@@ -14,10 +14,6 @@
     <main>
       <h1>Patience - Biología y Geología</h1>
       <p>Bienvenido a la página de inicio</p>
-      <form id="chat-form" onsubmit="handleSubmit(event)">
-        <input type="text" id="user-input" placeholder="Introduce tu nombre" required>
-        <button type="submit">Enviar</button>
-      </form>
       <!-- Añadir el botón de bienvenida -->
       <button class="welcome-button" onclick="redirect()">Bienvenid@!</button>
     </main>
@@ -25,18 +21,10 @@
       <p>© 2024 Patience. Todos los derechos reservados.</p>
     </footer>
   </div>
-  <script src="script.js"></script>
   <script>
     // Función para manejar la redirección al hacer clic en el botón
     function redirect() {
       window.location.href = "https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia";
-    }
-
-    // Función para manejar el envío del formulario (si es necesario)
-    function handleSubmit(event) {
-      event.preventDefault();
-      // Aquí puedes agregar cualquier lógica adicional que necesites al enviar el formulario
-      redirect();
     }
   </script>
 </body>

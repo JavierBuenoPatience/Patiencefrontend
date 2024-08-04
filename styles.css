@@ -38,7 +38,7 @@ p {
 footer {
   text-align: center;
   padding: 20px 0;
-  background-color: #333;
+  background-color: rgba(1, 192, 180, 0.8); /* Color con opacidad */
   color: #fff;
 }
 
@@ -61,4 +61,3 @@ footer {
 .welcome-button:hover {
   background-color: #019a90; /* Color más oscuro para el hover */
 }
-

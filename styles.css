@@ -41,9 +41,11 @@ footer {
   background-color: #333;
   color: #fff;
 }
-button {
-  background-color: #4CAF50; /* Verde */
-  color: white;
+
+/* Estilos para el botón de bienvenida */
+.welcome-button {
+  background-color: #01C0B4;
+  color: black;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
@@ -52,10 +54,12 @@ button {
   margin: 4px 2px;
   cursor: pointer;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px; /* Añadir bordes redondeados */
+  transition: background-color 0.3s ease; /* Transición suave para hover */
 }
 
-button:hover {
-  background-color: #45a049;
+.welcome-button:hover {
+  background-color: #019a90; /* Color más oscuro para el hover */
 }
+
 

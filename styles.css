@@ -17,7 +17,7 @@ header {
 }
 
 header img {
-  max-width: 150px;
+  max-width: 150px; /* Ajusta el tamaño del logo según sea necesario */
 }
 
 main {
@@ -61,5 +61,3 @@ footer {
 .welcome-button:hover {
   background-color: #019a90; /* Color más oscuro para el hover */
 }
-
-

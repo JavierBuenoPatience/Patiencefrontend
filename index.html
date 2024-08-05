@@ -9,7 +9,8 @@
 <body>
   <div class="container">
     <header>
-      <img src="assets/logo.png" alt="Logo" onclick="showHomeScreen()"> <!-- Asegúrate de que la ruta del logo sea correcta -->
+      <div class="header-left">Patience</div>
+      <img src="assets/logo.png" alt="Logo" class="header-right" onclick="showHomeScreen()"> <!-- Asegúrate de que la ruta del logo sea correcta -->
     </header>
     <div class="main-content">
       <!-- Menú Lateral -->
@@ -38,9 +39,6 @@
 
         <!-- Pantalla de Inicio -->
         <section id="home-screen" style="display: none;">
-          <header>
-            <img src="assets/logo.png" alt="Logo" onclick="showHomeScreen()"> <!-- Asegúrate de que la ruta del logo sea correcta -->
-          </header>
           <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
           <div class="buttons-container">
             <button class="welcome-button" onclick="redirectToURL('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia')">Apóyate en la IA</button>

@@ -175,12 +175,15 @@
     }
 
     function sendConfirmationEmail(email, token) {
-      fetch('/send-confirmation-email', {
+      fetch('https://formspree.io/f/mjkbwdwl', { // Reemplaza con el ID de tu formulario en Formspree
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, token })
+        body: JSON.stringify({
+          email: email,
+          message: `Confirma tu cuenta usando el siguiente enlace: http://tu-dominio.com/confirmar?token=${token}`
+        })
       }).then(response => {
         if (response.ok) {
           alert('Correo de confirmación enviado. Por favor, revisa tu email.');
@@ -197,7 +200,7 @@
     }
 
     function generateConfirmationToken() {
-      return crypto.randomBytes(16).toString('hex');
+      return Math.random().toString(36).substr(2); // Generar un token simple
     }
 
     function showLoginScreen() {

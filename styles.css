@@ -61,12 +61,17 @@ main {
   padding: 20px;
 }
 
-h1, h2, p, label, input, button {
+h1, h2, h3, p, label, input, button {
   font-family: 'Arial, sans-serif'; /* Unificar estilos de letra */
 }
 
 h1 {
   font-size: 2.5rem;
+  color: #333;
+}
+
+h2, h3 {
+  font-size: 2rem;
   color: #333;
 }
 
@@ -102,12 +107,20 @@ footer {
   background-color: #019a90; /* Color más oscuro para el hover */
 }
 
-/* Estilos para el formulario de registro */
+/* Estilos para los formularios de registro e inicio de sesión */
+.form-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin: 10px;
 }
 
 form label {

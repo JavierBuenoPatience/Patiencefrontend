@@ -25,6 +25,10 @@ main {
   padding: 20px 0;
 }
 
+h1, h2, p, label, input, button {
+  font-family: 'Arial, sans-serif'; /* Unificar estilos de letra */
+}
+
 h1 {
   font-size: 2.5rem;
   color: #333;
@@ -85,6 +89,7 @@ form input {
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-family: 'Arial, sans-serif'; /* Unificar estilos de letra */
 }
 
 form button {
@@ -95,13 +100,10 @@ form button {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-family: 'Arial, sans-serif'; /* Unificar estilos de letra */
 }
 
 form button:hover {
   background-color: #019a90;
 }
 
-
-.welcome-button:hover {
-  background-color: #019a90; /* Color más oscuro para el hover */
-}

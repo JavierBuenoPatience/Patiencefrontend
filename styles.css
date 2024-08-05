@@ -14,6 +14,7 @@ body {
 header {
   text-align: center;
   padding: 20px 0;
+  cursor: pointer; /* Añadir cursor de puntero para el logo */
 }
 
 header img {
@@ -26,9 +27,9 @@ header img {
 
 nav#sidebar {
   width: 200px;
-  background-color: #01C0B4;
+  background-color: #01C0B4; /* Color del recuadro del botón de "Bienvenid@" */
   padding: 20px;
-  border-radius: 20px;
+  border-radius: 20px; /* Esquinas redondeadas */
 }
 
 nav#sidebar ul {
@@ -37,13 +38,14 @@ nav#sidebar ul {
 }
 
 nav#sidebar ul li {
-  margin: 10px 0;
+  margin: 20px 0; /* Espacio entre elementos del menú */
 }
 
 nav#sidebar ul li a {
   color: black;
   text-decoration: none;
   font-size: 18px;
+  font-weight: bold; /* Letras en negrita */
 }
 
 main {
@@ -87,7 +89,7 @@ footer {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
+  margin: 10px 0; /* Espacio entre botones */
   cursor: pointer;
   border: none;
   border-radius: 20px; /* Añadir bordes redondeados */
@@ -139,3 +141,12 @@ form button:hover {
   font-size: 1rem;
   color: red;
 }
+
+/* Estilos para la pantalla de inicio */
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+

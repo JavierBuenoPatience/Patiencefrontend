@@ -76,16 +76,10 @@ p {
 }
 
 footer {
-  position: fixed;
-  bottom: 20px; /* Elevar el footer desde el borde inferior */
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(1, 192, 180, 0.5); /* Color con mayor transparencia */
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 10px;
   text-align: center;
   font-size: 0.8rem;
+  color: #666;
+  margin-top: 20px;
 }
 
 /* Estilos para los botones */
@@ -166,4 +160,3 @@ form button:hover {
   align-items: center;
   margin-top: 20px;
 }
-

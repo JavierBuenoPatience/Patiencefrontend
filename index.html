@@ -19,6 +19,7 @@
           <li><a href="#" onclick="showProfile()">Perfil</a></li>
           <li><a href="#" onclick="redirectToURL('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia')">pAtIence</a></li>
           <li><a href="#" onclick="showGroups()">Mis grupos</a></li> <!-- Nueva funcionalidad -->
+          <li><a href="#" onclick="showTraining()">Formación GPT</a></li> <!-- Nueva funcionalidad -->
           <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
           <li><a href="#" onclick="redirectToURL('https://www.csif.es/es/portada/andalucia/educacion')">Últimas noticias</a></li>
           <li><a href="#" onclick="handleLogout()">Cerrar sesión</a></li>
@@ -87,6 +88,27 @@
           <h2>Mis Grupos</h2>
           <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
           <button class="welcome-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Unirse a Slack</button>
+        </section>
+
+        <!-- Pantalla de Formación GPT -->
+        <section id="training-screen" style="display: none;">
+          <h2>Formación GPT</h2>
+          <p>Aprende cómo usar GPT y cómo puede ayudarte en tus estudios para la oposición.</p>
+          <h3>¿Qué es GPT?</h3>
+          <p>GPT (Generative Pre-trained Transformer) es un modelo de lenguaje desarrollado por OpenAI que puede generar texto de manera coherente y relevante en respuesta a una entrada de texto.</p>
+          <h3>Cómo Usar GPT</h3>
+          <ul>
+            <li>Accede a la plataforma de GPT utilizando el botón "Apóyate en la IA".</li>
+            <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
+            <li>GPT generará una respuesta que puedes utilizar para tus estudios.</li>
+          </ul>
+          <h3>Casos de Uso para Opositores</h3>
+          <ul>
+            <li><strong>Generar Resúmenes:</strong> Puedes pedir a GPT que resuma textos largos y complejos.</li>
+            <li><strong>Crear Esquemas:</strong> Solicita a GPT que te ayude a crear esquemas y diagramas para tus temas de estudio.</li>
+            <li><strong>Buscar Información Rápida:</strong> Utiliza GPT para obtener información rápida sobre temas específicos.</li>
+            <li><strong>Practicar Redacción:</strong> Escribe redacciones y pide a GPT que te ayude a mejorarlas o a darte retroalimentación.</li>
+          </ul>
         </section>
 
         <!-- Pantalla Próximamente -->
@@ -245,6 +267,11 @@
       document.getElementById('groups-screen').style.display = 'block';
     }
 
+    function showTraining() {
+      hideAllScreens();
+      document.getElementById('training-screen').style.display = 'block';
+    }
+
     function showComingSoon() {
       hideAllScreens();
       document.getElementById('coming-soon-screen').style.display = 'block';
@@ -256,6 +283,7 @@
       document.getElementById('home-screen').style.display = 'none';
       document.getElementById('profile-screen').style.display = 'none';
       document.getElementById('groups-screen').style.display = 'none';
+      document.getElementById('training-screen').style.display = 'none';
       document.getElementById('coming-soon-screen').style.display = 'none';
       document.getElementById('sidebar').style.display = 'none';
     }

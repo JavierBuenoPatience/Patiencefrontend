@@ -96,7 +96,7 @@
     const users = JSON.parse(localStorage.getItem('users')) || {};
 
     document.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('registered') === 'true' && localStorage.getItem('loggedIn') === 'true') {
+      if (localStorage.getItem('loggedIn') === 'true') {
         showHomeScreen();
       } else {
         showLoginScreen();
@@ -157,6 +157,7 @@
       localStorage.removeItem('loggedIn');
       localStorage.removeItem('email');
       localStorage.removeItem('name');
+      hideAllScreens();
       showLoginScreen();
     }
 
@@ -242,10 +243,16 @@
       document.getElementById('home-screen').style.display = 'none';
       document.getElementById('profile-screen').style.display = 'none';
       document.getElementById('coming-soon-screen').style.display = 'none';
+      document.getElementById('sidebar').style.display = 'none';
     }
 
     function redirectToURL(url) {
-      window.location.href = url;
+      if (localStorage.getItem('loggedIn') === 'true') {
+        window.location.href = url;
+      } else {
+        alert('Por favor, inicia sesión para acceder a esta funcionalidad.');
+        showLoginScreen();
+      }
     }
   </script>
 </body>

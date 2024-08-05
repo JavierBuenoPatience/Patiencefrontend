@@ -1,4 +1,10 @@
+const express = require('express');
+const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+
+const app = express();
+app.use(bodyParser.json());
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -7,6 +13,10 @@ const transporter = nodemailer.createTransport({
     pass: 'tu-contraseña', // tu contraseña
   },
 });
+
+function generateConfirmationToken() {
+  return crypto.randomBytes(16).toString('hex');
+}
 
 function sendConfirmationEmail(email, token) {
   const mailOptions = {
@@ -26,4 +36,13 @@ function sendConfirmationEmail(email, token) {
   });
 }
 
-module.exports = sendConfirmationEmail;
+app.post('/send-confirmation-email', (req, res) => {
+  const { email } = req.body;
+  const token = generateConfirmationToken();
+  sendConfirmationEmail(email, token);
+  res.sendStatus(200);
+});
+
+app.listen(3000, () => {
+  console.log('Servidor escuchando en el puerto 3000');
+});

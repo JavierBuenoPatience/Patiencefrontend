@@ -37,8 +37,7 @@ function sendConfirmationEmail(email, token) {
 }
 
 app.post('/send-confirmation-email', (req, res) => {
-  const { email } = req.body;
-  const token = generateConfirmationToken();
+  const { email, token } = req.body;
   sendConfirmationEmail(email, token);
   res.sendStatus(200);
 });

@@ -36,14 +36,12 @@
           <p id="registration-message" style="color: red; display: none;">Por favor, regístrate para acceder a los enlaces.</p>
         </section>
 
-        <!-- Pantalla de Bienvenida -->
-        <section id="welcome-screen" style="display: none;">
-          <h1>Bienvenid@, <span id="user-name"></span>!</h1>
-        </section>
-
         <!-- Pantalla de Inicio -->
         <section id="home-screen" style="display: none;">
-          <h1>Bienvenido <span id="user-name-home"></span></h1>
+          <header>
+            <img src="assets/logo.png" alt="Logo" onclick="showHomeScreen()"> <!-- Asegúrate de que la ruta del logo sea correcta -->
+          </header>
+          <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
           <div class="buttons-container">
             <button class="welcome-button" onclick="redirectToURL('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia')">Apóyate en la IA</button>
             <button class="welcome-button" onclick="redirectToURL('https://www.csif.es/es/portada/andalucia/educacion')">Últimas noticias</button>
@@ -93,22 +91,15 @@
       localStorage.setItem('registered', 'true');
       localStorage.setItem('name', name);
       localStorage.setItem('email', email);
-      // Mostrar la pantalla de bienvenida
-      showWelcomeScreen();
-    }
-
-    function showWelcomeScreen() {
-      document.getElementById('auth-screen').style.display = 'none';
-      document.getElementById('welcome-screen').style.display = 'block';
-      document.getElementById('home-screen').style.display = 'none';
-      document.getElementById('sidebar').style.display = 'block';
-      document.getElementById('user-name').textContent = localStorage.getItem('name');
-      document.getElementById('user-name-home').textContent = localStorage.getItem('name');
+      // Mostrar la pantalla de inicio
+      showHomeScreen();
     }
 
     function showHomeScreen() {
       hideAllScreens();
       document.getElementById('home-screen').style.display = 'block';
+      document.getElementById('sidebar').style.display = 'block';
+      document.getElementById('user-name-home').textContent = localStorage.getItem('name');
     }
 
     function showProfile() {
@@ -123,7 +114,6 @@
 
     function hideAllScreens() {
       document.getElementById('auth-screen').style.display = 'none';
-      document.getElementById('welcome-screen').style.display = 'none';
       document.getElementById('home-screen').style.display = 'none';
       document.getElementById('profile-screen').style.display = 'none';
       document.getElementById('coming-soon-screen').style.display = 'none';
@@ -135,8 +125,3 @@
   </script>
 </body>
 </html>
-
-  </script>
-</body>
-</html>
-

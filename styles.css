@@ -143,10 +143,20 @@ form button:hover {
 }
 
 /* Estilos para la pantalla de inicio */
+#home-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
 .buttons-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
 }
+
 

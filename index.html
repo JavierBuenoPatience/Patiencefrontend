@@ -12,30 +12,39 @@
       <img src="assets/logo.png" alt="Logo"> <!-- Asegúrate de que la ruta del logo sea correcta -->
     </header>
     <main>
-      <h1>Patience - Biología y Geología</h1>
-      <p>Bienvenido a la página de inicio</p>
-      <!-- Botón de Apóyate en la IA -->
-      <button class="welcome-button" onclick="checkRegistration('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia')">Apóyate en la IA</button>
-      <!-- Nuevo botón de últimas noticias -->
-      <button class="welcome-button" onclick="checkRegistration('https://www.csif.es/es/portada/andalucia/educacion')">Últimas noticias</button>
-
-      <!-- Formulario de Registro -->
-      <h2>Regístrate para utilizar la app</h2>
-      <form id="registration-form" onsubmit="handleRegistration(event)">
+      <!-- Pantalla de Registro/Inicio de Sesión -->
+      <section id="auth-screen">
+        <h2>Regístrate o Inicia Sesión</h2>
+        <form id="registration-form" onsubmit="handleRegistration(event)">
+          <label for="name">Nombre:</label>
+          <input type="text" id="name" name="name" required>
+          <label for="email">Correo Electrónico:</label>
+          <input type="email" id="email" name="email" required>
+          <button type="submit">Registrarse</button>
+        </form>
         <p id="registration-message" style="color: red; display: none;">Por favor, regístrate para acceder a los enlaces.</p>
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required>
-        <label for="email">Correo Electrónico:</label>
-        <input type="email" id="email" name="email" required>
-        <button type="submit">Registrarse</button>
-      </form>
+      </section>
+
+      <!-- Pantalla de Bienvenida -->
+      <section id="welcome-screen" style="display: none;">
+        <h1>Bienvenid@, <span id="user-name"></span>!</h1>
+        <button class="welcome-button" onclick="redirectToURL('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia')">Apóyate en la IA</button>
+        <button class="welcome-button" onclick="redirectToURL('https://www.csif.es/es/portada/andalucia/educacion')">Últimas noticias</button>
+      </section>
     </main>
     <footer>
       <p>© 2024 Patience. Todos los derechos reservados.</p>
     </footer>
   </div>
   <script>
-    // Función para manejar la redirección al hacer clic en el botón de Apóyate en la IA
+    document.addEventListener('DOMContentLoaded', () => {
+      // Verificar si el usuario está registrado
+      const isRegistered = localStorage.getItem('registered');
+      if (isRegistered === 'true') {
+        showWelcomeScreen();
+      }
+    });
+
     function handleRegistration(event) {
       event.preventDefault();
       const name = document.getElementById('name').value;
@@ -44,24 +53,19 @@
       localStorage.setItem('registered', 'true');
       localStorage.setItem('name', name);
       localStorage.setItem('email', email);
-      // Mostrar un mensaje de éxito o redirigir
-      document.getElementById('registration-message').style.display = 'none';
-      alert('Registro exitoso. Ahora puedes acceder a los enlaces.');
+      // Mostrar la pantalla de bienvenida
+      showWelcomeScreen();
     }
 
-    function checkRegistration(url) {
-      // Verificar si el usuario está registrado
-      const isRegistered = localStorage.getItem('registered');
-      if (isRegistered === 'true') {
-        // Redirigir al usuario a la URL especificada
-        window.location.href = url;
-      } else {
-        // Mostrar un mensaje indicando que deben registrarse primero
-        document.getElementById('registration-message').style.display = 'block';
-      }
+    function showWelcomeScreen() {
+      document.getElementById('auth-screen').style.display = 'none';
+      document.getElementById('welcome-screen').style.display = 'block';
+      document.getElementById('user-name').textContent = localStorage.getItem('name');
+    }
+
+    function redirectToURL(url) {
+      window.location.href = url;
     }
   </script>
 </body>
 </html>
-
-

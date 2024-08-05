@@ -50,6 +50,8 @@
             <input type="password" id="reg-password" name="password" required>
             <button type="submit">Registrarse</button>
           </form>
+          <p id="registration-message" style="display: none;">Genial! Gracias por registrarte. Recibirás un email de confirmación para poder comenzar!</p>
+          <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showHomeScreen()">Bienvenid@!</button>
         </section>
 
         <!-- Pantalla de Inicio -->
@@ -122,9 +124,9 @@
       localStorage.setItem('users', JSON.stringify(users));
       sendConfirmationEmail(email, token);
 
-      alert('Registro exitoso. Por favor, confirma tu correo.');
       document.getElementById('registration-form').reset();
-      showLoginScreen();
+      document.getElementById('registration-message').style.display = 'block';
+      document.getElementById('welcome-button').style.display = 'block';
     }
 
     function handleLogin(event) {

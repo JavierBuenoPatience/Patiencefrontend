@@ -2,7 +2,7 @@ body {
   font-family: 'Arial, sans-serif';
   margin: 0;
   padding: 0;
-  background-color: #ffffff;
+  background-color: #ffffff; /* Fondo blanco */
 }
 
 .container {
@@ -62,6 +62,10 @@ footer {
   border: none;
   border-radius: 20px; /* Añadir bordes redondeados */
   transition: background-color 0.3s ease; /* Transición suave para hover */
+}
+
+.welcome-button:hover {
+  background-color: #019a90; /* Color más oscuro para el hover */
 }
 
 .welcome-button:hover {

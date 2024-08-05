@@ -64,7 +64,7 @@
         <!-- Pantalla de Perfil -->
         <section id="profile-screen" style="display: none;">
           <h2>Perfil</h2>
-          <form>
+          <form id="profile-form" onsubmit="handleProfileUpdate(event)">
             <label for="full-name">Nombre Completo:</label>
             <input type="text" id="full-name" name="full-name" required>
             <label for="profile-email">Email:</label>
@@ -117,7 +117,7 @@
         return;
       }
 
-      users[email] = { name, email, password, confirmed: false };
+      users[email] = { name, email, password, confirmed: false, profile: {} };
       localStorage.setItem('users', JSON.stringify(users));
       sendConfirmationEmail(email);
 
@@ -157,6 +157,20 @@
       showLoginScreen();
     }
 
+    function handleProfileUpdate(event) {
+      event.preventDefault();
+      const email = localStorage.getItem('email');
+      const profile = {
+        fullName: document.getElementById('full-name').value,
+        phone: document.getElementById('phone').value,
+        studyTime: document.getElementById('study-time').value,
+        specialty: document.getElementById('specialty').value
+      };
+      users[email].profile = profile;
+      localStorage.setItem('users', JSON.stringify(users));
+      alert('Perfil actualizado con éxito');
+    }
+
     function sendConfirmationEmail(email) {
       // Aquí debes implementar la lógica para enviar el correo de confirmación
       // Esto es solo un placeholder
@@ -191,6 +205,12 @@
     function showProfile() {
       hideAllScreens();
       document.getElementById('profile-screen').style.display = 'block';
+      const email = localStorage.getItem('email');
+      const profile = users[email].profile || {};
+      document.getElementById('full-name').value = profile.fullName || '';
+      document.getElementById('phone').value = profile.phone || '';
+      document.getElementById('study-time').value = profile.studyTime || '';
+      document.getElementById('specialty').value = profile.specialty || '';
     }
 
     function showComingSoon() {

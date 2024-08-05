@@ -117,9 +117,10 @@
         return;
       }
 
-      users[email] = { name, email, password, confirmed: false, profile: {} };
+      const token = generateConfirmationToken();
+      users[email] = { name, email, password, confirmed: false, profile: {}, token: token };
       localStorage.setItem('users', JSON.stringify(users));
-      sendConfirmationEmail(email);
+      sendConfirmationEmail(email, token);
 
       alert('Registro exitoso. Por favor, confirma tu correo.');
       document.getElementById('registration-form').reset();
@@ -171,18 +172,30 @@
       alert('Perfil actualizado con éxito');
     }
 
-    function sendConfirmationEmail(email) {
-      // Aquí debes implementar la lógica para enviar el correo de confirmación
-      // Esto es solo un placeholder
-      alert(`Correo de confirmación enviado a ${email}`);
-      users[email].confirmed = true; // Remover esto en la implementación real
-      localStorage.setItem('users', JSON.stringify(users));
+    function sendConfirmationEmail(email, token) {
+      fetch('/send-confirmation-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, token })
+      }).then(response => {
+        if (response.ok) {
+          alert('Correo de confirmación enviado. Por favor, revisa tu email.');
+        } else {
+          alert('Error al enviar el correo de confirmación.');
+        }
+      });
     }
 
     function validateEmail(email) {
       const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
       const hotmailRegex = /^[a-zA-Z0-9._%+-]+@hotmail\.com$/;
       return gmailRegex.test(email) || hotmailRegex.test(email);
+    }
+
+    function generateConfirmationToken() {
+      return crypto.randomBytes(16).toString('hex');
     }
 
     function showLoginScreen() {

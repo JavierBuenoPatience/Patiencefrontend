@@ -12,13 +12,21 @@ body {
 }
 
 header {
-  text-align: center;
-  padding: 20px 0;
-  cursor: pointer; /* Añadir cursor de puntero para el logo */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
 }
 
-header img {
-  max-width: 150px; /* Ajusta el tamaño del logo según sea necesario */
+.header-left {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.header-right {
+  max-width: 50px; /* Tamaño pequeño para el logo */
+  cursor: pointer; /* Añadir cursor de puntero para el logo */
 }
 
 .main-content {
@@ -158,5 +166,3 @@ form button:hover {
   align-items: center;
   margin-top: 20px;
 }
-
-

@@ -18,6 +18,7 @@
         <ul>
           <li><a href="#" onclick="showProfile()">Perfil</a></li>
           <li><a href="#" onclick="redirectToURL('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia')">pAtIence</a></li>
+          <li><a href="#" onclick="showGroups()">Mis grupos</a></li> <!-- Nueva funcionalidad -->
           <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
           <li><a href="#" onclick="redirectToURL('https://www.csif.es/es/portada/andalucia/educacion')">Últimas noticias</a></li>
           <li><a href="#" onclick="handleLogout()">Cerrar sesión</a></li>
@@ -79,6 +80,13 @@
             <input type="text" id="specialty" name="specialty">
             <button type="submit">Guardar</button>
           </form>
+        </section>
+
+        <!-- Pantalla de Mis Grupos -->
+        <section id="groups-screen" style="display: none;">
+          <h2>Mis Grupos</h2>
+          <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
+          <button class="welcome-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Unirse a Slack</button>
         </section>
 
         <!-- Pantalla Próximamente -->
@@ -232,6 +240,11 @@
       document.getElementById('specialty').value = profile.specialty || '';
     }
 
+    function showGroups() {
+      hideAllScreens();
+      document.getElementById('groups-screen').style.display = 'block';
+    }
+
     function showComingSoon() {
       hideAllScreens();
       document.getElementById('coming-soon-screen').style.display = 'block';
@@ -242,6 +255,7 @@
       document.getElementById('registration-screen').style.display = 'none';
       document.getElementById('home-screen').style.display = 'none';
       document.getElementById('profile-screen').style.display = 'none';
+      document.getElementById('groups-screen').style.display = 'none';
       document.getElementById('coming-soon-screen').style.display = 'none';
       document.getElementById('sidebar').style.display = 'none';
     }

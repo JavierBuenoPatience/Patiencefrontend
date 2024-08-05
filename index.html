@@ -22,25 +22,26 @@
       <!-- Formulario de Registro -->
       <h2>Regístrate para utilizar la app</h2>
       <form id="registration-form" onsubmit="handleRegistration(event)">
+        <p id="registration-message" style="color: red; display: none;">Por favor, regístrate para acceder a los enlaces.</p>
         <label for="name">Nombre:</label>
         <input type="text" id="name" name="name" required>
         <label for="email">Correo Electrónico:</label>
         <input type="email" id="email" name="email" required>
         <button type="submit">Registrarse</button>
       </form>
-      <p id="registration-message" style="color: red; display: none;">Por favor, regístrate para acceder a los enlaces.</p>
     </main>
     <footer>
       <p>© 2024 Patience. Todos los derechos reservados.</p>
     </footer>
   </div>
   <script>
+    // Función para manejar la redirección al hacer clic en el botón de Apóyate en la IA
     function handleRegistration(event) {
       event.preventDefault();
       const name = document.getElementById('name').value;
       const email = document.getElementById('email').value;
       // Guardar la información de registro en el almacenamiento local
-      localStorage.setItem('registered', true);
+      localStorage.setItem('registered', 'true');
       localStorage.setItem('name', name);
       localStorage.setItem('email', email);
       // Mostrar un mensaje de éxito o redirigir
@@ -51,7 +52,7 @@
     function checkRegistration(url) {
       // Verificar si el usuario está registrado
       const isRegistered = localStorage.getItem('registered');
-      if (isRegistered) {
+      if (isRegistered === 'true') {
         // Redirigir al usuario a la URL especificada
         window.location.href = url;
       } else {
@@ -62,4 +63,5 @@
   </script>
 </body>
 </html>
+
 

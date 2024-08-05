@@ -41,7 +41,7 @@
           <li><a href="#" onclick="showProfile()">Perfil</a></li>
           <li><a href="#" onclick="redirectToURL('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia')">pAtIence</a></li>
           <li><a href="#" onclick="showGroups()">Mis grupos</a></li> <!-- Nueva funcionalidad -->
-          <li><a href="#" onclick="showTraining()">Formación pAtIence - IA para opositores</a></li> <!-- Nueva funcionalidad -->
+          <li><a href="#" onclick="showTraining()">¿Qué es pAtIence?</a></li> <!-- Nueva funcionalidad -->
           <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
           <li><a href="#" onclick="redirectToURL('https://www.csif.es/es/portada/andalucia/educacion')">Últimas noticias</a></li>
           <li><a href="#" onclick="handleLogout()">Cerrar sesión</a></li>
@@ -114,7 +114,7 @@
 
         <!-- Pantalla de Formación pAtIence - IA para opositores -->
         <section id="training-screen" class="training-section" style="display: none;">
-          <h2>Formación pAtIence - IA para opositores</h2>
+          <h2>¿Qué es pAtIence?</h2>
           <p>Aprende cómo usar pAtIence - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
           <h3>¿Qué es pAtIence - IA para opositores?</h3>
           <p>pAtIence - IA para opositores es un modelo de lenguaje desarrollado para generar texto de manera coherente y relevante en respuesta a una entrada de texto. Está diseñado específicamente para ayudar a opositores en sus estudios.</p>
@@ -281,7 +281,7 @@
       document.getElementById('full-name').value = profile.fullName || '';
       document.getElementById('phone').value = profile.phone || '';
       document.getElementById('study-time').value = profile.studyTime || '';
-      document.getElementId('specialty').value = profile.specialty || '';
+      document.getElementById('specialty').value = profile.specialty || '';
     }
 
     function showGroups() {

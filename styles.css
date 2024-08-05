@@ -36,10 +36,16 @@ p {
 }
 
 footer {
-  text-align: center;
-  padding: 20px 0;
-  background-color: rgba(1, 192, 180, 0.5); /* Color con opacidad */
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(1, 192, 180, 0.5); /* Color con mayor transparencia */
   color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.8rem;
 }
 
 /* Estilos para el botón de bienvenida */

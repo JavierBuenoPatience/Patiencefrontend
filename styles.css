@@ -48,7 +48,7 @@ footer {
   font-size: 0.8rem;
 }
 
-/* Estilos para el botón de bienvenida */
+/* Estilos para los botones */
 .welcome-button {
   background-color: #01C0B4;
   color: black;
@@ -67,6 +67,40 @@ footer {
 .welcome-button:hover {
   background-color: #019a90; /* Color más oscuro para el hover */
 }
+
+/* Estilos para el formulario de registro */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+form label {
+  margin: 10px 0 5px 0;
+}
+
+form input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form button {
+  background-color: #01C0B4;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #019a90;
+}
+
 
 .welcome-button:hover {
   background-color: #019a90; /* Color más oscuro para el hover */

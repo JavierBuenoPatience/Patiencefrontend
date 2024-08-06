@@ -283,3 +283,13 @@ iframe {
 .slack-button:hover {
   background-color: #7B3C8F;
 }
+
+.intro-section {
+  display: flex;
+  gap: 20px;
+}
+
+.intro-video,
+.intro-web {
+  flex: 1;
+}

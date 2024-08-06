@@ -30,6 +30,7 @@
       font-size: 24px;
       font-weight: bold;
       color: #01C0B4;
+      cursor: pointer;
     }
     .header-right {
       cursor: pointer;
@@ -44,6 +45,10 @@
       color: #fff;
       padding: 20px;
       border-radius: 10px;
+      height: 100vh; /* Ocupa toda la altura de la pantalla */
+      position: fixed; /* Mantiene el menú en su lugar */
+      top: 0;
+      left: 0;
     }
     nav ul {
       list-style-type: none;
@@ -61,6 +66,7 @@
       text-decoration: underline;
     }
     main {
+      margin-left: 220px; /* Ajusta el margen izquierdo para el contenido principal */
       flex-grow: 1;
       padding: 20px;
     }
@@ -112,13 +118,14 @@
       padding: 10px 0;
       border-top: 1px solid #ddd;
       margin-top: 20px;
+      font-size: 12px; /* Más pequeño */
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <div class="header-left">Patience</div>
+      <div class="header-left" onclick="showHomeScreen()">Patience</div>
       <img src="assets/logo.png" alt="Logo" class="header-right" onclick="showHomeScreen()"> <!-- Asegúrate de que la ruta del logo sea correcta -->
     </header>
     <div class="main-content">
@@ -169,7 +176,7 @@
         <section id="home-screen" style="display: none;">
           <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
           <div class="welcome-message">
-            <p>Bienvenido a la plataforma pAtIence, tu asistente IA especializado para opositores.</p>
+            <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
             <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
           </div>
         </section>
@@ -368,7 +375,6 @@
       document.getElementById('groups-screen').style.display = 'none';
       document.getElementById('training-screen').style.display = 'none';
       document.getElementById('coming-soon-screen').style.display = 'none';
-      document.getElementById('sidebar').style.display = 'none';
     }
 
     function redirectToURL(url) {

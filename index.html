@@ -50,11 +50,6 @@
       display: flex;
       align-items: center;
     }
-    .header-left .menu-icon {
-      cursor: pointer;
-      font-size: 24px;
-      margin-right: 20px;
-    }
     .header-left .logo {
       font-size: 24px;
       font-weight: bold;
@@ -123,6 +118,22 @@
       cursor: pointer;
       font-size: 18px;
       border-radius: 5px;
+      z-index: 1000;
+    }
+    .menu-button.hide {
+      display: none;
+    }
+    .pin-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #01C0B4;
+      color: #fff;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 50%;
       z-index: 1000;
     }
     .card {
@@ -194,19 +205,6 @@
       font-size: 12px;
       height: 70px;
     }
-    .fixed-menu-toggle {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background-color: #01C0B4;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-size: 16px;
-      border-radius: 5px;
-      z-index: 1000;
-    }
   </style>
 </head>
 <body>
@@ -222,6 +220,7 @@
     </div>
   </header>
   <div class="menu-desplegable" id="menu-desplegable">
+    <button class="pin-button" onclick="toggleFixedMenu()">📌</button>
     <ul>
       <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
       <li><a href="#" onclick="showProfile()">Perfil</a></li>
@@ -234,7 +233,7 @@
     </ul>
   </div>
   <div class="main-content">
-    <button class="menu-button" onclick="toggleMenu()">☰</button>
+    <button class="menu-button" id="menu-button" onclick="toggleMenu()">☰</button>
     <!-- Pantalla de Inicio de Sesión -->
     <div class="card" id="login-screen">
       <h2>Inicio de Sesión</h2>
@@ -272,6 +271,7 @@
         <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
       </div>
       <iframe src="https://www.csif.es/es/portada/andalucia/educacion"></iframe>
+      <iframe src="https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA" height="400" title="Slack Chat"></iframe>
     </div>
 
     <!-- Pantalla de Perfil -->
@@ -296,7 +296,7 @@
     <div class="card" id="groups-screen" style="display: none;">
       <h2>Mis Grupos</h2>
       <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
-      <button class="welcome-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+      <iframe src="https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA" height="400" title="Slack Chat"></iframe>
     </div>
 
     <!-- Pantalla de ¿Qué es pAtIence? -->
@@ -332,7 +332,6 @@
   <footer>
     <p>© 2024 Patience. Todos los derechos reservados.</p>
   </footer>
-  <button class="fixed-menu-toggle" onclick="toggleFixedMenu()">Fijar Menú</button>
   <script>
     const users = JSON.parse(localStorage.getItem('users')) || {};
     let isMenuFixed = false;
@@ -499,11 +498,10 @@
     }
 
     function toggleMenu() {
+      const menuButton = document.getElementById('menu-button');
       const menu = document.getElementById('menu-desplegable');
-      if (isMenuFixed) {
-        menu.classList.remove('fixed');
-      }
       menu.classList.toggle('show');
+      menuButton.classList.toggle('hide');
     }
 
     function toggleFixedMenu() {

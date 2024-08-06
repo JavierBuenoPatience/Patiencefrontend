@@ -47,34 +47,40 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
     .header-left {
+      display: flex;
+      align-items: center;
+    }
+    .header-left .menu-icon {
+      cursor: pointer;
+      font-size: 24px;
+      margin-right: 20px;
+    }
+    .header-left .logo {
       font-size: 24px;
       font-weight: bold;
       cursor: pointer;
-    }
-    .header-right {
-      display: flex;
-      align-items: center;
     }
     .header-right img {
       width: 50px;
       cursor: pointer;
       margin-left: 20px;
     }
-    .menu-icon {
-      cursor: pointer;
-    }
     .menu-desplegable {
       position: fixed;
-      top: 0;
+      top: 70px; /* Ajusta la altura para que esté entre el header y el footer */
       left: -250px;
       width: 250px;
-      height: 100%;
+      height: calc(100% - 140px); /* Ajusta la altura total menos el espacio de header y footer */
       background-color: #01C0B4;
       color: #fff;
       padding: 20px;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
       transition: left 0.3s ease;
       z-index: 999;
+    }
+    .menu-desplegable.fixed {
+      position: fixed;
+      left: 0;
     }
     .menu-desplegable ul {
       list-style-type: none;
@@ -104,6 +110,20 @@
       flex-direction: column;
       align-items: center;
       overflow-y: auto;
+      position: relative;
+    }
+    .menu-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #01C0B4;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 18px;
+      border-radius: 5px;
+      z-index: 1000;
     }
     .card {
       width: 100%;
@@ -172,6 +192,20 @@
       background-color: #333;
       color: #fff;
       font-size: 12px;
+      height: 70px;
+    }
+    .fixed-menu-toggle {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #01C0B4;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      z-index: 1000;
     }
   </style>
 </head>
@@ -180,8 +214,9 @@
     <img src="assets/logo.png" alt="Loading..." class="loading-logo">
   </div>
   <header>
-    <div class="header-left" onclick="handleLogoClick()">Patience</div>
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="header-left">
+      <div class="logo" onclick="handleLogoClick()">Patience</div>
+    </div>
     <div class="header-right">
       <img src="assets/logo.png" alt="Logo" onclick="handleLogoClick()"> <!-- Asegúrate de que la ruta del logo sea correcta -->
     </div>
@@ -199,6 +234,7 @@
     </ul>
   </div>
   <div class="main-content">
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
     <!-- Pantalla de Inicio de Sesión -->
     <div class="card" id="login-screen">
       <h2>Inicio de Sesión</h2>
@@ -296,8 +332,10 @@
   <footer>
     <p>© 2024 Patience. Todos los derechos reservados.</p>
   </footer>
+  <button class="fixed-menu-toggle" onclick="toggleFixedMenu()">Fijar Menú</button>
   <script>
     const users = JSON.parse(localStorage.getItem('users')) || {};
+    let isMenuFixed = false;
 
     document.addEventListener('DOMContentLoaded', () => {
       showLoadingScreen();
@@ -462,7 +500,20 @@
 
     function toggleMenu() {
       const menu = document.getElementById('menu-desplegable');
+      if (isMenuFixed) {
+        menu.classList.remove('fixed');
+      }
       menu.classList.toggle('show');
+    }
+
+    function toggleFixedMenu() {
+      const menu = document.getElementById('menu-desplegable');
+      isMenuFixed = !isMenuFixed;
+      if (isMenuFixed) {
+        menu.classList.add('fixed');
+      } else {
+        menu.classList.remove('fixed');
+      }
     }
   </script>
 </body>

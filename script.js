@@ -2,6 +2,8 @@
 
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
+let manualToggle = false;
+
 document.addEventListener('DOMContentLoaded', () => {
   showLoadingScreen();
   setTimeout(() => {
@@ -15,21 +17,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const menu = document.getElementById('menu-desplegable');
   const menuIcon = document.querySelector('.menu-icon');
+  const mainContent = document.querySelector('.main-content');
+  const headerLeft = document.querySelector('.header-left');
 
-  menuIcon.addEventListener('mouseenter', () => {
-    menu.classList.add('show');
+  menuIcon.addEventListener('click', () => {
+    menu.classList.toggle('show');
+    manualToggle = !manualToggle;
+  });
+
+  menu.addEventListener('mouseenter', () => {
+    if (!manualToggle) {
+      menu.classList.add('show');
+    }
   });
 
   menu.addEventListener('mouseleave', () => {
-    menu.classList.remove('show');
+    if (!manualToggle) {
+      menu.classList.remove('show');
+    }
   });
 
-  document.querySelector('.header-left').addEventListener('mouseenter', () => {
-    menu.classList.add('show');
+  mainContent.addEventListener('mouseenter', () => {
+    if (!manualToggle) {
+      menu.classList.remove('show');
+    }
   });
 
-  document.querySelector('.main-content').addEventListener('mouseenter', () => {
-    menu.classList.remove('show');
+  headerLeft.addEventListener('mouseenter', () => {
+    if (!manualToggle) {
+      menu.classList.add('show');
+    }
   });
 });
 
@@ -185,4 +202,5 @@ function handleLogoClick() {
 function toggleMenu() {
   const menu = document.getElementById('menu-desplegable');
   menu.classList.toggle('show');
+  manualToggle = !manualToggle;
 }

@@ -14,17 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 2000);
 
   const menu = document.getElementById('menu-desplegable');
-  const menuIcon = document.querySelector('.menu-icon');
   const mainContent = document.querySelector('.main-content');
   const headerLeft = document.querySelector('.header-left');
-
-  menuIcon.addEventListener('click', () => {
-    if (localStorage.getItem('loggedIn') === 'true') {
-      menu.classList.toggle('show');
-    } else {
-      showLoginScreen();
-    }
-  });
 
   menu.addEventListener('mouseenter', () => {
     if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
@@ -123,6 +114,8 @@ function handleLogout() {
   localStorage.removeItem('loggedIn');
   localStorage.removeItem('email');
   localStorage.removeItem('name');
+  const menu = document.getElementById('menu-desplegable');
+  menu.classList.remove('show');
   hideAllScreens();
   showLoginScreen();
 }
@@ -150,11 +143,15 @@ function validateEmail(email) {
 function showLoginScreen() {
   hideAllScreens();
   document.getElementById('login-screen').style.display = 'block';
+  document.querySelector('header').style.display = 'none';
+  document.querySelector('footer').style.display = 'none';
 }
 
 function showRegistrationScreen() {
   hideAllScreens();
   document.getElementById('registration-screen').style.display = 'block';
+  document.querySelector('header').style.display = 'none';
+  document.querySelector('footer').style.display = 'none';
 }
 
 function showHomeScreen() {
@@ -163,6 +160,7 @@ function showHomeScreen() {
     document.getElementById('home-screen').style.display = 'block';
     document.getElementById('user-name-home').textContent = localStorage.getItem('name');
     document.querySelector('header').style.display = 'flex';
+    document.querySelector('footer').style.display = 'block';
   } else {
     showLoginScreen();
   }
@@ -218,7 +216,6 @@ function hideAllScreens() {
   document.getElementById('groups-screen').style.display = 'none';
   document.getElementById('training-screen').style.display = 'none';
   document.getElementById('coming-soon-screen').style.display = 'none';
-  document.querySelector('header').style.display = 'none';
 }
 
 function redirectToURL(url) {
@@ -236,10 +233,4 @@ function handleLogoClick() {
   } else {
     showLoginScreen();
   }
-}
-
-function toggleMenu() {
-  const menu = document.getElementById('menu-desplegable');
-  menu.classList.toggle('show');
-  manualToggle = !manualToggle;
 }

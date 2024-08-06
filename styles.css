@@ -125,6 +125,23 @@ header {
   margin-bottom: 60px;
 }
 
+.branding {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.main-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+}
+
+.tagline {
+  font-size: 18px;
+  font-weight: 500;
+  color: #666;
+}
+
 .card {
   width: 100%;
   max-width: 900px;
@@ -247,4 +264,22 @@ iframe {
 
 .training-section ul li strong {
   font-weight: bold;
+}
+
+.slack-button {
+  background-color: #4A154B;
+  color: #fff;
+  border: none;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.slack-button:hover {
+  background-color: #7B3C8F;
 }

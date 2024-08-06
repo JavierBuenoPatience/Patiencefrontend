@@ -12,6 +12,25 @@ document.addEventListener('DOMContentLoaded', () => {
       showLoginScreen();
     }
   }, 2000);
+
+  const menu = document.getElementById('menu-desplegable');
+  const menuIcon = document.querySelector('.menu-icon');
+
+  menuIcon.addEventListener('mouseenter', () => {
+    menu.classList.add('show');
+  });
+
+  menu.addEventListener('mouseleave', () => {
+    menu.classList.remove('show');
+  });
+
+  document.querySelector('.header-left').addEventListener('mouseenter', () => {
+    menu.classList.add('show');
+  });
+
+  document.querySelector('.main-content').addEventListener('mouseenter', () => {
+    menu.classList.remove('show');
+  });
 });
 
 function showLoadingScreen() {

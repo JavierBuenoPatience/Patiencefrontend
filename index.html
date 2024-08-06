@@ -144,7 +144,7 @@
         <ul>
           <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
           <li><a href="#" onclick="showProfile()">Perfil</a></li>
-          <li><a href="#" onclick="showPatience()">pAtIence</a></li> <!-- Cambiado para mostrar el iframe -->
+          <li><a href="https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia" target="_blank">pAtIence</a></li> <!-- Cambiado para abrir en nueva pestaña -->
           <li><a href="#" onclick="showGroups()">Mis grupos</a></li> <!-- Nueva funcionalidad -->
           <li><a href="#" onclick="showTraining()">¿Qué es pAtIence?</a></li> <!-- Nueva funcionalidad -->
           <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
@@ -224,7 +224,6 @@
           <p>Aprende cómo usar pAtIence - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
           <h3>¿Qué es pAtIence - IA para opositores?</h3>
           <p>pAtIence - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
-          <iframe src="https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia"></iframe> <!-- Iframe añadido -->
           <h3>Cómo usar pAtIence - IA para opositores</h3>
           <ul>
             <li>Accede a la plataforma de pAtIence - IA para opositores utilizando el botón "Apóyate en la IA".</li>
@@ -393,7 +392,7 @@
 
     function redirectToURL(url) {
       if (localStorage.getItem('loggedIn') === 'true') {
-        window.location.href = url;
+        window.open(url, '_blank');
       } else {
         alert('Por favor, inicia sesión para acceder a esta funcionalidad.');
         showLoginScreen();
@@ -407,11 +406,7 @@
         showLoginScreen();
       }
     }
-
-    function showPatience() {
-      hideAllScreens();
-      document.getElementById('training-screen').style.display = 'block';
-    }
   </script>
 </body>
 </html>
+

@@ -1,7 +1,7 @@
 /* styles.css */
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: #f4f4f4;
   margin: 0;
   padding: 0;
@@ -142,6 +142,7 @@ header {
   margin-bottom: 20px;
   color: #01C0B4;
   font-size: 24px;
+  font-weight: bold;
 }
 
 .card form {
@@ -165,6 +166,8 @@ header {
   border-radius: 10px;
   box-sizing: border-box;
   font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
 }
 
 .card form button {
@@ -176,6 +179,8 @@ header {
   cursor: pointer;
   font-size: 18px;
   border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
 }
 
 .card form button:hover {
@@ -202,6 +207,8 @@ footer {
   position: fixed;
   width: 100%;
   bottom: 0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
 }
 
 iframe {
@@ -216,22 +223,26 @@ iframe {
 .training-section-content,
 .training-section-usage {
   margin-top: 20px;
+  line-height: 1.6;
 }
 
 .training-section h3 {
   color: #01C0B4;
   margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .training-section ul {
   list-style: none;
   padding: 0;
+  margin-bottom: 20px;
 }
 
 .training-section ul li {
   margin-bottom: 10px;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .training-section ul li strong {

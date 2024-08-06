@@ -74,8 +74,8 @@
             <input type="password" id="reg-password" name="password" required>
             <button type="submit">Registrarse</button>
           </form>
-          <p id="registration-message" style="display: none;">Genial! Gracias por registrarte. Recibirás un email de confirmación para poder comenzar!</p>
-          <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showHomeScreen()">Bienvenid@!</button>
+          <p id="registration-message" style="display: none;">Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
+          <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
         </section>
 
         <!-- Pantalla de Inicio -->
@@ -174,10 +174,8 @@
         return;
       }
 
-      const token = generateConfirmationToken();
-      users[email] = { name, email, password, confirmed: false, profile: {}, token: token };
+      users[email] = { name, email, password, profile: {} };
       localStorage.setItem('users', JSON.stringify(users));
-      sendConfirmationEmail(email, token);
 
       document.getElementById('registration-form').reset();
       document.getElementById('registration-message').style.display = 'block';
@@ -195,14 +193,10 @@
       }
 
       if (users[email] && users[email].password === password) {
-        if (users[email].confirmed) {
-          localStorage.setItem('loggedIn', 'true');
-          localStorage.setItem('email', email);
-          localStorage.setItem('name', users[email].name);
-          showHomeScreen();
-        } else {
-          alert('Por favor, confirma tu correo antes de iniciar sesión.');
-        }
+        localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem('email', email);
+        localStorage.setItem('name', users[email].name);
+        showHomeScreen();
       } else {
         alert('Correo o contraseña incorrectos.');
       }
@@ -230,33 +224,10 @@
       alert('Perfil actualizado con éxito');
     }
 
-    function sendConfirmationEmail(email, token) {
-      fetch('https://formspree.io/f/mjkbwdwl', { // Reemplaza con el ID de tu formulario en Formspree
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: email,
-          message: `Confirma tu cuenta usando el siguiente enlace: http://tu-dominio.com/confirmar?token=${token}`
-        })
-      }).then(response => {
-        if (response.ok) {
-          alert('Correo de confirmación enviado. Por favor, revisa tu email.');
-        } else {
-          alert('Error al enviar el correo de confirmación.');
-        }
-      });
-    }
-
     function validateEmail(email) {
       const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
       const hotmailRegex = /^[a-zA-Z0-9._%+-]+@hotmail\.com$/;
       return gmailRegex.test(email) || hotmailRegex.test(email);
-    }
-
-    function generateConfirmationToken() {
-      return Math.random().toString(36).substr(2); // Generar un token simple
     }
 
     function showLoginScreen() {

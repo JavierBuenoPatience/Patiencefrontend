@@ -60,7 +60,7 @@ header {
 .menu-desplegable {
   position: fixed;
   top: 0;
-  left: -250px;
+  left: -270px; /* Ajustar este valor para que no tape el título */
   width: 250px;
   height: 100%;
   background-color: #01C0B4;
@@ -69,24 +69,6 @@ header {
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   transition: left 0.3s ease;
   z-index: 999;
-}
-.menu-desplegable ul {
-  list-style-type: none;
-  padding: 0;
-}
-.menu-desplegable ul li {
-  margin-bottom: 15px;
-}
-.menu-desplegable ul li a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 18px;
-  display: block;
-  padding: 10px;
-  border-radius: 5px;
-}
-.menu-desplegable ul li a:hover {
-  background-color: #019A92;
 }
 .menu-desplegable.show {
   left: 0;
@@ -105,7 +87,7 @@ header {
   background-color: #fff;
   padding: 20px;
   margin-bottom: 20px;
-  border-radius: 10px;
+  border-radius: 10px; /* Esquinas redondeadas */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 h1, h2, h3 {
@@ -166,4 +148,43 @@ footer {
   background-color: #333;
   color: #fff;
   font-size: 12px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 20px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Esquinas redondeadas */
+  box-sizing: border-box;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+  font-weight: bold;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form button {
+  background-color: #01C0B4;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  align-self: flex-start;
+}
+
+form button:hover {
+  background-color: #019A92;
 }

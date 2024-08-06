@@ -2,8 +2,6 @@
 
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
-let manualToggle = false;
-
 document.addEventListener('DOMContentLoaded', () => {
   showLoadingScreen();
   setTimeout(() => {
@@ -21,34 +19,53 @@ document.addEventListener('DOMContentLoaded', () => {
   const headerLeft = document.querySelector('.header-left');
 
   menuIcon.addEventListener('click', () => {
-    menu.classList.toggle('show');
-    manualToggle = !manualToggle;
+    if (localStorage.getItem('loggedIn') === 'true') {
+      menu.classList.toggle('show');
+    } else {
+      showLoginScreen();
+    }
   });
 
   menu.addEventListener('mouseenter', () => {
-    if (!manualToggle) {
+    if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
       menu.classList.add('show');
     }
   });
 
   menu.addEventListener('mouseleave', () => {
-    if (!manualToggle) {
+    if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
       menu.classList.remove('show');
     }
   });
 
   mainContent.addEventListener('mouseenter', () => {
-    if (!manualToggle) {
+    if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
       menu.classList.remove('show');
     }
   });
 
   headerLeft.addEventListener('mouseenter', () => {
-    if (!manualToggle) {
+    if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
       menu.classList.add('show');
     }
   });
+
+  const headerRight = document.querySelector('.header-right img');
+  headerRight.addEventListener('click', () => {
+    if (localStorage.getItem('loggedIn') !== 'true') {
+      showLoginScreen();
+    }
+  });
+
+  const headerLeftLogo = document.querySelector('.header-left');
+  headerLeftLogo.addEventListener('click', () => {
+    if (localStorage.getItem('loggedIn') !== 'true') {
+      showLoginScreen();
+    }
+  });
 });
+
+let manualToggle = false;
 
 function showLoadingScreen() {
   document.getElementById('loading-screen').style.display = 'flex';
@@ -141,35 +158,56 @@ function showRegistrationScreen() {
 }
 
 function showHomeScreen() {
-  hideAllScreens();
-  document.getElementById('home-screen').style.display = 'block';
-  document.getElementById('user-name-home').textContent = localStorage.getItem('name');
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens();
+    document.getElementById('home-screen').style.display = 'block';
+    document.getElementById('user-name-home').textContent = localStorage.getItem('name');
+    document.querySelector('header').style.display = 'flex';
+  } else {
+    showLoginScreen();
+  }
 }
 
 function showProfile() {
-  hideAllScreens();
-  document.getElementById('profile-screen').style.display = 'block';
-  const email = localStorage.getItem('email');
-  const profile = users[email].profile || {};
-  document.getElementById('full-name').value = profile.fullName || '';
-  document.getElementById('phone').value = profile.phone || '';
-  document.getElementById('study-time').value = profile.studyTime || '';
-  document.getElementById('specialty').value = profile.specialty || '';
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens();
+    document.getElementById('profile-screen').style.display = 'block';
+    const email = localStorage.getItem('email');
+    const profile = users[email].profile || {};
+    document.getElementById('full-name').value = profile.fullName || '';
+    document.getElementById('phone').value = profile.phone || '';
+    document.getElementById('study-time').value = profile.studyTime || '';
+    document.getElementById('specialty').value = profile.specialty || '';
+  } else {
+    showLoginScreen();
+  }
 }
 
 function showGroups() {
-  hideAllScreens();
-  document.getElementById('groups-screen').style.display = 'block';
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens();
+    document.getElementById('groups-screen').style.display = 'block';
+  } else {
+    showLoginScreen();
+  }
 }
 
 function showTraining() {
-  hideAllScreens();
-  document.getElementById('training-screen').style.display = 'block';
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens();
+    document.getElementById('training-screen').style.display = 'block';
+  } else {
+    showLoginScreen();
+  }
 }
 
 function showComingSoon() {
-  hideAllScreens();
-  document.getElementById('coming-soon-screen').style.display = 'block';
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens();
+    document.getElementById('coming-soon-screen').style.display = 'block';
+  } else {
+    showLoginScreen();
+  }
 }
 
 function hideAllScreens() {
@@ -180,6 +218,7 @@ function hideAllScreens() {
   document.getElementById('groups-screen').style.display = 'none';
   document.getElementById('training-screen').style.display = 'none';
   document.getElementById('coming-soon-screen').style.display = 'none';
+  document.querySelector('header').style.display = 'none';
 }
 
 function redirectToURL(url) {

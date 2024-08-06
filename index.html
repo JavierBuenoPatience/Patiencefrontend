@@ -127,8 +127,8 @@
 <body>
   <div class="container">
     <header>
-      <div class="header-left" onclick="showHomeScreen()">Patience</div>
-      <img src="assets/logo.png" alt="Logo" class="header-right" onclick="showHomeScreen()"> <!-- Asegúrate de que la ruta del logo sea correcta -->
+      <div class="header-left" onclick="handleLogoClick()">Patience</div>
+      <img src="assets/logo.png" alt="Logo" class="header-right" onclick="handleLogoClick()"> <!-- Asegúrate de que la ruta del logo sea correcta -->
     </header>
     <div class="main-content">
       <!-- Menú Lateral -->
@@ -386,6 +386,14 @@
         window.location.href = url;
       } else {
         alert('Por favor, inicia sesión para acceder a esta funcionalidad.');
+        showLoginScreen();
+      }
+    }
+
+    function handleLogoClick() {
+      if (localStorage.getItem('loggedIn') === 'true') {
+        showHomeScreen();
+      } else {
         showLoginScreen();
       }
     }

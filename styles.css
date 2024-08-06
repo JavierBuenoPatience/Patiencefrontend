@@ -212,3 +212,28 @@ iframe {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.training-section-content,
+.training-section-usage {
+  margin-top: 20px;
+}
+
+.training-section h3 {
+  color: #01C0B4;
+  margin-bottom: 10px;
+}
+
+.training-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.training-section ul li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.training-section ul li strong {
+  font-weight: bold;
+}

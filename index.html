@@ -119,6 +119,8 @@
       border-top: 1px solid #ddd;
       margin-top: 20px;
       font-size: 12px; /* Más pequeño */
+      position: relative;
+      left: 10px;
     }
   </style>
 </head>
@@ -132,6 +134,7 @@
       <!-- Menú Lateral -->
       <nav id="sidebar">
         <ul>
+          <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
           <li><a href="#" onclick="showProfile()">Perfil</a></li>
           <li><a href="#" onclick="redirectToURL('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia')">pAtIence</a></li>
           <li><a href="#" onclick="showGroups()">Mis grupos</a></li> <!-- Nueva funcionalidad -->
@@ -301,6 +304,7 @@
       localStorage.removeItem('email');
       localStorage.removeItem('name');
       hideAllScreens();
+      document.getElementById('sidebar').style.display = 'none'; // Ocultar el menú lateral al cerrar sesión
       showLoginScreen();
     }
 

@@ -68,7 +68,7 @@ header {
   color: #fff;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  transition: left 0.3s ease;
+  transition: left 0.3s ease; /* Efecto de transición */
   z-index: 999;
 }
 .menu-desplegable.show {

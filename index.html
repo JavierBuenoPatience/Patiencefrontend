@@ -47,23 +47,21 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
     .header-left {
-      display: flex;
-      align-items: center;
-    }
-    .header-left .menu-icon {
-      cursor: pointer;
-      font-size: 24px;
-      margin-right: 20px;
-    }
-    .header-left .logo {
       font-size: 24px;
       font-weight: bold;
       cursor: pointer;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
     }
     .header-right img {
       width: 50px;
       cursor: pointer;
       margin-left: 20px;
+    }
+    .menu-icon {
+      cursor: pointer;
     }
     .menu-desplegable {
       position: fixed;
@@ -182,10 +180,8 @@
     <img src="assets/logo.png" alt="Loading..." class="loading-logo">
   </div>
   <header>
-    <div class="header-left">
-      <div class="menu-icon" onclick="toggleMenu()">☰</div>
-      <div class="logo" onclick="handleLogoClick()">Patience</div>
-    </div>
+    <div class="header-left" onclick="handleLogoClick()">Patience</div>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
     <div class="header-right">
       <img src="assets/logo.png" alt="Logo" onclick="handleLogoClick()"> <!-- Asegúrate de que la ruta del logo sea correcta -->
     </div>

@@ -44,6 +44,7 @@ header {
   font-size: 24px;
   font-weight: bold;
   cursor: pointer;
+  margin-left: 20px; /* Separar el título del borde izquierdo */
 }
 .header-right {
   display: flex;
@@ -72,6 +73,18 @@ header {
 }
 .menu-desplegable.show {
   left: 0;
+}
+.menu-desplegable ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center; /* Restaurar el estilo del menú */
+}
+.menu-desplegable ul li a:hover {
+  background-color: #019A92;
 }
 .main-content {
   flex: 1;

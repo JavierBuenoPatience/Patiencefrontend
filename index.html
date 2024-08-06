@@ -47,36 +47,57 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
     .header-left {
+      display: flex;
+      align-items: center;
+    }
+    .header-left .menu-icon {
+      cursor: pointer;
+      font-size: 24px;
+      margin-right: 20px;
+    }
+    .header-left .logo {
       font-size: 24px;
       font-weight: bold;
       cursor: pointer;
-    }
-    .header-right {
-      display: flex;
-      align-items: center;
     }
     .header-right img {
       width: 50px;
       cursor: pointer;
       margin-left: 20px;
     }
-    .menu-superior {
-      display: flex;
-      justify-content: center;
+    .menu-desplegable {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
       background-color: #01C0B4;
-      padding: 10px 0;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      color: #fff;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      transition: left 0.3s ease;
+      z-index: 999;
     }
-    .menu-superior a {
+    .menu-desplegable ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .menu-desplegable ul li {
+      margin-bottom: 15px;
+    }
+    .menu-desplegable ul li a {
       color: #fff;
       text-decoration: none;
-      margin: 0 15px;
-      padding: 10px;
       font-size: 18px;
+      display: block;
+      padding: 10px;
       border-radius: 5px;
     }
-    .menu-superior a:hover {
+    .menu-desplegable ul li a:hover {
       background-color: #019A92;
+    }
+    .menu-desplegable.show {
+      left: 0;
     }
     .main-content {
       flex: 1;
@@ -161,20 +182,25 @@
     <img src="assets/logo.png" alt="Loading..." class="loading-logo">
   </div>
   <header>
-    <div class="header-left" onclick="handleLogoClick()">Patience</div>
+    <div class="header-left">
+      <div class="menu-icon" onclick="toggleMenu()">☰</div>
+      <div class="logo" onclick="handleLogoClick()">Patience</div>
+    </div>
     <div class="header-right">
       <img src="assets/logo.png" alt="Logo" onclick="handleLogoClick()"> <!-- Asegúrate de que la ruta del logo sea correcta -->
     </div>
   </header>
-  <div class="menu-superior">
-    <a href="#" onclick="showHomeScreen()">Inicio</a>
-    <a href="#" onclick="showProfile()">Perfil</a>
-    <a href="https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia" target="_blank">pAtIence</a>
-    <a href="#" onclick="showGroups()">Mis grupos</a>
-    <a href="#" onclick="showTraining()">¿Qué es pAtIence?</a>
-    <a href="#" onclick="showComingSoon()">Mi centro</a>
-    <a href="#" onclick="redirectToURL('https://www.csif.es/es/portada/andalucia/educacion')">Últimas noticias</a>
-    <a href="#" onclick="handleLogout()">Cerrar sesión</a>
+  <div class="menu-desplegable" id="menu-desplegable">
+    <ul>
+      <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
+      <li><a href="#" onclick="showProfile()">Perfil</a></li>
+      <li><a href="https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia" target="_blank">pAtIence</a></li>
+      <li><a href="#" onclick="showGroups()">Mis grupos</a></li>
+      <li><a href="#" onclick="showTraining()">¿Qué es pAtIence?</a></li>
+      <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
+      <li><a href="#" onclick="redirectToURL('https://www.csif.es/es/portada/andalucia/educacion')">Últimas noticias</a></li>
+      <li><a href="#" onclick="handleLogout()">Cerrar sesión</a></li>
+    </ul>
   </div>
   <div class="main-content">
     <!-- Pantalla de Inicio de Sesión -->
@@ -436,6 +462,11 @@
       } else {
         showLoginScreen();
       }
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById('menu-desplegable');
+      menu.classList.toggle('show');
     }
   </script>
 </body>

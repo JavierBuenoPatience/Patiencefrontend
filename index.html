@@ -30,7 +30,7 @@
   </div>
   <div class="main-content">
     <div class="card" id="login-screen">
-      <h2>Inicio de Sesión</h2>
+      <h2>Inicio de Sesión 🚀</h2>
       <form id="login-form" onsubmit="handleLogin(event)">
         <label for="login-email">Correo Electrónico:</label>
         <input type="email" id="login-email" name="email" required>
@@ -38,11 +38,11 @@
         <input type="password" id="login-password" name="password" required>
         <button type="submit">Iniciar Sesión</button>
       </form>
-      <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">Regístrate!</button></p>
+      <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">Regístrate! ✨</button></p>
     </div>
 
     <div class="card" id="registration-screen" style="display: none;">
-      <h2>Registro</h2>
+      <h2>Registro 📝</h2>
       <form id="registration-form" onsubmit="handleRegistration(event)">
         <label for="reg-name">Nombre:</label>
         <input type="text" id="reg-name" name="name" required>
@@ -52,12 +52,12 @@
         <input type="password" id="reg-password" name="password" required>
         <button type="submit">Registrarse</button>
       </form>
-      <p id="registration-message" style="display: none;">Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
+      <p id="registration-message" style="display: none;">¡Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
       <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
     </div>
 
     <div class="card" id="home-screen" style="display: none;">
-      <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
+      <h1>Bienvenid@, <span id="user-name-home"></span>! 🎉</h1>
       <div class="welcome-message">
         <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
         <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
@@ -66,36 +66,60 @@
     </div>
 
     <div class="card" id="profile-screen" style="display: none;">
-      <h2>Perfil</h2>
+      <h2>Perfil 👤</h2>
       <form id="profile-form" onsubmit="handleProfileUpdate(event)">
-        <label for="full-name">Nombre Completo:</label>
-        <input type="text" id="full-name" name="full-name" required>
-        <label for="profile-email">Correo Electrónico:</label>
-        <input type="email" id="profile-email" name="profile-email" required>
-        <label for="phone">Teléfono:</label>
-        <input type="tel" id="phone" name="phone">
-        <label for="study-time">Tiempo dedicado a la oposición (horas por semana):</label>
-        <input type="number" id="study-time" name="study-time">
-        <label for="specialty">Especialidad del cuerpo:</label>
-        <input type="text" id="specialty" name="specialty">
-        <label for="study-resources">Recursos de estudio preferidos:</label>
-        <input type="text" id="study-resources" name="study-resources">
-        <label for="study-goals">Objetivos de estudio:</label>
-        <input type="text" id="study-goals" name="study-goals">
-        <label for="study-challenges">Desafíos en el estudio:</label>
-        <input type="text" id="study-challenges" name="study-challenges">
+        <div class="form-group">
+          <div>
+            <label for="full-name">Nombre Completo:</label>
+            <input type="text" id="full-name" name="full-name" required>
+          </div>
+          <div>
+            <label for="profile-email">Correo Electrónico:</label>
+            <input type="email" id="profile-email" name="profile-email" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div>
+            <label for="phone">Teléfono:</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          <div>
+            <label for="study-time">Tiempo dedicado a la oposición (horas por semana):</label>
+            <input type="number" id="study-time" name="study-time">
+          </div>
+        </div>
+        <div class="form-group">
+          <div>
+            <label for="specialty">Especialidad del cuerpo:</label>
+            <input type="text" id="specialty" name="specialty">
+          </div>
+          <div>
+            <label for="study-resources">Recursos de estudio preferidos:</label>
+            <input type="text" id="study-resources" name="study-resources">
+          </div>
+        </div>
+        <div class="form-group">
+          <div>
+            <label for="study-goals">Objetivos de estudio:</label>
+            <input type="text" id="study-goals" name="study-goals">
+          </div>
+          <div>
+            <label for="study-challenges">Desafíos en el estudio:</label>
+            <input type="text" id="study-challenges" name="study-challenges">
+          </div>
+        </div>
         <button type="submit">Guardar</button>
       </form>
     </div>
 
     <div class="card" id="groups-screen" style="display: none;">
-      <h2>Mis Grupos</h2>
+      <h2>Mis Grupos 🤝</h2>
       <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
       <button class="welcome-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
     </div>
 
     <div class="card" id="training-screen" class="training-section" style="display: none;">
-      <h2>¿Qué es Patience?</h2>
+      <h2>¿Qué es Patience? 🤔</h2>
       <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
       <h3>¿Qué es Patience - IA para opositores?</h3>
       <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
@@ -118,7 +142,7 @@
     </div>
 
     <div class="card" id="coming-soon-screen" style="display: none;">
-      <h2>Próximamente</h2>
+      <h2>Próximamente 🔜</h2>
       <p>Esta funcionalidad estará disponible pronto.</p>
     </div>
   </div>

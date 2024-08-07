@@ -277,6 +277,10 @@ footer {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  background: #f8f8f8;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .training-section .feature-icon {
@@ -321,4 +325,16 @@ footer {
   font-size: 16px;
   color: #666;
   margin-bottom: 10px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.training-section-usage ul li::before {
+  content: '✔️';
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(50%);
+  font-size: 16px;
+  color: #01C0B4;
 }

@@ -5,12 +5,14 @@ const users = JSON.parse(localStorage.getItem('users')) || {};
 document.addEventListener('DOMContentLoaded', () => {
   showLoadingScreen();
   setTimeout(() => {
-    hideLoadingScreen();
     if (localStorage.getItem('loggedIn') === 'true') {
       showHomeScreen();
+      document.getElementById('menu-desplegable').style.display = 'block';
     } else {
       showLoginScreen();
+      document.getElementById('menu-desplegable').style.display = 'none';
     }
+    hideLoadingScreen(); // Mover hideLoadingScreen aquí para asegurar que se oculta después de determinar la pantalla
   }, 2000);
 
   const menu = document.getElementById('menu-desplegable');
@@ -106,6 +108,7 @@ function handleLogin(event) {
     localStorage.setItem('email', email);
     localStorage.setItem('name', users[email].name);
     showHomeScreen();
+    document.getElementById('menu-desplegable').style.display = 'block';
   } else {
     alert('Correo o contraseña incorrectos.');
   }
@@ -117,9 +120,9 @@ function handleLogout() {
   localStorage.removeItem('name');
   const menu = document.getElementById('menu-desplegable');
   menu.classList.remove('show');
+  menu.style.display = 'none';
   hideAllScreens();
   showLoginScreen();
-  closeProfileDropdown(); // Cerrar el menú desplegable del perfil
 }
 
 function handleProfileUpdate(event) {
@@ -130,12 +133,12 @@ function handleProfileUpdate(event) {
     phone: document.getElementById('phone').value,
     studyTime: document.getElementById('study-time').value,
     specialty: document.getElementById('specialty').value,
-    profileImage: document.getElementById('profile-img').src // Añadir la imagen de perfil al objeto de perfil
+    profileImage: document.getElementById('profile-img').src
   };
   users[email].profile = profile;
   localStorage.setItem('users', JSON.stringify(users));
   alert('Perfil actualizado con éxito');
-  updateProfileIcon(); // Actualizar el icono del perfil en la cabecera
+  updateProfileIcon();
 }
 
 function validateEmail(email) {
@@ -165,7 +168,7 @@ function showHomeScreen() {
     document.getElementById('user-name-home').textContent = localStorage.getItem('name');
     document.querySelector('header').style.display = 'flex';
     document.querySelector('footer').style.display = 'block';
-    updateProfileIcon(); // Actualizar el icono del perfil en la cabecera
+    updateProfileIcon();
   } else {
     showLoginScreen();
   }
@@ -258,20 +261,10 @@ function updateProfileIcon() {
   }
 }
 
-function toggleProfileDropdown() {
-  const dropdown = document.getElementById('profile-dropdown');
-  dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
-}
-
-function closeProfileDropdown() {
-  const dropdown = document.getElementById('profile-dropdown');
-  dropdown.style.display = 'none';
-}
-
 // Integración con Google Calendar
 
 let CLIENT_ID = '1051045274828-t36vldu3s900upednlah9v59qdgo6onj.apps.googleusercontent.com';
-let API_KEY = 'AIzaSyDekTyQEzRbB2uI0-jVp6d-Fpwwnz5EeWk'; // Reemplazar con tu API Key
+let API_KEY = 'AIzaSyDekTyQEzRbB2uI0-jVp6d-Fpwwnz5EeWk';
 let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 let SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 

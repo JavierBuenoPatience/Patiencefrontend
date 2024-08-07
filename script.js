@@ -130,11 +130,13 @@ function handleProfileUpdate(event) {
     fullName: document.getElementById('full-name').value,
     phone: document.getElementById('phone').value,
     studyTime: document.getElementById('study-time').value,
-    specialty: document.getElementById('specialty').value
+    specialty: document.getElementById('specialty').value,
+    profileImage: document.getElementById('profile-img').src // Añadir la imagen de perfil al objeto de perfil
   };
   users[email].profile = profile;
   localStorage.setItem('users', JSON.stringify(users));
   alert('Perfil actualizado con éxito');
+  updateProfileIcon(); // Actualizar el icono del perfil en la cabecera
 }
 
 function validateEmail(email) {
@@ -164,6 +166,7 @@ function showHomeScreen() {
     document.getElementById('user-name-home').textContent = localStorage.getItem('name');
     document.querySelector('header').style.display = 'flex';
     document.querySelector('footer').style.display = 'block';
+    updateProfileIcon(); // Actualizar el icono del perfil en la cabecera
   } else {
     showLoginScreen();
   }
@@ -179,6 +182,7 @@ function showProfile() {
     document.getElementById('phone').value = profile.phone || '';
     document.getElementById('study-time').value = profile.studyTime || '';
     document.getElementById('specialty').value = profile.specialty || '';
+    document.getElementById('profile-img').src = profile.profileImage || 'assets/default-profile.png';
   } else {
     showLoginScreen();
   }
@@ -235,6 +239,23 @@ function handleLogoClick() {
     showHomeScreen();
   } else {
     showLoginScreen();
+  }
+}
+
+function handleImageUpload(event) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('profile-img').src = e.target.result;
+  };
+  reader.readAsDataURL(event.target.files[0]);
+}
+
+function updateProfileIcon() {
+  const email = localStorage.getItem('email');
+  const profile = users[email].profile || {};
+  const profileIcon = document.getElementById('profile-icon');
+  if (profileIcon) {
+    profileIcon.src = profile.profileImage || 'assets/default-profile.png';
   }
 }
 

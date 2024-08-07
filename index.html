@@ -6,6 +6,7 @@
   <title>Patience - Biología y Geología</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://apis.google.com/js/api.js"></script>
 </head>
 <body>
   <div class="loading-screen" id="loading-screen">
@@ -124,9 +125,10 @@
       <h2>Mis Grupos 🤝</h2>
       <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
       <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
-      <h2>Calendario de Eventos 📅</h2>
-      <div class="calendar">
-        <iframe src="https://calendar.google.com/calendar/embed?src=tu_calendario_id&ctz=Europe/Madrid" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+      <h2>Conectar Google Calendar 📅</h2>
+      <button id="authorize-button" onclick="handleAuthClick()">Autorizar Google Calendar</button>
+      <div class="calendar" id="calendar" style="display: none;">
+        <iframe src="" id="calendar-iframe" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
       </div>
     </div>
 

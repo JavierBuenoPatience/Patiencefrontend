@@ -62,6 +62,7 @@
       width: 50px;
       cursor: pointer;
       margin-left: 20px;
+      margin-right: 20px; /* Agrega margen derecho para separar de la esquina */
       border-radius: 50%;
     }
     .menu-icon {
@@ -103,6 +104,28 @@
     .menu-desplegable.show {
       left: 0;
     }
+    .profile-dropdown {
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      background-color: #fff;
+      color: #333;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      width: 200px;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+    .profile-dropdown a {
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+      display: block;
+    }
+    .profile-dropdown a:hover {
+      background-color: #f4f4f4;
+    }
     .main-content {
       flex: 1;
       padding: 20px;
@@ -141,7 +164,7 @@
       background-color: #e7f7f7;
       border: 1px solid #01C0B4;
       border-radius: 10px;
-      text-align: center;
+      text-align: center.
     }
     .training-section {
       padding: 20px;
@@ -199,7 +222,11 @@
   <header>
     <div class="header-left" onclick="handleLogoClick()">Patience</div>
     <div class="header-right">
-      <img src="assets/logo.png" alt="Logo" id="profile-icon" onclick="handleLogoClick()">
+      <img src="assets/default-profile.png" alt="Logo" id="profile-icon" onclick="toggleProfileDropdown()">
+      <div class="profile-dropdown" id="profile-dropdown">
+        <a href="#" onclick="showProfile()">Perfil</a>
+        <a href="#" onclick="handleLogout()">Cerrar sesión</a>
+      </div>
     </div>
   </header>
   <div class="menu-desplegable" id="menu-desplegable">
@@ -211,7 +238,6 @@
       <li><a href="#" onclick="showTraining()">¿Qué es Patience?</a></li>
       <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
       <li><a href="#" onclick="redirectToURL('https://www.csif.es/es/portada/andalucia/educacion')">Últimas noticias</a></li>
-      <li><a href="#" onclick="handleLogout()">Cerrar sesión</a></li>
     </ul>
   </div>
   <div class="main-content">

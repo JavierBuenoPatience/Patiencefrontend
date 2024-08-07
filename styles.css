@@ -230,10 +230,11 @@ footer {
 
 .home-section {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 20px;
   width: 100%;
   max-width: 1200px;
+  margin: 20px auto;
 }
 
 .intro-card,

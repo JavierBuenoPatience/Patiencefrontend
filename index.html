@@ -6,6 +6,7 @@
   <title>Patience - Biología y Geología</title>
   <link rel="stylesheet" href="styles.css">
   <style>
+    /* Tu estilo CSS existente */
     body {
       font-family: 'Poppins', sans-serif;
       background-color: #f4f4f4;
@@ -56,13 +57,13 @@
     .header-right {
       display: flex;
       align-items: center;
-      position: relative;
+      position: relative; /* Agregado */
     }
     .header-right img {
-      width: 60px;
+      width: 60px; /* Tamaño aumentado */
       cursor: pointer;
       margin-left: 20px;
-      margin-right: 30px;
+      margin-right: 30px; /* Margen derecho aumentado */
       border-radius: 50%;
     }
     .menu-icon {
@@ -103,6 +104,28 @@
     }
     .menu-desplegable.show {
       left: 0;
+    }
+    .profile-dropdown {
+      position: absolute;
+      top: 80px; /* Ajustado para alinearse mejor con la imagen del perfil */
+      right: 30px; /* Ajustado para alinearse mejor con la imagen del perfil */
+      background-color: #fff;
+      color: #333;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      width: 200px;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+    .profile-dropdown a {
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+      display: block;
+    }
+    .profile-dropdown a:hover {
+      background-color: #f4f4f4;
     }
     .main-content {
       flex: 1;
@@ -190,10 +213,6 @@
     .profile-img-upload {
       margin-bottom: 20px;
     }
-    .logo {
-      max-width: 150px;
-      margin-bottom: 20px;
-    }
   </style>
   <script src="https://apis.google.com/js/api.js"></script>
 </head>
@@ -204,10 +223,14 @@
   <header>
     <div class="header-left" onclick="handleLogoClick()">Patience</div>
     <div class="header-right">
-      <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon">
+      <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon" onclick="toggleProfileDropdown()">
+      <div class="profile-dropdown" id="profile-dropdown">
+        <a href="#" onclick="showProfile()">Perfil</a>
+        <a href="#" onclick="handleLogout()">Cerrar sesión</a>
+      </div>
     </div>
   </header>
-  <div class="menu-desplegable" id="menu-desplegable" style="display: none;">
+  <div class="menu-desplegable" id="menu-desplegable">
     <ul>
       <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
       <li><a href="#" onclick="showProfile()">Perfil</a></li>
@@ -216,13 +239,11 @@
       <li><a href="#" onclick="showTraining()">¿Qué es Patience?</a></li>
       <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
       <li><a href="#" onclick="redirectToURL('https://www.csif.es/es/portada/andalucia/educacion')">Últimas noticias</a></li>
-      <li><a href="#" onclick="handleLogout()">Cerrar sesión</a></li>
     </ul>
   </div>
   <div class="main-content">
     <!-- Pantalla de Inicio de Sesión -->
     <div class="card" id="login-screen">
-      <img src="assets/logo.png" alt="Patience Logo" class="logo">
       <h2>Inicio de Sesión</h2>
       <form id="login-form" onsubmit="handleLogin(event)">
         <label for="login-email">Correo Electrónico:</label>
@@ -236,7 +257,6 @@
 
     <!-- Pantalla de Registro -->
     <div class="card" id="registration-screen" style="display: none;">
-      <img src="assets/logo.png" alt="Patience Logo" class="logo">
       <h2>Registro</h2>
       <form id="registration-form" onsubmit="handleRegistration(event)">
         <label for="reg-name">Nombre:</label>
@@ -254,7 +274,6 @@
 
     <!-- Pantalla de Inicio -->
     <div class="card" id="home-screen" style="display: none;">
-      <img src="assets/logo.png" alt="Patience Logo" class="logo">
       <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
       <div class="welcome-message">
         <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>

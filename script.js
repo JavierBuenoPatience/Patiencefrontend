@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
       showLoginScreen();
       document.getElementById('menu-desplegable').style.display = 'none';
     }
-    hideLoadingScreen(); // Mover hideLoadingScreen aquí para asegurar que se oculta después de determinar la pantalla
+    hideLoadingScreen();
   }, 2000);
 
   const menu = document.getElementById('menu-desplegable');
@@ -208,6 +208,15 @@ function showTraining() {
   }
 }
 
+function showNews() {
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens();
+    document.getElementById('news-screen').style.display = 'block';
+  } else {
+    showLoginScreen();
+  }
+}
+
 function showComingSoon() {
   if (localStorage.getItem('loggedIn') === 'true') {
     hideAllScreens();
@@ -224,6 +233,7 @@ function hideAllScreens() {
   document.getElementById('profile-screen').style.display = 'none';
   document.getElementById('groups-screen').style.display = 'none';
   document.getElementById('training-screen').style.display = 'none';
+  document.getElementById('news-screen').style.display = 'none';
   document.getElementById('coming-soon-screen').style.display = 'none';
 }
 

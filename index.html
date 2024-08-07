@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Patience - Biología y Geología</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Tu estilo CSS existente */
+  </style>
   <script src="https://apis.google.com/js/api.js"></script>
 </head>
 <body>
@@ -14,6 +16,7 @@
   </div>
   <header>
     <div class="header-left" onclick="handleLogoClick()">Patience</div>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
     <div class="header-right">
       <img src="assets/logo.png" alt="Logo" onclick="handleLogoClick()">
     </div>
@@ -31,12 +34,8 @@
     </ul>
   </div>
   <div class="main-content">
-    <div class="branding">
-      <h1 class="main-title">Patience</h1>
-      <h2 class="tagline">Prepárate mejor, consigue tu plaza</h2>
-    </div>
     <div class="card" id="login-screen">
-      <h2>Inicio de Sesión 🚀</h2>
+      <h2>Inicio de Sesión</h2>
       <form id="login-form" onsubmit="handleLogin(event)">
         <label for="login-email">Correo Electrónico:</label>
         <input type="email" id="login-email" name="email" required>
@@ -44,11 +43,10 @@
         <input type="password" id="login-password" name="password" required>
         <button type="submit">Iniciar Sesión</button>
       </form>
-      <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">Regístrate! ✨</button></p>
+      <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">Regístrate!</button></p>
     </div>
-
     <div class="card" id="registration-screen" style="display: none;">
-      <h2>Registro 📝</h2>
+      <h2>Registro</h2>
       <form id="registration-form" onsubmit="handleRegistration(event)">
         <label for="reg-name">Nombre:</label>
         <input type="text" id="reg-name" name="name" required>
@@ -58,138 +56,77 @@
         <input type="password" id="reg-password" name="password" required>
         <button type="submit">Registrarse</button>
       </form>
-      <p id="registration-message" style="display: none;">¡Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
+      <p id="registration-message" style="display: none;">Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
       <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
-      <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia Sesión</button></p>
+      <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
     </div>
-
-    <div class="home-section" id="home-screen" style="display: none;">
-      <div class="intro-card">
+    <div class="card" id="home-screen" style="display: none;">
+      <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
+      <div class="welcome-message">
+        <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
+        <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
+      </div>
+      <div class="training-section">
         <h2>¿Qué es Patience?</h2>
-        <div class="intro-video">
-          <div style="position: relative; overflow: hidden; aspect-ratio: 16/9">
-            <iframe src="https://share.synthesia.io/embeds/videos/4c43a995-7419-47dd-ad2e-acc2f84ea689" loading="lazy" title="Synthesia video player - Company Intro" allowfullscreen allow="encrypted-media; fullscreen;" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow: hidden;"></iframe>
-          </div>
-        </div>
+        <iframe src="https://www.csif.es/es/portada/andalucia/educacion" frameborder="0"></iframe>
       </div>
     </div>
-
     <div class="card" id="profile-screen" style="display: none;">
-      <h2>Perfil 👤</h2>
+      <h2>Perfil</h2>
       <form id="profile-form" onsubmit="handleProfileUpdate(event)">
-        <div class="form-group">
-          <div>
-            <label for="full-name">Nombre Completo:</label>
-            <input type="text" id="full-name" name="full-name" required>
-          </div>
-          <div>
-            <label for="profile-email">Correo Electrónico:</label>
-            <input type="email" id="profile-email" name="profile-email" required>
-          </div>
+        <div class="profile-field">
+          <label for="full-name">Nombre Completo:</label>
+          <input type="text" id="full-name" name="full-name" required>
         </div>
-        <div class="form-group">
-          <div>
-            <label for="phone">Teléfono:</label>
-            <input type="tel" id="phone" name="phone">
-          </div>
-          <div>
-            <label for="study-time">Tiempo dedicado a la oposición (horas por semana):</label>
-            <input type="number" id="study-time" name="study-time">
-          </div>
+        <div class="profile-field">
+          <label for="profile-email">Email:</label>
+          <input type="email" id="profile-email" name="profile-email" required>
         </div>
-        <div class="form-group">
-          <div>
-            <label for="specialty">Especialidad del cuerpo:</label>
-            <input type="text" id="specialty" name="specialty">
-          </div>
-          <div>
-            <label for="study-resources">Recursos de estudio preferidos:</label>
-            <input type="text" id="study-resources" name="study-resources">
-          </div>
+        <div class="profile-field">
+          <label for="phone">Teléfono:</label>
+          <input type="tel" id="phone" name="phone">
         </div>
-        <div class="form-group">
-          <div>
-            <label for="study-goals">Objetivos de estudio:</label>
-            <input type="text" id="study-goals" name="study-goals">
-          </div>
-          <div>
-            <label for="study-challenges">Desafíos en el estudio:</label>
-            <input type="text" id="study-challenges" name="study-challenges">
-          </div>
+        <div class="profile-field">
+          <label for="study-time">Tiempo dedicado a la oposición:</label>
+          <input type="text" id="study-time" name="study-time">
+        </div>
+        <div class="profile-field">
+          <label for="specialty">Especialidad del cuerpo:</label>
+          <input type="text" id="specialty" name="specialty">
         </div>
         <button type="submit">Guardar</button>
       </form>
     </div>
-
     <div class="card" id="groups-screen" style="display: none;">
-      <h2>Mis Grupos 🤝</h2>
+      <h2>Mis Grupos</h2>
       <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
-      <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
-      <h2>Conectar Google Calendar 📅</h2>
-      <button id="authorize-button" onclick="handleAuthClick()">Autorizar Google Calendar</button>
-      <div class="calendar" id="calendar" style="display: none;">
-        <iframe src="" id="calendar-iframe" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-      </div>
+      <button class="welcome-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+      <div id="calendar"></div>
     </div>
-
-    <div class="card" id="training-screen" class="training-section" style="display: none;">
-      <h2>¿Qué es Patience? 🤔</h2>
-      <div class="feature">
-        <div class="feature-icon">📚</div>
-        <div class="feature-content">
-          <h3>Resúmenes Inteligentes</h3>
-          <p>Genera resúmenes de textos largos y complejos para extraer la información más relevante.</p>
-        </div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🗂️</div>
-        <div class="feature-content">
-          <h3>Esquemas Visuales</h3>
-          <p>Crea esquemas y diagramas que facilitan la comprensión y organización de la información.</p>
-        </div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🔍</div>
-        <div class="feature-content">
-          <h3>Búsqueda Rápida de Información</h3>
-          <p>Obtén respuestas rápidas y precisas a tus preguntas específicas sobre la materia.</p>
-        </div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📝</div>
-        <div class="feature-content">
-          <h3>Corrección de Documentos</h3>
-          <p>Sube documentos en formato .doc o .pdf para recibir sugerencias y mejoras en gramática, estilo y estructura.</p>
-        </div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📝</div>
-        <div class="feature-content">
-          <h3>Actividades Prácticas</h3>
-          <p>Genera cuestionarios y ejercicios para reforzar tu aprendizaje y preparación.</p>
-        </div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">✍️</div>
-        <div class="feature-content">
-          <h3>Mejora de Redacción</h3>
-          <p>Recibe retroalimentación detallada para mejorar tu capacidad de expresión escrita.</p>
-        </div>
-      </div>
-      <div class="training-section-usage">
-        <h3>Cómo Usar Patience</h3>
-        <ul>
-          <li>Accede a la plataforma utilizando tu cuenta.</li>
-          <li>Navega a través del menú lateral para explorar las diferentes herramientas y recursos disponibles.</li>
-          <li>Utiliza la IA para obtener ayuda personalizada en tus estudios.</li>
-          <li>Súbete a los grupos de estudio y participa en discusiones colaborativas.</li>
-        </ul>
-      </div>
-      <p>Con Patience, tendrás una herramienta integral para apoyarte en todas las etapas de tu preparación como opositor. ¡Descubre cómo podemos ayudarte a alcanzar tus metas!</p>
+    <div class="card" id="training-screen" style="display: none;">
+      <h2>¿Qué es Patience?</h2>
+      <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
+      <h3>¿Qué es Patience - IA para opositores?</h3>
+      <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
+      <h3>Cómo usar Patience - IA para opositores</h3>
+      <ul>
+        <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
+        <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
+        <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
+        <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
+      </ul>
+      <h3>Casos de uso para opositores</h3>
+      <ul>
+        <li><strong>Generar Resúmenes:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
+        <li><strong>Crear Esquemas:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
+        <li><strong>Buscar Información Rápida:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
+        <li><strong>Corregir Documentos:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
+        <li><strong>Generar Actividades Prácticas:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
+        <li><strong>Mejorar Redacción:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
+      </ul>
     </div>
-
     <div class="card" id="coming-soon-screen" style="display: none;">
-      <h2>Próximamente 🔜</h2>
+      <h2>Próximamente</h2>
       <p>Esta funcionalidad estará disponible pronto.</p>
     </div>
   </div>

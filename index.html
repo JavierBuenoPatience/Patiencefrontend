@@ -68,17 +68,17 @@
     }
     .menu-desplegable {
       position: fixed;
-      top: 0;
+      top: 50%;
       left: 0;
+      transform: translateY(-50%);
       width: 250px;
-      height: calc(100% - 60px); /* para no superponer el menú con el header */
+      height: auto;
       background-color: #01C0B4;
       color: #fff;
       padding: 20px;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
       transition: left 0.3s ease;
       z-index: 999;
-      overflow-y: auto;
       border-radius: 0 10px 10px 0;
     }
     .menu-desplegable ul {

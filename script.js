@@ -119,7 +119,6 @@ function handleLogout() {
   menu.classList.remove('show');
   hideAllScreens();
   showLoginScreen();
-  closeProfileDropdown(); // Cerrar el menú desplegable del perfil
 }
 
 function handleProfileUpdate(event) {
@@ -271,7 +270,7 @@ function closeProfileDropdown() {
 // Integración con Google Calendar
 
 let CLIENT_ID = '1051045274828-t36vldu3s900upednlah9v59qdgo6onj.apps.googleusercontent.com';
-let API_KEY = 'AIzaSyDekTyQEzRbB2uI0-jVp6d-Fpwwnz5EeWk'; // Reemplazar con tu API Key
+let API_KEY = 'TU_API_KEY'; // Reemplazar con tu API Key
 let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 let SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 

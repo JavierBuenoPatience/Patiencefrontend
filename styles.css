@@ -272,3 +272,53 @@ footer {
 .slack-button:hover {
   background-color: #7B3C8F;
 }
+
+.training-section .feature {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.training-section .feature-icon {
+  font-size: 36px;
+  color: #01C0B4;
+  margin-right: 20px;
+}
+
+.training-section .feature-content {
+  flex: 1;
+}
+
+.training-section .feature-content h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.training-section .feature-content p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.training-section-usage {
+  margin-top: 30px;
+}
+
+.training-section-usage h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.training-section-usage ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.training-section-usage ul li {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+}

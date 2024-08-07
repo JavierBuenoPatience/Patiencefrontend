@@ -57,12 +57,13 @@
     .header-right {
       display: flex;
       align-items: center;
+      position: relative; /* Agregado */
     }
     .header-right img {
-      width: 50px;
+      width: 60px; /* Tamaño aumentado */
       cursor: pointer;
       margin-left: 20px;
-      margin-right: 20px; /* Agrega margen derecho para separar de la esquina */
+      margin-right: 30px; /* Margen derecho aumentado */
       border-radius: 50%;
     }
     .menu-icon {
@@ -106,8 +107,8 @@
     }
     .profile-dropdown {
       position: absolute;
-      top: 70px;
-      right: 20px;
+      top: 80px; /* Ajustado para alinearse mejor con la imagen del perfil */
+      right: 30px; /* Ajustado para alinearse mejor con la imagen del perfil */
       background-color: #fff;
       color: #333;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -164,7 +165,7 @@
       background-color: #e7f7f7;
       border: 1px solid #01C0B4;
       border-radius: 10px;
-      text-align: center.
+      text-align: center;
     }
     .training-section {
       padding: 20px;
@@ -222,7 +223,7 @@
   <header>
     <div class="header-left" onclick="handleLogoClick()">Patience</div>
     <div class="header-right">
-      <img src="assets/default-profile.png" alt="Logo" id="profile-icon" onclick="toggleProfileDropdown()">
+      <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon" onclick="toggleProfileDropdown()">
       <div class="profile-dropdown" id="profile-dropdown">
         <a href="#" onclick="showProfile()">Perfil</a>
         <a href="#" onclick="handleLogout()">Cerrar sesión</a>

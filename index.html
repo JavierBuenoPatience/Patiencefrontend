@@ -62,21 +62,18 @@
       <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia Sesión</button></p>
     </div>
 
-    <div class="card" id="home-screen" style="display: none;">
-      <h1>Bienvenid@, <span id="user-name-home"></span>! 🎉</h1>
-      <div class="welcome-message">
-        <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
-        <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
-      </div>
-      <div class="intro-section">
+    <div class="home-section" id="home-screen" style="display: none;">
+      <div class="card intro-card">
+        <h2>¿Qué es Patience?</h2>
         <div class="intro-video">
           <div style="position: relative; overflow: hidden; aspect-ratio: 1920/1080">
             <iframe src="https://share.synthesia.io/embeds/videos/4c43a995-7419-47dd-ad2e-acc2f84ea689" loading="lazy" title="Synthesia video player - Company Intro" allowfullscreen allow="encrypted-media; fullscreen;" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow: hidden;"></iframe>
           </div>
         </div>
-        <div class="intro-web">
-          <iframe src="https://www.csif.es/es/portada/andalucia/educacion"></iframe>
-        </div>
+      </div>
+      <div class="card news-card">
+        <h2>Últimas noticias</h2>
+        <iframe src="https://www.csif.es/es/portada/andalucia/educacion"></iframe>
       </div>
     </div>
 

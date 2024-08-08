@@ -444,3 +444,23 @@ function goBack() {
   currentFolder = null;
   displayDocuments();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const faqButton = document.getElementById('faq-button');
+  const faqSection = document.getElementById('faq-section');
+
+  faqButton.addEventListener('click', toggleFaqSection);
+
+  const faqQuestions = document.querySelectorAll('.faq-question');
+  faqQuestions.forEach(question => {
+    question.addEventListener('click', () => {
+      const answer = question.nextElementSibling;
+      answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+    });
+  });
+});
+
+function toggleFaqSection() {
+  const faqSection = document.getElementById('faq-section');
+  faqSection.style.display = faqSection.style.display === 'block' ? 'none' : 'block';
+}

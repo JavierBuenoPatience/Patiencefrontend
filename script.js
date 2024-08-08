@@ -177,7 +177,7 @@ function showHomeScreen() {
 function showProfile() {
   if (localStorage.getItem('loggedIn') === 'true') {
     hideAllScreens();
-    document.getElementById('profile-screen').style.display = 'block';
+    document.getElementById('profile-screen').style.display = 'flex';
     const email = localStorage.getItem('email');
     const profile = users[email].profile || {};
     document.getElementById('full-name').value = profile.fullName || '';

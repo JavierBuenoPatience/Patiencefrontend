@@ -2,6 +2,7 @@
 
 const users = JSON.parse(localStorage.getItem('users')) || {};
 let documents = JSON.parse(localStorage.getItem('documents')) || {};
+let currentFolder = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   showLoadingScreen();
@@ -352,10 +353,14 @@ function loadCalendar() {
 function handleFileUpload(event) {
   const file = event.target.files[0];
   const email = localStorage.getItem('email');
-  if (!documents[email]) {
-    documents[email] = [];
+  if (currentFolder !== null) {
+    documents[email][currentFolder].content.push({ name: file.name, type: 'file', content: URL.createObjectURL(file) });
+  } else {
+    if (!documents[email]) {
+      documents[email] = [];
+    }
+    documents[email].push({ name: file.name, type: 'file', content: URL.createObjectURL(file) });
   }
-  documents[email].push({ name: file.name, type: 'file', content: URL.createObjectURL(file) });
   localStorage.setItem('documents', JSON.stringify(documents));
   displayDocuments();
 }
@@ -367,7 +372,11 @@ function createFolder() {
     if (!documents[email]) {
       documents[email] = [];
     }
-    documents[email].push({ name: folderName, type: 'folder', content: [] });
+    if (currentFolder !== null) {
+      documents[email][currentFolder].content.push({ name: folderName, type: 'folder', content: [] });
+    } else {
+      documents[email].push({ name: folderName, type: 'folder', content: [] });
+    }
     localStorage.setItem('documents', JSON.stringify(documents));
     displayDocuments();
   }
@@ -376,25 +385,38 @@ function createFolder() {
 function displayDocuments() {
   const email = localStorage.getItem('email');
   const documentsList = document.getElementById('documents-list');
+  const backButton = document.querySelector('.back-button');
   documentsList.innerHTML = '';
-  if (documents[email]) {
-    documents[email].forEach((doc, index) => {
+  if (currentFolder === null) {
+    backButton.style.display = 'none';
+    if (documents[email]) {
+      documents[email].forEach((doc, index) => {
+        const div = document.createElement('div');
+        div.className = doc.type === 'folder' ? 'document-folder' : 'document-file';
+        div.innerHTML = `
+          <span><i class="${doc.type === 'folder' ? 'fas fa-folder' : 'fas fa-file-alt'}"></i>${doc.name}</span>
+          <div>
+            <button onclick="deleteDocument(${index})"><i class="fas fa-trash-alt"></i></button>
+            ${doc.type === 'file' ? `<a href="${doc.content}" target="_blank"><i class="fas fa-external-link-alt"></i></a>` : `<button onclick="openFolder(${index})"><i class="fas fa-folder-open"></i></button>`}
+          </div>
+        `;
+        documentsList.appendChild(div);
+      });
+    }
+  } else {
+    backButton.style.display = 'block';
+    const folder = documents[email][currentFolder];
+    folder.content.forEach((doc, index) => {
       const div = document.createElement('div');
       div.className = doc.type === 'folder' ? 'document-folder' : 'document-file';
       div.innerHTML = `
         <span><i class="${doc.type === 'folder' ? 'fas fa-folder' : 'fas fa-file-alt'}"></i>${doc.name}</span>
         <div>
-          <button onclick="deleteDocument('${index}')"><i class="fas fa-trash-alt"></i></button>
-          ${doc.type === 'file' ? `<a href="${doc.content}" target="_blank"><i class="fas fa-external-link-alt"></i></a>` : `<button onclick="openFolder(${index})"><i class="fas fa-folder-open"></i></button>`}
+          <button onclick="deleteFolderDocument(${currentFolder}, ${index})"><i class="fas fa-trash-alt"></i></button>
+          ${doc.type === 'file' ? `<a href="${doc.content}" target="_blank"><i class="fas fa-external-link-alt"></i></a>` : `<button onclick="openFolder(${currentFolder}, ${index})"><i class="fas fa-folder-open"></i></button>`}
         </div>
       `;
       documentsList.appendChild(div);
-      if (doc.type === 'folder') {
-        const folderContent = document.createElement('div');
-        folderContent.className = 'folder-content';
-        folderContent.id = `folder-${index}`;
-        div.appendChild(folderContent);
-      }
     });
   }
 }
@@ -407,45 +429,18 @@ function deleteDocument(index) {
 }
 
 function openFolder(index) {
-  const folderContent = document.getElementById(`folder-${index}`);
-  folderContent.style.display = folderContent.style.display === 'block' ? 'none' : 'block';
-  displayFolderContent(index);
-}
-
-function displayFolderContent(folderIndex) {
-  const email = localStorage.getItem('email');
-  const folderContent = document.getElementById(`folder-${folderIndex}`);
-  folderContent.innerHTML = '';
-  const folder = documents[email][folderIndex];
-  if (folder && folder.content.length > 0) {
-    folder.content.forEach((doc, index) => {
-      const div = document.createElement('div');
-      div.className = 'document-file';
-      div.innerHTML = `
-        <span><i class="fas fa-file-alt"></i>${doc.name}</span>
-        <div>
-          <button onclick="deleteFolderDocument(${folderIndex}, ${index})"><i class="fas fa-trash-alt"></i></button>
-          <a href="${doc.content}" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-        </div>
-      `;
-      folderContent.appendChild(div);
-    });
-  }
+  currentFolder = index;
+  displayDocuments();
 }
 
 function deleteFolderDocument(folderIndex, docIndex) {
   const email = localStorage.getItem('email');
   documents[email][folderIndex].content.splice(docIndex, 1);
   localStorage.setItem('documents', JSON.stringify(documents));
-  displayFolderContent(folderIndex);
+  displayDocuments();
 }
 
-function addDocumentToFolder(folderIndex, file) {
-  const email = localStorage.getItem('email');
-  const folder = documents[email][folderIndex];
-  const newDocument = { name: file.name, type: 'file', content: URL.createObjectURL(file) };
-  folder.content.push(newDocument);
-  localStorage.setItem('documents', JSON.stringify(documents));
-  displayFolderContent(folderIndex);
+function goBack() {
+  currentFolder = null;
+  displayDocuments();
 }
-

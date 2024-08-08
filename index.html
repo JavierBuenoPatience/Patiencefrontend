@@ -133,6 +133,7 @@
       cursor: pointer;
       font-size: 16px;
       border-radius: 5px;
+      margin-right: 10px;
     }
     button:hover {
       background-color: #019A92;
@@ -234,6 +235,10 @@
     .folder-content {
       display: none;
       padding-left: 20px;
+    }
+    .back-button {
+      display: none;
+      margin-bottom: 10px;
     }
   </style>
   <script src="https://apis.google.com/js/api.js"></script>
@@ -391,9 +396,10 @@
     <div class="card" id="documents-screen" style="display: none;">
       <h2>Mis Documentos</h2>
       <div class="documents-container">
-        <input type="file" id="file-upload" style="display: none;" onchange="handleFileUpload(event)">
+        <button class="back-button" onclick="goBack()">Atrás</button>
         <button onclick="document.getElementById('file-upload').click()">Subir Archivo</button>
         <button onclick="createFolder()">Crear Carpeta</button>
+        <input type="file" id="file-upload" style="display: none;" onchange="handleFileUpload(event)">
         <div id="documents-list"></div>
       </div>
     </div>

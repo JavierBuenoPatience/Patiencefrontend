@@ -378,24 +378,74 @@ function displayDocuments() {
   const documentsList = document.getElementById('documents-list');
   documentsList.innerHTML = '';
   if (documents[email]) {
-    documents[email].forEach(doc => {
+    documents[email].forEach((doc, index) => {
       const div = document.createElement('div');
       div.className = doc.type === 'folder' ? 'document-folder' : 'document-file';
       div.innerHTML = `
-        <span>${doc.name}</span>
-        <button onclick="deleteDocument('${doc.name}')">Eliminar</button>
-        ${doc.type === 'file' ? `<a href="${doc.content}" target="_blank">Abrir</a>` : ''}
+        <span><i class="${doc.type === 'folder' ? 'fas fa-folder' : 'fas fa-file-alt'}"></i>${doc.name}</span>
+        <div>
+          <button onclick="deleteDocument('${index}')"><i class="fas fa-trash-alt"></i></button>
+          ${doc.type === 'file' ? `<a href="${doc.content}" target="_blank"><i class="fas fa-external-link-alt"></i></a>` : `<button onclick="openFolder(${index})"><i class="fas fa-folder-open"></i></button>`}
+        </div>
       `;
       documentsList.appendChild(div);
+      if (doc.type === 'folder') {
+        const folderContent = document.createElement('div');
+        folderContent.className = 'folder-content';
+        folderContent.id = `folder-${index}`;
+        div.appendChild(folderContent);
+      }
     });
   }
 }
 
-function deleteDocument(name) {
+function deleteDocument(index) {
   const email = localStorage.getItem('email');
-  documents[email] = documents[email].filter(doc => doc.name !== name);
+  documents[email].splice(index, 1);
   localStorage.setItem('documents', JSON.stringify(documents));
   displayDocuments();
 }
 
-document.addEventListener('DOMContentLoaded', handleClientLoad);
+function openFolder(index) {
+  const folderContent = document.getElementById(`folder-${index}`);
+  folderContent.style.display = folderContent.style.display === 'block' ? 'none' : 'block';
+  displayFolderContent(index);
+}
+
+function displayFolderContent(folderIndex) {
+  const email = localStorage.getItem('email');
+  const folderContent = document.getElementById(`folder-${folderIndex}`);
+  folderContent.innerHTML = '';
+  const folder = documents[email][folderIndex];
+  if (folder && folder.content.length > 0) {
+    folder.content.forEach((doc, index) => {
+      const div = document.createElement('div');
+      div.className = 'document-file';
+      div.innerHTML = `
+        <span><i class="fas fa-file-alt"></i>${doc.name}</span>
+        <div>
+          <button onclick="deleteFolderDocument(${folderIndex}, ${index})"><i class="fas fa-trash-alt"></i></button>
+          <a href="${doc.content}" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+        </div>
+      `;
+      folderContent.appendChild(div);
+    });
+  }
+}
+
+function deleteFolderDocument(folderIndex, docIndex) {
+  const email = localStorage.getItem('email');
+  documents[email][folderIndex].content.splice(docIndex, 1);
+  localStorage.setItem('documents', JSON.stringify(documents));
+  displayFolderContent(folderIndex);
+}
+
+function addDocumentToFolder(folderIndex, file) {
+  const email = localStorage.getItem('email');
+  const folder = documents[email][folderIndex];
+  const newDocument = { name: file.name, type: 'file', content: URL.createObjectURL(file) };
+  folder.content.push(newDocument);
+  localStorage.setItem('documents', JSON.stringify(documents));
+  displayFolderContent(folderIndex);
+}
+

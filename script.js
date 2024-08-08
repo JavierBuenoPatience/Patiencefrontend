@@ -1,6 +1,7 @@
 // script.js
 
 const users = JSON.parse(localStorage.getItem('users')) || {};
+let documents = JSON.parse(localStorage.getItem('documents')) || {};
 
 document.addEventListener('DOMContentLoaded', () => {
   showLoadingScreen();
@@ -217,6 +218,16 @@ function showNews() {
   }
 }
 
+function showDocuments() {
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens();
+    document.getElementById('documents-screen').style.display = 'block';
+    displayDocuments();
+  } else {
+    showLoginScreen();
+  }
+}
+
 function showComingSoon() {
   if (localStorage.getItem('loggedIn') === 'true') {
     hideAllScreens();
@@ -234,6 +245,7 @@ function hideAllScreens() {
   document.getElementById('groups-screen').style.display = 'none';
   document.getElementById('training-screen').style.display = 'none';
   document.getElementById('news-screen').style.display = 'none';
+  document.getElementById('documents-screen').style.display = 'none';
   document.getElementById('coming-soon-screen').style.display = 'none';
 }
 
@@ -333,6 +345,57 @@ function loadCalendar() {
       console.log('No upcoming events found.');
     }
   });
+}
+
+// Funciones para manejo de documentos
+
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  const email = localStorage.getItem('email');
+  if (!documents[email]) {
+    documents[email] = [];
+  }
+  documents[email].push({ name: file.name, type: 'file', content: URL.createObjectURL(file) });
+  localStorage.setItem('documents', JSON.stringify(documents));
+  displayDocuments();
+}
+
+function createFolder() {
+  const folderName = prompt('Nombre de la carpeta:');
+  if (folderName) {
+    const email = localStorage.getItem('email');
+    if (!documents[email]) {
+      documents[email] = [];
+    }
+    documents[email].push({ name: folderName, type: 'folder', content: [] });
+    localStorage.setItem('documents', JSON.stringify(documents));
+    displayDocuments();
+  }
+}
+
+function displayDocuments() {
+  const email = localStorage.getItem('email');
+  const documentsList = document.getElementById('documents-list');
+  documentsList.innerHTML = '';
+  if (documents[email]) {
+    documents[email].forEach(doc => {
+      const div = document.createElement('div');
+      div.className = doc.type === 'folder' ? 'document-folder' : 'document-file';
+      div.innerHTML = `
+        <span>${doc.name}</span>
+        <button onclick="deleteDocument('${doc.name}')">Eliminar</button>
+        ${doc.type === 'file' ? `<a href="${doc.content}" target="_blank">Abrir</a>` : ''}
+      `;
+      documentsList.appendChild(div);
+    });
+  }
+}
+
+function deleteDocument(name) {
+  const email = localStorage.getItem('email');
+  documents[email] = documents[email].filter(doc => doc.name !== name);
+  localStorage.setItem('documents', JSON.stringify(documents));
+  displayDocuments();
 }
 
 document.addEventListener('DOMContentLoaded', handleClientLoad);

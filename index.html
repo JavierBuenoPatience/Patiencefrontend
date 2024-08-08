@@ -240,62 +240,101 @@
       display: none;
       margin-bottom: 10px;
     }
-    /* Botón de Preguntas Frecuentes */
-.faq-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #01C0B4;
-  color: #fff;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 1000;
-}
+   <!-- Botón de Preguntas Frecuentes -->
+<div id="faq-button" class="faq-button">Preguntas Frecuentes</div>
 
-/* Sección de Preguntas Frecuentes */
-.faq-section {
-  display: none;
-  position: fixed;
-  bottom: 60px;
-  right: 20px;
-  width: 300px;
-  max-height: 400px;
-  overflow-y: auto;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  padding: 20px;
-  z-index: 1000;
-}
+<!-- Sección de Preguntas Frecuentes -->
+<div id="faq-section" class="faq-section">
+  <div class="faq-close" onclick="toggleFaqSection()">✖</div>
+  <h2>Preguntas Frecuentes</h2>
+  <div class="faq-item">
+    <div class="faq-question">1. ¿Qué es una oposición y cuál es su objetivo?</div>
+    <div class="faq-answer">Una oposición es un proceso selectivo que tiene como objetivo seleccionar a los mejores candidatos para ocupar plazas en la administración pública. Consiste en una serie de pruebas y evaluaciones que pueden incluir exámenes escritos, pruebas prácticas y entrevistas.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">2. ¿Cuáles son los requisitos generales para presentarse a una oposición?</div>
+    <div class="faq-answer">Los requisitos generales suelen incluir tener la nacionalidad española o de un país miembro de la UE, ser mayor de edad y no haber alcanzado la edad de jubilación, y poseer la titulación requerida para la plaza a la que se opta. Es fundamental consultar la convocatoria específica de cada oposición para conocer los requisitos detallados.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">3. ¿Qué tipos de oposiciones existen en España?</div>
+    <div class="faq-answer">Las oposiciones se clasifican en diferentes grupos según el nivel de titulación requerido:
+      <ul>
+        <li><strong>Grupo A:</strong> Licenciados, ingenieros, arquitectos.</li>
+        <li><strong>Grupo B:</strong> Diplomados, técnicos superiores.</li>
+        <li><strong>Grupo C1:</strong> Bachillerato, técnico.</li>
+        <li><strong>Grupo C2:</strong> Graduado en ESO.</li>
+        <li><strong>Agrupaciones Profesionales:</strong> No se requiere titulación específica.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">4. ¿Cómo se estructura generalmente una oposición?</div>
+    <div class="faq-answer">Las oposiciones suelen estructurarse en varias fases que pueden incluir:
+      <ul>
+        <li><strong>Fase de oposición:</strong> Con pruebas eliminatorias como exámenes teóricos, prácticos y psicotécnicos.</li>
+        <li><strong>Fase de concurso:</strong> Valoración de méritos, experiencia y formación adicional.</li>
+        <li><strong>Fase de prácticas:</strong> Período de formación y adaptación en el puesto de trabajo.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">5. ¿Cómo prepararse eficientemente para una oposición?</div>
+    <div class="faq-answer">La preparación eficiente implica:
+      <ul>
+        <li><strong>Planificación:</strong> Elaborar un plan de estudio detallado y realista.</li>
+        <li><strong>Materiales de estudio:</strong> Utilizar temarios actualizados y específicos de la convocatoria.</li>
+        <li><strong>Academias y cursos:</strong> Considerar la posibilidad de inscribirse en academias especializadas.</li>
+        <li><strong>Práctica:</strong> Realizar simulacros de examen y practicar con pruebas de años anteriores.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">6. ¿Qué son los méritos en una fase de concurso y cómo se valoran?</div>
+    <div class="faq-answer">Los méritos son puntos adicionales que se valoran en la fase de concurso, y pueden incluir:
+      <ul>
+        <li><strong>Formación académica:</strong> Cursos y títulos adicionales relacionados con la plaza.</li>
+        <li><strong>Experiencia profesional:</strong> Años de trabajo en el sector público o privado en áreas relacionadas.</li>
+        <li><strong>Idiomas:</strong> Conocimientos de lenguas extranjeras certificados.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">7. ¿Qué importancia tienen los exámenes psicotécnicos en las oposiciones?</div>
+    <div class="faq-answer">Los exámenes psicotécnicos evalúan aptitudes y capacidades cognitivas, como razonamiento lógico, comprensión lectora, y habilidades numéricas. Son importantes para determinar la adecuación del candidato al puesto.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">8. ¿Cómo se puede gestionar el estrés y la ansiedad durante la preparación y los exámenes?</div>
+    <div class="faq-answer">Algunas estrategias para gestionar el estrés incluyen:
+      <ul>
+        <li><strong>Técnicas de relajación:</strong> Como la meditación, la respiración profunda y el mindfulness.</li>
+        <li><strong>Ejercicio físico:</strong> Mantener una rutina de ejercicio regular.</li>
+        <li><strong>Apoyo emocional:</strong> Buscar apoyo en familiares, amigos o grupos de estudio.</li>
+        <li><strong>Descansos regulares:</strong> Incorporar pausas y tiempo de ocio en el plan de estudio.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">9. ¿Qué hacer si no se supera la oposición en el primer intento?</div>
+    <div class="faq-answer">Es importante no desanimarse y considerar lo siguiente:
+      <ul>
+        <li><strong>Análisis:</strong> Identificar las áreas de mejora y trabajar en ellas.</li>
+        <li><strong>Planificación:</strong> Ajustar el plan de estudio basado en la experiencia previa.</li>
+        <li><strong>Persistencia:</strong> Mantener una actitud positiva y continuar preparándose para futuras convocatorias.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">10. ¿Qué aspectos legales y administrativos deben considerarse al inscribirse en una oposición?</div>
+    <div class="faq-answer">Algunos aspectos clave son:
+      <ul>
+        <li><strong>Plazos de inscripción:</strong> Respetar las fechas establecidas en la convocatoria.</li>
+        <li><strong>Documentación requerida:</strong> Asegurarse de tener toda la documentación necesaria, como DNI, títulos académicos, y certificados.</li>
+        <li><strong>Tasas:</strong> Pagar las tasas de examen si las hubiera.</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-.faq-section h2 {
-  margin-top: 0;
-}
-
-.faq-item {
-  margin-bottom: 15px;
-}
-
-.faq-question {
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 5px;
-}
-
-.faq-answer {
-  display: none;
-  color: #333;
-  font-size: 14px;
-}
-
-.faq-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-}
   </style>
   <script src="https://apis.google.com/js/api.js"></script>
 </head>

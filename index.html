@@ -487,17 +487,17 @@
       <iframe src="https://www.csif.es/es/portada/andalucia/educacion" style="border: 0;" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>
     </div>
 
-    <!-- Pantalla de Mis Documentos -->
-    <div class="card" id="documents-screen" style="display: none;">
-      <h2>Mis Documentos</h2>
-      <div class="documents-container">
-        <button class="back-button" onclick="goBack()">Atrás</button>
-        <button onclick="document.getElementById('file-upload').click()">Subir Archivo</button>
-        <button onclick="createFolder()">Crear Carpeta</button>
-        <input type="file" id="file-upload" style="display: none;" onchange="handleFileUpload(event)">
-        <div id="documents-list"></div>
-      </div>
-    </div>
+  <!-- Pantalla de Mis Documentos -->
+<div class="card" id="documents-screen" style="display: none;">
+  <h2>Mis Documentos</h2>
+  <div class="documents-container">
+    <button class="back-button" onclick="goBack()">Atrás</button>
+    <button onclick="document.getElementById('file-upload').click()">Subir Archivo</button>
+    <button onclick="createFolder()">Crear Carpeta</button>
+    <input type="file" id="file-upload" style="display: none;" onchange="handleFileUpload(event)">
+    <div id="documents-list"></div>
+  </div>
+</div>
 
     <!-- Pantalla Próximamente -->
     <div class="card" id="coming-soon-screen" style="display: none;">

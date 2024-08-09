@@ -154,21 +154,31 @@ button:hover {
   text-align: center;
 }
 
+/* Mejora del diseño para "¿Qué es Patience?" */
 .training-section {
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin: 30px 0;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .training-section h2, .training-section h3 {
   color: #01C0B4;
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .training-section p, .training-section ul {
   color: #333;
-  line-height: 1.6;
+  line-height: 1.8;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .training-section ul {
@@ -176,8 +186,21 @@ button:hover {
 }
 
 .training-section ul li {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  position: relative;
+  padding-left: 25px;
+  font-size: 16px;
+  color: #555;
 }
+
+.training-section ul li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  color: #01C0B4;
+  font-weight: bold;
+}
+
 
 iframe {
   width: 100%;

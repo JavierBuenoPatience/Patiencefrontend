@@ -43,64 +43,53 @@ header {
   background-color: #333;
   color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
+  position: relative;
+  z-index: 1;
 }
 
 .header-left {
   font-size: 24px;
   font-weight: bold;
   cursor: pointer;
-  margin-left: 20px;
 }
 
 .header-right {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .header-right img {
-  width: 50px;
+  width: 60px;
   cursor: pointer;
   margin-left: 20px;
+  margin-right: 30px;
+  border-radius: 50%;
 }
 
 .menu-desplegable {
   position: fixed;
   top: 50%;
-  left: -270px;
+  left: 0;
   transform: translateY(-50%);
   width: 250px;
   height: auto;
-  max-height: 80vh;
   background-color: #01C0B4;
   color: #fff;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   transition: left 0.3s ease;
   z-index: 999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 10px;
-}
-
-.menu-desplegable.show {
-  left: 0;
+  border-radius: 0 10px 10px 0;
 }
 
 .menu-desplegable ul {
   list-style-type: none;
   padding: 0;
-  margin: 0;
-  text-align: center;
 }
 
 .menu-desplegable ul li {
-  margin: 15px 0;
+  margin-bottom: 15px;
 }
 
 .menu-desplegable ul li a {
@@ -116,6 +105,10 @@ header {
   background-color: #019A92;
 }
 
+.menu-desplegable.show {
+  left: 0;
+}
+
 .main-content {
   flex: 1;
   padding: 20px;
@@ -123,97 +116,78 @@ header {
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
-  margin-top: 80px;
-  margin-bottom: 60px;
-}
-
-.branding {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.main-title {
-  font-size: 36px;
-  font-weight: bold;
-  color: #333;
-}
-
-.tagline {
-  font-size: 18px;
-  font-weight: 500;
-  color: #666;
 }
 
 .card {
   width: 100%;
-  max-width: 900px;
+  max-width: 800px;
   background-color: #fff;
-  padding: 30px;
+  padding: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-.card h2 {
-  margin-bottom: 20px;
-  color: #01C0B4;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.card form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.card form label {
-  margin-bottom: 10px;
-  font-weight: bold;
+h1, h2, h3 {
   color: #333;
 }
 
-.card form input,
-.card form select {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-sizing: border-box;
-  font-size: 16px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-}
-
-.card form button {
-  width: 100%;
+button {
   background-color: #01C0B4;
   color: #fff;
   border: none;
-  padding: 15px;
+  padding: 10px 20px;
   cursor: pointer;
-  font-size: 18px;
-  border-radius: 10px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: bold;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-.card form button:hover {
+button:hover {
   background-color: #019A92;
 }
 
-.card .form-group {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.welcome-message {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #e7f7f7;
+  border: 1px solid #01C0B4;
+  border-radius: 10px;
+  text-align: center;
 }
 
-.card .form-group > div {
-  flex: 0 0 48%;
+.training-section {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.training-section h2, .training-section h3 {
+  color: #01C0B4;
+}
+
+.training-section p, .training-section ul {
+  color: #333;
+  line-height: 1.6;
+}
+
+.training-section ul {
+  padding-left: 20px;
+}
+
+.training-section ul li {
+  margin-bottom: 10px;
+}
+
+iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 footer {
@@ -223,121 +197,95 @@ footer {
   background-color: #333;
   color: #fff;
   font-size: 12px;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
 }
 
-.home-section {
+.profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.profile-img-upload {
+  margin-bottom: 20px;
+}
+
+.logo {
+  max-width: 150px;
+  margin-bottom: 20px;
+}
+
+.profile-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 20px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 20px auto;
 }
 
-.intro-card {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  flex: 1;
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
 }
 
-.intro-video {
-  width: 100%;
-  height: 400px;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.documents-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 
-.slack-button {
-  background-color: #4A154B;
+.documents-container button {
+  background-color: #01C0B4;
   color: #fff;
   border: none;
-  padding: 15px 20px;
-  font-size: 16px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: bold;
-  border-radius: 10px;
+  padding: 10px 20px;
   cursor: pointer;
-  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-bottom: 10px; /* Añade margen inferior para separar los botones */
   transition: background-color 0.3s ease;
+  width: 180px; /* Ajusta el ancho de los botones */
 }
 
-.slack-button:hover {
-  background-color: #7B3C8F;
+.documents-container button:hover {
+  background-color: #019A92;
 }
 
-.training-section .feature {
+.back-button {
+  align-self: flex-start;
+  margin-bottom: 20px;
+}
+
+.document-folder, .document-file {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-  background: #f8f8f8;
-  padding: 20px;
-  border-radius: 10px;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
-.training-section .feature-icon {
-  font-size: 36px;
-  color: #01C0B4;
-  margin-right: 20px;
+.document-folder:hover, .document-file:hover {
+  background-color: #f0f0f0;
 }
 
-.training-section .feature-content {
-  flex: 1;
+.document-folder i, .document-file i {
+  margin-right: 10px;
 }
 
-.training-section .feature-content h3 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.training-section .feature-content p {
-  font-size: 16px;
-  color: #666;
-  margin: 0;
-}
-
-.training-section-usage {
-  margin-top: 30px;
-}
-
-.training-section-usage h3 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.training-section-usage ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.training-section-usage ul li {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 10px;
+.folder-content {
+  display: none;
   padding-left: 20px;
-  position: relative;
 }
 
-.training-section-usage ul li::before {
-  content: '✔️';
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: translateY(50%);
-  font-size: 16px;
-  color: #01C0B4;
-}
 /* Botón de Preguntas Frecuentes */
 .faq-button {
   position: fixed;
@@ -394,4 +342,3 @@ footer {
   right: 10px;
   cursor: pointer;
 }
-

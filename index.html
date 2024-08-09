@@ -411,44 +411,42 @@
     </div>
 
     <!-- Pantalla de Perfil -->
-    <div class="profile-container" id="profile-screen" style="display: none;">
-      <div class="card">
-        <h2>Perfil</h2>
-        <form id="profile-form" onsubmit="handleProfileUpdate(event)">
-          <div class="profile-field">
-            <img id="profile-img" src="assets/default-profile.png" alt="Profile Image" class="profile-img">
-            <input type="file" id="profile-img-upload" class="profile-img-upload" accept="image/*" onchange="handleImageUpload(event)">
-          </div>
-          <div class="profile-field">
-            <label for="full-name">Nombre Completo:</label>
-            <input type="text" id="full-name" name="full-name" required>
-          </div>
-          <div class="profile-field">
-            <label for="profile-email">Email:</label>
-            <input type="email" id="profile-email" name="profile-email" required>
-          </div>
-          <div class="profile-field">
-            <label for="phone">Teléfono:</label>
-            <input type="tel" id="phone" name="phone">
-          </div>
-          <div class="profile-field">
-            <label for="study-time">Tiempo dedicado a la oposición:</label>
-            <input type="text" id="study-time" name="study-time">
-          </div>
-          <div class="profile-field">
-            <label for="specialty">Especialidad del cuerpo:</label>
-            <input type="text" id="specialty" name="specialty">
-          </div>
-          <button type="submit">Guardar</button>
-        </form>
-      </div>
-      <div class="card">
-        <h2>Calendario</h2>
-        <div id="calendar">
-          <iframe id="calendar-iframe" src="" style="border: 0;" width="600" height="600" frameborder="0" scrolling="no"></iframe>
-        </div>
-      </div>
+<div class="card" id="profile-screen" style="display: none;">
+  <h2>Perfil</h2>
+  <div class="profile-container">
+    <div class="profile-img-upload">
+      <img src="assets/default-profile.png" alt="Profile Image" class="profile-img">
+      <input type="file" id="upload-profile-pic" accept="image/*" style="display: none;" onchange="handleProfilePicUpload(event)">
+      <button onclick="document.getElementById('upload-profile-pic').click()">Cambiar Foto</button>
     </div>
+    <div>
+      <form id="profile-form" onsubmit="handleProfileUpdate(event)">
+        <div class="profile-field">
+          <label for="full-name">Nombre Completo:</label>
+          <input type="text" id="full-name" name="full-name" required>
+        </div>
+        <div class="profile-field">
+          <label for="profile-email">Email:</label>
+          <input type="email" id="profile-email" name="profile-email" required>
+        </div>
+        <div class="profile-field">
+          <label for="phone">Teléfono:</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+        <div class="profile-field">
+          <label for="study-time">Tiempo dedicado a la oposición:</label>
+          <input type="text" id="study-time" name="study-time">
+        </div>
+        <div class="profile-field">
+          <label for="specialty">Especialidad del cuerpo:</label>
+          <input type="text" id="specialty" name="specialty">
+        </div>
+        <button type="submit">Guardar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
 
     <!-- Pantalla de Mis Grupos -->
     <div class="card" id="groups-screen" style="display: none;">

@@ -446,3 +446,58 @@ footer {
   color: #333;
   margin-bottom: 20px;
 }
+
+/* Estilos para el Planificador de Estudio */
+#study-planner-screen h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#study-planner-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+#study-planner-form label {
+  font-weight: bold;
+  color: #333;
+}
+
+#study-planner-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+#study-planner-form button {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: #01C0B4;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+#study-planner-form button:hover {
+  background-color: #019A92;
+}
+
+#study-sessions-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+#study-sessions-list li {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+

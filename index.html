@@ -410,6 +410,25 @@
       </div>
     </div>
 
+    <!-- Pantalla de Planificador de Estudio -->
+<div class="card" id="study-planner-screen" style="display: none;">
+  <h2>Planificador de Estudio</h2>
+  <form id="study-planner-form" onsubmit="addStudySession(event)">
+    <label for="session-title">Título de la Sesión:</label>
+    <input type="text" id="session-title" required>
+    
+    <label for="session-date">Fecha:</label>
+    <input type="date" id="session-date" required>
+
+    <label for="session-time">Hora:</label>
+    <input type="time" id="session-time" required>
+
+    <button type="submit">Añadir Sesión</button>
+  </form>
+  <h3>Sesiones Programadas</h3>
+  <ul id="study-sessions-list"></ul>
+</div>
+
     <!-- Pantalla de Perfil -->
 <div class="card" id="profile-screen" style="display: none;">
   <h2>Perfil</h2>

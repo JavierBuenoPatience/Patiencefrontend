@@ -464,3 +464,36 @@ function toggleFaqSection() {
   const faqSection = document.getElementById('faq-section');
   faqSection.style.display = faqSection.style.display === 'block' ? 'none' : 'block';
 }
+
+const studySessions = JSON.parse(localStorage.getItem('studySessions')) || [];
+
+function showStudyPlannerScreen() {
+  hideAllScreens();
+  document.getElementById('study-planner-screen').style.display = 'block';
+  displayStudySessions();
+}
+
+function addStudySession(event) {
+  event.preventDefault();
+  const title = document.getElementById('session-title').value;
+  const date = document.getElementById('session-date').value;
+  const time = document.getElementById('session-time').value;
+
+  const session = { title, date, time };
+  studySessions.push(session);
+  localStorage.setItem('studySessions', JSON.stringify(studySessions));
+
+  displayStudySessions();
+  document.getElementById('study-planner-form').reset();
+}
+
+function displayStudySessions() {
+  const list = document.getElementById('study-sessions-list');
+  list.innerHTML = '';
+
+  studySessions.forEach((session, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${session.title} - ${session.date} a las ${session.time}`;
+    list.appendChild(listItem);
+  });
+}

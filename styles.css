@@ -1,5 +1,3 @@
-/* styles.css */
-
 body {
   font-family: 'Poppins', sans-serif;
   background-color: #f4f4f4;
@@ -341,4 +339,87 @@ footer {
   top: 10px;
   right: 10px;
   cursor: pointer;
+}
+
+/* Diseño original de las pantallas de inicio de sesión y registro */
+#login-screen, #registration-screen {
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+  margin: auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+#login-screen h2, #registration-screen h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#login-screen form, #registration-screen form {
+  display: flex;
+  flex-direction: column;
+}
+
+#login-screen form label, #registration-screen form label {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+#login-screen form input, #registration-screen form input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+#login-screen form button, #registration-screen form button {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: #01C0B4;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+#login-screen form button:hover, #registration-screen form button:hover {
+  background-color: #019A92;
+}
+
+#login-screen p, #registration-screen p {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+#login-screen p button, #registration-screen p button {
+  background: none;
+  border: none;
+  color: #01C0B4;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+}
+
+#login-screen p button:hover, #registration-screen p button:hover {
+  text-decoration: underline;
+}
+
+/* Diseño específico para el logo y tagline en las pantallas de inicio de sesión y registro */
+#login-screen .logo, #registration-screen .logo {
+  display: block;
+  margin: 0 auto 20px;
+}
+
+#login-screen .tagline, #registration-screen .tagline {
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
 }

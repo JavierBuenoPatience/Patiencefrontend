@@ -90,3 +90,41 @@ footer {
     color: #fff;
     font-size: 12px;
 }
+
+.menu-desplegable {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 250px;
+    height: auto;
+    background-color: #01C0B4;
+    color: #fff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease;
+    z-index: 999;
+    border-radius: 0 10px 10px 0;
+}
+
+.menu-desplegable ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu-desplegable ul li {
+    margin-bottom: 15px;
+}
+
+.menu-desplegable ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.menu-desplegable ul li a:hover {
+    background-color: #019A92;
+}

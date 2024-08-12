@@ -42,25 +42,7 @@ function hideLoadingScreen() {
   }
 }
 
-  setupMenuToggle();
-  setupProfileDropdown();
-  handleClientLoad();
-});
-
-let manualToggle = false;
-
-function toggleMenu(show) {
-  const menu = document.getElementById('menu-desplegable');
-  menu.style.display = show ? 'block' : 'none';
-}
-
-function showLoadingScreen() {
-  document.getElementById('loading-screen').style.display = 'flex';
-}
-
-function hideLoadingScreen() {
-  document.getElementById('loading-screen').style.display = 'none';
-}
+// Resto del código sigue igual...
 
 function handleRegistration(event) {
   event.preventDefault();
@@ -69,11 +51,13 @@ function handleRegistration(event) {
   const password = document.getElementById('reg-password').value;
 
   if (!validateEmail(email)) {
-    return alert('Por favor, utiliza un correo de Gmail o Hotmail.');
+    alert('Por favor, utiliza un correo de Gmail o Hotmail.');
+    return;
   }
 
   if (users[email]) {
-    return alert('Correo ya registrado. Por favor, inicia sesión.');
+    alert('Correo ya registrado. Por favor, inicia sesión.');
+    return;
   }
 
   users[email] = { name, email, password, profile: {} };
@@ -90,7 +74,8 @@ function handleLogin(event) {
   const password = document.getElementById('login-password').value;
 
   if (!validateEmail(email)) {
-    return alert('Por favor, utiliza un correo de Gmail o Hotmail.');
+    alert('Por favor, utiliza un correo de Gmail o Hotmail.');
+    return;
   }
 
   if (users[email] && users[email].password === password) {
@@ -105,7 +90,11 @@ function handleLogin(event) {
 }
 
 function handleLogout() {
-  localStorage.clear();
+  localStorage.removeItem('loggedIn');
+  localStorage.removeItem('email');
+  localStorage.removeItem('name');
+  const menu = document.getElementById('menu-desplegable');
+  menu.classList.remove('show');
   toggleMenu(false);
   hideAllScreens();
   showLoginScreen();
@@ -128,8 +117,9 @@ function handleProfileUpdate(event) {
 }
 
 function validateEmail(email) {
-  const validEmails = ['@gmail.com', '@hotmail.com'];
-  return validEmails.some(domain => email.endsWith(domain));
+  const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+  const hotmailRegex = /^[a-zA-Z0-9._%+-]+@hotmail\.com$/;
+  return gmailRegex.test(email) || hotmailRegex.test(email);
 }
 
 function showLoginScreen() {
@@ -154,11 +144,6 @@ function showHomeScreen() {
   } else {
     showLoginScreen();
   }
-}
-
-function toggleHeaderFooter(show) {
-  document.querySelector('header').style.display = show ? 'flex' : 'none';
-  document.querySelector('footer').style.display = show ? 'block' : 'none';
 }
 
 function showProfile() {
@@ -225,7 +210,16 @@ function showComingSoon() {
 
 function hideAllScreens() {
   const screens = document.querySelectorAll('.card');
-  screens.forEach(screen => screen.style.display = 'none');
+  screens.forEach(screen => {
+    screen.style.display = 'none';
+  });
+}
+
+function toggleHeaderFooter(show) {
+  const header = document.querySelector('header');
+  const footer = document.querySelector('footer');
+  header.style.display = show ? 'flex' : 'none';
+  footer.style.display = show ? 'block' : 'none';
 }
 
 function redirectToURL(url) {
@@ -245,7 +239,7 @@ function handleLogoClick() {
   }
 }
 
-function handleProfilePicUpload(event) {
+function handleImageUpload(event) {
   const reader = new FileReader();
   reader.onload = function(e) {
     document.getElementById('profile-img').src = e.target.result;
@@ -256,44 +250,10 @@ function handleProfilePicUpload(event) {
 function updateProfileIcon() {
   const email = localStorage.getItem('email');
   const profile = users[email].profile || {};
-  document.getElementById('profile-icon').src = profile.profileImage || 'assets/default-profile.png';
-}
-
-function setupMenuToggle() {
-  const menu = document.getElementById('menu-desplegable');
-  const mainContent = document.querySelector('.main-content');
-  const headerLeft = document.querySelector('.header-left');
-
-  menu.addEventListener('mouseenter', () => {
-    if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
-      menu.classList.add('show');
-    }
-  });
-
-  menu.addEventListener('mouseleave', () => {
-    if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
-      menu.classList.remove('show');
-    }
-  });
-
-  mainContent.addEventListener('mouseenter', () => {
-    if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
-      menu.classList.remove('show');
-    }
-  });
-
-  headerLeft.addEventListener('mouseenter', () => {
-    if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
-      menu.classList.add('show');
-    }
-  });
-}
-
-function setupProfileDropdown() {
-  const headerRight = document.querySelector('.header-right img');
-  headerRight.addEventListener('click', () => {
-    toggleProfileDropdown();
-  });
+  const profileIcon = document.getElementById('profile-icon');
+  if (profileIcon) {
+    profileIcon.src = profile.profileImage || 'assets/default-profile.png';
+  }
 }
 
 // Integración con Google Calendar
@@ -317,7 +277,7 @@ function initClient() {
     gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
   }, (error) => {
-    console.error('Error initializing Google API client:', error);
+    console.log(JSON.stringify(error, null, 2));
   });
 }
 
@@ -332,27 +292,27 @@ function updateSigninStatus(isSignedIn) {
   }
 }
 
-function handleAuthClick() {
+function handleAuthClick(event) {
   gapi.auth2.getAuthInstance().signIn();
 }
 
-function handleSignoutClick() {
+function handleSignoutClick(event) {
   gapi.auth2.getAuthInstance().signOut();
 }
 
 function loadCalendar() {
   gapi.client.calendar.events.list({
-    calendarId: 'primary',
-    timeMin: new Date().toISOString(),
-    showDeleted: false,
-    singleEvents: true,
-    maxResults: 10,
-    orderBy: 'startTime'
+    'calendarId': 'primary',
+    'timeMin': (new Date()).toISOString(),
+    'showDeleted': false,
+    'singleEvents': true,
+    'maxResults': 10,
+    'orderBy': 'startTime'
   }).then((response) => {
-    const events = response.result.items;
+    let events = response.result.items;
     if (events.length > 0) {
-      const calendarIframe = document.getElementById('calendar-iframe');
-      const calendarSrc = `https://calendar.google.com/calendar/embed?src=${gapi.auth2.getAuthInstance().currentUser.get().getId()}&ctz=Europe/Madrid`;
+      let calendarIframe = document.getElementById('calendar-iframe');
+      let calendarSrc = `https://calendar.google.com/calendar/embed?src=${gapi.auth2.getAuthInstance().currentUser.get().getId()}&ctz=Europe/Madrid`;
       calendarIframe.src = calendarSrc;
     } else {
       console.log('No upcoming events found.');
@@ -365,18 +325,14 @@ function loadCalendar() {
 function handleFileUpload(event) {
   const file = event.target.files[0];
   const email = localStorage.getItem('email');
-  if (!documents[email]) {
-    documents[email] = [];
-  }
-
-  const fileData = { name: file.name, type: 'file', content: URL.createObjectURL(file) };
-
   if (currentFolder !== null) {
-    documents[email][currentFolder].content.push(fileData);
+    documents[email][currentFolder].content.push({ name: file.name, type: 'file', content: URL.createObjectURL(file) });
   } else {
-    documents[email].push(fileData);
+    if (!documents[email]) {
+      documents[email] = [];
+    }
+    documents[email].push({ name: file.name, type: 'file', content: URL.createObjectURL(file) });
   }
-
   localStorage.setItem('documents', JSON.stringify(documents));
   displayDocuments();
 }
@@ -388,15 +344,11 @@ function createFolder() {
     if (!documents[email]) {
       documents[email] = [];
     }
-
-    const folderData = { name: folderName, type: 'folder', content: [] };
-
     if (currentFolder !== null) {
-      documents[email][currentFolder].content.push(folderData);
+      documents[email][currentFolder].content.push({ name: folderName, type: 'folder', content: [] });
     } else {
-      documents[email].push(folderData);
+      documents[email].push({ name: folderName, type: 'folder', content: [] });
     }
-
     localStorage.setItem('documents', JSON.stringify(documents));
     displayDocuments();
   }
@@ -406,36 +358,39 @@ function displayDocuments() {
   const email = localStorage.getItem('email');
   const documentsList = document.getElementById('documents-list');
   const backButton = document.querySelector('.back-button');
-
   documentsList.innerHTML = '';
-
   if (currentFolder === null) {
     backButton.style.display = 'none';
     if (documents[email]) {
       documents[email].forEach((doc, index) => {
-        documentsList.appendChild(createDocumentElement(doc, index));
+        const div = document.createElement('div');
+        div.className = doc.type === 'folder' ? 'document-folder' : 'document-file';
+        div.innerHTML = `
+          <span><i class="${doc.type === 'folder' ? 'fas fa-folder' : 'fas fa-file-alt'}"></i>${doc.name}</span>
+          <div>
+            <button onclick="deleteDocument(${index})"><i class="fas fa-trash-alt"></i></button>
+            ${doc.type === 'file' ? `<a href="${doc.content}" target="_blank"><i class="fas fa-external-link-alt"></i></a>` : `<button onclick="openFolder(${index})"><i class="fas fa-folder-open"></i></button>`}
+          </div>
+        `;
+        documentsList.appendChild(div);
       });
     }
   } else {
     backButton.style.display = 'block';
     const folder = documents[email][currentFolder];
     folder.content.forEach((doc, index) => {
-      documentsList.appendChild(createDocumentElement(doc, index, currentFolder));
+      const div = document.createElement('div');
+      div.className = doc.type === 'folder' ? 'document-folder' : 'document-file';
+      div.innerHTML = `
+        <span><i class="${doc.type === 'folder' ? 'fas fa-folder' : 'fas fa-file-alt'}"></i>${doc.name}</span>
+        <div>
+          <button onclick="deleteFolderDocument(${currentFolder}, ${index})"><i class="fas fa-trash-alt"></i></button>
+          ${doc.type === 'file' ? `<a href="${doc.content}" target="_blank"><i class="fas fa-external-link-alt"></i></a>` : `<button onclick="openFolder(${currentFolder}, ${index})"><i class="fas fa-folder-open"></i></button>`}
+        </div>
+      `;
+      documentsList.appendChild(div);
     });
   }
-}
-
-function createDocumentElement(doc, index, folderIndex = null) {
-  const div = document.createElement('div');
-  div.className = doc.type === 'folder' ? 'document-folder' : 'document-file';
-  div.innerHTML = `
-    <span><i class="${doc.type === 'folder' ? 'fas fa-folder' : 'fas fa-file-alt'}"></i>${doc.name}</span>
-    <div>
-      <button onclick="${folderIndex === null ? `deleteDocument(${index})` : `deleteFolderDocument(${folderIndex}, ${index})`}"><i class="fas fa-trash-alt"></i></button>
-      ${doc.type === 'file' ? `<a href="${doc.content}" target="_blank"><i class="fas fa-external-link-alt"></i></a>` : `<button onclick="openFolder(${index})"><i class="fas fa-folder-open"></i></button>`}
-    </div>
-  `;
-  return div;
 }
 
 function deleteDocument(index) {
@@ -462,15 +417,14 @@ function goBack() {
   displayDocuments();
 }
 
-// Manejo de Preguntas Frecuentes (FAQ)
-
 document.addEventListener('DOMContentLoaded', () => {
   const faqButton = document.getElementById('faq-button');
   const faqSection = document.getElementById('faq-section');
 
   faqButton.addEventListener('click', toggleFaqSection);
 
-  document.querySelectorAll('.faq-question').forEach(question => {
+  const faqQuestions = document.querySelectorAll('.faq-question');
+  faqQuestions.forEach(question => {
     question.addEventListener('click', () => {
       const answer = question.nextElementSibling;
       answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
@@ -482,8 +436,6 @@ function toggleFaqSection() {
   const faqSection = document.getElementById('faq-section');
   faqSection.style.display = faqSection.style.display === 'block' ? 'none' : 'block';
 }
-
-// Planificador de Estudio
 
 const studySessions = JSON.parse(localStorage.getItem('studySessions')) || [];
 

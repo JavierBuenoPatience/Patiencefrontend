@@ -1,309 +1,357 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Patience - Biología y Geología</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-  </style>
-  <script src="https://apis.google.com/js/api.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patience - Biología y Geología</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
-  <div class="loading-screen" id="loading-screen">
-    <img src="assets/logo.png" alt="Loading..." class="loading-logo">
-  </div>
-  <header>
-    <div class="header-left" onclick="handleLogoClick()">Patience 💡</div>
-    <div class="header-right">
-      <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon">
+    <div class="loading-screen" id="loading-screen">
+        <img src="assets/logo.png" alt="Loading..." class="loading-logo">
     </div>
-  </header>
-  <div class="menu-desplegable" id="menu-desplegable" style="display: none;">
-    <ul>
-      <li><a href="#" onclick="showHomeScreen()">Inicio 🏠</a></li>
-      <li><a href="#" onclick="showProfile()">Perfil 👤</a></li>
-      <li><a href="https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia" target="_blank">IA especializada 🤖</a></li>
-      <li><a href="#" onclick="showGroups()">Mis grupos 👥</a></li>
-      <li><a href="#" onclick="showTraining()">¿Qué es Patience? ❓</a></li>
-      <li><a href="#" onclick="showComingSoon()">Mi centro 🏫</a></li>
-      <li><a href="#" onclick="showNews()">Últimas noticias 📰</a></li>
-      <li><a href="#" onclick="showDocuments()">Mis documentos 📁</a></li>
-      <li><a href="#" onclick="handleLogout()">Cerrar sesión 🚪</a></li>
-    </ul>
-  </div>
-  <div class="main-content">
-    <!-- Pantalla de Inicio de Sesión -->
-    <div class="card" id="login-screen">
-      <img src="assets/logo.png" alt="Patience Logo" class="logo">
-      <h2>Inicio de Sesión 🔑</h2>
-      <form id="login-form" onsubmit="handleLogin(event)">
-        <label for="login-email">Correo Electrónico:</label>
-        <input type="email" id="login-email" name="email" required>
-        <label for="login-password">Contraseña:</label>
-        <input type="password" id="login-password" name="password" required>
-        <button type="submit">Iniciar Sesión</button>
-      </form>
-      <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">Regístrate!</button></p>
-    </div>
-
-    <!-- Pantalla de Registro -->
-    <div class="card" id="registration-screen" style="display: none;">
-      <img src="assets/logo.png" alt="Patience Logo" class="logo">
-      <h2>Registro 📝</h2>
-      <form id="registration-form" onsubmit="handleRegistration(event)">
-        <label for="reg-name">Nombre:</label>
-        <input type="text" id="reg-name" name="name" required>
-        <label for="reg-email">Correo Electrónico:</label>
-        <input type="email" id="reg-email" name="email" required>
-        <label for="reg-password">Contraseña:</label>
-        <input type="password" id="reg-password" name="password" required>
-        <button type="submit">Registrarse</button>
-      </form>
-      <p id="registration-message" style="display: none;">¡Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
-      <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
-      <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
-    </div>
-
-    <!-- Pantalla de Inicio -->
-    <div class="card" id="home-screen" style="display: none;">
-      <img src="assets/logo.png" alt="Patience Logo" class="logo">
-      <h1>Bienvenid@, <span id="user-name-home"></span>! 👋</h1>
-      <div class="welcome-message">
-        <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
-        <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
-      </div>
-      <div class="training-section">
-        <h2>¿Qué es Patience? ❓</h2>
-        <div style="position: relative; overflow: hidden; aspect-ratio: 16/9;">
-          <iframe src="https://share.synthesia.io/embeds/videos/4c43a995-7419-47dd-ad2e-acc2f84ea689" loading="lazy" title="Synthesia video player - Company Intro" allowfullscreen allow="encrypted-media; fullscreen;" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow:hidden;"></iframe>
+    <header>
+        <div class="header-left" onclick="handleLogoClick()">Patience</div>
+        <div class="header-right">
+            <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon">
         </div>
-      </div>
+    </header>
+    <div class="menu-desplegable" id="menu-desplegable" style="display: none;">
+        <ul>
+            <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
+            <li><a href="#" onclick="showProfile()">Perfil</a></li>
+            <li><a href="https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia" target="_blank">IA especializada</a></li>
+            <li><a href="#" onclick="showGroups()">Mis grupos</a></li>
+            <li><a href="#" onclick="showTraining()">¿Qué es Patience?</a></li>
+            <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
+            <li><a href="#" onclick="showNews()">Últimas noticias</a></li>
+            <li><a href="#" onclick="showDocuments()">Mis documentos</a></li>
+            <li><a href="#" onclick="handleLogout()">Cerrar sesión</a></li>
+        </ul>
     </div>
-
-    <!-- Pantalla de Planificador de Estudio -->
-    <div class="card" id="study-planner-screen" style="display: none;">
-      <h2>Planificador de Estudio 📅</h2>
-      <form id="study-planner-form" onsubmit="addStudySession(event)">
-        <label for="session-title">Título de la Sesión:</label>
-        <input type="text" id="session-title" required>
-        
-        <label for="session-date">Fecha:</label>
-        <input type="date" id="session-date" required>
-
-        <label for="session-time">Hora:</label>
-        <input type="time" id="session-time" required>
-
-        <button type="submit">Añadir Sesión</button>
-      </form>
-      <h3>Sesiones Programadas 📋</h3>
-      <ul id="study-sessions-list"></ul>
-    </div>
-
-    <!-- Pantalla de Perfil -->
-    <div class="card" id="profile-screen" style="display: none;">
-      <h2>Perfil 👤</h2>
-      <div class="profile-container">
-        <div class="profile-img-upload">
-          <img src="assets/default-profile.png" alt="Profile Image" class="profile-img" id="profile-img">
-          <input type="file" id="upload-profile-pic" accept="image/*" style="display: none;" onchange="handleProfilePicUpload(event)">
-          <button onclick="document.getElementById('upload-profile-pic').click()">Cambiar Foto</button>
+    <div class="main-content">
+        <!-- Pantalla de Inicio de Sesión -->
+        <div class="card" id="login-screen">
+            <img src="assets/logo.png" alt="Patience Logo" class="logo">
+            <h2>Inicio de Sesión</h2>
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <label for="login-email">Correo Electrónico:</label>
+                <input type="email" id="login-email" name="email" required>
+                <label for="login-password">Contraseña:</label>
+                <input type="password" id="login-password" name="password" required>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+            <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">Regístrate!</button></p>
         </div>
-        <div>
-          <form id="profile-form" onsubmit="handleProfileUpdate(event)">
-            <div class="profile-field">
-              <label for="full-name">Nombre Completo:</label>
-              <input type="text" id="full-name" name="full-name" required>
-            </div>
-            <div class="profile-field">
-              <label for="profile-email">Email:</label>
-              <input type="email" id="profile-email" name="profile-email" required>
-            </div>
-            <div class="profile-field">
-              <label for="phone">Teléfono:</label>
-              <input type="tel" id="phone" name="phone">
-            </div>
-            <div class="profile-field">
-              <label for="study-time">Tiempo dedicado a la oposición:</label>
-              <input type="text" id="study-time" name="study-time">
-            </div>
-            <div class="profile-field">
-              <label for="specialty">Especialidad del cuerpo:</label>
-              <input type="text" id="specialty" name="specialty">
-            </div>
-            <button type="submit">Guardar</button>
-          </form>
+
+        <!-- Pantalla de Registro -->
+        <div class="card" id="registration-screen" style="display: none;">
+            <img src="assets/logo.png" alt="Patience Logo" class="logo">
+            <h2>Registro</h2>
+            <form id="registration-form" onsubmit="handleRegistration(event)">
+                <label for="reg-name">Nombre:</label>
+                <input type="text" id="reg-name" name="name" required>
+                <label for="reg-email">Correo Electrónico:</label>
+                <input type="email" id="reg-email" name="email" required>
+                <label for="reg-password">Contraseña:</label>
+                <input type="password" id="reg-password" name="password" required>
+                <button type="submit">Registrarse</button>
+            </form>
+            <p id="registration-message" style="display: none;">Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
+            <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
+            <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
         </div>
-      </div>
-    </div>
 
-    <!-- Pantalla de Mis Grupos -->
-    <div class="card" id="groups-screen" style="display: none;">
-      <h2>Mis Grupos 👥</h2>
-      <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
-      <button class="welcome-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')" style="background-color: #4A154B; color: #FFFFFF; border: none; padding: 10px 20px; cursor: pointer; font-size: 16px; border-radius: 5px;">Accede a Slack</button>
-    </div>
+        <!-- Pantalla de Inicio -->
+        <div class="card" id="home-screen" style="display: none;">
+            <img src="assets/logo.png" alt="Patience Logo" class="logo">
+            <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
+            <div class="welcome-message">
+                <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
+                <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y
+                    recursos que hemos preparado para ti.</p>
+            </div>
+            <div class="training-section">
+                <h2>¿Qué es Patience?</h2>
+                <div class="training-content">
+                    <iframe src="https://share.synthesia.io/embeds/videos/4c43a995-7419-47dd-ad2e-acc2f84ea689"
+                        loading="lazy" title="Synthesia video player - Company Intro"
+                        allowfullscreen allow="encrypted-media; fullscreen;"></iframe>
+                </div>
+            </div>
+        </div>
 
-    <!-- Pantalla de ¿Qué es Patience? -->
-    <div class="card" id="training-screen" style="display: none;">
-      <h2>¿Qué es Patience? ❓</h2>
-      <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
-      <div class="training-content">
-        <h3>¿Qué es Patience - IA para opositores? 🤖</h3>
-        <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
-        <h3>Cómo usar Patience - IA para opositores 🛠️</h3>
-        <ul>
-          <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
-          <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
-          <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
-          <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
-        </ul>
-        <h3>Casos de uso para opositores 📚</h3>
-        <ul>
-          <li><strong>Generar Resúmenes:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
-          <li><strong>Crear Esquemas:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
-          <li><strong>Buscar Información Rápida:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
-          <li><strong>Corregir Documentos:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
-          <li><strong>Generar Actividades Prácticas:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
-          <li><strong>Mejorar Redacción:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
-        </ul>
-      </div>
-    </div>
+        <!-- Pantalla de Planificador de Estudio -->
+        <div class="card" id="study-planner-screen" style="display: none;">
+            <h2>📅 Planificador de Estudio</h2>
+            <form id="study-planner-form" onsubmit="addStudySession(event)">
+                <label for="session-title">Título de la Sesión:</label>
+                <input type="text" id="session-title" required>
 
-    <!-- Pantalla Últimas noticias -->
-    <div class="card" id="news-screen" style="display: none;">
-      <h2>Últimas noticias 📰</h2>
-      <iframe src="https://www.csif.es/es/portada/andalucia/educacion" style="border: 0;" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>
-    </div>
+                <label for="session-date">Fecha:</label>
+                <input type="date" id="session-date" required>
 
-    <!-- Pantalla de Mis Documentos -->
-    <div class="card" id="documents-screen" style="display: none;">
-      <h2>Mis Documentos 📁</h2>
-      <div class="documents-container">
-        <button class="back-button" onclick="goBack()">Atrás</button>
-        <button onclick="document.getElementById('file-upload').click()">Subir Archivo</button>
-        <button onclick="createFolder()">Crear Carpeta</button>
-        <input type="file" id="file-upload" style="display: none;" onchange="handleFileUpload(event)">
-        <div id="documents-list"></div>
-      </div>
-    </div>
+                <label for="session-time">Hora:</label>
+                <input type="time" id="session-time" required>
 
-    <!-- Pantalla Próximamente -->
-    <div class="card" id="coming-soon-screen" style="display: none;">
-      <h2>Próximamente 🚧</h2>
-      <p>Esta funcionalidad estará disponible pronto.</p>
-    </div>
-  </div>
-  <footer>
-    <p>© 2024 Patience. Todos los derechos reservados.</p>
-  </footer>
-  <script src="script.js"></script>
+                <button type="submit">Añadir Sesión</button>
+            </form>
+            <h3>📋 Sesiones Programadas</h3>
+            <ul id="study-sessions-list"></ul>
+        </div>
 
-  <!-- Botón de Preguntas Frecuentes -->
-  <div id="faq-button" class="faq-button">Preguntas Frecuentes ❓</div>
+        <!-- Pantalla de Perfil -->
+        <div class="card" id="profile-screen" style="display: none;">
+            <h2>👤 Perfil</h2>
+            <div class="profile-container">
+                <div class="profile-img-upload">
+                    <img src="assets/default-profile.png" alt="Profile Image" id="profile-img" class="profile-img">
+                    <input type="file" id="upload-profile-pic" accept="image/*"
+                        onchange="handleProfilePicUpload(event)" style="display: none;">
+                    <button onclick="document.getElementById('upload-profile-pic').click()">Cambiar Foto</button>
+                </div>
+                <div>
+                    <form id="profile-form" onsubmit="handleProfileUpdate(event)">
+                        <div class="profile-field">
+                            <label for="full-name">Nombre Completo:</label>
+                            <input type="text" id="full-name" name="full-name" required>
+                        </div>
+                        <div class="profile-field">
+                            <label for="profile-email">Email:</label>
+                            <input type="email" id="profile-email" name="profile-email" required>
+                        </div>
+                        <div class="profile-field">
+                            <label for="phone">Teléfono:</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="profile-field">
+                            <label for="study-time">Tiempo dedicado a la oposición:</label>
+                            <input type="text" id="study-time" name="study-time">
+                        </div>
+                        <div class="profile-field">
+                            <label for="specialty">Especialidad del cuerpo:</label>
+                            <input type="text" id="specialty" name="specialty">
+                        </div>
+                        <button type="submit">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-  <!-- Sección de Preguntas Frecuentes -->
-  <div id="faq-section" class="faq-section">
-    <div class="faq-close" onclick="toggleFaqSection()">✖</div>
-    <h2>Preguntas Frecuentes ❓</h2>
-    
-    <div class="faq-item">
-      <div class="faq-question">1. ¿Qué es una oposición y cuál es su objetivo?</div>
-      <div class="faq-answer">Una oposición es un proceso selectivo que tiene como objetivo seleccionar a los mejores candidatos para ocupar plazas en la administración pública. Consiste en una serie de pruebas y evaluaciones que pueden incluir exámenes escritos, pruebas prácticas y entrevistas.</div>
-    </div>
+        <!-- Pantalla de Mis Grupos -->
+        <div class="card" id="groups-screen" style="display: none;">
+            <h2>👥 Mis Grupos</h2>
+            <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
+            <button class="welcome-button"
+                onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')"
+                style="background-color: #4A154B; color: #FFFFFF; border: none; padding: 10px 20px; cursor: pointer; font-size: 16px; border-radius: 5px;">Accede
+                a Slack</button>
+        </div>
 
-    <div class="faq-item">
-      <div class="faq-question">2. ¿Cuáles son los requisitos generales para presentarse a una oposición?</div>
-      <div class="faq-answer">Los requisitos generales suelen incluir tener la nacionalidad española o de un país miembro de la UE, ser mayor de edad y no haber alcanzado la edad de jubilación, y poseer la titulación requerida para la plaza a la que se opta. Es fundamental consultar la convocatoria específica de cada oposición para conocer los requisitos detallados.</div>
-    </div>
+        <!-- Pantalla de ¿Qué es Patience? -->
+        <div class="card" id="training-screen" class="training-section" style="display: none;">
+            <h2>❓ ¿Qué es Patience?</h2>
+            <div class="training-content">
+                <h3>🤖 ¿Qué es Patience - IA para opositores?</h3>
+                <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes
+                    especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA
+                    experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en
+                    función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para
+                    tu oposición.</p>
+                <h3>🛠️ Cómo usar Patience - IA para opositores</h3>
+                <ul>
+                    <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".
+                    </li>
+                    <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
+                    <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
+                    <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
+                </ul>
+                <h3>💡 Casos de uso para opositores</h3>
+                <ul>
+                    <li><strong>Generar Resúmenes:</strong> Patience puede resumir textos largos y complejos,
+                        ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de
+                        materiales extensos.</li>
+                    <li><strong>Crear Esquemas:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas
+                        para tus temas de estudio. Esto facilita la organización de la información y la comprensión de
+                        conceptos clave.</li>
+                    <li><strong>Buscar Información Rápida:</strong> Utiliza Patience para obtener información rápida y
+                        precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver
+                        dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
+                    <li><strong>Corregir Documentos:</strong> Envía documentos en formato .doc o .pdf para que Patience
+                        los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo y sugerencias
+                        para mejorar la estructura y claridad de tus escritos.</li>
+                    <li><strong>Generar Actividades Prácticas:</strong> Patience puede ayudarte a crear actividades
+                        prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para
+                        las pruebas de la oposición.</li>
+                    <li><strong>Mejorar Redacción:</strong> Redacta textos y solicita a Patience que te brinde
+                        retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión
+                        escrita, esencial para muchos exámenes y pruebas.</li>
+                </ul>
+            </div>
+        </div>
 
-    <div class="faq-item">
-      <div class="faq-question">3. ¿Qué tipos de oposiciones existen en España?</div>
-      <div class="faq-answer">Las oposiciones se clasifican en diferentes grupos según el nivel de titulación requerido:
-        <ul>
-          <li><strong>Grupo A:</strong> Licenciados, ingenieros, arquitectos.</li>
-          <li><strong>Grupo B:</strong> Diplomados, técnicos superiores.</li>
-          <li><strong>Grupo C1:</strong> Bachillerato, técnico.</li>
-          <li><strong>Grupo C2:</strong> Graduado en ESO.</li>
-          <li><strong>Agrupaciones Profesionales:</strong> No se requiere titulación específica.</li>
-        </ul>
-      </div>
-    </div>
+        <!-- Pantalla Últimas noticias -->
+        <div class="card" id="news-screen" style="display: none;">
+            <h2>📰 Últimas noticias</h2>
+            <iframe src="https://www.csif.es/es/portada/andalucia/educacion" style="border: 0;" width="100%"
+                height="600" frameborder="0" scrolling="auto"></iframe>
+        </div>
 
-    <div class="faq-item">
-      <div class="faq-question">4. ¿Cómo se estructura generalmente una oposición?</div>
-      <div class="faq-answer">Las oposiciones suelen estructurarse en varias fases que pueden incluir:
-        <ul>
-          <li><strong>Fase de oposición:</strong> Con pruebas eliminatorias como exámenes teóricos, prácticos y psicotécnicos.</li>
-          <li><strong>Fase de concurso:</strong> Valoración de méritos, experiencia y formación adicional.</li>
-          <li><strong>Fase de prácticas:</strong> Período de formación y adaptación en el puesto de trabajo.</li>
-        </ul>
-      </div>
-    </div>
+        <!-- Pantalla de Mis Documentos -->
+        <div class="card" id="documents-screen" style="display: none;">
+            <h2>📁 Mis Documentos</h2>
+            <div class="documents-container">
+                <button class="back-button" onclick="goBack()">Atrás</button>
+                <button onclick="document.getElementById('file-upload').click()">Subir Archivo</button>
+                <button onclick="createFolder()">Crear Carpeta</button>
+                <input type="file" id="file-upload" style="display: none;" onchange="handleFileUpload(event)">
+                <div id="documents-list"></div>
+            </div>
+        </div>
 
-    <div class="faq-item">
-      <div class="faq-question">5. ¿Cómo prepararse eficientemente para una oposición?</div>
-      <div class="faq-answer">La preparación eficiente implica:
-        <ul>
-          <li><strong>Planificación:</strong> Elaborar un plan de estudio detallado y realista.</li>
-          <li><strong>Materiales de estudio:</strong> Utilizar temarios actualizados y específicos de la convocatoria.</li>
-          <li><strong>Academias y cursos:</strong> Considerar la posibilidad de inscribirse en academias especializadas.</li>
-          <li><strong>Práctica:</strong> Realizar simulacros de examen y practicar con pruebas de años anteriores.</li>
-        </ul>
-      </div>
+        <!-- Pantalla Próximamente -->
+        <div class="card" id="coming-soon-screen" style="display: none;">
+            <h2>🚧 Próximamente</h2>
+            <p>Esta funcionalidad estará disponible pronto.</p>
+        </div>
     </div>
+    <footer>
+        <p>© 2024 Patience. Todos los derechos reservados.</p>
+    </footer>
+    <script src="script.js"></script>
 
-    <div class="faq-item">
-      <div class="faq-question">6. ¿Qué son los méritos en una fase de concurso y cómo se valoran?</div>
-      <div class="faq-answer">Los méritos son puntos adicionales que se valoran en la fase de concurso, y pueden incluir:
-        <ul>
-          <li><strong>Formación académica:</strong> Cursos y títulos adicionales relacionados con la plaza.</li>
-          <li><strong>Experiencia profesional:</strong> Años de trabajo en el sector público o privado en áreas relacionadas.</li>
-          <li><strong>Idiomas:</strong> Conocimientos de lenguas extranjeras certificados.</li>
-        </ul>
-      </div>
-    </div>
+    <!-- Botón de Preguntas Frecuentes -->
+    <div id="faq-button" class="faq-button">❓ Preguntas Frecuentes</div>
 
-    <div class="faq-item">
-      <div class="faq-question">7. ¿Qué importancia tienen los exámenes psicotécnicos en las oposiciones?</div>
-      <div class="faq-answer">Los exámenes psicotécnicos evalúan aptitudes y capacidades cognitivas, como razonamiento lógico, comprensión lectora, y habilidades numéricas. Son importantes para determinar la adecuación del candidato al puesto.</div>
-    </div>
+    <!-- Sección de Preguntas Frecuentes -->
+    <div id="faq-section" class="faq-section">
+        <div class="faq-close" onclick="toggleFaqSection()">✖</div>
+        <h2>Preguntas Frecuentes</h2>
 
-    <div class="faq-item">
-      <div class="faq-question">8. ¿Cómo se puede gestionar el estrés y la ansiedad durante la preparación y los exámenes?</div>
-      <div class="faq-answer">Algunas estrategias para gestionar el estrés incluyen:
-        <ul>
-          <li><strong>Técnicas de relajación:</strong> Como la meditación, la respiración profunda y el mindfulness.</li>
-          <li><strong>Ejercicio físico:</strong> Mantener una rutina de ejercicio regular.</li>
-          <li><strong>Apoyo emocional:</strong> Buscar apoyo en familiares, amigos o grupos de estudio.</li>
-          <li><strong>Descansos regulares:</strong> Incorporar pausas y tiempo de ocio en el plan de estudio.</li>
-        </ul>
-      </div>
-    </div>
+        <div class="faq-item">
+            <div class="faq-question">1. ¿Qué es una oposición y cuál es su objetivo?</div>
+            <div class="faq-answer">Una oposición es un proceso selectivo que tiene como objetivo seleccionar a los
+                mejores candidatos para ocupar plazas en la administración pública. Consiste en una serie de pruebas y
+                evaluaciones que pueden incluir exámenes escritos, pruebas prácticas y entrevistas.</div>
+        </div>
 
-    <div class="faq-item">
-      <div class="faq-question">9. ¿Qué hacer si no se supera la oposición en el primer intento?</div>
-      <div class="faq-answer">Es importante no desanimarse y considerar lo siguiente:
-        <ul>
-          <li><strong>Análisis:</strong> Identificar las áreas de mejora y trabajar en ellas.</li>
-          <li><strong>Planificación:</strong> Ajustar el plan de estudio basado en la experiencia previa.</li>
-          <li><strong>Persistencia:</strong> Mantener una actitud positiva y continuar preparándose para futuras convocatorias.</li>
-        </ul>
-      </div>
-    </div>
+        <div class="faq-item">
+            <div class="faq-question">2. ¿Cuáles son los requisitos generales para presentarse a una oposición?</div>
+            <div class="faq-answer">Los requisitos generales suelen incluir tener la nacionalidad española o de un país
+                miembro de la UE, ser mayor de edad y no haber alcanzado la edad de jubilación, y poseer la titulación
+                requerida para la plaza a la que se opta. Es fundamental consultar la convocatoria específica de cada
+                oposición para conocer los requisitos detallados.</div>
+        </div>
 
-    <div class="faq-item">
-      <div class="faq-question">10. ¿Qué aspectos legales y administrativos deben considerarse al inscribirse en una oposición?</div>
-      <div class="faq-answer">Algunos aspectos clave son:
-        <ul>
-          <li><strong>Plazos de inscripción:</strong> Respetar las fechas establecidas en la convocatoria.</li>
-          <li><strong>Documentación requerida:</strong> Asegurarse de tener toda la documentación necesaria, como DNI, títulos académicos, y certificados.</li>
-          <li><strong>Tasas:</strong> Pagar las tasas de examen si las hubiera.</li>
-        </ul>
-      </div>
+        <div class="faq-item">
+            <div class="faq-question">3. ¿Qué tipos de oposiciones existen en España?</div>
+            <div class="faq-answer">Las oposiciones se clasifican en diferentes grupos según el nivel de titulación
+                requerido:
+                <ul>
+                    <li><strong>Grupo A:</strong> Licenciados, ingenieros, arquitectos.</li>
+                    <li><strong>Grupo B:</strong> Diplomados, técnicos superiores.</li>
+                    <li><strong>Grupo C1:</strong> Bachillerato, técnico.</li>
+                    <li><strong>Grupo C2:</strong> Graduado en ESO.</li>
+                    <li><strong>Agrupaciones Profesionales:</strong> No se requiere titulación específica.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">4. ¿Cómo se estructura generalmente una oposición?</div>
+            <div class="faq-answer">Las oposiciones suelen estructurarse en varias fases que pueden incluir:
+                <ul>
+                    <li><strong>Fase de oposición:</strong> Con pruebas eliminatorias como exámenes teóricos, prácticos
+                        y psicotécnicos.</li>
+                    <li><strong>Fase de concurso:</strong> Valoración de méritos, experiencia y formación adicional.
+                    </li>
+                    <li><strong>Fase de prácticas:</strong> Período de formación y adaptación en el puesto de trabajo.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">5. ¿Cómo prepararse eficientemente para una oposición?</div>
+            <div class="faq-answer">La preparación eficiente implica:
+                <ul>
+                    <li><strong>Planificación:</strong> Elaborar un plan de estudio detallado y realista.</li>
+                    <li><strong>Materiales de estudio:</strong> Utilizar temarios actualizados y específicos de la
+                        convocatoria.</li>
+                    <li><strong>Academias y cursos:</strong> Considerar la posibilidad de inscribirse en academias
+                        especializadas.</li>
+                    <li><strong>Práctica:</strong> Realizar simulacros de examen y practicar con pruebas de años
+                        anteriores.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">6. ¿Qué son los méritos en una fase de concurso y cómo se valoran?</div>
+            <div class="faq-answer">Los méritos son puntos adicionales que se valoran en la fase de concurso, y pueden
+                incluir:
+                <ul>
+                    <li><strong>Formación académica:</strong> Cursos y títulos adicionales relacionados con la plaza.
+                    </li>
+                    <li><strong>Experiencia profesional:</strong> Años de trabajo en el sector público o privado en
+                        áreas relacionadas.</li>
+                    <li><strong>Idiomas:</strong> Conocimientos de lenguas extranjeras certificados.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">7. ¿Qué importancia tienen los exámenes psicotécnicos en las oposiciones?</div>
+            <div class="faq-answer">Los exámenes psicotécnicos evalúan aptitudes y capacidades cognitivas, como
+                razonamiento lógico, comprensión lectora, y habilidades numéricas. Son importantes para determinar la
+                adecuación del candidato al puesto.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">8. ¿Cómo se puede gestionar el estrés y la ansiedad durante la preparación y los
+                exámenes?</div>
+            <div class="faq-answer">Algunas estrategias para gestionar el estrés incluyen:
+                <ul>
+                    <li><strong>Técnicas de relajación:</strong> Como la meditación, la respiración profunda y el
+                        mindfulness.</li>
+                    <li><strong>Ejercicio físico:</strong> Mantener una rutina de ejercicio regular.</li>
+                    <li><strong>Apoyo emocional:</strong> Buscar apoyo en familiares, amigos o grupos de estudio.</li>
+                    <li><strong>Descansos regulares:</strong> Incorporar pausas y tiempo de ocio en el plan de estudio.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">9. ¿Qué hacer si no se supera la oposición en el primer intento?</div>
+            <div class="faq-answer">Es importante no desanimarse y considerar lo siguiente:
+                <ul>
+                    <li><strong>Análisis:</strong> Identificar las áreas de mejora y trabajar en ellas.</li>
+                    <li><strong>Planificación:</strong> Ajustar el plan de estudio basado en la experiencia previa.
+                    </li>
+                    <li><strong>Persistencia:</strong> Mantener una actitud positiva y continuar preparándose para
+                        futuras convocatorias.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">10. ¿Qué aspectos legales y administrativos deben considerarse al inscribirse en
+                una oposición?</div>
+            <div class="faq-answer">Algunos aspectos clave son:
+                <ul>
+                    <li><strong>Plazos de inscripción:</strong> Respetar las fechas establecidas en la convocatoria.
+                    </li>
+                    <li><strong>Documentación requerida:</strong> Asegurarse de tener toda la documentación necesaria,
+                        como DNI, títulos académicos, y certificados.</li>
+                    <li><strong>Tasas:</strong> Pagar las tasas de examen si las hubiera.</li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
 </body>
+
 </html>

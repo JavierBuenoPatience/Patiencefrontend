@@ -120,10 +120,10 @@ header {
   width: 100%;
   max-width: 800px;
   background-color: #fff;
-  padding: 20px;
+  padding: 30px;
   margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2, h3 {
@@ -162,8 +162,6 @@ button:hover {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   margin: 30px 0;
   max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .training-section h2, .training-section h3 {
@@ -201,6 +199,12 @@ button:hover {
   font-weight: bold;
 }
 
+.training-content {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  margin-top: 20px;
+}
 
 iframe {
   width: 100%;
@@ -221,33 +225,42 @@ footer {
 }
 
 .profile-img {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 10px;
+  border: 3px solid #01C0B4;
 }
 
 .profile-img-upload {
-  margin-bottom: 20px;
-}
-
-.logo {
-  max-width: 150px;
-  margin-bottom: 20px;
+  text-align: center;
 }
 
 .profile-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 20px;
+  gap: 30px;
 }
 
 .profile-field {
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.profile-field label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-field input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .documents-container {
@@ -265,9 +278,9 @@ footer {
   cursor: pointer;
   font-size: 16px;
   border-radius: 5px;
-  margin-bottom: 10px; /* Añade margen inferior para separar los botones */
+  margin-bottom: 10px;
   transition: background-color 0.3s ease;
-  width: 180px; /* Ajusta el ancho de los botones */
+  width: 180px;
 }
 
 .documents-container button:hover {
@@ -500,4 +513,3 @@ footer {
   border-radius: 5px;
   border: 1px solid #ddd;
 }
-

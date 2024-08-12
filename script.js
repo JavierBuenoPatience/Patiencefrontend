@@ -6,6 +6,7 @@ let currentFolder = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   showLoadingScreen();
+
   setTimeout(() => {
     const loggedIn = localStorage.getItem('loggedIn') === 'true';
     if (loggedIn) {
@@ -15,8 +16,31 @@ document.addEventListener('DOMContentLoaded', () => {
       showLoginScreen();
       toggleMenu(false);
     }
-    hideLoadingScreen();
-  }, 1500); // Reduced timeout to 1500ms for faster loading
+    hideLoadingScreen();  // Asegura que la pantalla de carga siempre se oculte
+  }, 1500);
+
+  setupMenuToggle();
+  setupProfileDropdown();
+  handleClientLoad();
+});
+
+let manualToggle = false;
+
+function toggleMenu(show) {
+  const menu = document.getElementById('menu-desplegable');
+  menu.style.display = show ? 'block' : 'none';
+}
+
+function showLoadingScreen() {
+  document.getElementById('loading-screen').style.display = 'flex';
+}
+
+function hideLoadingScreen() {
+  const loadingScreen = document.getElementById('loading-screen');
+  if (loadingScreen) {
+    loadingScreen.style.display = 'none';
+  }
+}
 
   setupMenuToggle();
   setupProfileDropdown();

@@ -34,9 +34,9 @@ header {
 }
 
 .header-right img {
-  width: 35px; /* Reducido */
+  width: 30px; /* Reducido */
   cursor: pointer;
-  margin-left: 16px; /* Reducido */
+  margin-left: 10px; /* Reducido */
 }
 
 .menu-desplegable {
@@ -44,12 +44,12 @@ header {
   top: 50%;
   left: 0px;
   transform: translateY(-50%);
-  width: 220px; /* Reducido */
+  width: 200px; /* Reducido */
   height: auto;
   max-height: 80vh;
   background-color: #01C0B4;
   color: #fff;
-  padding: 16px; /* Reducido */
+  padding: 10px; /* Reducido */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   z-index: 999;
   display: flex;
@@ -67,13 +67,13 @@ header {
 }
 
 .menu-desplegable ul li {
-  margin: 12px 0; /* Reducido */
+  margin: 10px 0; /* Reducido */
 }
 
 .menu-desplegable ul li a {
   color: #fff;
   text-decoration: none;
-  font-size: 16px; /* Reducido */
+  font-size: 14px; /* Reducido */
   display: block;
   padding: 8px; /* Reducido */
   border-radius: 5px;
@@ -100,13 +100,13 @@ header {
 }
 
 .main-title {
-  font-size: 30px; /* Reducido */
+  font-size: 28px; /* Reducido */
   font-weight: bold;
   color: #333;
 }
 
 .tagline {
-  font-size: 16px; /* Reducido */
+  font-size: 14px; /* Reducido */
   font-weight: 500;
   color: #666;
 }
@@ -184,7 +184,7 @@ header {
 }
 
 .logo {
-  max-width: 120px; /* Reducido */
+  max-width: 100px; /* Reducido */
   margin-bottom: 16px; /* Reducido */
 }
 
@@ -221,7 +221,7 @@ footer {
 
 .intro-video {
   width: 100%;
-  height: 350px; /* Reducido */
+  height: 300px; /* Reducido */
   border: none;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -370,17 +370,4 @@ footer {
   color: #333;
   margin-bottom: 16px; /* Reducido */
   text-align: center;
-}
-
-#calendar {
-  width: 100%;
-  max-width: 800px; /* Reducido */
-}
-
-#calendar-iframe {
-  width: 100%;
-  height: 500px; /* Reducido */
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

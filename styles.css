@@ -12,7 +12,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 8px 16px; /* Reducido */
   background-color: #333;
   color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -23,10 +23,9 @@ header {
 }
 
 .header-left {
-  font-size: 24px;
+  font-size: 20px; /* Reducido */
   font-weight: bold;
   cursor: pointer;
-  margin-left: 20px;
 }
 
 .header-right {
@@ -35,9 +34,9 @@ header {
 }
 
 .header-right img {
-  width: 40px;
+  width: 35px; /* Reducido */
   cursor: pointer;
-  margin-left: 20px;
+  margin-left: 16px; /* Reducido */
 }
 
 .menu-desplegable {
@@ -45,12 +44,12 @@ header {
   top: 50%;
   left: 0px;
   transform: translateY(-50%);
-  width: 250px;
+  width: 220px; /* Reducido */
   height: auto;
   max-height: 80vh;
   background-color: #01C0B4;
   color: #fff;
-  padding: 20px;
+  padding: 16px; /* Reducido */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   z-index: 999;
   display: flex;
@@ -68,15 +67,15 @@ header {
 }
 
 .menu-desplegable ul li {
-  margin: 15px 0;
+  margin: 12px 0; /* Reducido */
 }
 
 .menu-desplegable ul li a {
   color: #fff;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 16px; /* Reducido */
   display: block;
-  padding: 10px;
+  padding: 8px; /* Reducido */
   border-radius: 5px;
 }
 
@@ -86,38 +85,38 @@ header {
 
 .main-content {
   flex: 1;
-  padding: 20px;
+  padding: 16px; /* Reducido */
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
-  margin-top: 70px;
-  margin-bottom: 50px;
+  margin-top: 64px; /* Reducido */
+  margin-bottom: 40px; /* Reducido */
 }
 
 .branding {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px; /* Reducido */
 }
 
 .main-title {
-  font-size: 36px;
+  font-size: 30px; /* Reducido */
   font-weight: bold;
   color: #333;
 }
 
 .tagline {
-  font-size: 18px;
+  font-size: 16px; /* Reducido */
   font-weight: 500;
   color: #666;
 }
 
 .card {
   width: 100%;
-  max-width: 900px;
+  max-width: 800px; /* Reducido */
   background-color: #fff;
-  padding: 30px;
-  margin-bottom: 20px;
+  padding: 24px; /* Reducido */
+  margin-bottom: 16px; /* Reducido */
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -126,9 +125,9 @@ header {
 }
 
 .card h2 {
-  margin-bottom: 20px;
+  margin-bottom: 16px; /* Reducido */
   color: #01C0B4;
-  font-size: 24px;
+  font-size: 20px; /* Reducido */
   font-weight: bold;
 }
 
@@ -139,7 +138,7 @@ header {
 }
 
 .card form label {
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Reducido */
   font-weight: bold;
   color: #333;
 }
@@ -147,12 +146,12 @@ header {
 .card form input,
 .card form select {
   width: 100%;
-  padding: 15px;
-  margin-bottom: 20px;
+  padding: 12px; /* Reducido */
+  margin-bottom: 16px; /* Reducido */
   border: 1px solid #ccc;
   border-radius: 10px;
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 14px; /* Reducido */
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
 }
@@ -162,9 +161,9 @@ header {
   background-color: #01C0B4;
   color: #fff;
   border: none;
-  padding: 15px;
+  padding: 12px; /* Reducido */
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px; /* Reducido */
   border-radius: 10px;
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
@@ -184,13 +183,18 @@ header {
   flex: 0 0 48%;
 }
 
+.logo {
+  max-width: 120px; /* Reducido */
+  margin-bottom: 16px; /* Reducido */
+}
+
 footer {
   text-align: center;
-  padding: 10px 20px;
+  padding: 8px 16px; /* Reducido */
   border-top: 1px solid #ddd;
   background-color: #333;
   color: #fff;
-  font-size: 12px;
+  font-size: 10px; /* Reducido */
   position: fixed;
   width: 100%;
   bottom: 0;
@@ -201,15 +205,15 @@ footer {
 .home-section {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 16px; /* Reducido */
   width: 100%;
-  max-width: 1200px;
-  margin: 20px auto;
+  max-width: 1000px; /* Reducido */
+  margin: 16px auto; /* Reducido */
 }
 
 .intro-card {
   background-color: #fff;
-  padding: 20px;
+  padding: 16px; /* Reducido */
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   flex: 1;
@@ -217,7 +221,7 @@ footer {
 
 .intro-video {
   width: 100%;
-  height: 400px;
+  height: 350px; /* Reducido */
   border: none;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -227,8 +231,8 @@ footer {
   background-color: #4A154B;
   color: #fff;
   border: none;
-  padding: 15px 20px;
-  font-size: 16px;
+  padding: 12px 16px; /* Reducido */
+  font-size: 14px; /* Reducido */
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
   border-radius: 10px;
@@ -242,48 +246,41 @@ footer {
 }
 
 .training-section {
-  margin-bottom: 30px;
+  margin-bottom: 24px; /* Reducido */
 }
 
 .training-section h3 {
-  font-size: 24px;
+  font-size: 20px; /* Reducido */
   color: #019A92;
-  margin-bottom: 15px;
+  margin-bottom: 12px; /* Reducido */
   display: flex;
   align-items: center;
 }
 
 .training-section h3::before {
-  content: '💡';
-  font-size: 28px;
-  margin-right: 10px;
+  font-size: 24px; /* Reducido */
+  margin-right: 8px; /* Reducido */
 }
 
 .training-section p,
 .training-section ul {
-  font-size: 16px;
+  font-size: 14px; /* Reducido */
   color: #666;
   line-height: 1.6;
 }
 
 .training-section ul {
-  padding-left: 20px;
+  padding-left: 16px; /* Reducido */
 }
 
 .training-section ul li {
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Reducido */
   position: relative;
-  padding-left: 20px;
+  padding-left: 16px; /* Reducido */
 }
 
 .training-section ul li::before {
-  content: '✔️';
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: translateY(50%);
-  font-size: 16px;
-  color: #01C0B4;
+  font-size: 14px; /* Reducido */
 }
 
 .training-section ul li strong {
@@ -291,13 +288,13 @@ footer {
 }
 
 .training-section-usage {
-  margin-top: 30px;
+  margin-top: 24px; /* Reducido */
 }
 
 .training-section-usage h3 {
-  font-size: 24px;
+  font-size: 20px; /* Reducido */
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 16px; /* Reducido */
 }
 
 .training-section-usage ul {
@@ -307,31 +304,24 @@ footer {
 }
 
 .training-section-usage ul li {
-  font-size: 16px;
+  font-size: 14px; /* Reducido */
   color: #666;
-  margin-bottom: 10px;
-  padding-left: 20px;
+  margin-bottom: 8px; /* Reducido */
+  padding-left: 16px; /* Reducido */
   position: relative;
 }
 
 .training-section-usage ul li::before {
-  content: '✔️';
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: translateY(50%);
-  font-size: 16px;
-  color: #01C0B4;
+  font-size: 14px; /* Reducido */
 }
 
-/* Estilos adicionales para Últimas noticias */
 .news-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 800px;
-  margin-top: 20px;
+  max-width: 700px; /* Reducido */
+  margin-top: 16px; /* Reducido */
 }
 
 .news-section button {
@@ -339,11 +329,11 @@ footer {
   background-color: #01C0B4;
   color: #fff;
   border: none;
-  padding: 15px;
+  padding: 12px; /* Reducido */
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px; /* Reducido */
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Reducido */
   text-align: left;
   font-family: 'Poppins', sans-serif;
 }
@@ -354,31 +344,43 @@ footer {
 
 .news-iframe {
   width: 100%;
-  height: 600px;
+  height: 500px; /* Reducido */
   border: none;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+  margin-top: 16px; /* Reducido */
   display: none;
 }
 
-/* Estilos para "Mis Grupos" */
 #groups-screen {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 16px; /* Reducido */
 }
 
 #groups-screen h2 {
-  font-size: 24px;
+  font-size: 20px; /* Reducido */
   color: #01C0B4;
-  margin-bottom: 20px;
+  margin-bottom: 16px; /* Reducido */
 }
 
 #groups-screen p {
-  font-size: 16px;
+  font-size: 14px; /* Reducido */
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 16px; /* Reducido */
   text-align: center;
+}
+
+#calendar {
+  width: 100%;
+  max-width: 800px; /* Reducido */
+}
+
+#calendar-iframe {
+  width: 100%;
+  height: 500px; /* Reducido */
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

@@ -1,19 +1,13 @@
-// script.js
-
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
 document.addEventListener('DOMContentLoaded', () => {
-  showLoadingScreen();
-  setTimeout(() => {
-    if (localStorage.getItem('loggedIn') === 'true') {
-      showHomeScreen();
-      document.getElementById('menu-desplegable').style.display = 'block';
-    } else {
-      showLoginScreen();
-      document.getElementById('menu-desplegable').style.display = 'none';
-    }
-    hideLoadingScreen(); // Mover hideLoadingScreen aquí para asegurar que se oculta después de determinar la pantalla
-  }, 2000);
+  if (localStorage.getItem('loggedIn') === 'true') {
+    showHomeScreen();
+    document.getElementById('menu-desplegable').style.display = 'block';
+  } else {
+    showLoginScreen();
+    document.getElementById('menu-desplegable').style.display = 'none';
+  }
 
   const menu = document.getElementById('menu-desplegable');
   const mainContent = document.querySelector('.main-content');
@@ -60,14 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 let manualToggle = false;
-
-function showLoadingScreen() {
-  document.getElementById('loading-screen').style.display = 'flex';
-}
-
-function hideLoadingScreen() {
-  document.getElementById('loading-screen').style.display = 'none';
-}
 
 function handleRegistration(event) {
   event.preventDefault();

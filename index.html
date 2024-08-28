@@ -6,12 +6,150 @@
   <title>Patience - Biología y Geología</title>
   <link rel="stylesheet" href="styles.css">
   <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .loading-screen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .loading-logo {
+      width: 100px;
+      height: 100px;
+      animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #333;
+      color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+    .header-left {
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .header-right img {
+      width: 60px;
+      cursor: pointer;
+      margin-left: 20px;
+      margin-right: 30px;
+      border-radius: 50%;
+    }
+    .menu-icon {
+      cursor: pointer;
+    }
+    .menu-desplegable {
+      position: fixed;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 250px;
+      height: auto;
+      background-color: #01C0B4;
+      color: #fff;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      transition: left 0.3s ease;
+      z-index: 999;
+      border-radius: 0 10px 10px 0;
+    }
+    .menu-desplegable ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .menu-desplegable ul li {
+      margin-bottom: 15px;
+    }
+    .menu-desplegable ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+      display: block;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .menu-desplegable ul li a:hover {
+      background-color: #019A92;
+    }
+    .menu-desplegable.show {
+      left: 0;
+    }
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+    }
+    .card {
+      width: 100%;
+      max-width: 800px;
+      background-color: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    button {
+      background-color: #01C0B4;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #019A92;
+    }
+    .welcome-message {
+      margin: 20px 0;
+      padding: 20px;
+      background-color: #e7f7f7;
+      border: 1px solid #01C0B4;
+      border-radius: 10px;
+      text-align: center;
+    }
     .training-section {
       padding: 20px;
       background-color: #f9f9f9;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin: 20px;
+      margin: 20px 0;
     }
     .training-section h2, .training-section h3 {
       color: #01C0B4;
@@ -26,301 +164,191 @@
     .training-section ul li {
       margin-bottom: 10px;
     }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background-color: #333;
+      color: #fff;
+      font-size: 12px;
+    }
+    .profile-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    .profile-img-upload {
+      margin-bottom: 20px;
+    }
+    .logo {
+      max-width: 150px;
+      margin-bottom: 20px;
+    }
   </style>
+  <script src="https://apis.google.com/js/api.js"></script>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="header-left">Patience</div>
-      <img src="assets/logo.png" alt="Logo" class="header-right" onclick="showHomeScreen()"> <!-- Asegúrate de que la ruta del logo sea correcta -->
-    </header>
-    <div class="main-content">
-      <!-- Menú Lateral -->
-      <nav id="sidebar" style="display: none;">
-        <ul>
-          <li><a href="#" onclick="showProfile()">Perfil</a></li>
-          <li><a href="#" onclick="redirectToURL('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia')">pAtIence</a></li>
-          <li><a href="#" onclick="showGroups()">Mis grupos</a></li> <!-- Nueva funcionalidad -->
-          <li><a href="#" onclick="showTraining()">¿Qué es pAtIence?</a></li> <!-- Nueva funcionalidad -->
-          <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
-          <li><a href="#" onclick="redirectToURL('https://www.csif.es/es/portada/andalucia/educacion')">Últimas noticias</a></li>
-          <li><a href="#" onclick="handleLogout()">Cerrar sesión</a></li>
-        </ul>
-      </nav>
-
-      <main>
-        <!-- Pantalla de Inicio de Sesión -->
-        <section id="login-screen">
-          <h2>Inicio de Sesión</h2>
-          <form id="login-form" onsubmit="handleLogin(event)">
-            <label for="login-email">Correo Electrónico:</label>
-            <input type="email" id="login-email" name="email" required>
-            <label for="login-password">Contraseña:</label>
-            <input type="password" id="login-password" name="password" required>
-            <button type="submit">Iniciar Sesión</button>
-          </form>
-          <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">Regístrate!</button></p>
-        </section>
-
-        <!-- Pantalla de Registro -->
-        <section id="registration-screen" style="display: none;">
-          <h2>Registro</h2>
-          <form id="registration-form" onsubmit="handleRegistration(event)">
-            <label for="reg-name">Nombre:</label>
-            <input type="text" id="reg-name" name="name" required>
-            <label for="reg-email">Correo Electrónico:</label>
-            <input type="email" id="reg-email" name="email" required>
-            <label for="reg-password">Contraseña:</label>
-            <input type="password" id="reg-password" name="password" required>
-            <button type="submit">Registrarse</button>
-          </form>
-          <p id="registration-message" style="display: none;">Genial! Gracias por registrarte. Recibirás un email de confirmación para poder comenzar!</p>
-          <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showHomeScreen()">Bienvenid@!</button>
-        </section>
-
-        <!-- Pantalla de Inicio -->
-        <section id="home-screen" style="display: none;">
-          <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
-          <div class="buttons-container">
-            <button class="welcome-button" onclick="redirectToURL('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia')">Apóyate en la IA</button>
-            <button class="welcome-button" onclick="redirectToURL('https://www.csif.es/es/portada/andalucia/educacion')">Últimas noticias</button>
-          </div>
-        </section>
-
-        <!-- Pantalla de Perfil -->
-        <section id="profile-screen" style="display: none;">
-          <h2>Perfil</h2>
-          <form id="profile-form" onsubmit="handleProfileUpdate(event)">
-            <label for="full-name">Nombre Completo:</label>
-            <input type="text" id="full-name" name="full-name" required>
-            <label for="profile-email">Email:</label>
-            <input type="email" id="profile-email" name="profile-email" required>
-            <label for="phone">Teléfono:</label>
-            <input type="tel" id="phone" name="phone">
-            <label for="study-time">Tiempo dedicado a la oposición:</label>
-            <input type="text" id="study-time" name="study-time">
-            <label for="specialty">Especialidad del cuerpo:</label>
-            <input type="text" id="specialty" name="specialty">
-            <button type="submit">Guardar</button>
-          </form>
-        </section>
-
-        <!-- Pantalla de Mis Grupos -->
-        <section id="groups-screen" style="display: none;">
-          <h2>Mis Grupos</h2>
-          <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
-          <button class="welcome-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Unirse a Slack</button>
-        </section>
-
-        <!-- Pantalla de ¿Qué es pAtIence? -->
-        <section id="training-screen" class="training-section" style="display: none;">
-          <h2>¿Qué es pAtIence?</h2>
-          <p>Aprende cómo usar pAtIence - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
-          <h3>¿Qué es pAtIence - IA para opositores?</h3>
-          <p>pAtIence - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
-          <h3>Cómo usar pAtIence - IA para opositores</h3>
-          <ul>
-            <li>Accede a la plataforma de pAtIence - IA para opositores utilizando el botón "Apóyate en la IA".</li>
-            <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
-            <li>pAtIence - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
-            <li>Envía documentos en formato .doc o .pdf para que pAtIence los revise y te sugiera mejoras.</li>
-          </ul>
-          <h3>Casos de uso para opositores</h3>
-          <ul>
-            <li><strong>Generar Resúmenes:</strong> pAtIence puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
-            <li><strong>Crear Esquemas:</strong> Solicita a pAtIence que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
-            <li><strong>Buscar Información Rápida:</strong> Utiliza pAtIence para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
-            <li><strong>Corregir Documentos:</strong> Envía documentos en formato .doc o .pdf para que pAtIence los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
-            <li><strong>Generar Actividades Prácticas:</strong> pAtIence puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
-            <li><strong>Mejorar Redacción:</strong> Redacta textos y solicita a pAtIence que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
-          </ul>
-        </section>
-
-        <!-- Pantalla Próximamente -->
-        <section id="coming-soon-screen" style="display: none;">
-          <h2>Próximamente</h2>
-          <p>Esta funcionalidad estará disponible pronto.</p>
-        </section>
-      </main>
-    </div>
-    <footer>
-      <p>© 2024 Patience. Todos los derechos reservados.</p>
-    </footer>
+  <div class="loading-screen" id="loading-screen">
+    <img src="assets/logo.png" alt="Loading..." class="loading-logo">
   </div>
-  <script>
-    const users = JSON.parse(localStorage.getItem('users')) || {};
+  <header>
+    <div class="header-left" onclick="handleLogoClick()">Patience</div>
+    <div class="header-right">
+      <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon">
+    </div>
+  </header>
+  <div class="menu-desplegable" id="menu-desplegable" style="display: none;">
+    <ul>
+      <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
+      <li><a href="#" onclick="showProfile()">Perfil</a></li>
+      <li><a href="https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia" target="_blank">IA especializada</a></li>
+      <li><a href="#" onclick="showGroups()">Mis grupos</a></li>
+      <li><a href="#" onclick="showTraining()">¿Qué es Patience?</a></li>
+      <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
+      <li><a href="#" onclick="showNews()">Últimas noticias</a></li>
+      <li><a href="#" onclick="handleLogout()">Cerrar sesión</a></li>
+    </ul>
+  </div>
+  <div class="main-content">
+    <!-- Pantalla de Inicio de Sesión -->
+    <div class="card" id="login-screen">
+      <img src="assets/logo.png" alt="Patience Logo" class="logo">
+      <h2>Inicio de Sesión</h2>
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <label for="login-email">Correo Electrónico:</label>
+        <input type="email" id="login-email" name="email" required>
+        <label for="login-password">Contraseña:</label>
+        <input type="password" id="login-password" name="password" required>
+        <button type="submit">Iniciar Sesión</button>
+      </form>
+      <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">Regístrate!</button></p>
+    </div>
 
-    document.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('loggedIn') === 'true') {
-        showHomeScreen();
-      } else {
-        showLoginScreen();
-      }
-    });
+    <!-- Pantalla de Registro -->
+    <div class="card" id="registration-screen" style="display: none;">
+      <img src="assets/logo.png" alt="Patience Logo" class="logo">
+      <h2>Registro</h2>
+      <form id="registration-form" onsubmit="handleRegistration(event)">
+        <label for="reg-name">Nombre:</label>
+        <input type="text" id="reg-name" name="name" required>
+        <label for="reg-email">Correo Electrónico:</label>
+        <input type="email" id="reg-email" name="email" required>
+        <label for="reg-password">Contraseña:</label>
+        <input type="password" id="reg-password" name="password" required>
+        <button type="submit">Registrarse</button>
+      </form>
+      <p id="registration-message" style="display: none;">Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
+      <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
+      <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
+    </div>
 
-    function handleRegistration(event) {
-      event.preventDefault();
-      const name = document.getElementById('reg-name').value;
-      const email = document.getElementById('reg-email').value;
-      const password = document.getElementById('reg-password').value;
+    <!-- Pantalla de Inicio -->
+    <div class="card" id="home-screen" style="display: none;">
+      <img src="assets/logo.png" alt="Patience Logo" class="logo">
+      <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
+      <div class="welcome-message">
+        <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
+        <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
+      </div>
+      <div class="training-section">
+        <h2>¿Qué es Patience?</h2>
+        <div style="position: relative; overflow: hidden; aspect-ratio: 16/9;">
+          <iframe src="https://share.synthesia.io/embeds/videos/4c43a995-7419-47dd-ad2e-acc2f84ea689" loading="lazy" title="Synthesia video player - Company Intro" allowfullscreen allow="encrypted-media; fullscreen;" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow:hidden;"></iframe>
+        </div>
+      </div>
+    </div>
 
-      if (!validateEmail(email)) {
-        alert('Por favor, utiliza un correo de Gmail o Hotmail.');
-        return;
-      }
+    <!-- Pantalla de Perfil -->
+    <div class="card" id="profile-screen" style="display: none;">
+      <h2>Perfil</h2>
+      <form id="profile-form" onsubmit="handleProfileUpdate(event)">
+        <div class="profile-field">
+          <img id="profile-img" src="assets/default-profile.png" alt="Profile Image" class="profile-img">
+          <input type="file" id="profile-img-upload" class="profile-img-upload" accept="image/*" onchange="handleImageUpload(event)">
+        </div>
+        <div class="profile-field">
+          <label for="full-name">Nombre Completo:</label>
+          <input type="text" id="full-name" name="full-name" required>
+        </div>
+        <div class="profile-field">
+          <label for="profile-email">Email:</label>
+          <input type="email" id="profile-email" name="profile-email" required>
+        </div>
+        <div class="profile-field">
+          <label for="phone">Teléfono:</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+        <div class="profile-field">
+          <label for="study-time">Tiempo dedicado a la oposición:</label>
+          <input type="text" id="study-time" name="study-time">
+        </div>
+        <div class="profile-field">
+          <label for="specialty">Especialidad del cuerpo:</label>
+          <input type="text" id="specialty" name="specialty">
+        </div>
+        <button type="submit">Guardar</button>
+      </form>
+    </div>
 
-      if (users[email]) {
-        alert('Correo ya registrado. Por favor, inicia sesión.');
-        return;
-      }
+    <!-- Pantalla de Mis Grupos -->
+    <div class="card" id="groups-screen" style="display: none;">
+      <h2>Mis Grupos</h2>
+      <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
+      <button class="welcome-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')" style="background-color: #4A154B; color: #FFFFFF; border: none; padding: 10px 20px; cursor: pointer; font-size: 16px; border-radius: 5px;">Accede a Slack</button>
+      <div id="calendar" style="margin-top: 20px;">
+        <iframe id="calendar-iframe" src="" style="border: 0;" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+      </div>
+    </div>
 
-      const token = generateConfirmationToken();
-      users[email] = { name, email, password, confirmed: false, profile: {}, token: token };
-      localStorage.setItem('users', JSON.stringify(users));
-      sendConfirmationEmail(email, token);
+    <!-- Pantalla de ¿Qué es Patience? -->
+    <div class="card" id="training-screen" class="training-section" style="display: none;">
+      <h2>¿Qué es Patience?</h2>
+      <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
+      <h3>¿Qué es Patience - IA para opositores?</h3>
+      <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
+      <h3>Cómo usar Patience - IA para opositores</h3>
+      <ul>
+        <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
+        <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
+        <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
+        <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
+      </ul>
+      <h3>Casos de uso para opositores</h3>
+      <ul>
+        <li><strong>Generar Resúmenes:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
+        <li><strong>Crear Esquemas:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
+        <li><strong>Buscar Información Rápida:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
+        <li><strong>Corregir Documentos:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
+        <li><strong>Generar Actividades Prácticas:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
+        <li><strong>Mejorar Redacción:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
+      </ul>
+    </div>
 
-      document.getElementById('registration-form').reset();
-      document.getElementById('registration-message').style.display = 'block';
-      document.getElementById('welcome-button').style.display = 'block';
-    }
+    <!-- Pantalla Últimas noticias -->
+    <div class="card" id="news-screen" style="display: none;">
+      <h2>Últimas noticias</h2>
+      <iframe src="https://www.csif.es/es/portada/andalucia/educacion" style="border: 0;" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>
+    </div>
 
-    function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById('login-email').value;
-      const password = document.getElementById('login-password').value;
-
-      if (!validateEmail(email)) {
-        alert('Por favor, utiliza un correo de Gmail o Hotmail.');
-        return;
-      }
-
-      if (users[email] && users[email].password === password) {
-        if (users[email].confirmed) {
-          localStorage.setItem('loggedIn', 'true');
-          localStorage.setItem('email', email);
-          localStorage.setItem('name', users[email].name);
-          showHomeScreen();
-        } else {
-          alert('Por favor, confirma tu correo antes de iniciar sesión.');
-        }
-      } else {
-        alert('Correo o contraseña incorrectos.');
-      }
-    }
-
-    function handleLogout() {
-      localStorage.removeItem('loggedIn');
-      localStorage.removeItem('email');
-      localStorage.removeItem('name');
-      hideAllScreens();
-      showLoginScreen();
-    }
-
-    function handleProfileUpdate(event) {
-      event.preventDefault();
-      const email = localStorage.getItem('email');
-      const profile = {
-        fullName: document.getElementById('full-name').value,
-        phone: document.getElementById('phone').value,
-        studyTime: document.getElementById('study-time').value,
-        specialty: document.getElementById('specialty').value
-      };
-      users[email].profile = profile;
-      localStorage.setItem('users', JSON.stringify(users));
-      alert('Perfil actualizado con éxito');
-    }
-
-    function sendConfirmationEmail(email, token) {
-      fetch('https://formspree.io/f/mjkbwdwl', { // Reemplaza con el ID de tu formulario en Formspree
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: email,
-          message: `Confirma tu cuenta usando el siguiente enlace: http://tu-dominio.com/confirmar?token=${token}`
-        })
-      }).then(response => {
-        if (response.ok) {
-          alert('Correo de confirmación enviado. Por favor, revisa tu email.');
-        } else {
-          alert('Error al enviar el correo de confirmación.');
-        }
-      });
-    }
-
-    function validateEmail(email) {
-      const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-      const hotmailRegex = /^[a-zA-Z0-9._%+-]+@hotmail\.com$/;
-      return gmailRegex.test(email) || hotmailRegex.test(email);
-    }
-
-    function generateConfirmationToken() {
-      return Math.random().toString(36).substr(2); // Generar un token simple
-    }
-
-    function showLoginScreen() {
-      hideAllScreens();
-      document.getElementById('login-screen').style.display = 'block';
-    }
-
-    function showRegistrationScreen() {
-      hideAllScreens();
-      document.getElementById('registration-screen').style.display = 'block';
-    }
-
-    function showHomeScreen() {
-      hideAllScreens();
-      document.getElementById('home-screen').style.display = 'block';
-      document.getElementById('sidebar').style.display = 'block';
-      document.getElementById('user-name-home').textContent = localStorage.getItem('name');
-    }
-
-    function showProfile() {
-      hideAllScreens();
-      document.getElementById('profile-screen').style.display = 'block';
-      const email = localStorage.getItem('email');
-      const profile = users[email].profile || {};
-      document.getElementById('full-name').value = profile.fullName || '';
-      document.getElementById('phone').value = profile.phone || '';
-      document.getElementById('study-time').value = profile.studyTime || '';
-      document.getElementById('specialty').value = profile.specialty || '';
-    }
-
-    function showGroups() {
-      hideAllScreens();
-      document.getElementById('groups-screen').style.display = 'block';
-    }
-
-    function showTraining() {
-      hideAllScreens();
-      document.getElementById('training-screen').style.display = 'block';
-    }
-
-    function showComingSoon() {
-      hideAllScreens();
-      document.getElementById('coming-soon-screen').style.display = 'block';
-    }
-
-    function hideAllScreens() {
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('registration-screen').style.display = 'none';
-      document.getElementById('home-screen').style.display = 'none';
-      document.getElementById('profile-screen').style.display = 'none';
-      document.getElementById('groups-screen').style.display = 'none';
-      document.getElementById('training-screen').style.display = 'none';
-      document.getElementById('coming-soon-screen').style.display = 'none';
-      document.getElementById('sidebar').style.display = 'none';
-    }
-
-    function redirectToURL(url) {
-      if (localStorage.getItem('loggedIn') === 'true') {
-        window.location.href = url;
-      } else {
-        alert('Por favor, inicia sesión para acceder a esta funcionalidad.');
-        showLoginScreen();
-      }
-    }
-  </script>
+    <!-- Pantalla Próximamente -->
+    <div class="card" id="coming-soon-screen" style="display: none;">
+      <h2>Próximamente</h2>
+      <p>Esta funcionalidad estará disponible pronto.</p>
+    </div>
+  </div>
+  <footer>
+    <p>© 2024 Patience. Todos los derechos reservados.</p>
+  </footer>
+  <script src="script.js"></script>
 </body>
 </html>

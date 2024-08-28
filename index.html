@@ -15,28 +15,6 @@
       flex-direction: column;
       height: 100vh;
     }
-    .loading-screen {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.9);
-      z-index: 9999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .loading-logo {
-      width: 100px;
-      height: 100px;
-      animation: spin 2s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
     header {
       display: flex;
       justify-content: space-between;
@@ -198,9 +176,6 @@
   <script src="https://apis.google.com/js/api.js"></script>
 </head>
 <body>
-  <div class="loading-screen" id="loading-screen">
-    <img src="assets/logo.png" alt="Loading..." class="loading-logo">
-  </div>
   <header>
     <div class="header-left" onclick="handleLogoClick()">Patience</div>
     <div class="header-right">

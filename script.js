@@ -15,34 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     menu.style.display = 'none';
   }
 
-  // Muestra el menú cuando el usuario pasa el cursor
-  menu.addEventListener('mouseenter', () => {
-    if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
-      menu.classList.add('show');
-    }
-  });
-
-  // Oculta el menú cuando el usuario sale del área del menú
-  menu.addEventListener('mouseleave', () => {
-    if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
-      menu.classList.remove('show');
-    }
-  });
-
-  // Oculta el menú cuando el usuario interactúa con el contenido principal
-  mainContent.addEventListener('mouseenter', () => {
-    if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
-      menu.classList.remove('show');
-    }
-  });
-
-  // Muestra el menú cuando el usuario pasa el cursor por el logo
-  headerLeft.addEventListener('mouseenter', () => {
-    if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
-      menu.classList.add('show');
-    }
-  });
-
   // Alterna el menú de perfil
   headerRight.addEventListener('click', () => {
     toggleProfileDropdown();
@@ -54,9 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showLoginScreen();
     }
   });
-
-  // Cargar cliente de Google API
-  handleClientLoad();
 });
 
 let manualToggle = false;
@@ -278,70 +247,3 @@ function showNewsContent(newsType) {
     sipriIframe.style.display = 'block';
   }
 }
-
-// Integración con Google Calendar
-
-let CLIENT_ID = '1051045274828-t36vldu3s900upednlah9v59qdgo6onj.apps.googleusercontent.com';
-let API_KEY = 'AIzaSyDekTyQEzRbB2uI0-jVp6d-Fpwwnz5EeWk';
-let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
-let SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
-
-function handleClientLoad() {
-  gapi.load('client:auth2', initClient);
-}
-
-function initClient() {
-  gapi.client.init({
-    apiKey: API_KEY,
-    clientId: CLIENT_ID,
-    discoveryDocs: DISCOVERY_DOCS,
-    scope: SCOPES
-  }).then(() => {
-    gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-    updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-  }, (error) => {
-    console.log(JSON.stringify(error, null, 2));
-  });
-}
-
-function updateSigninStatus(isSignedIn) {
-  if (isSignedIn) {
-    document.getElementById('authorize-button').style.display = 'none';
-    document.getElementById('calendar').style.display = 'block';
-    loadCalendar();
-  } else {
-    document.getElementById('authorize-button').style.display = 'block';
-    document.getElementById('calendar').style.display = 'none';
-  }
-}
-
-function handleAuthClick(event) {
-  gapi.auth2.getAuthInstance().signIn();
-}
-
-function handleSignoutClick(event) {
-  gapi.auth2.getAuthInstance().signOut();
-}
-
-function loadCalendar() {
-  gapi.client.calendar.events.list({
-    'calendarId': 'primary',
-    'timeMin': (new Date()).toISOString(),
-    'showDeleted': false,
-    'singleEvents': true,
-    'maxResults': 10,
-    'orderBy': 'startTime'
-  }).then((response) => {
-    let events = response.result.items;
-    if (events.length > 0) {
-      let calendarIframe = document.getElementById('calendar-iframe');
-      let calendarSrc = `https://calendar.google.com/calendar/embed?src=${gapi.auth2.getAuthInstance().currentUser.get().getId()}&ctz=Europe/Madrid`;
-      calendarIframe.src = calendarSrc;
-    } else {
-      console.log('No upcoming events found.');
-    }
-  });
-}
-
-document.addEventListener('DOMContentLoaded', handleClientLoad);
-

@@ -197,6 +197,11 @@
       flex: 0 0 48%;
     }
 
+    .logo {
+      max-width: 150px;
+      margin-bottom: 20px;
+    }
+
     footer {
       text-align: center;
       padding: 10px;
@@ -254,63 +259,42 @@
       background-color: #7B3C8F;
     }
 
-    .training-section .feature {
+    .training-section {
+      margin-bottom: 30px;
+    }
+
+    .training-section h3 {
+      font-size: 24px;
+      color: #019A92;
+      margin-bottom: 15px;
       display: flex;
       align-items: center;
-      margin-bottom: 20px;
-      background: #f8f8f8;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    .training-section .feature-icon {
-      font-size: 36px;
-      color: #01C0B4;
-      margin-right: 20px;
+    .training-section h3::before {
+      content: '💡';
+      font-size: 28px;
+      margin-right: 10px;
     }
 
-    .training-section .feature-content {
-      flex: 1;
-    }
-
-    .training-section .feature-content h3 {
-      font-size: 24px;
-      color: #333;
-      margin-bottom: 10px;
-    }
-
-    .training-section .feature-content p {
+    .training-section p,
+    .training-section ul {
       font-size: 16px;
       color: #666;
-      margin: 0;
+      line-height: 1.6;
     }
 
-    .training-section-usage {
-      margin-top: 30px;
-    }
-
-    .training-section-usage h3 {
-      font-size: 24px;
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    .training-section-usage ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .training-section-usage ul li {
-      font-size: 16px;
-      color: #666;
-      margin-bottom: 10px;
+    .training-section ul {
       padding-left: 20px;
-      position: relative;
     }
 
-    .training-section-usage ul li::before {
+    .training-section ul li {
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .training-section ul li::before {
       content: '✔️';
       position: absolute;
       left: 0;
@@ -318,6 +302,10 @@
       transform: translateY(50%);
       font-size: 16px;
       color: #01C0B4;
+    }
+
+    .training-section ul li strong {
+      color: #333;
     }
 
     /* Estilos adicionales para Últimas noticias */
@@ -377,6 +365,20 @@
       color: #333;
       margin-bottom: 20px;
       text-align: center;
+    }
+
+    /* Estilo para el iframe del calendario */
+    #calendar {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    #calendar-iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
   </style>
   <script src="https://apis.google.com/js/api.js"></script>
@@ -441,36 +443,8 @@
         <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
         <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
       </div>
-      <div class="training-section">
-        <h2>🤔 ¿Qué es Patience?</h2>
-        <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
-
-        <div class="training-section">
-          <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
-          <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
-        </div>
-
-        <div class="training-section">
-          <h3>🛠️ Cómo usar Patience - IA para opositores</h3>
-          <ul>
-            <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
-            <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
-            <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
-            <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
-          </ul>
-        </div>
-
-        <div class="training-section">
-          <h3>📚 Casos de uso para opositores</h3>
-          <ul>
-            <li><strong>Generar Resúmenes 📝:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
-            <li><strong>Crear Esquemas 📊:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
-            <li><strong>Buscar Información Rápida 🔍:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
-            <li><strong>Corregir Documentos 🖋️:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo, y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
-            <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
-            <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
-          </ul>
-        </div>
+      <div class="intro-card">
+        <iframe class="intro-video" src="https://www.youtube.com/embed/2WwGJivY8Mo" title="Patience Introduction" allowfullscreen></iframe>
       </div>
     </div>
 

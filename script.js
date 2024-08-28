@@ -1,17 +1,19 @@
 // script.js
 
 const users = JSON.parse(localStorage.getItem('users')) || {};
-let documents = JSON.parse(localStorage.getItem('documents')) || {};
-let currentFolder = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('loggedIn') === 'true') {
-    showHomeScreen();
-    document.getElementById('menu-desplegable').style.display = 'block';
-  } else {
-    showLoginScreen();
-    document.getElementById('menu-desplegable').style.display = 'none';
-  }
+  showLoadingScreen();
+  setTimeout(() => {
+    if (localStorage.getItem('loggedIn') === 'true') {
+      showHomeScreen();
+      document.getElementById('menu-desplegable').style.display = 'block';
+    } else {
+      showLoginScreen();
+      document.getElementById('menu-desplegable').style.display = 'none';
+    }
+    hideLoadingScreen(); // Mover hideLoadingScreen aquí para asegurar que se oculta después de determinar la pantalla
+  }, 2000);
 
   const menu = document.getElementById('menu-desplegable');
   const mainContent = document.querySelector('.main-content');
@@ -42,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const headerRight = document.querySelector('.header-right img');
-  headerRight?.addEventListener('click', () => {
+  headerRight.addEventListener('click', () => {
     toggleProfileDropdown();
   });
 
@@ -53,16 +55,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Ocultar el perfil en las pantallas de inicio de sesión y registro
-  if (localStorage.getItem('loggedIn') !== 'true') {
-    document.querySelector('.header-right').style.display = 'none';
-  }
-
   // Cargar cliente de Google API
   handleClientLoad();
 });
 
 let manualToggle = false;
+
+function showLoadingScreen() {
+  document.getElementById('loading-screen').style.display = 'flex';
+}
+
+function hideLoadingScreen() {
+  document.getElementById('loading-screen').style.display = 'none';
+}
 
 function handleRegistration(event) {
   event.preventDefault();
@@ -106,8 +111,6 @@ function handleLogin(event) {
     document.getElementById('menu-desplegable').style.display = 'block';
   } else {
     alert('Correo o contraseña incorrectos.');
-    // Reset form for user convenience
-    document.getElementById('login-form').reset();
   }
 }
 
@@ -149,7 +152,6 @@ function showLoginScreen() {
   document.getElementById('login-screen').style.display = 'block';
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
-  document.querySelector('.header-right').style.display = 'none';  // Ocultar la foto de perfil
 }
 
 function showRegistrationScreen() {
@@ -157,7 +159,6 @@ function showRegistrationScreen() {
   document.getElementById('registration-screen').style.display = 'block';
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
-  document.querySelector('.header-right').style.display = 'none';  // Ocultar la foto de perfil
 }
 
 function showHomeScreen() {
@@ -167,7 +168,6 @@ function showHomeScreen() {
     document.getElementById('user-name-home').textContent = localStorage.getItem('name');
     document.querySelector('header').style.display = 'flex';
     document.querySelector('footer').style.display = 'block';
-    document.querySelector('.header-right').style.display = 'flex';  // Mostrar la foto de perfil al iniciar sesión
     updateProfileIcon();
   } else {
     showLoginScreen();
@@ -177,7 +177,7 @@ function showHomeScreen() {
 function showProfile() {
   if (localStorage.getItem('loggedIn') === 'true') {
     hideAllScreens();
-    document.getElementById('profile-screen').style.display = 'flex';
+    document.getElementById('profile-screen').style.display = 'block';
     const email = localStorage.getItem('email');
     const profile = users[email].profile || {};
     document.getElementById('full-name').value = profile.fullName || '';
@@ -208,25 +208,6 @@ function showTraining() {
   }
 }
 
-function showNews() {
-  if (localStorage.getItem('loggedIn') === 'true') {
-    hideAllScreens();
-    document.getElementById('news-screen').style.display = 'block';
-  } else {
-    showLoginScreen();
-  }
-}
-
-function showDocuments() {
-  if (localStorage.getItem('loggedIn') === 'true') {
-    hideAllScreens();
-    document.getElementById('documents-screen').style.display = 'block';
-    displayDocuments();
-  } else {
-    showLoginScreen();
-  }
-}
-
 function showComingSoon() {
   if (localStorage.getItem('loggedIn') === 'true') {
     hideAllScreens();
@@ -243,8 +224,6 @@ function hideAllScreens() {
   document.getElementById('profile-screen').style.display = 'none';
   document.getElementById('groups-screen').style.display = 'none';
   document.getElementById('training-screen').style.display = 'none';
-  document.getElementById('news-screen').style.display = 'none';
-  document.getElementById('documents-screen').style.display = 'none';
   document.getElementById('coming-soon-screen').style.display = 'none';
 }
 
@@ -346,152 +325,4 @@ function loadCalendar() {
   });
 }
 
-// Funciones para manejo de documentos
-
-function handleFileUpload(event) {
-  const file = event.target.files[0];
-  const email = localStorage.getItem('email');
-  if (currentFolder !== null) {
-    documents[email][currentFolder].content.push({ name: file.name, type: 'file', content: URL.createObjectURL(file) });
-  } else {
-    if (!documents[email]) {
-      documents[email] = [];
-    }
-    documents[email].push({ name: file.name, type: 'file', content: URL.createObjectURL(file) });
-  }
-  localStorage.setItem('documents', JSON.stringify(documents));
-  displayDocuments();
-}
-
-function createFolder() {
-  const folderName = prompt('Nombre de la carpeta:');
-  if (folderName) {
-    const email = localStorage.getItem('email');
-    if (!documents[email]) {
-      documents[email] = [];
-    }
-    if (currentFolder !== null) {
-      documents[email][currentFolder].content.push({ name: folderName, type: 'folder', content: [] });
-    } else {
-      documents[email].push({ name: folderName, type: 'folder', content: [] });
-    }
-    localStorage.setItem('documents', JSON.stringify(documents));
-    displayDocuments();
-  }
-}
-
-function displayDocuments() {
-  const email = localStorage.getItem('email');
-  const documentsList = document.getElementById('documents-list');
-  const backButton = document.querySelector('.back-button');
-  documentsList.innerHTML = '';
-  if (currentFolder === null) {
-    backButton.style.display = 'none';
-    if (documents[email]) {
-      documents[email].forEach((doc, index) => {
-        const div = document.createElement('div');
-        div.className = doc.type === 'folder' ? 'document-folder' : 'document-file';
-        div.innerHTML = `
-          <span><i class="${doc.type === 'folder' ? 'fas fa-folder' : 'fas fa-file-alt'}"></i>${doc.name}</span>
-          <div>
-            <button onclick="deleteDocument(${index})"><i class="fas fa-trash-alt"></i></button>
-            ${doc.type === 'file' ? `<a href="${doc.content}" target="_blank"><i class="fas fa-external-link-alt"></i></a>` : `<button onclick="openFolder(${index})"><i class="fas fa-folder-open"></i></button>`}
-          </div>
-        `;
-        documentsList.appendChild(div);
-      });
-    }
-  } else {
-    backButton.style.display = 'block';
-    const folder = documents[email][currentFolder];
-    folder.content.forEach((doc, index) => {
-      const div = document.createElement('div');
-      div.className = doc.type === 'folder' ? 'document-folder' : 'document-file';
-      div.innerHTML = `
-        <span><i class="${doc.type === 'folder' ? 'fas fa-folder' : 'fas fa-file-alt'}"></i>${doc.name}</span>
-        <div>
-          <button onclick="deleteFolderDocument(${currentFolder}, ${index})"><i class="fas fa-trash-alt"></i></button>
-          ${doc.type === 'file' ? `<a href="${doc.content}" target="_blank"><i class="fas fa-external-link-alt"></i></a>` : `<button onclick="openFolder(${currentFolder}, ${index})"><i class="fas fa-folder-open"></i></button>`}
-        </div>
-      `;
-      documentsList.appendChild(div);
-    });
-  }
-}
-
-function deleteDocument(index) {
-  const email = localStorage.getItem('email');
-  documents[email].splice(index, 1);
-  localStorage.setItem('documents', JSON.stringify(documents));
-  displayDocuments();
-}
-
-function openFolder(index) {
-  currentFolder = index;
-  displayDocuments();
-}
-
-function deleteFolderDocument(folderIndex, docIndex) {
-  const email = localStorage.getItem('email');
-  documents[email][folderIndex].content.splice(docIndex, 1);
-  localStorage.setItem('documents', JSON.stringify(documents));
-  displayDocuments();
-}
-
-function goBack() {
-  currentFolder = null;
-  displayDocuments();
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const faqButton = document.getElementById('faq-button');
-  const faqSection = document.getElementById('faq-section');
-
-  faqButton.addEventListener('click', toggleFaqSection);
-
-  const faqQuestions = document.querySelectorAll('.faq-question');
-  faqQuestions.forEach(question => {
-    question.addEventListener('click', () => {
-      const answer = question.nextElementSibling;
-      answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
-    });
-  });
-});
-
-function toggleFaqSection() {
-  const faqSection = document.getElementById('faq-section');
-  faqSection.style.display = faqSection.style.display === 'block' ? 'none' : 'block';
-}
-
-const studySessions = JSON.parse(localStorage.getItem('studySessions')) || [];
-
-function showStudyPlannerScreen() {
-  hideAllScreens();
-  document.getElementById('study-planner-screen').style.display = 'block';
-  displayStudySessions();
-}
-
-function addStudySession(event) {
-  event.preventDefault();
-  const title = document.getElementById('session-title').value;
-  const date = document.getElementById('session-date').value;
-  const time = document.getElementById('session-time').value;
-
-  const session = { title, date, time };
-  studySessions.push(session);
-  localStorage.setItem('studySessions', JSON.stringify(studySessions));
-
-  displayStudySessions();
-  document.getElementById('study-planner-form').reset();
-}
-
-function displayStudySessions() {
-  const list = document.getElementById('study-sessions-list');
-  list.innerHTML = '';
-
-  studySessions.forEach((session, index) => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `${session.title} - ${session.date} a las ${session.time}`;
-    list.appendChild(listItem);
-  });
-}
+document.addEventListener('DOMContentLoaded', handleClientLoad);

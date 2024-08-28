@@ -246,63 +246,57 @@ footer {
   background-color: #7B3C8F;
 }
 
-.training-section .feature {
+/* Estilo para la sección de "Qué es Patience" */
+#training-screen h2 {
+  font-size: 28px;
+  color: #01C0B4;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#training-screen p {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.training-section {
+  margin-bottom: 30px;
+}
+
+.training-section h3 {
+  font-size: 24px;
+  color: #019A92;
+  margin-bottom: 15px;
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-  background: #f8f8f8;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.training-section .feature-icon {
-  font-size: 36px;
-  color: #01C0B4;
-  margin-right: 20px;
+.training-section h3::before {
+  content: '💡';
+  font-size: 28px;
+  margin-right: 10px;
 }
 
-.training-section .feature-content {
-  flex: 1;
-}
-
-.training-section .feature-content h3 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.training-section .feature-content p {
+.training-section p,
+.training-section ul {
   font-size: 16px;
   color: #666;
-  margin: 0;
+  line-height: 1.6;
 }
 
-.training-section-usage {
-  margin-top: 30px;
-}
-
-.training-section-usage h3 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.training-section-usage ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.training-section-usage ul li {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 10px;
+.training-section ul {
   padding-left: 20px;
-  position: relative;
 }
 
-.training-section-usage ul li::before {
+.training-section ul li {
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.training-section ul li::before {
   content: '✔️';
   position: absolute;
   left: 0;
@@ -310,6 +304,10 @@ footer {
   transform: translateY(50%);
   font-size: 16px;
   color: #01C0B4;
+}
+
+.training-section ul li strong {
+  color: #333;
 }
 
 /* Estilos adicionales para Últimas noticias */

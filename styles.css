@@ -246,21 +246,6 @@ footer {
   background-color: #7B3C8F;
 }
 
-/* Estilo para la sección de "Qué es Patience" */
-#training-screen h2 {
-  font-size: 28px;
-  color: #01C0B4;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-#training-screen p {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
 .training-section {
   margin-bottom: 30px;
 }
@@ -310,6 +295,40 @@ footer {
   color: #333;
 }
 
+.training-section-usage {
+  margin-top: 30px;
+}
+
+.training-section-usage h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.training-section-usage ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.training-section-usage ul li {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.training-section-usage ul li::before {
+  content: '✔️';
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(50%);
+  font-size: 16px;
+  color: #01C0B4;
+}
+
 /* Estilos adicionales para Últimas noticias */
 .news-section {
   display: flex;
@@ -347,3 +366,39 @@ footer {
   margin-top: 20px;
   display: none;
 }
+
+/* Estilos para "Mis Grupos" */
+#groups-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+#groups-screen h2 {
+  font-size: 24px;
+  color: #01C0B4;
+  margin-bottom: 20px;
+}
+
+#groups-screen p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Estilo para el iframe del calendario */
+#calendar {
+  width: 100%;
+  max-width: 900px;
+}
+
+#calendar-iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+

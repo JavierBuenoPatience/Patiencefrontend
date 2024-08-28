@@ -9,7 +9,7 @@ body {
 }
 
 .loading-screen {
-  display: none;
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
@@ -17,7 +17,6 @@ body {
   height: 100%;
   background-color: rgba(255, 255, 255, 0.9);
   z-index: 9999;
-  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -139,6 +138,7 @@ button {
   font-size: 16px;
   border-radius: 5px;
   margin-right: 10px;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -200,7 +200,6 @@ button:hover {
   color: #01C0B4;
   font-weight: bold;
 }
-
 
 iframe {
   width: 100%;
@@ -319,6 +318,11 @@ footer {
   border-radius: 5px;
   cursor: pointer;
   z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.faq-button:hover {
+  background-color: #019A92;
 }
 
 /* Sección de Preguntas Frecuentes */
@@ -355,6 +359,7 @@ footer {
   display: none;
   color: #333;
   font-size: 14px;
+  transition: all 0.3s ease;
 }
 
 .faq-close {

@@ -36,7 +36,7 @@ header {
 .header-right img {
   width: 30px; /* Reducido */
   cursor: pointer;
-  margin-left: 10px; /* Reducido */
+  margin-left: 5px; /* Reducido */
 }
 
 .menu-desplegable {

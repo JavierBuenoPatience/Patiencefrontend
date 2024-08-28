@@ -1,49 +1,55 @@
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('loggedIn') === 'true') {
-    showHomeScreen();
-    document.getElementById('menu-desplegable').style.display = 'block';
-  } else {
-    showLoginScreen();
-    document.getElementById('menu-desplegable').style.display = 'none';
-  }
-
   const menu = document.getElementById('menu-desplegable');
   const mainContent = document.querySelector('.main-content');
   const headerLeft = document.querySelector('.header-left');
+  const headerRight = document.querySelector('.header-right img');
 
+  // Verifica el estado de inicio de sesión
+  if (localStorage.getItem('loggedIn') === 'true') {
+    showHomeScreen();
+    menu.style.display = 'block';  // Asegura que el menú sea visible
+  } else {
+    showLoginScreen();
+    menu.style.display = 'none';
+  }
+
+  // Muestra el menú cuando el usuario pasa el cursor
   menu.addEventListener('mouseenter', () => {
     if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
       menu.classList.add('show');
     }
   });
 
+  // Oculta el menú cuando el usuario sale del área del menú
   menu.addEventListener('mouseleave', () => {
     if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
       menu.classList.remove('show');
     }
   });
 
+  // Oculta el menú cuando el usuario interactúa con el contenido principal
   mainContent.addEventListener('mouseenter', () => {
     if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
       menu.classList.remove('show');
     }
   });
 
+  // Muestra el menú cuando el usuario pasa el cursor por el logo
   headerLeft.addEventListener('mouseenter', () => {
     if (!manualToggle && localStorage.getItem('loggedIn') === 'true') {
       menu.classList.add('show');
     }
   });
 
-  const headerRight = document.querySelector('.header-right img');
+  // Alterna el menú de perfil
   headerRight.addEventListener('click', () => {
     toggleProfileDropdown();
   });
 
-  const headerLeftLogo = document.querySelector('.header-left');
-  headerLeftLogo.addEventListener('click', () => {
+  // Maneja clics en el logo
+  headerLeft.addEventListener('click', () => {
     if (localStorage.getItem('loggedIn') !== 'true') {
       showLoginScreen();
     }

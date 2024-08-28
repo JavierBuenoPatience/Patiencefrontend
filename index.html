@@ -169,6 +169,39 @@
       max-width: 150px;
       margin-bottom: 20px;
     }
+    /* Estilos adicionales para Últimas noticias */
+    .news-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 800px;
+      margin-top: 20px;
+    }
+    .news-section button {
+      width: 100%;
+      background-color: #01C0B4;
+      color: #fff;
+      border: none;
+      padding: 15px;
+      cursor: pointer;
+      font-size: 18px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+    .news-section button:hover {
+      background-color: #019A92;
+    }
+    .news-iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+      display: none;
+    }
   </style>
   <script src="https://apis.google.com/js/api.js"></script>
 </head>
@@ -309,7 +342,12 @@
     <!-- Pantalla Últimas noticias -->
     <div class="card" id="news-screen" style="display: none;">
       <h2>Últimas noticias</h2>
-      <iframe src="https://www.csif.es/es/portada/andalucia/educacion" style="border: 0;" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>
+      <div class="news-section">
+        <button onclick="showNewsContent('csif')">CSIF</button>
+        <button onclick="showNewsContent('sipri')">SIPRI</button>
+        <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es/es/categoria/andalucia/educacion/oposiciones"></iframe>
+        <iframe id="sipri-iframe" class="news-iframe" src="https://sipri.es/oposiciones/"></iframe>
+      </div>
     </div>
 
     <!-- Pantalla Próximamente -->

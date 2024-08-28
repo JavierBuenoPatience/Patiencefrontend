@@ -5,17 +5,13 @@ let documents = JSON.parse(localStorage.getItem('documents')) || {};
 let currentFolder = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-  showLoadingScreen();
-  setTimeout(() => {
-    if (localStorage.getItem('loggedIn') === 'true') {
-      showHomeScreen();
-      document.getElementById('menu-desplegable').style.display = 'block';
-    } else {
-      showLoginScreen();
-      document.getElementById('menu-desplegable').style.display = 'none';
-    }
-    hideLoadingScreen();
-  }, 2000);
+  if (localStorage.getItem('loggedIn') === 'true') {
+    showHomeScreen();
+    document.getElementById('menu-desplegable').style.display = 'block';
+  } else {
+    showLoginScreen();
+    document.getElementById('menu-desplegable').style.display = 'none';
+  }
 
   const menu = document.getElementById('menu-desplegable');
   const mainContent = document.querySelector('.main-content');
@@ -62,14 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 let manualToggle = false;
-
-function showLoadingScreen() {
-  document.getElementById('loading-screen').style.display = 'flex';
-}
-
-function hideLoadingScreen() {
-  document.getElementById('loading-screen').style.display = 'none';
-}
 
 function handleRegistration(event) {
   event.preventDefault();

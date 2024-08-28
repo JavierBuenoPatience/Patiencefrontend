@@ -209,6 +209,15 @@ function showComingSoon() {
   }
 }
 
+function showNews() {
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens();
+    document.getElementById('news-screen').style.display = 'block';
+  } else {
+    showLoginScreen();
+  }
+}
+
 function hideAllScreens() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('registration-screen').style.display = 'none';
@@ -216,6 +225,7 @@ function hideAllScreens() {
   document.getElementById('profile-screen').style.display = 'none';
   document.getElementById('groups-screen').style.display = 'none';
   document.getElementById('training-screen').style.display = 'none';
+  document.getElementById('news-screen').style.display = 'none';
   document.getElementById('coming-soon-screen').style.display = 'none';
 }
 
@@ -250,6 +260,22 @@ function updateProfileIcon() {
   const profileIcon = document.getElementById('profile-icon');
   if (profileIcon) {
     profileIcon.src = profile.profileImage || 'assets/default-profile.png';
+  }
+}
+
+function showNewsContent(newsType) {
+  const csifIframe = document.getElementById('csif-iframe');
+  const sipriIframe = document.getElementById('sipri-iframe');
+
+  // Oculta ambos iframes
+  csifIframe.style.display = 'none';
+  sipriIframe.style.display = 'none';
+
+  // Muestra el iframe seleccionado
+  if (newsType === 'csif') {
+    csifIframe.style.display = 'block';
+  } else if (newsType === 'sipri') {
+    sipriIframe.style.display = 'block';
   }
 }
 
@@ -318,3 +344,4 @@ function loadCalendar() {
 }
 
 document.addEventListener('DOMContentLoaded', handleClientLoad);
+

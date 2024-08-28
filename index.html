@@ -15,6 +15,7 @@
       flex-direction: column;
       height: 100vh;
     }
+
     header {
       display: flex;
       justify-content: space-between;
@@ -23,48 +24,66 @@
       background-color: #333;
       color: #fff;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      position: relative;
-      z-index: 1;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
     }
+
     .header-left {
       font-size: 24px;
       font-weight: bold;
       cursor: pointer;
+      margin-left: 20px;
     }
+
     .header-right {
       display: flex;
       align-items: center;
-      position: relative;
     }
+
     .header-right img {
-      width: 60px;
+      width: 50px;
       cursor: pointer;
       margin-left: 20px;
-      margin-right: 30px;
-      border-radius: 50%;
     }
+
     .menu-desplegable {
       position: fixed;
       top: 50%;
-      left: 0;
+      left: -270px;
       transform: translateY(-50%);
       width: 250px;
       height: auto;
+      max-height: 80vh;
       background-color: #01C0B4;
       color: #fff;
       padding: 20px;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
       transition: left 0.3s ease;
       z-index: 999;
-      border-radius: 0 10px 10px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border-radius: 10px;
     }
+
+    .menu-desplegable.show {
+      left: 0;
+    }
+
     .menu-desplegable ul {
       list-style-type: none;
       padding: 0;
+      margin: 0;
+      text-align: center;
     }
+
     .menu-desplegable ul li {
-      margin-bottom: 15px;
+      margin: 15px 0;
     }
+
     .menu-desplegable ul li a {
       color: #fff;
       text-decoration: none;
@@ -73,12 +92,11 @@
       padding: 10px;
       border-radius: 5px;
     }
+
     .menu-desplegable ul li a:hover {
       background-color: #019A92;
     }
-    .menu-desplegable.show {
-      left: 0;
-    }
+
     .main-content {
       flex: 1;
       padding: 20px;
@@ -86,67 +104,99 @@
       flex-direction: column;
       align-items: center;
       overflow-y: auto;
+      margin-top: 80px;
+      margin-bottom: 60px;
     }
+
+    .branding {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .main-title {
+      font-size: 36px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .tagline {
+      font-size: 18px;
+      font-weight: 500;
+      color: #666;
+    }
+
     .card {
       width: 100%;
-      max-width: 800px;
+      max-width: 900px;
       background-color: #fff;
-      padding: 20px;
+      padding: 30px;
       margin-bottom: 20px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    h1, h2, h3 {
+
+    .card h2 {
+      margin-bottom: 20px;
+      color: #01C0B4;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .card form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card form label {
+      margin-bottom: 10px;
+      font-weight: bold;
       color: #333;
     }
-    button {
+
+    .card form input,
+    .card form select {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 16px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+    }
+
+    .card form button {
+      width: 100%;
       background-color: #01C0B4;
       color: #fff;
       border: none;
-      padding: 10px 20px;
+      padding: 15px;
       cursor: pointer;
-      font-size: 16px;
-      border-radius: 5px;
+      font-size: 18px;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
     }
-    button:hover {
+
+    .card form button:hover {
       background-color: #019A92;
     }
-    .welcome-message {
-      margin: 20px 0;
-      padding: 20px;
-      background-color: #e7f7f7;
-      border: 1px solid #01C0B4;
-      border-radius: 10px;
-      text-align: center;
+
+    .card .form-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
     }
-    .training-section {
-      padding: 20px;
-      background-color: #f9f9f9;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin: 20px 0;
+
+    .card .form-group > div {
+      flex: 0 0 48%;
     }
-    .training-section h2, .training-section h3 {
-      color: #01C0B4;
-    }
-    .training-section p, .training-section ul {
-      color: #333;
-      line-height: 1.6;
-    }
-    .training-section ul {
-      padding-left: 20px;
-    }
-    .training-section ul li {
-      margin-bottom: 10px;
-    }
-    iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      margin-top: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+
     footer {
       text-align: center;
       padding: 10px;
@@ -154,21 +204,122 @@
       background-color: #333;
       color: #fff;
       font-size: 12px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
     }
-    .profile-img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
+
+    .home-section {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 20px auto;
+    }
+
+    .intro-card {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      flex: 1;
+    }
+
+    .intro-video {
+      width: 100%;
+      height: 400px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .slack-button {
+      background-color: #4A154B;
+      color: #fff;
+      border: none;
+      padding: 15px 20px;
+      font-size: 16px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+
+    .slack-button:hover {
+      background-color: #7B3C8F;
+    }
+
+    .training-section .feature {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      background: #f8f8f8;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .training-section .feature-icon {
+      font-size: 36px;
+      color: #01C0B4;
+      margin-right: 20px;
+    }
+
+    .training-section .feature-content {
+      flex: 1;
+    }
+
+    .training-section .feature-content h3 {
+      font-size: 24px;
+      color: #333;
       margin-bottom: 10px;
     }
-    .profile-img-upload {
+
+    .training-section .feature-content p {
+      font-size: 16px;
+      color: #666;
+      margin: 0;
+    }
+
+    .training-section-usage {
+      margin-top: 30px;
+    }
+
+    .training-section-usage h3 {
+      font-size: 24px;
+      color: #333;
       margin-bottom: 20px;
     }
-    .logo {
-      max-width: 150px;
-      margin-bottom: 20px;
+
+    .training-section-usage ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
     }
+
+    .training-section-usage ul li {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .training-section-usage ul li::before {
+      content: '✔️';
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: translateY(50%);
+      font-size: 16px;
+      color: #01C0B4;
+    }
+
     /* Estilos adicionales para Últimas noticias */
     .news-section {
       display: flex;
@@ -178,6 +329,7 @@
       max-width: 800px;
       margin-top: 20px;
     }
+
     .news-section button {
       width: 100%;
       background-color: #01C0B4;
@@ -189,10 +341,13 @@
       border-radius: 10px;
       margin-bottom: 10px;
       text-align: left;
+      font-family: 'Poppins', sans-serif;
     }
+
     .news-section button:hover {
       background-color: #019A92;
     }
+
     .news-iframe {
       width: 100%;
       height: 600px;
@@ -201,6 +356,27 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       margin-top: 20px;
       display: none;
+    }
+
+    /* Estilos para "Mis Grupos" */
+    #groups-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    #groups-screen h2 {
+      font-size: 24px;
+      color: #01C0B4;
+      margin-bottom: 20px;
+    }
+
+    #groups-screen p {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
     }
   </style>
   <script src="https://apis.google.com/js/api.js"></script>
@@ -212,7 +388,7 @@
       <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon">
     </div>
   </header>
-  <div class="menu-desplegable" id="menu-desplegable">
+  <div class="menu-desplegable" id="menu-desplegable" style="display: none;">
     <ul>
       <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
       <li><a href="#" onclick="showProfile()">Perfil</a></li>
@@ -266,9 +442,34 @@
         <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
       </div>
       <div class="training-section">
-        <h2>¿Qué es Patience?</h2>
-        <div style="position: relative; overflow: hidden; aspect-ratio: 16/9;">
-          <iframe src="https://share.synthesia.io/embeds/videos/4c43a995-7419-47dd-ad2e-acc2f84ea689" loading="lazy" title="Synthesia video player - Company Intro" allowfullscreen allow="encrypted-media; fullscreen;" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow:hidden;"></iframe>
+        <h2>🤔 ¿Qué es Patience?</h2>
+        <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
+
+        <div class="training-section">
+          <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
+          <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
+        </div>
+
+        <div class="training-section">
+          <h3>🛠️ Cómo usar Patience - IA para opositores</h3>
+          <ul>
+            <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
+            <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
+            <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
+            <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
+          </ul>
+        </div>
+
+        <div class="training-section">
+          <h3>📚 Casos de uso para opositores</h3>
+          <ul>
+            <li><strong>Generar Resúmenes 📝:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
+            <li><strong>Crear Esquemas 📊:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
+            <li><strong>Buscar Información Rápida 🔍:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
+            <li><strong>Corregir Documentos 🖋️:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo, y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
+            <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
+            <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -309,44 +510,44 @@
     <div class="card" id="groups-screen" style="display: none;">
       <h2>Mis Grupos</h2>
       <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
-      <button class="welcome-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')" style="background-color: #4A154B; color: #FFFFFF; border: none; padding: 10px 20px; cursor: pointer; font-size: 16px; border-radius: 5px;">Accede a Slack</button>
+      <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
       <div id="calendar" style="margin-top: 20px;">
         <iframe id="calendar-iframe" src="" style="border: 0;" width="800" height="600" frameborder="0" scrolling="no"></iframe>
       </div>
     </div>
 
     <!-- Pantalla de ¿Qué es Patience? -->
-   <div class="card" id="training-screen" style="display: none;">
-  <h2>🤔 ¿Qué es Patience?</h2>
-  <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
+    <div class="card" id="training-screen" style="display: none;">
+      <h2>🤔 ¿Qué es Patience?</h2>
+      <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
 
-  <div class="training-section">
-    <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
-    <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
-  </div>
+      <div class="training-section">
+        <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
+        <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
+      </div>
 
-  <div class="training-section">
-    <h3>🛠️ Cómo usar Patience - IA para opositores</h3>
-    <ul>
-      <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "IA especializada".</li>
-      <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
-      <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
-      <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
-    </ul>
-  </div>
+      <div class="training-section">
+        <h3>🛠️ Cómo usar Patience - IA para opositores</h3>
+        <ul>
+          <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
+          <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
+          <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
+          <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
+        </ul>
+      </div>
 
-  <div class="training-section">
-    <h3>📚 Casos de uso para opositores</h3>
-    <ul>
-      <li><strong>Generar Resúmenes 📝:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
-      <li><strong>Crear Esquemas 📊:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
-      <li><strong>Buscar Información Rápida 🔍:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
-      <li><strong>Corregir Documentos 🖋️:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo, y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
-      <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
-      <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
-    </ul>
-  </div>
-</div>
+      <div class="training-section">
+        <h3>📚 Casos de uso para opositores</h3>
+        <ul>
+          <li><strong>Generar Resúmenes 📝:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
+          <li><strong>Crear Esquemas 📊:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
+          <li><strong>Buscar Información Rápida 🔍:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
+          <li><strong>Corregir Documentos 🖋️:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo, y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
+          <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
+          <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
+        </ul>
+      </div>
+    </div>
 
     <!-- Pantalla Últimas noticias -->
     <div class="card" id="news-screen" style="display: none;">

@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const headerRight = document.querySelector('.header-right img');
-  headerRight.addEventListener('click', () => {
+  headerRight?.addEventListener('click', () => {
     toggleProfileDropdown();
   });
 
@@ -52,6 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
       showLoginScreen();
     }
   });
+
+  // Ocultar el perfil en las pantallas de inicio de sesión y registro
+  if (localStorage.getItem('loggedIn') !== 'true') {
+    document.querySelector('.header-right').style.display = 'none';
+  }
 
   // Cargar cliente de Google API
   handleClientLoad();
@@ -101,6 +106,8 @@ function handleLogin(event) {
     document.getElementById('menu-desplegable').style.display = 'block';
   } else {
     alert('Correo o contraseña incorrectos.');
+    // Reset form for user convenience
+    document.getElementById('login-form').reset();
   }
 }
 
@@ -142,6 +149,7 @@ function showLoginScreen() {
   document.getElementById('login-screen').style.display = 'block';
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
+  document.querySelector('.header-right').style.display = 'none';  // Ocultar la foto de perfil
 }
 
 function showRegistrationScreen() {
@@ -149,6 +157,7 @@ function showRegistrationScreen() {
   document.getElementById('registration-screen').style.display = 'block';
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
+  document.querySelector('.header-right').style.display = 'none';  // Ocultar la foto de perfil
 }
 
 function showHomeScreen() {
@@ -158,6 +167,7 @@ function showHomeScreen() {
     document.getElementById('user-name-home').textContent = localStorage.getItem('name');
     document.querySelector('header').style.display = 'flex';
     document.querySelector('footer').style.display = 'block';
+    document.querySelector('.header-right').style.display = 'flex';  // Mostrar la foto de perfil al iniciar sesión
     updateProfileIcon();
   } else {
     showLoginScreen();

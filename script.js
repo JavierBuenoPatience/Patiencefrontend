@@ -247,3 +247,77 @@ function showNewsContent(newsType) {
     sipriIframe.style.display = 'block';
   }
 }
+
+const users = JSON.parse(localStorage.getItem('users')) || {};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const menu = document.getElementById('menu-desplegable');
+  const mainContent = document.querySelector('.main-content');
+  const headerLeft = document.querySelector('.header-left');
+  const headerRight = document.querySelector('.header-right img');
+  const profileDropdown = document.getElementById('profile-dropdown');
+
+  // Verifica el estado de inicio de sesión
+  if (localStorage.getItem('loggedIn') === 'true') {
+    showHomeScreen();
+    menu.style.display = 'block';  // Asegura que el menú sea visible
+  } else {
+    showLoginScreen();
+    menu.style.display = 'none';
+  }
+
+  // Alterna el menú de perfil
+  headerRight.addEventListener('click', () => {
+    toggleProfileDropdown();
+  });
+
+  document.addEventListener('click', function(event) {
+    if (!headerRight.contains(event.target) && !profileDropdown.contains(event.target)) {
+      profileDropdown.style.display = 'none';
+    }
+  });
+
+  // Maneja clics en el logo
+  headerLeft.addEventListener('click', () => {
+    if (localStorage.getItem('loggedIn') !== 'true') {
+      showLoginScreen();
+    }
+  });
+});
+
+let manualToggle = false;
+
+function toggleProfileDropdown() {
+  const profileDropdown = document.getElementById('profile-dropdown');
+  profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
+}
+
+function showHelpScreen() {
+  hideAllScreens();
+  document.getElementById('help-screen').style.display = 'block';
+}
+
+function showFAQ() {
+  alert('Aquí puedes mostrar las Preguntas Frecuentes.');
+}
+
+function showContact() {
+  hideAllScreens();
+  document.getElementById('contact-screen').style.display = 'block';
+}
+
+function toggleContactInfo() {
+  const contactInfo = document.getElementById('contact-info');
+  contactInfo.style.display = contactInfo.style.display === 'block' ? 'none' : 'block';
+}
+
+function handleLogout() {
+  localStorage.removeItem('loggedIn');
+  localStorage.removeItem('email');
+  localStorage.removeItem('name');
+  const menu = document.getElementById('menu-desplegable');
+  menu.classList.remove('show');
+  menu.style.display = 'none';
+  hideAllScreens();
+  showLoginScreen();
+}

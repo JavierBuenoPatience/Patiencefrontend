@@ -11,6 +11,10 @@
     <div class="header-left" onclick="handleLogoClick()">Patience</div>
     <div class="header-right">
       <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon">
+      <div id="profile-dropdown" class="dropdown-content">
+        <a href="#" onclick="handleLogout()">Cerrar sesión</a>
+        <a href="#" onclick="showHelp()">Ayuda</a>
+      </div>
     </div>
   </header>
   <div class="menu-desplegable" id="menu-desplegable">
@@ -164,7 +168,16 @@
       </div>
     </div>
 
-    <!-- Pantalla Próximamente -->
+    <!-- Pantalla de Ayuda -->
+    <div class="card" id="help-screen" style="display: none;">
+      <h2>Ayuda</h2>
+      <div class="help-section">
+        <button onclick="showFAQs()">Preguntas Frecuentes</button>
+        <button onclick="showContactOptions()">Contacta con nosotros</button>
+      </div>
+    </div>
+
+    <!-- Pantalla de Próximamente -->
     <div class="card" id="coming-soon-screen" style="display: none;">
       <h2>Próximamente</h2>
       <p>Esta funcionalidad estará disponible pronto.</p>
@@ -176,3 +189,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+

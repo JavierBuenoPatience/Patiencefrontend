@@ -34,9 +34,9 @@ header {
 }
 
 .header-right img {
-  width: 30px; /* Reducido */
+  width: 30px; /* Mantenemos el tamaño reducido */
   cursor: pointer;
-  margin-left: 10px; /* Reducido */
+  margin-left: 5px; /* Reducimos el margen izquierdo para moverla más a la izquierda */
 }
 
 .menu-desplegable {

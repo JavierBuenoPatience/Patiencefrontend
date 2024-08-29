@@ -451,3 +451,11 @@ footer {
 .help-section button:hover {
   background-color: #019A92;
 }
+
+.profile-img {
+  width: 80px; /* Cambia este valor para ajustar el tamaño según lo que desees */
+  height: 80px; /* Asegúrate de que el alto y el ancho sean iguales para mantener la proporción */
+  border-radius: 50%; /* Mantiene la imagen circular */
+  object-fit: cover; /* Asegura que la imagen cubra completamente el área designada */
+  margin-bottom: 10px; /* Puedes ajustar este valor para cambiar el espacio debajo de la imagen */
+}

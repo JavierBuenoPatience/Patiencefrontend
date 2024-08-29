@@ -31,6 +31,7 @@ header {
 .header-right {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .header-right img {
@@ -397,6 +398,7 @@ footer {
   background-color: #019A92;
 }
 
+/* Estilos adicionales para el menú desplegable */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -405,6 +407,8 @@ footer {
   padding: 12px;
   z-index: 1;
   right: 10px;
+  top: 40px;
+  border-radius: 10px;
 }
 
 .dropdown-content a {
@@ -421,4 +425,27 @@ footer {
 
 .show-dropdown {
   display: block;
+}
+
+.help-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.help-section button {
+  width: 100%;
+  background-color: #01C0B4;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 10px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.help-section button:hover {
+  background-color: #019A92;
 }

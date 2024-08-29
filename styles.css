@@ -12,7 +12,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 16px; /* Aseguramos que el padding no sea excesivo */
+  padding: 8px 16px;
   background-color: #333;
   color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -20,11 +20,10 @@ header {
   width: 100%;
   top: 0;
   z-index: 1000;
-  box-sizing: border-box; /* Aseguramos que el padding esté incluido dentro del ancho del header */
 }
 
 .header-left {
-  font-size: 20px; /* Reducido */
+  font-size: 20px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -32,13 +31,47 @@ header {
 .header-right {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .header-right img {
-  width: 30px; /* Reducido */
+  width: 30px;
   cursor: pointer;
-  margin-left: 0px; /* Reducido */
-  margin-right: 16px; /* Espacio a la derecha para no estar pegado al borde */
+  margin-left: 10px;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 1001;
+}
+
+.profile-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-dropdown ul li {
+  margin: 0;
+}
+
+.profile-dropdown ul li a {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.profile-dropdown ul li a:hover {
+  background-color: #f4f4f4;
 }
 
 .menu-desplegable {
@@ -46,12 +79,12 @@ header {
   top: 50%;
   left: 0px;
   transform: translateY(-50%);
-  width: 200px; /* Reducido */
+  width: 200px;
   height: auto;
   max-height: 80vh;
   background-color: #01C0B4;
   color: #fff;
-  padding: 10px; /* Reducido */
+  padding: 10px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   z-index: 999;
   display: flex;
@@ -69,15 +102,15 @@ header {
 }
 
 .menu-desplegable ul li {
-  margin: 10px 0; /* Reducido */
+  margin: 10px 0;
 }
 
 .menu-desplegable ul li a {
   color: #fff;
   text-decoration: none;
-  font-size: 14px; /* Reducido */
+  font-size: 14px;
   display: block;
-  padding: 8px; /* Reducido */
+  padding: 8px;
   border-radius: 5px;
 }
 
@@ -87,38 +120,38 @@ header {
 
 .main-content {
   flex: 1;
-  padding: 16px; /* Reducido */
+  padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
-  margin-top: 64px; /* Reducido */
-  margin-bottom: 40px; /* Reducido */
+  margin-top: 64px;
+  margin-bottom: 40px;
 }
 
 .branding {
   text-align: center;
-  margin-bottom: 16px; /* Reducido */
+  margin-bottom: 16px;
 }
 
 .main-title {
-  font-size: 28px; /* Reducido */
+  font-size: 28px;
   font-weight: bold;
   color: #333;
 }
 
 .tagline {
-  font-size: 14px; /* Reducido */
+  font-size: 14px;
   font-weight: 500;
   color: #666;
 }
 
 .card {
   width: 100%;
-  max-width: 800px; /* Reducido */
+  max-width: 800px;
   background-color: #fff;
-  padding: 24px; /* Reducido */
-  margin-bottom: 16px; /* Reducido */
+  padding: 24px;
+  margin-bottom: 16px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -127,9 +160,9 @@ header {
 }
 
 .card h2 {
-  margin-bottom: 16px; /* Reducido */
+  margin-bottom: 16px;
   color: #01C0B4;
-  font-size: 20px; /* Reducido */
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -140,7 +173,7 @@ header {
 }
 
 .card form label {
-  margin-bottom: 8px; /* Reducido */
+  margin-bottom: 8px;
   font-weight: bold;
   color: #333;
 }
@@ -148,12 +181,12 @@ header {
 .card form input,
 .card form select {
   width: 100%;
-  padding: 12px; /* Reducido */
-  margin-bottom: 16px; /* Reducido */
+  padding: 12px;
+  margin-bottom: 16px;
   border: 1px solid #ccc;
   border-radius: 10px;
   box-sizing: border-box;
-  font-size: 14px; /* Reducido */
+  font-size: 14px;
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
 }
@@ -163,9 +196,9 @@ header {
   background-color: #01C0B4;
   color: #fff;
   border: none;
-  padding: 12px; /* Reducido */
+  padding: 12px;
   cursor: pointer;
-  font-size: 16px; /* Reducido */
+  font-size: 16px;
   border-radius: 10px;
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
@@ -186,17 +219,17 @@ header {
 }
 
 .logo {
-  max-width: 100px; /* Reducido */
-  margin-bottom: 16px; /* Reducido */
+  max-width: 100px;
+  margin-bottom: 16px;
 }
 
 footer {
   text-align: center;
-  padding: 8px 16px; /* Reducido */
+  padding: 8px 16px;
   border-top: 1px solid #ddd;
   background-color: #333;
   color: #fff;
-  font-size: 10px; /* Reducido */
+  font-size: 10px;
   position: fixed;
   width: 100%;
   bottom: 0;
@@ -207,15 +240,15 @@ footer {
 .home-section {
   display: flex;
   justify-content: center;
-  gap: 16px; /* Reducido */
+  gap: 16px;
   width: 100%;
-  max-width: 1000px; /* Reducido */
-  margin: 16px auto; /* Reducido */
+  max-width: 1000px;
+  margin: 16px auto;
 }
 
 .intro-card {
   background-color: #fff;
-  padding: 16px; /* Reducido */
+  padding: 16px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   flex: 1;
@@ -223,7 +256,7 @@ footer {
 
 .intro-video {
   width: 100%;
-  height: 300px; /* Reducido */
+  height: 300px;
   border: none;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -233,8 +266,8 @@ footer {
   background-color: #4A154B;
   color: #fff;
   border: none;
-  padding: 12px 16px; /* Reducido */
-  font-size: 14px; /* Reducido */
+  padding: 12px 16px;
+  font-size: 14px;
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
   border-radius: 10px;
@@ -248,41 +281,41 @@ footer {
 }
 
 .training-section {
-  margin-bottom: 24px; /* Reducido */
+  margin-bottom: 24px;
 }
 
 .training-section h3 {
-  font-size: 20px; /* Reducido */
+  font-size: 20px;
   color: #019A92;
-  margin-bottom: 12px; /* Reducido */
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
 }
 
 .training-section h3::before {
-  font-size: 24px; /* Reducido */
-  margin-right: 8px; /* Reducido */
+  font-size: 24px;
+  margin-right: 8px;
 }
 
 .training-section p,
 .training-section ul {
-  font-size: 14px; /* Reducido */
+  font-size: 14px;
   color: #666;
   line-height: 1.6;
 }
 
 .training-section ul {
-  padding-left: 16px; /* Reducido */
+  padding-left: 16px;
 }
 
 .training-section ul li {
-  margin-bottom: 8px; /* Reducido */
+  margin-bottom: 8px;
   position: relative;
-  padding-left: 16px; /* Reducido */
+  padding-left: 16px;
 }
 
 .training-section ul li::before {
-  font-size: 14px; /* Reducido */
+  font-size: 14px;
 }
 
 .training-section ul li strong {
@@ -290,13 +323,13 @@ footer {
 }
 
 .training-section-usage {
-  margin-top: 24px; /* Reducido */
+  margin-top: 24px;
 }
 
 .training-section-usage h3 {
-  font-size: 20px; /* Reducido */
+  font-size: 20px;
   color: #333;
-  margin-bottom: 16px; /* Reducido */
+  margin-bottom: 16px;
 }
 
 .training-section-usage ul {
@@ -306,15 +339,15 @@ footer {
 }
 
 .training-section-usage ul li {
-  font-size: 14px; /* Reducido */
+  font-size: 14px;
   color: #666;
-  margin-bottom: 8px; /* Reducido */
-  padding-left: 16px; /* Reducido */
+  margin-bottom: 8px;
+  padding-left: 16px;
   position: relative;
 }
 
 .training-section-usage ul li::before {
-  font-size: 14px; /* Reducido */
+  font-size: 14px;
 }
 
 .news-section {
@@ -322,8 +355,8 @@ footer {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 700px; /* Reducido */
-  margin-top: 16px; /* Reducido */
+  max-width: 700px;
+  margin-top: 16px;
 }
 
 .news-section button {
@@ -331,11 +364,11 @@ footer {
   background-color: #01C0B4;
   color: #fff;
   border: none;
-  padding: 12px; /* Reducido */
+  padding: 12px;
   cursor: pointer;
-  font-size: 16px; /* Reducido */
+  font-size: 16px;
   border-radius: 10px;
-  margin-bottom: 8px; /* Reducido */
+  margin-bottom: 8px;
   text-align: left;
   font-family: 'Poppins', sans-serif;
 }
@@ -346,11 +379,11 @@ footer {
 
 .news-iframe {
   width: 100%;
-  height: 500px; /* Reducido */
+  height: 500px;
   border: none;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 16px; /* Reducido */
+  margin-top: 16px;
   display: none;
 }
 
@@ -358,62 +391,54 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px; /* Reducido */
+  padding: 16px;
 }
 
 #groups-screen h2 {
-  font-size: 20px; /* Reducido */
+  font-size: 20px;
   color: #01C0B4;
-  margin-bottom: 16px; /* Reducido */
+  margin-bottom: 16px;
 }
 
 #groups-screen p {
-  font-size: 14px; /* Reducido */
+  font-size: 14px;
   color: #333;
-  margin-bottom: 16px; /* Reducido */
+  margin-bottom: 16px;
   text-align: center;
 }
 
-.profile-img {
-  width: 80px; /* Cambia este valor para ajustar el tamaño según lo que desees */
-  height: 80px; /* Asegúrate de que el alto y el ancho sean iguales para mantener la proporción */
-  border-radius: 50%; /* Mantiene la imagen circular */
-  object-fit: cover; /* Asegura que la imagen cubra completamente el área designada */
-  margin-bottom: 10px; /* Puedes ajustar este valor para cambiar el espacio debajo de la imagen */
+.help-options button {
+  width: 100%;
+  background-color: #01C0B4;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
 }
 
-#profile-dropdown {
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    display: none;
-    z-index: 1000;
+.help-options button:hover {
+  background-color: #019A92;
 }
 
-#profile-dropdown.show {
-    display: block;
+.ia-options button {
+  width: 100%;
+  background-color: #01C0B4;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
 }
 
-#profile-dropdown ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-#profile-dropdown ul li {
-    padding: 10px;
-    text-align: left;
-}
-
-#profile-dropdown ul li a {
-    text-decoration: none;
-    color: #333;
-}
-
-#profile-dropdown ul li a:hover {
-    background-color: #f4f4f4;
+.ia-options button:hover {
+  background-color: #019A92;
 }

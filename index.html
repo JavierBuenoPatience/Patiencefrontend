@@ -168,12 +168,22 @@
       </div>
     </div>
 
-    <!-- Pantalla de Ayuda -->
+   <!-- Pantalla de Ayuda -->
     <div class="card" id="help-screen" style="display: none;">
       <h2>Ayuda</h2>
       <div class="help-section">
-        <button onclick="showFAQs()">Preguntas Frecuentes</button>
-        <button onclick="showContactOptions()">Contacta con nosotros</button>
+        <button onclick="toggleSection('faqs-section')">Preguntas Frecuentes</button>
+        <div id="faqs-section" class="collapsible-section">
+          <p>Desafíos durante la oposición...</p>
+          <!-- Aquí va todo el contenido de las Preguntas Frecuentes -->
+        </div>
+
+        <button onclick="toggleSection('contact-section')">Contacta con nosotros</button>
+        <div id="contact-section" class="collapsible-section">
+          <p>Accede a Slack y escríbenos al chat privado de Patience!</p>
+          <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+          <p>O también puedes escribirnos un email a <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
+        </div>
       </div>
     </div>
 

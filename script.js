@@ -5,33 +5,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainContent = document.querySelector('.main-content');
   const headerLeft = document.querySelector('.header-left');
   const headerRight = document.querySelector('.header-right img');
+  const dropdown = document.getElementById('profile-dropdown');
 
-  // Verifica el estado de inicio de sesión
   if (localStorage.getItem('loggedIn') === 'true') {
     showHomeScreen();
-    menu.style.display = 'block';  // Asegura que el menú sea visible
+    menu.style.display = 'block';
   } else {
     showLoginScreen();
     menu.style.display = 'none';
   }
 
-  // Alterna el menú de perfil
   headerRight.addEventListener('click', () => {
-    toggleProfileDropdown();
+    dropdown.classList.toggle('show-dropdown');
   });
 
-  // Maneja clics en el logo
-  headerLeft.addEventListener('click', () => {
-    if (localStorage.getItem('loggedIn') !== 'true') {
-      showLoginScreen();
+  document.addEventListener('click', (event) => {
+    if (!headerRight.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.remove('show-dropdown');
     }
   });
-
-  // Cargar cliente de Google API
-  handleClientLoad();
 });
-
-let manualToggle = false;
 
 function handleRegistration(event) {
   event.preventDefault();
@@ -163,6 +156,23 @@ function showGroups() {
   }
 }
 
+function showIASpecializedOptions() {
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens();
+    document.getElementById('ia-specialized-screen').style.display = 'block';
+  } else {
+    showLoginScreen();
+  }
+}
+
+function redirectToIA(specialty) {
+  if (specialty === 'biologia') {
+    window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank');
+  } else {
+    alert('La especialidad seleccionada estará disponible pronto.');
+  }
+}
+
 function showTraining() {
   if (localStorage.getItem('loggedIn') === 'true') {
     hideAllScreens();
@@ -190,40 +200,6 @@ function showNews() {
   }
 }
 
-function showIASpecializedOptions() {
-  if (localStorage.getItem('loggedIn') === 'true') {
-    hideAllScreens();
-    document.getElementById('ia-specialized-screen').style.display = 'block';
-  } else {
-    showLoginScreen();
-  }
-}
-
-function showHelp() {
-  if (localStorage.getItem('loggedIn') === 'true') {
-    hideAllScreens();
-    document.getElementById('help-screen').style.display = 'block';
-  } else {
-    showLoginScreen();
-  }
-}
-
-function redirectToIA(specialty) {
-  if (specialty === 'biologia') {
-    window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank');
-  } else {
-    alert('Esta especialidad estará disponible próximamente.');
-  }
-}
-
-function showFaq() {
-  alert('Esta sección estará disponible próximamente.');
-}
-
-function showContactOptions() {
-  alert('Slack: https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA\nEmail: javibueda@gmail.com\nTeléfono: +34 691 350 972');
-}
-
 function hideAllScreens() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('registration-screen').style.display = 'none';
@@ -234,12 +210,15 @@ function hideAllScreens() {
   document.getElementById('news-screen').style.display = 'none';
   document.getElementById('coming-soon-screen').style.display = 'none';
   document.getElementById('ia-specialized-screen').style.display = 'none';
-  document.getElementById('help-screen').style.display = 'none';
 }
 
-function toggleProfileDropdown() {
-  const dropdown = document.getElementById('profile-dropdown');
-  dropdown.style.display = dropdown.style.display === 'none' || dropdown.style.display === '' ? 'block' : 'none';
+function redirectToURL(url) {
+  if (localStorage.getItem('loggedIn') === 'true') {
+    window.open(url, '_blank');
+  } else {
+    alert('Por favor, inicia sesión para acceder a esta funcionalidad.');
+    showLoginScreen();
+  }
 }
 
 function handleLogoClick() {
@@ -271,80 +250,12 @@ function showNewsContent(newsType) {
   const csifIframe = document.getElementById('csif-iframe');
   const sipriIframe = document.getElementById('sipri-iframe');
 
-  // Oculta ambos iframes
   csifIframe.style.display = 'none';
   sipriIframe.style.display = 'none';
 
-  // Muestra el iframe seleccionado
   if (newsType === 'csif') {
     csifIframe.style.display = 'block';
   } else if (newsType === 'sipri') {
     sipriIframe.style.display = 'block';
   }
 }
-
-// Integración con Google Calendar
-
-let CLIENT_ID = '1051045274828-t36vldu3s900upednlah9v59qdgo6onj.apps.googleusercontent.com';
-let API_KEY = 'AIzaSyDekTyQEzRbB2uI0-jVp6d-Fpwwnz5EeWk';
-let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
-let SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
-
-function handleClientLoad() {
-  gapi.load('client:auth2', initClient);
-}
-
-function initClient() {
-  gapi.client.init({
-    apiKey: API_KEY,
-    clientId: CLIENT_ID,
-    discoveryDocs: DISCOVERY_DOCS,
-    scope: SCOPES
-  }).then(() => {
-    gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-    updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-  }, (error) => {
-    console.log(JSON.stringify(error, null, 2));
-  });
-}
-
-function updateSigninStatus(isSignedIn) {
-  if (isSignedIn) {
-    document.getElementById('authorize-button').style.display = 'none';
-    document.getElementById('calendar').style.display = 'block';
-    loadCalendar();
-  } else {
-    document.getElementById('authorize-button').style.display = 'block';
-    document.getElementById('calendar').style.display = 'none';
-  }
-}
-
-function handleAuthClick(event) {
-  gapi.auth2.getAuthInstance().signIn();
-}
-
-function handleSignoutClick(event) {
-  gapi.auth2.getAuthInstance().signOut();
-}
-
-function loadCalendar() {
-  gapi.client.calendar.events.list({
-    'calendarId': 'primary',
-    'timeMin': (new Date()).toISOString(),
-    'showDeleted': false,
-    'singleEvents': true,
-    'maxResults': 10,
-    'orderBy': 'startTime'
-  }).then((response) => {
-    let events = response.result.items;
-    if (events.length > 0) {
-      let calendarIframe = document.getElementById('calendar-iframe');
-      let calendarSrc = `https://calendar.google.com/calendar/embed?src=${gapi.auth2.getAuthInstance().currentUser.get().getId()}&ctz=Europe/Madrid`;
-      calendarIframe.src = calendarSrc;
-    } else {
-      console.log('No upcoming events found.');
-    }
-  });
-}
-
-document.addEventListener('DOMContentLoaded', handleClientLoad);

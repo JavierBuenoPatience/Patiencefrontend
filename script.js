@@ -200,6 +200,23 @@ function showNews() {
   }
 }
 
+function showHelp() {
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens();
+    document.getElementById('help-screen').style.display = 'block';
+  } else {
+    showLoginScreen();
+  }
+}
+
+function showFAQs() {
+  alert('Sección de Preguntas Frecuentes disponible pronto.');
+}
+
+function showContactOptions() {
+  alert('Opciones de contacto estarán disponibles pronto.');
+}
+
 function hideAllScreens() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('registration-screen').style.display = 'none';
@@ -210,6 +227,7 @@ function hideAllScreens() {
   document.getElementById('news-screen').style.display = 'none';
   document.getElementById('coming-soon-screen').style.display = 'none';
   document.getElementById('ia-specialized-screen').style.display = 'none';
+  document.getElementById('help-screen').style.display = 'none';
 }
 
 function redirectToURL(url) {

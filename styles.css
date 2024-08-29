@@ -12,7 +12,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 16px; /* Reducido */
+  padding: 8px 16px; /* Aseguramos que el padding no sea excesivo */
   background-color: #333;
   color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -20,6 +20,7 @@ header {
   width: 100%;
   top: 0;
   z-index: 1000;
+  box-sizing: border-box; /* Aseguramos que el padding esté incluido dentro del ancho del header */
 }
 
 .header-left {
@@ -34,9 +35,10 @@ header {
 }
 
 .header-right img {
-  width: 30px; /* Mantenemos el tamaño reducido */
+  width: 30px; /* Tamaño de la imagen */
   cursor: pointer;
-  margin-left: 5px; /* Reducimos el margen izquierdo para moverla más a la izquierda */
+  margin-left: 0; /* Eliminamos el margen extra */
+  margin-right: 16px; /* Espacio a la derecha para no estar pegado al borde */
 }
 
 .menu-desplegable {

@@ -200,23 +200,6 @@ function showNews() {
   }
 }
 
-function showHelp() {
-  if (localStorage.getItem('loggedIn') === 'true') {
-    hideAllScreens();
-    document.getElementById('help-screen').style.display = 'block';
-  } else {
-    showLoginScreen();
-  }
-}
-
-function showFAQs() {
-  alert('Sección de Preguntas Frecuentes disponible pronto.');
-}
-
-function showContactOptions() {
-  alert('Opciones de contacto estarán disponibles pronto.');
-}
-
 function hideAllScreens() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('registration-screen').style.display = 'none';
@@ -276,4 +259,18 @@ function showNewsContent(newsType) {
   } else if (newsType === 'sipri') {
     sipriIframe.style.display = 'block';
   }
+}
+
+function showHelp() {
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens();
+    document.getElementById('help-screen').style.display = 'block';
+  } else {
+    showLoginScreen();
+  }
+}
+
+function toggleSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  section.style.display = section.style.display === 'none' || section.style.display === '' ? 'block' : 'none';
 }

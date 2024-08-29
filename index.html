@@ -1,195 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Patience - Biología y Geología</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patience - Biología y Geología</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <div class="header-left" onclick="handleLogoClick()">Patience</div>
-    <div class="header-right">
-      <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon" onclick="toggleProfileDropdown()">
-      <div id="profile-dropdown" class="profile-dropdown">
-        <a href="#" onclick="showHelpScreen()">Ayuda</a>
-        <a href="#" onclick="handleLogout()">Cerrar sesión</a>
-      </div>
-    </div>
-  </header>
-  <div class="menu-desplegable" id="menu-desplegable">
-    <ul>
-      <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
-      <li><a href="#" onclick="showProfile()">Perfil</a></li>
-      <li><a href="https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia" target="_blank">IA especializada</a></li>
-      <li><a href="#" onclick="showGroups()">Mis grupos</a></li>
-      <li><a href="#" onclick="showTraining()">¿Qué es Patience?</a></li>
-      <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
-      <li><a href="#" onclick="showNews()">Últimas noticias</a></li>
-    </ul>
-  </div>
-  <div class="main-content">
-    <!-- Pantalla de Inicio de Sesión -->
-    <div class="card" id="login-screen">
-      <img src="assets/logo.png" alt="Patience Logo" class="logo">
-      <h2>Inicio de Sesión</h2>
-      <form id="login-form" onsubmit="handleLogin(event)">
-        <label for="login-email">Correo Electrónico:</label>
-        <input type="email" id="login-email" name="email" required>
-        <label for="login-password">Contraseña:</label>
-        <input type="password" id="login-password" name="password" required>
-        <button type="submit">Iniciar Sesión</button>
-      </form>
-      <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">Regístrate!</button></p>
-    </div>
-
-    <!-- Pantalla de Registro -->
-    <div class="card" id="registration-screen" style="display: none;">
-      <img src="assets/logo.png" alt="Patience Logo" class="logo">
-      <h2>Registro</h2>
-      <form id="registration-form" onsubmit="handleRegistration(event)">
-        <label for="reg-name">Nombre:</label>
-        <input type="text" id="reg-name" name="name" required>
-        <label for="reg-email">Correo Electrónico:</label>
-        <input type="email" id="reg-email" name="email" required>
-        <label for="reg-password">Contraseña:</label>
-        <input type="password" id="reg-password" name="password" required>
-        <button type="submit">Registrarse</button>
-      </form>
-      <p id="registration-message" style="display: none;">Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
-      <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
-      <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
-    </div>
-
-    <!-- Pantalla de Inicio -->
-    <div class="card" id="home-screen" style="display: none;">
-      <img src="assets/logo.png" alt="Patience Logo" class="logo">
-      <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
-      <div class="welcome-message">
-        <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
-        <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
-      </div>
-      <div style="position: relative; overflow: hidden; aspect-ratio: 1920/1080">
-        <iframe src="https://share.synthesia.io/embeds/videos/4c43a995-7419-47dd-ad2e-acc2f84ea689" loading="lazy" title="Synthesia video player - Company Intro" allowfullscreen allow="encrypted-media; fullscreen;" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow:hidden;"></iframe>
-      </div>
-    </div>
-
-    <!-- Pantalla de Perfil -->
-    <div class="card" id="profile-screen" style="display: none;">
-      <h2>Perfil</h2>
-      <form id="profile-form" onsubmit="handleProfileUpdate(event)">
-        <div class="profile-field">
-          <img id="profile-img" src="assets/default-profile.png" alt="Profile Image" class="profile-img">
-          <input type="file" id="profile-img-upload" class="profile-img-upload" accept="image/*" onchange="handleImageUpload(event)">
+    <header>
+        <div class="header-left" onclick="handleLogoClick()">Patience</div>
+        <div class="header-right">
+            <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon">
+            <div id="profile-dropdown" class="profile-dropdown">
+                <ul>
+                    <li><a href="#" onclick="handleLogout()">Cerrar sesión</a></li>
+                    <li><a href="#" onclick="showHelp()">Ayuda</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="profile-field">
-          <label for="full-name">Nombre Completo:</label>
-          <input type="text" id="full-name" name="full-name" required>
-        </div>
-        <div class="profile-field">
-          <label for="profile-email">Email:</label>
-          <input type="email" id="profile-email" name="profile-email" required>
-        </div>
-        <div class="profile-field">
-          <label for="phone">Teléfono:</label>
-          <input type="tel" id="phone" name="phone">
-        </div>
-        <div class="profile-field">
-          <label for="study-time">Tiempo dedicado a la oposición:</label>
-          <input type="text" id="study-time" name="study-time">
-        </div>
-        <div class="profile-field">
-          <label for="specialty">Especialidad del cuerpo:</label>
-          <input type="text" id="specialty" name="specialty">
-        </div>
-        <button type="submit">Guardar</button>
-      </form>
-    </div>
-
-    <!-- Pantalla de Mis Grupos -->
-    <div class="card" id="groups-screen" style="display: none;">
-      <h2>Mis Grupos</h2>
-      <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
-      <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
-    </div>
-
-    <!-- Pantalla de Ayuda -->
-    <div class="card" id="help-screen" style="display: none;">
-      <h2>Ayuda</h2>
-      <div class="help-section">
-        <button onclick="showFAQ()">Preguntas Frecuentes</button>
-        <button onclick="showContact()">Contacta con nosotros</button>
-      </div>
-    </div>
-
-    <!-- Pantalla de Contacto -->
-    <div class="card" id="contact-screen" style="display: none;">
-      <h2>Contacta con nosotros</h2>
-      <p>Accede a Slack y escríbenos al chat privado de Patience! Un@ de nuestros compañer@s te atenderá encantad@ :)</p>
-      <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
-      <div>
-        <button onclick="toggleContactInfo()">Ver detalles de contacto</button>
-        <div id="contact-info" style="display: none;">
-          <p>Email de contacto: javibueda@gmail.com</p>
-          <p>Teléfono: +34 691 350 972</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pantalla de ¿Qué es Patience? -->
-    <div class="card" id="training-screen" style="display: none;">
-      <h2>🤔 ¿Qué es Patience?</h2>
-      <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
-
-      <div class="training-section">
-        <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
-        <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
-      </div>
-
-      <div class="training-section">
-        <h3>🛠️ Cómo usar Patience - IA para opositores</h3>
+    </header>
+    <div class="menu-desplegable" id="menu-desplegable">
         <ul>
-          <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
-          <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
-          <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
-          <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
+            <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
+            <li><a href="#" onclick="showProfile()">Perfil</a></li>
+            <li><a href="https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia" target="_blank">IA especializada</a></li>
+            <li><a href="#" onclick="showGroups()">Mis grupos</a></li>
+            <li><a href="#" onclick="showTraining()">¿Qué es Patience?</a></li>
+            <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
+            <li><a href="#" onclick="showNews()">Últimas noticias</a></li>
         </ul>
-      </div>
-
-      <div class="training-section">
-        <h3>📚 Casos de uso para opositores</h3>
-        <ul>
-          <li><strong>Generar Resúmenes 📝:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
-          <li><strong>Crear Esquemas 📊:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
-          <li><strong>Buscar Información Rápida 🔍:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
-          <li><strong>Corregir Documentos 🖋️:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo, y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
-          <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
-          <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
-        </ul>
-      </div>
     </div>
+    <div class="main-content">
+        <!-- Pantalla de Inicio de Sesión -->
+        <div class="card" id="login-screen">
+            <img src="assets/logo.png" alt="Patience Logo" class="logo">
+            <h2>Inicio de Sesión</h2>
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <label for="login-email">Correo Electrónico:</label>
+                <input type="email" id="login-email" name="email" required>
+                <label for="login-password">Contraseña:</label>
+                <input type="password" id="login-password" name="password" required>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+            <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">Regístrate!</button></p>
+        </div>
 
-    <!-- Pantalla Últimas noticias -->
-    <div class="card" id="news-screen" style="display: none;">
-      <h2>Últimas noticias</h2>
-      <div class="news-section">
-        <button onclick="showNewsContent('csif')">CSIF</button>
-        <button onclick="showNewsContent('sipri')">SIPRI</button>
-        <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es/es/categoria/andalucia/educacion/oposiciones"></iframe>
-        <iframe id="sipri-iframe" class="news-iframe" src="https://sipri.es/oposiciones/"></iframe>
-      </div>
-    </div>
+        <!-- Pantalla de Registro -->
+        <div class="card" id="registration-screen" style="display: none;">
+            <img src="assets/logo.png" alt="Patience Logo" class="logo">
+            <h2>Registro</h2>
+            <form id="registration-form" onsubmit="handleRegistration(event)">
+                <label for="reg-name">Nombre:</label>
+                <input type="text" id="reg-name" name="name" required>
+                <label for="reg-email">Correo Electrónico:</label>
+                <input type="email" id="reg-email" name="email" required>
+                <label for="reg-password">Contraseña:</label>
+                <input type="password" id="reg-password" name="password" required>
+                <button type="submit">Registrarse</button>
+            </form>
+            <p id="registration-message" style="display: none;">Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
+            <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
+            <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
+        </div>
 
-    <!-- Pantalla Próximamente -->
-    <div class="card" id="coming-soon-screen" style="display: none;">
-      <h2>Próximamente</h2>
-      <p>Esta funcionalidad estará disponible pronto.</p>
+        <!-- Pantalla de Inicio -->
+        <div class="card" id="home-screen" style="display: none;">
+            <img src="assets/logo.png" alt="Patience Logo" class="logo">
+            <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
+            <div class="welcome-message">
+                <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
+                <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
+            </div>
+            <div style="position: relative; overflow: hidden; aspect-ratio: 1920/1080">
+                <iframe src="https://share.synthesia.io/embeds/videos/4c43a995-7419-47dd-ad2e-acc2f84ea689" loading="lazy" title="Synthesia video player - Company Intro" allowfullscreen allow="encrypted-media; fullscreen;" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow:hidden;"></iframe>
+            </div>
+        </div>
+
+        <!-- Pantalla de Perfil -->
+        <div class="card" id="profile-screen" style="display: none;">
+            <h2>Perfil</h2>
+            <form id="profile-form" onsubmit="handleProfileUpdate(event)">
+                <div class="profile-field">
+                    <img id="profile-img" src="assets/default-profile.png" alt="Profile Image" class="profile-img">
+                    <input type="file" id="profile-img-upload" class="profile-img-upload" accept="image/*" onchange="handleImageUpload(event)">
+                </div>
+                <div class="profile-field">
+                    <label for="full-name">Nombre Completo:</label>
+                    <input type="text" id="full-name" name="full-name" required>
+                </div>
+                <div class="profile-field">
+                    <label for="profile-email">Email:</label>
+                    <input type="email" id="profile-email" name="profile-email" required>
+                </div>
+                <div class="profile-field">
+                    <label for="phone">Teléfono:</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="profile-field">
+                    <label for="study-time">Tiempo dedicado a la oposición:</label>
+                    <input type="text" id="study-time" name="study-time">
+                </div>
+                <div class="profile-field">
+                    <label for="specialty">Especialidad del cuerpo:</label>
+                    <input type="text" id="specialty" name="specialty">
+                </div>
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
+
+        <!-- Pantalla de Mis Grupos -->
+        <div class="card" id="groups-screen" style="display: none;">
+            <h2>Mis Grupos</h2>
+            <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
+            <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+        </div>
+
+        <!-- Pantalla de ¿Qué es Patience? -->
+        <div class="card" id="training-screen" style="display: none;">
+            <h2>🤔 ¿Qué es Patience?</h2>
+            <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
+
+            <div class="training-section">
+                <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
+                <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
+            </div>
+
+            <div class="training-section">
+                <h3>🛠️ Cómo usar Patience - IA para opositores</h3>
+                <ul>
+                    <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
+                    <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
+                    <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
+                    <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
+                </ul>
+            </div>
+
+            <div class="training-section">
+                <h3>📚 Casos de uso para opositores</h3>
+                <ul>
+                    <li><strong>Generar Resúmenes 📝:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
+                    <li><strong>Crear Esquemas 📊:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
+                    <li><strong>Buscar Información Rápida 🔍:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
+                    <li><strong>Corregir Documentos 🖋️:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo, y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
+                    <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
+                    <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Pantalla Últimas noticias -->
+        <div class="card" id="news-screen" style="display: none;">
+            <h2>Últimas noticias</h2>
+            <div class="news-section">
+                <button onclick="showNewsContent('csif')">CSIF</button>
+                <button onclick="showNewsContent('sipri')">SIPRI</button>
+                <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es/es/categoria/andalucia/educacion/oposiciones"></iframe>
+                <iframe id="sipri-iframe" class="news-iframe" src="https://sipri.es/oposiciones/"></iframe>
+            </div>
+        </div>
+
+        <!-- Pantalla de Ayuda -->
+        <div class="card" id="help-screen" style="display: none;">
+            <h2>Ayuda</h2>
+            <div class="help-section">
+                <button onclick="showFAQ()">Preguntas Frecuentes</button>
+                <button onclick="showContact()">Contacta con nosotros</button>
+            </div>
+        </div>
+
+        <!-- Pantalla de Contacto -->
+        <div class="card" id="contact-screen" style="display: none;">
+            <h2>Contacta con nosotros</h2>
+            <p>Accede a Slack y escríbenos al chat privado de Patience! Un@ de nuestros compañer@s te atenderá encantad@ :)</p>
+            <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+            <button onclick="toggleContactOptions()">Mostrar información de contacto</button>
+            <div id="contact-options" class="contact-options" style="display: none;">
+                <p>Email de contacto: javibueda@gmail.com</p>
+                <p>Teléfono: +34 691 350 972</p>
+            </div>
+        </div>
+
+        <!-- Pantalla Próximamente -->
+        <div class="card" id="coming-soon-screen" style="display: none;">
+            <h2>Próximamente</h2>
+            <p>Esta funcionalidad estará disponible pronto.</p>
+        </div>
     </div>
-  </div>
-  <footer>
-    <p>© 2024 Patience. Todos los derechos reservados.</p>
-  </footer>
-  <script src="script.js"></script>
+    <footer>
+        <p>© 2024 Patience. Todos los derechos reservados.</p>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
+
 

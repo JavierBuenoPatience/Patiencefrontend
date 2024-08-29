@@ -382,3 +382,56 @@ footer {
   margin-bottom: 10px; /* Puedes ajustar este valor para cambiar el espacio debajo de la imagen */
 }
 
+.profile-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: none;
+  flex-direction: column;
+}
+
+.profile-dropdown a {
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 10px;
+  display: block;
+}
+
+.profile-dropdown a:hover {
+  background-color: #444;
+}
+
+.help-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.help-section button {
+  width: 100%;
+  background-color: #01C0B4;
+  color: #fff;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 10px;
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
+}
+
+.help-section button:hover {
+  background-color: #019A92;
+}
+
+#contact-info {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+}

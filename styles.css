@@ -382,56 +382,38 @@ footer {
   margin-bottom: 10px; /* Puedes ajustar este valor para cambiar el espacio debajo de la imagen */
 }
 
-.profile-dropdown {
-  position: absolute;
-  top: 50px;
-  right: 0;
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: none;
-  flex-direction: column;
+#profile-dropdown {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
 }
 
-.profile-dropdown a {
-  color: #fff;
-  text-decoration: none;
-  padding: 5px 10px;
-  display: block;
+#profile-dropdown.show {
+    display: block;
 }
 
-.profile-dropdown a:hover {
-  background-color: #444;
+#profile-dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
-.help-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+#profile-dropdown ul li {
+    padding: 10px;
+    text-align: left;
 }
 
-.help-section button {
-  width: 100%;
-  background-color: #01C0B4;
-  color: #fff;
-  border: none;
-  padding: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  border-radius: 10px;
-  text-align: left;
-  font-family: 'Poppins', sans-serif;
+#profile-dropdown ul li a {
+    text-decoration: none;
+    color: #333;
 }
 
-.help-section button:hover {
-  background-color: #019A92;
-}
-
-#contact-info {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #f4f4f4;
-  border-radius: 5px;
+#profile-dropdown ul li a:hover {
+    background-color: #f4f4f4;
 }

@@ -10,13 +10,7 @@
   <header>
     <div class="header-left" onclick="handleLogoClick()">Patience</div>
     <div class="header-right">
-      <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon" onclick="toggleProfileDropdown()">
-      <div class="profile-dropdown" id="profile-dropdown" style="display: none;">
-        <ul>
-          <li><a href="#" onclick="handleLogout()">Cerrar sesión</a></li>
-          <li><a href="#" onclick="showHelp()">Ayuda</a></li>
-        </ul>
-      </div>
+      <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon">
     </div>
   </header>
   <div class="menu-desplegable" id="menu-desplegable">
@@ -148,18 +142,7 @@
       </div>
     </div>
 
-    <!-- Pantalla de Opciones de IA Especializada -->
-    <div class="card" id="ia-specialized-screen" style="display: none;">
-      <h2>Selecciona tu Especialidad</h2>
-      <div class="ia-options">
-        <button onclick="redirectToIA('biologia')">Biología y Geología</button>
-        <button onclick="redirectToIA('ingles')">Inglés</button>
-        <button onclick="redirectToIA('lengua')">Lengua Castellana y Literatura</button>
-        <button onclick="redirectToIA('matematicas')">Matemáticas</button>
-      </div>
-    </div>
-
-    <!-- Pantalla de Últimas noticias -->
+    <!-- Pantalla Últimas noticias -->
     <div class="card" id="news-screen" style="display: none;">
       <h2>Últimas noticias</h2>
       <div class="news-section">
@@ -170,16 +153,18 @@
       </div>
     </div>
 
-    <!-- Pantalla de Ayuda -->
-    <div class="card" id="help-screen" style="display: none;">
-      <h2>Ayuda</h2>
-      <div class="help-options">
-        <button onclick="showFaq()">Preguntas Frecuentes</button>
-        <button onclick="showContactOptions()">Contacta con nosotros</button>
+    <!-- Pantalla de Selección de IA Especializada -->
+    <div class="card" id="ia-specialized-screen" style="display: none;">
+      <h2>Selecciona tu especialidad</h2>
+      <div class="ia-options">
+        <button onclick="redirectToIA('biologia')">Biología y Geología</button>
+        <button onclick="redirectToIA('ingles')">Inglés</button>
+        <button onclick="redirectToIA('lengua')">Lengua Castellana y Literatura</button>
+        <button onclick="redirectToIA('matematicas')">Matemáticas</button>
       </div>
     </div>
 
-    <!-- Pantalla de Próximamente -->
+    <!-- Pantalla Próximamente -->
     <div class="card" id="coming-soon-screen" style="display: none;">
       <h2>Próximamente</h2>
       <p>Esta funcionalidad estará disponible pronto.</p>

@@ -10,7 +10,11 @@
   <header>
     <div class="header-left" onclick="handleLogoClick()">Patience</div>
     <div class="header-right">
-      <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon">
+      <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon" onclick="toggleProfileDropdown()">
+      <div id="profile-dropdown" class="profile-dropdown">
+        <a href="#" onclick="showHelpScreen()">Ayuda</a>
+        <a href="#" onclick="handleLogout()">Cerrar sesión</a>
+      </div>
     </div>
   </header>
   <div class="menu-desplegable" id="menu-desplegable">
@@ -22,7 +26,6 @@
       <li><a href="#" onclick="showTraining()">¿Qué es Patience?</a></li>
       <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
       <li><a href="#" onclick="showNews()">Últimas noticias</a></li>
-      <li><a href="#" onclick="handleLogout()">Cerrar sesión</a></li>
     </ul>
   </div>
   <div class="main-content">
@@ -108,6 +111,29 @@
       <h2>Mis Grupos</h2>
       <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
       <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+    </div>
+
+    <!-- Pantalla de Ayuda -->
+    <div class="card" id="help-screen" style="display: none;">
+      <h2>Ayuda</h2>
+      <div class="help-section">
+        <button onclick="showFAQ()">Preguntas Frecuentes</button>
+        <button onclick="showContact()">Contacta con nosotros</button>
+      </div>
+    </div>
+
+    <!-- Pantalla de Contacto -->
+    <div class="card" id="contact-screen" style="display: none;">
+      <h2>Contacta con nosotros</h2>
+      <p>Accede a Slack y escríbenos al chat privado de Patience! Un@ de nuestros compañer@s te atenderá encantad@ :)</p>
+      <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+      <div>
+        <button onclick="toggleContactInfo()">Ver detalles de contacto</button>
+        <div id="contact-info" style="display: none;">
+          <p>Email de contacto: javibueda@gmail.com</p>
+          <p>Teléfono: +34 691 350 972</p>
+        </div>
+      </div>
     </div>
 
     <!-- Pantalla de ¿Qué es Patience? -->

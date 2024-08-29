@@ -5,30 +5,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.querySelector('.main-content');
     const headerLeft = document.querySelector('.header-left');
     const headerRight = document.querySelector('.header-right img');
+    const profileDropdown = document.getElementById('profile-dropdown');
 
     // Verifica el estado de inicio de sesión
     if (localStorage.getItem('loggedIn') === 'true') {
         showHomeScreen();
-        menu.style.display = 'block'; // Asegura que el menú sea visible
+        menu.style.display = 'block';
+        document.querySelector('header').style.display = 'flex';
+        document.querySelector('footer').style.display = 'block';
     } else {
         showLoginScreen();
         menu.style.display = 'none';
+        document.querySelector('header').style.display = 'none';
+        document.querySelector('footer').style.display = 'none';
     }
 
-    // Alterna el menú de perfil
+    // Maneja el clic en la imagen de perfil para mostrar el dropdown
     headerRight.addEventListener('click', () => {
-        toggleProfileDropdown();
+        profileDropdown.classList.toggle('show');
     });
 
-    // Maneja clics en el logo
-    headerLeft.addEventListener('click', () => {
-        if (localStorage.getItem('loggedIn') !== 'true') {
-            showLoginScreen();
+    // Oculta el menú desplegable cuando se hace clic fuera de él
+    document.addEventListener('click', function(event) {
+        if (!profileDropdown.contains(event.target) && !headerRight.contains(event.target)) {
+            profileDropdown.classList.remove('show');
         }
     });
-});
 
-let manualToggle = false;
+    // Otros códigos de manejo de inicio de sesión, perfil, etc.
+});
 
 function handleRegistration(event) {
     event.preventDefault();
@@ -196,6 +201,16 @@ function showHelp() {
     }
 }
 
+function showFAQ() {
+    // Aquí puedes agregar el código para mostrar las preguntas frecuentes
+    alert('Mostrando preguntas frecuentes...');
+}
+
+function showContact() {
+    hideAllScreens();
+    document.getElementById('contact-screen').style.display = 'block';
+}
+
 function hideAllScreens() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('registration-screen').style.display = 'none';
@@ -206,6 +221,7 @@ function hideAllScreens() {
     document.getElementById('news-screen').style.display = 'none';
     document.getElementById('coming-soon-screen').style.display = 'none';
     document.getElementById('help-screen').style.display = 'none';
+    document.getElementById('contact-screen').style.display = 'none';
 }
 
 function redirectToURL(url) {
@@ -227,7 +243,7 @@ function handleLogoClick() {
 
 function handleImageUpload(event) {
     const reader = new FileReader();
-    reader.onload = function (e) {
+    reader.onload = function(e) {
         document.getElementById('profile-img').src = e.target.result;
     };
     reader.readAsDataURL(event.target.files[0]);
@@ -258,13 +274,11 @@ function showNewsContent(newsType) {
     }
 }
 
-function toggleProfileDropdown() {
-    const dropdown = document.getElementById('profile-dropdown');
-    dropdown.classList.toggle('show');
-}
-
-function showContactOptions() {
+function toggleContactOptions() {
     const contactOptions = document.getElementById('contact-options');
-    contactOptions.classList.toggle('show');
+    if (contactOptions.style.display === 'none') {
+        contactOptions.style.display = 'block';
+    } else {
+        contactOptions.style.display = 'none';
+    }
 }
-

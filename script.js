@@ -379,7 +379,7 @@ function displayDocuments() {
     folderElement.textContent = folder.name;
 
     const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Borrar carpeta';
+    deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>'; // Ícono de basura
     deleteButton.onclick = () => deleteFolder(folder.name);
 
     folderElement.appendChild(deleteButton);

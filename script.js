@@ -26,6 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
       dropdown.classList.remove('show-dropdown');
     }
   });
+
+  // Añadimos el event listener para la pestaña "Mis Documentos"
+  const misDocumentosLink = document.querySelector('a[onclick="showDocuments()"]');
+  if (misDocumentosLink) {
+    misDocumentosLink.addEventListener('click', (event) => {
+      event.preventDefault(); // Evitamos el comportamiento por defecto
+      showDocuments(); // Llamamos a la función que muestra la pantalla de documentos
+    });
+  }
 });
 
 function handleRegistration(event) {

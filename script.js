@@ -1,4 +1,5 @@
 const users = JSON.parse(localStorage.getItem('users')) || {};
+let documents = JSON.parse(localStorage.getItem('documents')) || {};
 
 document.addEventListener('DOMContentLoaded', () => {
   const menu = document.getElementById('menu-desplegable');
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (localStorage.getItem('loggedIn') === 'true') {
     showHomeScreen();
     menu.style.display = 'block';
+    updateDocumentOverview();
   } else {
     showLoginScreen();
     menu.style.display = 'none';
@@ -42,7 +44,7 @@ function handleRegistration(event) {
     return;
   }
 
-  users[email] = { name, email, password, profile: {} };
+  users[email] = { name, email, password, profile: {}, documents: [] };
   localStorage.setItem('users', JSON.stringify(users));
 
   document.getElementById('registration-form').reset();
@@ -126,6 +128,7 @@ function showHomeScreen() {
     document.querySelector('header').style.display = 'flex';
     document.querySelector('footer').style.display = 'block';
     updateProfileIcon();
+    updateDocumentOverview();
   } else {
     showLoginScreen();
   }
@@ -200,6 +203,16 @@ function showNews() {
   }
 }
 
+function showDocuments() {
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens();
+    document.getElementById('documents-screen').style.display = 'block';
+    displayDocuments();
+  } else {
+    showLoginScreen();
+  }
+}
+
 function hideAllScreens() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('registration-screen').style.display = 'none';
@@ -211,6 +224,7 @@ function hideAllScreens() {
   document.getElementById('coming-soon-screen').style.display = 'none';
   document.getElementById('ia-specialized-screen').style.display = 'none';
   document.getElementById('help-screen').style.display = 'none';
+  document.getElementById('documents-screen').style.display = 'none';
 }
 
 function redirectToURL(url) {
@@ -232,7 +246,7 @@ function handleLogoClick() {
 
 function handleImageUpload(event) {
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     document.getElementById('profile-img').src = e.target.result;
   };
   reader.readAsDataURL(event.target.files[0]);
@@ -273,4 +287,99 @@ function showHelp() {
 function toggleSection(sectionId) {
   const section = document.getElementById(sectionId);
   section.style.display = section.style.display === 'none' || section.style.display === '' ? 'block' : 'none';
+}
+
+function updateDocumentOverview() {
+  const email = localStorage.getItem('email');
+  const userDocuments = users[email].documents || [];
+
+  const documentList = document.getElementById('document-list');
+  documentList.innerHTML = '';
+
+  if (userDocuments.length === 0) {
+    documentList.textContent = 'Sin documentos';
+  } else {
+    const lastOpenedDocuments = userDocuments.filter(doc => doc.lastOpened).slice(-2);
+
+    if (lastOpenedDocuments.length === 0) {
+      const randomDocs = userDocuments.slice(0, 2);
+      randomDocs.forEach(doc => {
+        const docElement = document.createElement('p');
+        docElement.textContent = doc.name;
+        documentList.appendChild(docElement);
+      });
+    } else {
+      lastOpenedDocuments.forEach(doc => {
+        const docElement = document.createElement('p');
+        docElement.textContent = doc.name;
+        documentList.appendChild(docElement);
+      });
+    }
+  }
+}
+
+function uploadDocuments() {
+  const email = localStorage.getItem('email');
+  const fileInput = document.getElementById('upload-document');
+  const files = fileInput.files;
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const documentData = {
+      name: file.name,
+      lastOpened: null,
+      folder: null,
+    };
+
+    users[email].documents.push(documentData);
+  }
+
+  localStorage.setItem('users', JSON.stringify(users));
+  displayDocuments();
+}
+
+function createFolder() {
+  const folderName = prompt('Nombre de la nueva carpeta:');
+  if (folderName) {
+    const folderData = {
+      name: folderName,
+      documents: []
+    };
+    const email = localStorage.getItem('email');
+    users[email].folders = users[email].folders || [];
+    users[email].folders.push(folderData);
+    localStorage.setItem('users', JSON.stringify(users));
+    displayDocuments();
+  }
+}
+
+function displayDocuments() {
+  const email = localStorage.getItem('email');
+  const documentsContainer = document.getElementById('documents-container');
+  documentsContainer.innerHTML = '';
+
+  const userFolders = users[email].folders || [];
+  userFolders.forEach(folder => {
+    const folderElement = document.createElement('div');
+    folderElement.classList.add('folder');
+    folderElement.textContent = folder.name;
+    folderElement.addEventListener('click', () => {
+      alert(`Documentos en la carpeta "${folder.name}":\n${folder.documents.map(doc => doc.name).join(', ')}`);
+    });
+    documentsContainer.appendChild(folderElement);
+  });
+
+  const userDocuments = users[email].documents || [];
+  userDocuments.forEach(doc => {
+    const docElement = document.createElement('div');
+    docElement.classList.add('document');
+    docElement.textContent = doc.name;
+    docElement.addEventListener('click', () => {
+      doc.lastOpened = new Date();
+      localStorage.setItem('users', JSON.stringify(users));
+      alert(`Abriendo documento: ${doc.name}`);
+      updateDocumentOverview();
+    });
+    documentsContainer.appendChild(docElement);
+  });
 }

@@ -38,6 +38,7 @@ header {
 .header-right img {
   width: 30px; /* Reducido */
   cursor: pointer;
+  border-radius: 30px;
   margin-left: 0px; /* Reducido */
   margin-right: 16px; /* Espacio a la derecha para no estar pegado al borde */
 }

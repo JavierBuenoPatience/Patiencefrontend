@@ -522,3 +522,83 @@ footer {
 .document:hover {
   background-color: #eaeaea;
 }
+
+/* Estilos adicionales para "Mis Documentos" */
+.documents-overview {
+  width: 100%;
+  max-width: 400px;
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.documents-overview h3 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.documents-overview .document-list {
+  font-size: 14px;
+  color: #666;
+}
+
+.document-management {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.document-management input[type="file"] {
+  display: none; /* Oculta el input */
+}
+
+.upload-label,
+.create-folder-button {
+  background-color: #01C0B4;
+  color: #fff;
+  border: none;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.upload-label:hover,
+.create-folder-button:hover {
+  background-color: #019A92;
+}
+
+#documents-container {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.folder,
+.document {
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.folder:hover,
+.document:hover {
+  background-color: #eaeaea;
+}
+

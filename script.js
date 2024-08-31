@@ -357,6 +357,16 @@ function createFolder() {
   }
 }
 
+function deleteFolder(folderName) {
+  const email = localStorage.getItem('email');
+  const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
+  if (folderIndex > -1) {
+    users[email].folders.splice(folderIndex, 1);
+    localStorage.setItem('users', JSON.stringify(users));
+    displayDocuments();
+  }
+}
+
 function displayDocuments() {
   const email = localStorage.getItem('email');
   const documentsContainer = document.getElementById('documents-container');
@@ -367,9 +377,12 @@ function displayDocuments() {
     const folderElement = document.createElement('div');
     folderElement.classList.add('folder');
     folderElement.textContent = folder.name;
-    folderElement.addEventListener('click', () => {
-      alert(`Documentos en la carpeta "${folder.name}":\n${folder.documents.map(doc => doc.name).join(', ')}`);
-    });
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Borrar carpeta';
+    deleteButton.onclick = () => deleteFolder(folder.name);
+
+    folderElement.appendChild(deleteButton);
     documentsContainer.appendChild(folderElement);
   });
 

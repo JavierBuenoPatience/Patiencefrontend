@@ -328,16 +328,16 @@ function uploadDocuments() {
       name: file.name,
       lastOpened: null,
       folder: null,
-      fileContent: '', // Para almacenar el contenido del archivo
+      fileContent: '' // Para almacenar el contenido del archivo
     };
 
     const reader = new FileReader();
     reader.onload = function (e) {
       documentData.fileContent = e.target.result;
-      users[email].documents.push(documentData);
-      localStorage.setItem('users', JSON.stringify(users));
-      displayDocuments();
-      updateDocumentOverview();
+      users[email].documents.push(documentData); // Guardar documento en la lista de documentos del usuario
+      localStorage.setItem('users', JSON.stringify(users)); // Actualizar localStorage
+      displayDocuments(); // Refrescar la lista de documentos
+      updateDocumentOverview(); // Actualizar la vista general de documentos
     };
     reader.readAsDataURL(file);
   }

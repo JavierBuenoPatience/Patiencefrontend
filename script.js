@@ -1,5 +1,4 @@
 const users = JSON.parse(localStorage.getItem('users')) || {};
-let documents = JSON.parse(localStorage.getItem('documents')) || {};
 
 document.addEventListener('DOMContentLoaded', () => {
   const menu = document.getElementById('menu-desplegable');
@@ -26,15 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
       dropdown.classList.remove('show-dropdown');
     }
   });
-
-  // Añadimos el event listener para la pestaña "Mis Documentos"
-  const misDocumentosLink = document.querySelector('a[onclick="showDocuments()"]');
-  if (misDocumentosLink) {
-    misDocumentosLink.addEventListener('click', (event) => {
-      event.preventDefault(); // Evitamos el comportamiento por defecto
-      showDocuments(); // Llamamos a la función que muestra la pantalla de documentos
-    });
-  }
 });
 
 function handleRegistration(event) {
@@ -53,7 +43,7 @@ function handleRegistration(event) {
     return;
   }
 
-  users[email] = { name, email, password, profile: {}, documents: [] };
+  users[email] = { name, email, password, profile: {}, documents: [], folders: [] };
   localStorage.setItem('users', JSON.stringify(users));
 
   document.getElementById('registration-form').reset();
@@ -338,13 +328,19 @@ function uploadDocuments() {
       name: file.name,
       lastOpened: null,
       folder: null,
+      fileContent: '', // Para almacenar el contenido del archivo
     };
 
-    users[email].documents.push(documentData);
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      documentData.fileContent = e.target.result;
+      users[email].documents.push(documentData);
+      localStorage.setItem('users', JSON.stringify(users));
+      displayDocuments();
+      updateDocumentOverview();
+    };
+    reader.readAsDataURL(file);
   }
-
-  localStorage.setItem('users', JSON.stringify(users));
-  displayDocuments();
 }
 
 function createFolder() {
@@ -355,7 +351,6 @@ function createFolder() {
       documents: []
     };
     const email = localStorage.getItem('email');
-    users[email].folders = users[email].folders || [];
     users[email].folders.push(folderData);
     localStorage.setItem('users', JSON.stringify(users));
     displayDocuments();
@@ -389,6 +384,35 @@ function displayDocuments() {
       alert(`Abriendo documento: ${doc.name}`);
       updateDocumentOverview();
     });
+
+    const moveButton = document.createElement('button');
+    moveButton.textContent = 'Mover a carpeta';
+    moveButton.style.marginTop = '5px';
+    moveButton.onclick = () => {
+      moveDocumentToFolder(email, doc.name);
+    };
+
+    docElement.appendChild(moveButton);
     documentsContainer.appendChild(docElement);
   });
+}
+
+function moveDocumentToFolder(email, documentName) {
+  const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
+  if (selectedFolder) {
+    const folder = users[email].folders.find(f => f.name === selectedFolder);
+    if (folder) {
+      const documentIndex = users[email].documents.findIndex(doc => doc.name === documentName);
+      if (documentIndex > -1) {
+        const document = users[email].documents.splice(documentIndex, 1)[0];
+        folder.documents.push(document);
+        localStorage.setItem('users', JSON.stringify(users));
+        displayDocuments();
+      } else {
+        alert('Documento no encontrado.');
+      }
+    } else {
+      alert('Carpeta no encontrada.');
+    }
+  }
 }

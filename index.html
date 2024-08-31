@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Patience - Biología y Geología</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <header>
     <div class="header-left" onclick="handleLogoClick()">Patience</div>
@@ -23,6 +25,7 @@
       <li><a href="#" onclick="showProfile()">Perfil</a></li>
       <li><a href="#" onclick="showIASpecializedOptions()">IA especializada</a></li>
       <li><a href="#" onclick="showGroups()">Mis grupos</a></li>
+      <li><a href="#" onclick="showDocuments()">Mis Documentos</a></li>
       <li><a href="#" onclick="showTraining()">¿Qué es Patience?</a></li>
       <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
       <li><a href="#" onclick="showNews()">Últimas noticias</a></li>
@@ -69,8 +72,11 @@
         <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
         <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
       </div>
-      <div style="position: relative; overflow: hidden; aspect-ratio: 1920/1080">
-        <iframe src="https://share.synthesia.io/embeds/videos/4c43a995-7419-47dd-ad2e-acc2f84ea689" loading="lazy" title="Synthesia video player - Company Intro" allowfullscreen allow="encrypted-media; fullscreen;" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow:hidden;"></iframe>
+      <div class="documents-overview" id="documents-overview">
+        <h3>Mis Documentos</h3>
+        <div class="document-list" id="document-list">
+          <!-- Aquí se mostrará la lista de los dos últimos documentos -->
+        </div>
       </div>
     </div>
 
@@ -106,6 +112,17 @@
       </form>
     </div>
 
+    <!-- Pantalla de Mis Documentos -->
+    <div class="card" id="documents-screen" style="display: none;">
+      <h2>Mis Documentos</h2>
+      <div class="document-management">
+        <input type="file" id="upload-document" multiple>
+        <button onclick="uploadDocuments()">Subir Documentos</button>
+        <button onclick="createFolder()">Crear Carpeta</button>
+        <div id="documents-container"></div>
+      </div>
+    </div>
+
     <!-- Pantalla de Mis Grupos -->
     <div class="card" id="groups-screen" style="display: none;">
       <h2>Mis Grupos</h2>
@@ -117,7 +134,6 @@
     <div class="card" id="training-screen" style="display: none;">
       <h2>🤔 ¿Qué es Patience?</h2>
       <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
-
       <div class="training-section">
         <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
         <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
@@ -168,7 +184,7 @@
       </div>
     </div>
 
-   <!-- Pantalla de Ayuda -->
+    <!-- Pantalla de Ayuda -->
     <div class="card" id="help-screen" style="display: none;">
       <h2>Ayuda</h2>
       <div class="help-section">
@@ -198,4 +214,5 @@
   </footer>
   <script src="script.js"></script>
 </body>
+
 </html>

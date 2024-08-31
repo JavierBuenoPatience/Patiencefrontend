@@ -113,12 +113,14 @@
     </div>
 
     <!-- Pantalla de Mis Documentos -->
-    <div class="card" id="documents-screen" style="display: none;"> <!-- Asegúrate de que esta sección está presente -->
+    <div class="card" id="documents-screen" style="display: none;">
       <h2>Mis Documentos</h2>
       <div class="document-management">
+        <!-- Botón de subir documentos -->
+        <label for="upload-document" class="upload-label">Subir Documentos</label>
         <input type="file" id="upload-document" multiple>
-        <button onclick="uploadDocuments()">Subir Documentos</button>
-        <button onclick="createFolder()">Crear Carpeta</button>
+        <!-- Botón de crear carpeta -->
+        <button class="create-folder-button" onclick="createFolder()">Crear Carpeta</button>
         <div id="documents-container"></div>
       </div>
     </div>

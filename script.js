@@ -212,6 +212,19 @@ function showDocuments() {
   }
 }
 
+function redirectToGuideSection() {
+  if (localStorage.getItem('loggedIn') === 'true') {
+    hideAllScreens(); // Oculta todas las pantallas
+    document.getElementById('ia-specialized-screen').style.display = 'block'; // Muestra la pantalla de IA especializada
+    window.scrollTo({
+        top: document.querySelector('.guide-section').offsetTop,
+        behavior: 'smooth'
+    }); // Desplázate suavemente hasta la sección de la guía
+  } else {
+    showLoginScreen(); // Si no está logueado, mostrar la pantalla de login
+  }
+}
+
 function hideAllScreens() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('registration-screen').style.display = 'none';

@@ -443,7 +443,7 @@ footer {
     transition: background-color 0.3s ease;
 }
 
-/* Estilos adicionales para el menú desplegable */
+/* Estilos para el menú desplegable */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -470,35 +470,4 @@ footer {
 
 .show-dropdown {
   display: block;
-}
-
-.help-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.help-section button {
-  width: 100%;
-  background-color: #01C0B4;
-  color: #fff;
-  border: none;
-  padding: 12px;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 10px;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-}
-
-.help-section button:hover {
-  background-color: #019A92;
-}
-
-.profile-img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
 }

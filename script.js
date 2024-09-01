@@ -171,6 +171,14 @@ function showIASpecializedOptions() {
     }
 }
 
+function redirectToIA(specialty) {
+    if (specialty === 'biologia') {
+        window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank');
+    } else {
+        alert('La especialidad seleccionada estará disponible pronto.');
+    }
+}
+
 function showTraining() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
@@ -209,18 +217,37 @@ function showDocuments() {
 }
 
 function showGuide() {
-    hideAllScreens();
-    document.getElementById('guide-screen').style.display = 'block';
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('guide-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
 }
 
 function showDirectory() {
-    hideAllScreens();
-    document.getElementById('directory-screen').style.display = 'block';
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('directory-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
 }
 
 function hideAllScreens() {
-    const screens = document.querySelectorAll('.card');
-    screens.forEach(screen => screen.style.display = 'none');
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('registration-screen').style.display = 'none';
+    document.getElementById('home-screen').style.display = 'none';
+    document.getElementById('profile-screen').style.display = 'none';
+    document.getElementById('groups-screen').style.display = 'none';
+    document.getElementById('training-screen').style.display = 'none';
+    document.getElementById('news-screen').style.display = 'none';
+    document.getElementById('coming-soon-screen').style.display = 'none';
+    document.getElementById('ia-specialized-screen').style.display = 'none';
+    document.getElementById('help-screen').style.display = 'none';
+    document.getElementById('documents-screen').style.display = 'none';
+    document.getElementById('guide-screen').style.display = 'none';
+    document.getElementById('directory-screen').style.display = 'none';
 }
 
 function redirectToURL(url) {
@@ -257,22 +284,172 @@ function updateProfileIcon() {
     }
 }
 
-function updateDocumentOverview() {
-    // Función para actualizar la vista de documentos en la pantalla de inicio.
-}
-
-function createFolder() {
-    // Función para crear carpetas en la sección de documentos.
-}
-
-function displayDocuments() {
-    // Función para mostrar documentos en la pantalla de documentos.
-}
-
 function showNewsContent(newsType) {
-    // Función para mostrar el contenido de las noticias según el tipo (CSIF o SIPRI).
+    const csifIframe = document.getElementById('csif-iframe');
+    const sipriIframe = document.getElementById('sipri-iframe');
+
+    csifIframe.style.display = 'none';
+    sipriIframe.style.display = 'none';
+
+    if (newsType === 'csif') {
+        csifIframe.style.display = 'block';
+    } else if (newsType === 'sipri') {
+        sipriIframe.style.display = 'block';
+    }
+}
+
+function showHelp() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('help-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
 }
 
 function toggleSection(sectionId) {
-    // Función para alternar la visibilidad de las secciones de ayuda.
+    const section = document.getElementById(sectionId);
+    section.style.display = section.style.display === 'none' || section.style.display === '' ? 'block' : 'none';
+}
+
+function updateDocumentOverview() {
+    const email = localStorage.getItem('email');
+    const userDocuments = users[email].documents || [];
+
+    const documentList = document.getElementById('document-list');
+    documentList.innerHTML = '';
+
+    if (userDocuments.length === 0) {
+        documentList.textContent = 'Sin documentos';
+    } else {
+        const lastOpenedDocuments = userDocuments.filter(doc => doc.lastOpened).slice(-2);
+
+        if (lastOpenedDocuments.length === 0) {
+            const randomDocs = userDocuments.slice(0, 2);
+            randomDocs.forEach(doc => {
+                const docElement = document.createElement('p');
+                docElement.textContent = doc.name;
+                documentList.appendChild(docElement);
+            });
+        } else {
+            lastOpenedDocuments.forEach(doc => {
+                const docElement = document.createElement('p');
+                docElement.textContent = doc.name;
+                documentList.appendChild(docElement);
+            });
+        }
+    }
+}
+
+function uploadDocuments() {
+    const email = localStorage.getItem('email');
+    const fileInput = document.getElementById('upload-document');
+    const files = fileInput.files;
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const documentData = {
+            name: file.name,
+            lastOpened: null,
+            folder: null,
+            fileContent: ''
+        };
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            documentData.fileContent = e.target.result;
+            users[email].documents.push(documentData);
+            localStorage.setItem('users', JSON.stringify(users));
+            displayDocuments();
+            updateDocumentOverview();
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function createFolder() {
+    const folderName = prompt('Nombre de la nueva carpeta:');
+    if (folderName) {
+        const folderData = {
+            name: folderName,
+            documents: []
+        };
+        const email = localStorage.getItem('email');
+        users[email].folders.push(folderData);
+        localStorage.setItem('users', JSON.stringify(users));
+        displayDocuments();
+    }
+}
+
+function deleteFolder(folderName) {
+    const email = localStorage.getItem('email');
+    const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
+    if (folderIndex > -1) {
+        users[email].folders.splice(folderIndex, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+        displayDocuments();
+    }
+}
+
+function displayDocuments() {
+    const email = localStorage.getItem('email');
+    const documentsContainer = document.getElementById('documents-container');
+    documentsContainer.innerHTML = '';
+
+    const userFolders = users[email].folders || [];
+    userFolders.forEach(folder => {
+        const folderElement = document.createElement('div');
+        folderElement.classList.add('folder');
+        folderElement.textContent = folder.name;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        deleteButton.onclick = () => deleteFolder(folder.name);
+
+        folderElement.appendChild(deleteButton);
+        documentsContainer.appendChild(folderElement);
+    });
+
+    const userDocuments = users[email].documents || [];
+    userDocuments.forEach(doc => {
+        const docElement = document.createElement('div');
+        docElement.classList.add('document');
+        docElement.textContent = doc.name;
+        docElement.addEventListener('click', () => {
+            doc.lastOpened = new Date();
+            localStorage.setItem('users', JSON.stringify(users));
+            alert(`Abriendo documento: ${doc.name}`);
+            updateDocumentOverview();
+        });
+
+        const moveButton = document.createElement('button');
+        moveButton.textContent = 'Mover a carpeta';
+        moveButton.style.marginTop = '5px';
+        moveButton.onclick = () => {
+            moveDocumentToFolder(email, doc.name);
+        };
+
+        docElement.appendChild(moveButton);
+        documentsContainer.appendChild(docElement);
+    });
+}
+
+function moveDocumentToFolder(email, documentName) {
+    const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
+    if (selectedFolder) {
+        const folder = users[email].folders.find(f => f.name === selectedFolder);
+        if (folder) {
+            const documentIndex = users[email].documents.findIndex(doc => doc.name === documentName);
+            if (documentIndex > -1) {
+                const document = users[email].documents.splice(documentIndex, 1)[0];
+                folder.documents.push(document);
+                localStorage.setItem('users', JSON.stringify(users));
+                displayDocuments();
+            } else {
+                alert('Documento no encontrado.');
+            }
+        } else {
+            alert('Carpeta no encontrada.');
+        }
+    }
 }

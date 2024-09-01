@@ -2,8 +2,6 @@ const users = JSON.parse(localStorage.getItem('users')) || {};
 
 document.addEventListener('DOMContentLoaded', () => {
     const menu = document.getElementById('menu-desplegable');
-    const mainContent = document.querySelector('.main-content');
-    const headerLeft = document.querySelector('.header-left');
     const headerRight = document.querySelector('.header-right img');
     const dropdown = document.getElementById('profile-dropdown');
 
@@ -25,6 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
             dropdown.classList.remove('show-dropdown');
         }
     });
+
+    // Manejo de la subida de documentos
+    document.getElementById('upload-document').addEventListener('change', uploadDocuments);
 });
 
 function handleRegistration(event) {
@@ -235,19 +236,8 @@ function showDirectory() {
 }
 
 function hideAllScreens() {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('registration-screen').style.display = 'none';
-    document.getElementById('home-screen').style.display = 'none';
-    document.getElementById('profile-screen').style.display = 'none';
-    document.getElementById('groups-screen').style.display = 'none';
-    document.getElementById('training-screen').style.display = 'none';
-    document.getElementById('news-screen').style.display = 'none';
-    document.getElementById('coming-soon-screen').style.display = 'none';
-    document.getElementById('ia-specialized-screen').style.display = 'none';
-    document.getElementById('help-screen').style.display = 'none';
-    document.getElementById('documents-screen').style.display = 'none';
-    document.getElementById('guide-screen').style.display = 'none';
-    document.getElementById('directory-screen').style.display = 'none';
+    const screens = document.querySelectorAll('.card');
+    screens.forEach(screen => screen.style.display = 'none');
 }
 
 function redirectToURL(url) {
@@ -314,7 +304,7 @@ function toggleSection(sectionId) {
 
 function updateDocumentOverview() {
     const email = localStorage.getItem('email');
-    const userDocuments = users[email].documents || [];
+    const userDocuments = users[email]?.documents || [];
 
     const documentList = document.getElementById('document-list');
     documentList.innerHTML = '';
@@ -322,47 +312,40 @@ function updateDocumentOverview() {
     if (userDocuments.length === 0) {
         documentList.textContent = 'Sin documentos';
     } else {
-        const lastOpenedDocuments = userDocuments.filter(doc => doc.lastOpened).slice(-2);
-
-        if (lastOpenedDocuments.length === 0) {
-            const randomDocs = userDocuments.slice(0, 2);
-            randomDocs.forEach(doc => {
-                const docElement = document.createElement('p');
-                docElement.textContent = doc.name;
-                documentList.appendChild(docElement);
-            });
-        } else {
-            lastOpenedDocuments.forEach(doc => {
-                const docElement = document.createElement('p');
-                docElement.textContent = doc.name;
-                documentList.appendChild(docElement);
-            });
-        }
+        const lastOpenedDocuments = userDocuments.slice(-2);
+        lastOpenedDocuments.forEach(doc => {
+            const docElement = document.createElement('p');
+            docElement.textContent = doc.name;
+            documentList.appendChild(docElement);
+        });
     }
 }
 
-function uploadDocuments() {
+function uploadDocuments(event) {
     const email = localStorage.getItem('email');
-    const fileInput = document.getElementById('upload-document');
-    const files = fileInput.files;
+    const files = event.target.files;
+
+    if (!users[email].documents) {
+        users[email].documents = [];
+    }
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        const documentData = {
-            name: file.name,
-            lastOpened: null,
-            folder: null,
-            fileContent: ''
-        };
-
         const reader = new FileReader();
+
         reader.onload = function (e) {
-            documentData.fileContent = e.target.result;
+            const documentData = {
+                name: file.name,
+                lastOpened: null,
+                folder: null,
+                fileContent: e.target.result
+            };
             users[email].documents.push(documentData);
             localStorage.setItem('users', JSON.stringify(users));
             displayDocuments();
             updateDocumentOverview();
         };
+
         reader.readAsDataURL(file);
     }
 }

@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Patience - Biología y Geología</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome para íconos -->
 </head>
-
 <body>
   <header>
     <div class="header-left" onclick="handleLogoClick()">Patience</div>
@@ -20,7 +17,6 @@
       </div>
     </div>
   </header>
-  
   <div class="menu-desplegable" id="menu-desplegable">
     <ul>
       <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
@@ -33,8 +29,39 @@
       <li><a href="#" onclick="showNews()">Últimas noticias</a></li>
     </ul>
   </div>
-  
   <div class="main-content">
+    <!-- Pantalla de Inicio de Sesión -->
+    <div class="card" id="login-screen">
+      <img src="assets/logo.png" alt="Patience Logo" class="logo">
+      <h2>Inicio de Sesión</h2>
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <label for="login-email">Correo Electrónico:</label>
+        <input type="email" id="login-email" name="email" required>
+        <label for="login-password">Contraseña:</label>
+        <input type="password" id="login-password" name="password" required>
+        <button type="submit">Iniciar Sesión</button>
+      </form>
+      <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">Regístrate!</button></p>
+    </div>
+
+    <!-- Pantalla de Registro -->
+    <div class="card" id="registration-screen" style="display: none;">
+      <img src="assets/logo.png" alt="Patience Logo" class="logo">
+      <h2>Registro</h2>
+      <form id="registration-form" onsubmit="handleRegistration(event)">
+        <label for="reg-name">Nombre:</label>
+        <input type="text" id="reg-name" name="name" required>
+        <label for="reg-email">Correo Electrónico:</label>
+        <input type="email" id="reg-email" name="email" required>
+        <label for="reg-password">Contraseña:</label>
+        <input type="password" id="reg-password" name="password" required>
+        <button type="submit">Registrarse</button>
+      </form>
+      <p id="registration-message" style="display: none;">Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
+      <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
+      <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
+    </div>
+
     <!-- Pantalla de Inicio -->
     <div class="card" id="home-screen" style="display: none;">
       <img src="assets/logo.png" alt="Patience Logo" class="logo">
@@ -42,23 +69,6 @@
       <div class="welcome-message">
         <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
         <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
-      </div>
-
-      <!-- Sección "Mis Documentos" existente -->
-      <div class="documents-overview" id="documents-overview">
-        <h3>Mis Documentos</h3>
-        <div class="document-list" id="document-list">
-          <!-- Aquí se mostrará la lista de los dos últimos documentos -->
-        </div>
-      </div>
-
-      <!-- Nueva Sección "Guía para opositores" -->
-      <div class="guide-overview" id="guide-overview">
-        <h3>Guía para opositores</h3>
-        <div class="guide-summary" onclick="redirectToGuideSection()">
-          <p>Descubre cómo aprovechar al máximo la IA en tu preparación para la oposición.</p>
-          <p><strong>Haz clic aquí para ver la guía completa</strong></p>
-        </div>
       </div>
     </div>
 
@@ -94,19 +104,6 @@
       </form>
     </div>
 
-    <!-- Pantalla de Mis Documentos -->
-    <div class="card" id="documents-screen" style="display: none;">
-      <h2>Mis Documentos</h2>
-      <div class="document-management">
-        <!-- Botón de subir documentos -->
-        <label for="upload-document" class="upload-label">Subir Documentos</label>
-        <input type="file" id="upload-document" multiple>
-        <!-- Botón de crear carpeta -->
-        <button class="create-folder-button" onclick="createFolder()">Crear Carpeta</button>
-        <div id="documents-container"></div> <!-- Aquí se mostrarán las carpetas y documentos -->
-      </div>
-    </div>
-
     <!-- Pantalla de Mis Grupos -->
     <div class="card" id="groups-screen" style="display: none;">
       <h2>Mis Grupos</h2>
@@ -118,6 +115,7 @@
     <div class="card" id="training-screen" style="display: none;">
       <h2>🤔 ¿Qué es Patience?</h2>
       <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
+
       <div class="training-section">
         <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
         <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
@@ -166,38 +164,20 @@
         <button onclick="redirectToIA('lengua')">Lengua Castellana y Literatura</button>
         <button onclick="redirectToIA('matematicas')">Matemáticas</button>
       </div>
-
-      <!-- Nueva sección: Guía para aprovechar la IA al máximo -->
+      <!-- Nueva sección Guía de Prompts -->
       <div class="guide-section">
-        <h3>📘 Guía para aprovechar la IA al máximo</h3>
-        
+        <h3>📖 Guía para aprovechar la IA al máximo</h3>
         <div class="prompt-section">
-            <h4>🎯 Cómo pedir a la IA que genere un examen aleatorio:</h4>
-            <p>
-                <strong>Prompt:</strong> Genera un examen de oposición de profesorado de educación secundaria obligatoria aleatorio para la especialidad de 
-                <span class="prompt-hint">[nombre de tu especialidad]</span>. Debes darme 
-                <span class="prompt-hint">[nº de bolas que saca el tribunal]</span> títulos de temas aleatorios de mi especialidad, así como 
-                <span class="prompt-hint">[X]</span> ejercicio(s) prácticos que sean 
-                <span class="prompt-hint">[tipo de ejercicios prácticos de tu especialidad; ejemplo: un texto para traducir de EN>ES o un problema de genética]</span>. 
-                Además, genera un cronómetro de <span class="prompt-hint">[X]</span> horas y <span class="prompt-hint">[X]</span> minutos y avísame cuando termine el tiempo.
-            </p>
+          <h4>📝 Cómo pedir a la IA que genere un examen aleatorio</h4>
+          <p>Prompt: Genera un examen de oposición de profesorado de educación secundaria obligatoria aleatorio para la especialidad de <span class="prompt-hint">[nombre de tu especialidad]</span>. Debes darme <span class="prompt-hint">[nº de bolas que saca el tribunal]</span> títulos de temas aleatorios de mi especialidad, así como <span class="prompt-hint">[X]</span> ejercicio(s) prácticos que sean <span class="prompt-hint">[tipo de ejercicios prácticos de tu especialidad; ejemplo: un texto para traducir de EN>ES o un problema de genética]</span>. Además, genera un cronómetro de <span class="prompt-hint">[X] horas</span> y <span class="prompt-hint">[X] minutos</span> y avísame cuando termine el tiempo.</p>
         </div>
-        
         <div class="prompt-section">
-            <h4>✍️ Cómo pedir a la IA que genere una introducción desde 0:</h4>
-            <p>
-                <strong>Prompt:</strong> Genera una introducción para el tema <span class="prompt-hint">[X]</span> en 
-                <span class="prompt-hint">[idioma]</span>. Utiliza un estilo formal, evita todo formato que pueda inducir a pensar que se ha generado con IA y emplea el estilo de redacción que usaría un opositor de educación secundaria de la especialidad de 
-                <span class="prompt-hint">[tu especialidad]</span>.
-            </p>
+          <h4>📄 Cómo pedir a la IA que genere una introducción desde 0</h4>
+          <p>Prompt: Genera una introducción para el tema <span class="prompt-hint">[X]</span> en <span class="prompt-hint">[idioma]</span>. Utiliza un estilo formal, evita todo formato que pueda inducir a pensar que se ha generado con IA y emplea el estilo de redacción que usaría un opositor de educación secundaria de la especialidad de <span class="prompt-hint">[tu especialidad]</span>.</p>
         </div>
-        
         <div class="prompt-section">
-            <h4>🧩 Cómo pedir a la IA que genere ejercicios prácticos corregidos para tu especialidad:</h4>
-            <p>
-                <strong>Prompt:</strong> Genera 3 ejercicios prácticos de la oposición de educación secundaria para la especialidad de 
-                <span class="prompt-hint">[tu especialidad]</span> con las soluciones.
-            </p>
+          <h4>🧩 Cómo pedir a la IA que genere ejercicios prácticos corregidos para tu especialidad</h4>
+          <p>Prompt: Genera 3 ejercicios prácticos de la oposición de educación secundaria para la especialidad de <span class="prompt-hint">[tu especialidad]</span> con las soluciones.</p>
         </div>
       </div>
     </div>
@@ -209,6 +189,7 @@
         <button onclick="toggleSection('faqs-section')">Preguntas Frecuentes</button>
         <div id="faqs-section" class="collapsible-section">
           <p>Desafíos durante la oposición...</p>
+          <!-- Aquí va todo el contenido de las Preguntas Frecuentes -->
         </div>
 
         <button onclick="toggleSection('contact-section')">Contacta con nosotros</button>
@@ -225,13 +206,23 @@
       <h2>Próximamente</h2>
       <p>Esta funcionalidad estará disponible pronto.</p>
     </div>
-  </div>
 
+    <!-- Pantalla Mis Documentos -->
+    <div class="card" id="documents-screen" style="display: none;">
+      <h2>Mis Documentos</h2>
+      <div class="documents-container" id="documents-container">
+        <!-- Aquí se mostrarán las carpetas y documentos -->
+      </div>
+      <div>
+        <input type="file" id="upload-document" multiple>
+        <button onclick="uploadDocuments()">Subir Documentos</button>
+        <button onclick="createFolder()">Crear Carpeta</button>
+      </div>
+    </div>
+  </div>
   <footer>
     <p>© 2024 Patience. Todos los derechos reservados.</p>
   </footer>
-
   <script src="script.js"></script>
 </body>
-
 </html>

@@ -401,34 +401,6 @@ footer {
   background-color: #019A92;
 }
 
-/* Estilo para la sección "Guía para opositores" en la pantalla de inicio */
-.guide-overview {
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-}
-
-.guide-overview h3 {
-    color: #019A92;
-    margin-bottom: 15px;
-}
-
-.guide-summary p {
-    color: #666;
-    line-height: 1.6;
-    margin-bottom: 10px;
-}
-
-.guide-summary:hover {
-    background-color: #e6f7f7;
-    padding: 15px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-}
-
 /* Estilo mejorado para las indicaciones en prompts */
 .prompt-hint {
     color: #01C0B4;

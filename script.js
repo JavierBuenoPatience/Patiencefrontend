@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const headerRight = document.querySelector('.header-right img');
   const dropdown = document.getElementById('profile-dropdown');
 
-  // Verificar si el usuario está logueado
   if (localStorage.getItem('loggedIn') === 'true') {
     showHomeScreen();
     menu.style.display = 'block';
@@ -17,12 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
     menu.style.display = 'none';
   }
 
-  // Manejar el clic en la imagen de perfil para mostrar el menú desplegable
   headerRight.addEventListener('click', () => {
     dropdown.classList.toggle('show-dropdown');
   });
 
-  // Cerrar el menú desplegable si se hace clic fuera de él
   document.addEventListener('click', (event) => {
     if (!headerRight.contains(event.target) && !dropdown.contains(event.target)) {
       dropdown.classList.remove('show-dropdown');
@@ -216,8 +213,17 @@ function showDocuments() {
 }
 
 function hideAllScreens() {
-  const screens = document.querySelectorAll('.card');
-  screens.forEach(screen => screen.style.display = 'none');
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('registration-screen').style.display = 'none';
+  document.getElementById('home-screen').style.display = 'none';
+  document.getElementById('profile-screen').style.display = 'none';
+  document.getElementById('groups-screen').style.display = 'none';
+  document.getElementById('training-screen').style.display = 'none';
+  document.getElementById('news-screen').style.display = 'none';
+  document.getElementById('coming-soon-screen').style.display = 'none';
+  document.getElementById('ia-specialized-screen').style.display = 'none';
+  document.getElementById('help-screen').style.display = 'none';
+  document.getElementById('documents-screen').style.display = 'none';
 }
 
 function redirectToURL(url) {

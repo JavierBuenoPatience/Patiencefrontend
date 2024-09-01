@@ -602,3 +602,30 @@ footer {
   background-color: #eaeaea;
 }
 
+/* Estilo para las indicaciones en prompts */
+.prompt-hint {
+    color: #01C0B4; /* Verde agua similar al diseño existente */
+    font-weight: bold;
+}
+
+/* Estilo para la sección de la guía */
+.guide-section {
+    margin-top: 20px;
+}
+
+.guide-section h3 {
+    color: #019A92; /* Color para el título de la guía */
+    margin-bottom: 10px;
+}
+
+.prompt-section h4 {
+    color: #333; /* Color para los subtítulos */
+    margin-bottom: 5px;
+}
+
+.prompt-section p {
+    color: #666; /* Color para el texto del prompt */
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+

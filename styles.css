@@ -490,69 +490,6 @@ footer {
 }
 
 .document-management input[type="file"] {
-  display: block;
-  margin-bottom: 12px;
-}
-
-#documents-container {
-  margin-top: 20px;
-  width: 100%;
-}
-
-.folder {
-  padding: 10px;
-  background-color: #e0e0e0;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-.folder:hover {
-  background-color: #d0d0d0;
-}
-
-.document {
-  padding: 8px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  cursor: pointer;
-}
-
-.document:hover {
-  background-color: #eaeaea;
-}
-
-/* Estilos adicionales para "Mis Documentos" */
-.documents-overview {
-  width: 100%;
-  max-width: 400px;
-  background-color: #f9f9f9;
-  padding: 16px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.documents-overview h3 {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 12px;
-}
-
-.documents-overview .document-list {
-  font-size: 14px;
-  color: #666;
-}
-
-.document-management {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-}
-
-.document-management input[type="file"] {
   display: none; /* Oculta el input */
 }
 

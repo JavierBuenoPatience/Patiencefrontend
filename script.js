@@ -91,10 +91,10 @@ function handleProfileUpdate(event) {
     phone: document.getElementById('phone').value,
     studyTime: document.getElementById('study-time').value,
     specialty: document.getElementById('specialty').value,
-    profileImage: document.getElementById('profile-img').src,
     hobbies: document.getElementById('hobbies').value,
     location: document.getElementById('location').value,
-    preferences: document.getElementById('preferences').value
+    studyPreferences: document.getElementById('study-preferences').value,
+    profileImage: document.getElementById('profile-img').src
   };
   users[email].profile = profile;
   localStorage.setItem('users', JSON.stringify(users));
@@ -148,7 +148,7 @@ function showProfile() {
     document.getElementById('specialty').value = profile.specialty || '';
     document.getElementById('hobbies').value = profile.hobbies || '';
     document.getElementById('location').value = profile.location || '';
-    document.getElementById('preferences').value = profile.preferences || '';
+    document.getElementById('study-preferences').value = profile.studyPreferences || '';
     document.getElementById('profile-img').src = profile.profileImage || 'assets/default-profile.png';
   } else {
     showLoginScreen();
@@ -334,16 +334,16 @@ function uploadDocuments() {
       name: file.name,
       lastOpened: null,
       folder: null,
-      fileContent: ''
+      fileContent: '' // Para almacenar el contenido del archivo
     };
 
     const reader = new FileReader();
     reader.onload = function (e) {
       documentData.fileContent = e.target.result;
-      users[email].documents.push(documentData);
-      localStorage.setItem('users', JSON.stringify(users));
-      displayDocuments();
-      updateDocumentOverview();
+      users[email].documents.push(documentData); // Guardar documento en la lista de documentos del usuario
+      localStorage.setItem('users', JSON.stringify(users)); // Actualizar localStorage
+      displayDocuments(); // Refrescar la lista de documentos
+      updateDocumentOverview(); // Actualizar la vista general de documentos
     };
     reader.readAsDataURL(file);
   }
@@ -385,7 +385,7 @@ function displayDocuments() {
     folderElement.textContent = folder.name;
 
     const deleteButton = document.createElement('button');
-    deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+    deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>'; // Ícono de basura
     deleteButton.onclick = () => deleteFolder(folder.name);
 
     folderElement.appendChild(deleteButton);
@@ -434,4 +434,9 @@ function moveDocumentToFolder(email, documentName) {
       alert('Carpeta no encontrada.');
     }
   }
+}
+
+function toggleGuideSection() {
+  const guideSection = document.getElementById('guide-section');
+  guideSection.style.display = guideSection.style.display === 'none' ? 'block' : 'none';
 }

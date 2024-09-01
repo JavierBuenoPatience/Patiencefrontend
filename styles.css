@@ -487,10 +487,11 @@ footer {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  width: 100%;
 }
 
 .document-management input[type="file"] {
-  display: none; /* Oculta el input */
+  display: none;
 }
 
 .upload-label,
@@ -541,42 +542,63 @@ footer {
 
 /* Estilo mejorado para las indicaciones en prompts */
 .prompt-hint {
-    color: #01C0B4; /* Verde agua similar al diseño existente */
-    font-weight: bold;
-    font-style: italic;
+  color: #01C0B4;
+  font-weight: bold;
+  font-style: italic;
 }
 
 /* Estilo mejorado para la sección de la guía */
 .guide-section {
-    margin-top: 20px;
-    background-color: #f9f9f9; /* Fondo suave para destacar la guía */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .guide-section h3 {
-    color: #019A92; /* Color para el título de la guía */
-    margin-bottom: 15px;
-    font-size: 24px;
+  color: #019A92;
+  margin-bottom: 15px;
+  font-size: 24px;
 }
 
 .prompt-section h4 {
-    color: #333; /* Color para los subtítulos */
-    margin-bottom: 8px;
-    font-size: 18px;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 18px;
 }
 
 .prompt-section p {
-    color: #666; /* Color para el texto del prompt */
-    line-height: 1.8;
-    margin-bottom: 20px;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 20px;
 }
 
 /* Efecto hover en la sección de prompts */
 .prompt-section:hover {
-    background-color: #e6f7f7; /* Fondo más claro en hover */
-    padding: 15px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+  background-color: #e6f7f7;
+  padding: 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilo adicional para "Mis Grupos" en la pantalla de inicio */
+.groups-overview {
+  width: 100%;
+  max-width: 400px;
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.groups-overview h3 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.group-link {
+  text-align: center;
 }

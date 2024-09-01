@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patience - Biología y Geología</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -78,13 +77,13 @@
             </div>
             <div class="home-section">
                 <!-- Mis Documentos -->
-                <div class="home-card" onclick="showDocuments()">
+                <div class="overview documents-overview" onclick="showDocuments()">
                     <h3>Mis Documentos</h3>
                     <div class="document-list" id="document-list"></div>
                 </div>
 
                 <!-- Mis Grupos -->
-                <div class="home-card" onclick="showGroups()">
+                <div class="overview groups-overview" onclick="showGroups()">
                     <h3>Mis Grupos</h3>
                     <p>Accede a Slack para colaborar y comunicarte con otros usuarios.</p>
                     <button class="slack-button"
@@ -93,13 +92,13 @@
                 </div>
 
                 <!-- Guía para aprovechar al máximo la IA -->
-                <div class="home-card" onclick="showGuide()">
+                <div class="overview guide-overview" onclick="showGuide()">
                     <h3>Guía para aprovechar al máximo la IA</h3>
                     <p>Aprende a utilizar la IA especializada de la mejor manera.</p>
                 </div>
 
                 <!-- ¿Dónde te puedes preparar? -->
-                <div class="home-card" onclick="showDirectory()">
+                <div class="overview directory-overview" onclick="showDirectory()">
                     <h3>¿Dónde te puedes preparar?</h3>
                     <p>Explora academias y preparadores para tu oposición.</p>
                 </div>
@@ -112,8 +111,7 @@
             <form id="profile-form" onsubmit="handleProfileUpdate(event)">
                 <div class="profile-field">
                     <img id="profile-img" src="assets/default-profile.png" alt="Profile Image" class="profile-img">
-                    <input type="file" id="profile-img-upload" class="profile-img-upload" accept="image/*"
-                        onchange="handleImageUpload(event)">
+                    <input type="file" id="profile-img-upload" class="profile-img-upload" accept="image/*" onchange="handleImageUpload(event)">
                 </div>
                 <div class="profile-field">
                     <label for="full-name">Nombre Completo:</label>
@@ -222,9 +220,7 @@
         <div class="card" id="groups-screen" style="display: none;">
             <h2>Mis Grupos</h2>
             <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
-            <button class="slack-button"
-                onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede
-                a Slack</button>
+            <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
         </div>
 
         <!-- Pantalla de ¿Qué es Patience? -->
@@ -263,8 +259,7 @@
             <div class="news-section">
                 <button onclick="showNewsContent('csif')">CSIF</button>
                 <button onclick="showNewsContent('sipri')">SIPRI</button>
-                <iframe id="csif-iframe" class="news-iframe"
-                    src="https://www.csif.es/es/categoria/andalucia/educacion/oposiciones"></iframe>
+                <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es/es/categoria/andalucia/educacion/oposiciones"></iframe>
                 <iframe id="sipri-iframe" class="news-iframe" src="https://sipri.es/oposiciones/"></iframe>
             </div>
         </div>
@@ -292,9 +287,7 @@
                 <button onclick="toggleSection('contact-section')">Contacta con nosotros</button>
                 <div id="contact-section" class="collapsible-section">
                     <p>Accede a Slack y escríbenos al chat privado de Patience!</p>
-                    <button class="slack-button"
-                        onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede
-                        a Slack</button>
+                    <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
                     <p>O también puedes escribirnos un email a <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
                 </div>
             </div>

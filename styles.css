@@ -355,6 +355,13 @@ footer {
     margin-bottom: 16px;
 }
 
+.directory-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
 .directory-item {
     padding: 15px;
     background-color: #f4f4f4;
@@ -363,7 +370,7 @@ footer {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.directory-item h4 {
+.directory-item h3 {
     font-size: 16px;
     margin-bottom: 8px;
     color: #333;
@@ -373,4 +380,150 @@ footer {
     font-size: 14px;
     color: #666;
     margin-bottom: 5px;
+}
+
+/* Estilos adicionales para Slack */
+.slack-button {
+    background-color: #01C0B4;
+    color: #fff;
+    border: none;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.slack-button:hover {
+    background-color: #019A92;
+}
+
+/* Estilo para las noticias */
+.news-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 700px;
+    margin-top: 16px;
+}
+
+.news-section button {
+    width: 100%;
+    background-color: #01C0B4;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+}
+
+.news-section button:hover {
+    background-color: #019A92;
+}
+
+.news-iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 16px;
+    display: none;
+}
+
+/* Estilos adicionales para las opciones de IA Especializada */
+.ia-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.ia-options button {
+    width: 100%;
+    background-color: #01C0B4;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.ia-options button:hover {
+    background-color: #019A92;
+}
+
+/* Estilos adicionales para el menú desplegable */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    z-index: 1;
+    right: 10px;
+    top: 40px;
+    border-radius: 10px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    border-radius: 5px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.show-dropdown {
+    display: block;
+}
+
+.help-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.help-section button {
+    width: 100%;
+    background-color: #01C0B4;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.help-section button:hover {
+    background-color: #019A92;
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
 }

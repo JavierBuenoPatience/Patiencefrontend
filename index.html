@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
     <header>
         <div class="header-left" onclick="handleLogoClick()">Patience</div>
@@ -84,13 +86,21 @@
                 <div class="groups-overview" onclick="showGroups()">
                     <h3>Mis Grupos</h3>
                     <p>Accede a Slack para colaborar y comunicarte con otros usuarios.</p>
-                    <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+                    <button class="slack-button"
+                        onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede
+                        a Slack</button>
                 </div>
 
                 <!-- Guía para aprovechar al máximo la IA -->
                 <div class="guide-overview" onclick="showGuide()">
                     <h3>Guía para aprovechar al máximo la IA</h3>
                     <p>Aprende a utilizar la IA especializada de la mejor manera.</p>
+                </div>
+
+                <!-- ¿Dónde te puedes preparar? -->
+                <div class="directory-overview" onclick="showDirectory()">
+                    <h3>¿Dónde te puedes preparar?</h3>
+                    <p>Explora academias y preparadores para tu oposición.</p>
                 </div>
             </div>
         </div>
@@ -150,6 +160,47 @@
                 <div class="prompt-section">
                     <h4>Cómo pedir a la IA que genere ejercicios prácticos corregidos para tu especialidad:</h4>
                     <p>Prompt: Genera 3 ejercicios prácticos de la oposición de educación secundaria para la especialidad de <span class="prompt-hint">[tu especialidad]</span> con las soluciones.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantalla de ¿Dónde te puedes preparar? -->
+        <div class="card" id="directory-screen" style="display: none;">
+            <h2>¿Dónde te puedes preparar?</h2>
+            <div class="directory-container">
+                <div class="directory-item">
+                    <h3>TecnosZubia</h3>
+                    <p><strong>Dirección:</strong> Calle García Lorca, 27-A Local 1, 18140 La Zubia, Granada</p>
+                    <p><strong>Teléfono:</strong> 958 890 387</p>
+                </div>
+                <div class="directory-item">
+                    <h3>ECOEM Sevilla</h3>
+                    <p><strong>Dirección:</strong> C/ Balbino Marrón, Edificio Viapol A, planta 3ª módulo 3, 41018 Sevilla</p>
+                    <p><strong>Teléfonos:</strong> 954 65 23 21, 954 65 21 06, 655 460 324</p>
+                    <p><strong>Email:</strong> sevilla@ecoemformacion.es</p>
+                </div>
+                <div class="directory-item">
+                    <h3>ECOEM Huelva</h3>
+                    <p><strong>Dirección:</strong> C/ Vázquez López 21, entreplanta 3, 21001 Huelva</p>
+                    <p><strong>Teléfonos:</strong> 959 24 68 07, 682 060 940</p>
+                    <p><strong>Email:</strong> huelva@ecoemformacion.es</p>
+                </div>
+                <div class="directory-item">
+                    <h3>CEN Oposiciones Sevilla</h3>
+                    <p><strong>Dirección:</strong> C. Luis de Morales, 32, Edificio Forum 1ª Planta - Módulo 2, 41018 Sevilla</p>
+                    <p><strong>Teléfono:</strong> 954 05 40 41</p>
+                </div>
+                <div class="directory-item">
+                    <h3>Preparador de Oposiciones de Biología y Geología</h3>
+                    <p><strong>Teléfono:</strong> 653 109 128</p>
+                    <p><strong>Email:</strong> contacto@preparadorbiologia.com</p>
+                    <p><strong>Redes sociales:</strong> Instagram (preparadorbiologia)</p>
+                </div>
+                <div class="directory-item">
+                    <h3>Cartuja Oposiciones</h3>
+                    <p><strong>Dirección:</strong> Avd. Camino de los Descubrimientos 19, Isla de La Cartuja, Sevilla, 41092</p>
+                    <p><strong>Teléfonos:</strong> 954 467 464, 610 609 320</p>
+                    <p><strong>Horario de atención:</strong> Lunes a viernes: 8:30 a 21:00 h. | Sábados: 9:00 a 14:00 h. | Domingos: cerrado.</p>
                 </div>
             </div>
         </div>
@@ -255,4 +306,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

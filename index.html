@@ -178,49 +178,16 @@
       </div>
     </div>
 
-<!-- Pantalla de Selección de IA Especializada -->
-<div class="card" id="ia-specialized-screen" style="display: none;">
-    <h2>Selecciona tu especialidad</h2>
-    <div class="ia-options">
+    <!-- Pantalla de Selección de IA Especializada -->
+    <div class="card" id="ia-specialized-screen" style="display: none;">
+      <h2>Selecciona tu especialidad</h2>
+      <div class="ia-options">
         <button onclick="redirectToIA('biologia')">Biología y Geología</button>
         <button onclick="redirectToIA('ingles')">Inglés</button>
         <button onclick="redirectToIA('lengua')">Lengua Castellana y Literatura</button>
         <button onclick="redirectToIA('matematicas')">Matemáticas</button>
+      </div>
     </div>
-
-  <!-- Nueva sección: Guía para aprovechar la IA al máximo -->
-<div class="guide-section">
-    <h3>📘 Guía para aprovechar la IA al máximo</h3>
-    
-    <div class="prompt-section">
-        <h4>🎯 Cómo pedir a la IA que genere un examen aleatorio:</h4>
-        <p>
-            <strong>Prompt:</strong> Genera un examen de oposición de profesorado de educación secundaria obligatoria aleatorio para la especialidad de 
-            <span class="prompt-hint">[nombre de tu especialidad]</span>. Debes darme 
-            <span class="prompt-hint">[nº de bolas que saca el tribunal]</span> títulos de temas aleatorios de mi especialidad, así como 
-            <span class="prompt-hint">[X]</span> ejercicio(s) prácticos que sean 
-            <span class="prompt-hint">[tipo de ejercicios prácticos de tu especialidad; ejemplo: un texto para traducir de EN>ES o un problema de genética]</span>. 
-            Además, genera un cronómetro de <span class="prompt-hint">[X]</span> horas y <span class="prompt-hint">[X]</span> minutos y avísame cuando termine el tiempo.
-        </p>
-    </div>
-    
-    <div class="prompt-section">
-        <h4>✍️ Cómo pedir a la IA que genere una introducción desde 0:</h4>
-        <p>
-            <strong>Prompt:</strong> Genera una introducción para el tema <span class="prompt-hint">[X]</span> en 
-            <span class="prompt-hint">[idioma]</span>. Utiliza un estilo formal, evita todo formato que pueda inducir a pensar que se ha generado con IA y emplea el estilo de redacción que usaría un opositor de educación secundaria de la especialidad de 
-            <span class="prompt-hint">[tu especialidad]</span>.
-        </p>
-    </div>
-    
-    <div class="prompt-section">
-        <h4>🧩 Cómo pedir a la IA que genere ejercicios prácticos corregidos para tu especialidad:</h4>
-        <p>
-            <strong>Prompt:</strong> Genera 3 ejercicios prácticos de la oposición de educación secundaria para la especialidad de 
-            <span class="prompt-hint">[tu especialidad]</span> con las soluciones.
-        </p>
-    </div>
-</div>
 
     <!-- Pantalla de Ayuda -->
     <div class="card" id="help-screen" style="display: none;">

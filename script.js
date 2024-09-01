@@ -33,6 +33,7 @@ function handleRegistration(event) {
     const name = document.getElementById('reg-name').value;
     const email = document.getElementById('reg-email').value;
     const password = document.getElementById('reg-password').value;
+    const paymentConfirmed = document.getElementById('payment-confirmed').checked;
 
     if (!validateEmail(email)) {
         alert('Por favor, utiliza un correo de Gmail o Hotmail.');
@@ -41,6 +42,11 @@ function handleRegistration(event) {
 
     if (users[email]) {
         alert('Correo ya registrado. Por favor, inicia sesión.');
+        return;
+    }
+
+    if (!paymentConfirmed) {
+        alert('Por favor, completa el pago antes de registrarte.');
         return;
     }
 

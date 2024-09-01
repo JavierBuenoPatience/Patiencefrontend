@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const headerRight = document.querySelector('.header-right img');
   const dropdown = document.getElementById('profile-dropdown');
 
+  // Verificar si el usuario está logueado
   if (localStorage.getItem('loggedIn') === 'true') {
     showHomeScreen();
     menu.style.display = 'block';
@@ -16,10 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     menu.style.display = 'none';
   }
 
+  // Manejar el clic en la imagen de perfil para mostrar el menú desplegable
   headerRight.addEventListener('click', () => {
     dropdown.classList.toggle('show-dropdown');
   });
 
+  // Cerrar el menú desplegable si se hace clic fuera de él
   document.addEventListener('click', (event) => {
     if (!headerRight.contains(event.target) && !dropdown.contains(event.target)) {
       dropdown.classList.remove('show-dropdown');

@@ -20,7 +20,7 @@
       </div>
     </div>
   </header>
-
+  
   <div class="menu-desplegable" id="menu-desplegable">
     <ul>
       <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
@@ -33,7 +33,7 @@
       <li><a href="#" onclick="showNews()">Últimas noticias</a></li>
     </ul>
   </div>
-
+  
   <div class="main-content">
     <!-- Pantalla de Inicio de Sesión -->
     <div class="card" id="login-screen">
@@ -62,7 +62,7 @@
         <input type="password" id="reg-password" name="password" required>
         <button type="submit">Registrarse</button>
       </form>
-      <p id="registration-message" style="display: none;">¡Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
+      <p id="registration-message" style="display: none;">Genial! Gracias por registrarte. Ahora puedes iniciar sesión.</p>
       <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
       <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
     </div>
@@ -75,14 +75,37 @@
         <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
         <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
       </div>
-      <div class="documents-overview" id="documents-overview">
-        <h3>Mis Documentos</h3>
-        <div class="document-list" id="document-list">
-          <!-- Aquí se mostrará la lista de los dos últimos documentos -->
+      
+      <!-- Apartado Mis Documentos -->
+      <div class="home-section">
+        <div class="documents-overview">
+          <h3>Mis Documentos</h3>
+          <div class="document-list" id="document-list">
+            <!-- Aquí se mostrará la lista de los dos últimos documentos -->
+          </div>
+        </div>
+
+        <!-- Nuevo apartado: Guía para aprovechar al máximo la IA -->
+        <div class="guide-overview">
+          <h3 onclick="toggleGuideSection()">Guía para aprovechar al máximo la IA</h3>
+          <div id="guide-section" class="guide-section" style="display: none;">
+            <div class="prompt-section">
+              <h4>Cómo pedir a la IA que genere un examen aleatorio:</h4>
+              <p>Prompt: Genera un examen de oposición de profesorado de educación secundaria obligatoria aleatorio para la especialidad de <span class="prompt-hint">[nombre de tu especialidad]</span>. Debes darme <span class="prompt-hint">[nº de bolas que saca el tribunal]</span> títulos de temas aleatorios de mi especialidad, así como <span class="prompt-hint">[X]</span> ejercicio(s) prácticos que sean <span class="prompt-hint">[tipo de ejercicios prácticos de tu especialidad; ejemplo: un texto para traducir de EN>ES o un problema de genética]</span>. Además, genera un cronómetro de <span class="prompt-hint">[X]</span> horas y <span class="prompt-hint">[X]</span> minutos y avísame cuando termine el tiempo.</p>
+            </div>
+            <div class="prompt-section">
+              <h4>Cómo pedir a la IA que genere una introducción desde 0:</h4>
+              <p>Prompt: Genera una introducción para el tema <span class="prompt-hint">[X]</span> en <span class="prompt-hint">[idioma]</span>. Utiliza un estilo formal, evita todo formato que pueda inducir a pensar que se ha generado con IA y emplea el estilo de redacción que usaría un opositor de educación secundaria de la especialidad de <span class="prompt-hint">[tu especialidad]</span>.</p>
+            </div>
+            <div class="prompt-section">
+              <h4>Cómo pedir a la IA que genere ejercicios prácticos corregidos para tu especialidad:</h4>
+              <p>Prompt: Genera 3 ejercicios prácticos de la oposición de educación secundaria para la especialidad de <span class="prompt-hint">[tu especialidad]</span> con las soluciones.</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Nuevo apartado: Mis Grupos -->
+      <!-- Nuevo apartado: Enlace a Slack -->
       <div class="groups-overview">
         <h3>Mis Grupos</h3>
         <div class="group-link">
@@ -105,7 +128,7 @@
         </div>
         <div class="profile-field">
           <label for="profile-email">Email:</label>
-          <input type="email" id="profile-email" name="profile-email" disabled>
+          <input type="email" id="profile-email" name="profile-email" required>
         </div>
         <div class="profile-field">
           <label for="phone">Teléfono:</label>
@@ -128,8 +151,8 @@
           <input type="text" id="location" name="location">
         </div>
         <div class="profile-field">
-          <label for="preferences">Preferencias de estudio:</label>
-          <input type="text" id="preferences" name="preferences">
+          <label for="study-preferences">Preferencias de Estudio:</label>
+          <input type="text" id="study-preferences" name="study-preferences">
         </div>
         <button type="submit">Guardar</button>
       </form>
@@ -207,52 +230,30 @@
       </div>
     </div>
 
-    <!-- Nueva sección: Guía para aprovechar la IA al máximo -->
-    <div class="guide-section">
-      <h3>Guía para aprovechar la IA al máximo</h3>
+    <!-- Pantalla de Ayuda -->
+    <div class="card" id="help-screen" style="display: none;">
+      <h2>Ayuda</h2>
+      <div class="help-section">
+        <button onclick="toggleSection('faqs-section')">Preguntas Frecuentes</button>
+        <div id="faqs-section" class="collapsible-section">
+          <p>Desafíos durante la oposición...</p>
+          <!-- Aquí va todo el contenido de las Preguntas Frecuentes -->
+        </div>
 
-      <div class="prompt-section">
-        <h4>Cómo pedir a la IA que genere un examen aleatorio:</h4>
-        <p>Prompt: Genera un examen de oposición de profesorado de educación secundaria obligatoria aleatorio para la especialidad de
-          <span class="prompt-hint">[nombre de tu especialidad]</span>. Debes darme <span class="prompt-hint">[nº de bolas que saca el tribunal]</span> títulos de temas aleatorios de mi especialidad, así como <span class="prompt-hint">[X]</span> ejercicio(s) prácticos que sean <span class="prompt-hint">[tipo de ejercicios prácticos de tu especialidad; ejemplo: un texto para traducir de EN>ES o un problema de genética]</span>. Además, genera un cronómetro de <span class="prompt-hint">[X]</span> horas y <span class="prompt-hint">[X]</span> minutos y avísame cuando termine el tiempo.</p>
-      </div>
-
-      <div class="prompt-section">
-        <h4>Cómo pedir a la IA que genere una introducción desde 0:</h4>
-        <p>Prompt: Genera una introducción para el tema <span class="prompt-hint">[X]</span> en <span class="prompt-hint">[idioma]</span>. Utiliza un estilo formal, evita todo formato que pueda inducir a pensar que se ha generado con IA y emplea el estilo de redacción que usaría un opositor de educación secundaria de la especialidad de <span class="prompt-hint">[tu especialidad]</span>.</p>
-      </div>
-
-      <div class="prompt-section">
-        <h4>Cómo pedir a la IA que genere ejercicios prácticos corregidos para tu especialidad:</h4>
-        <p>Prompt: Genera 3 ejercicios prácticos de la oposición de educación secundaria para la especialidad de <span class="prompt-hint">[tu especialidad]</span> con las soluciones.</p>
+        <button onclick="toggleSection('contact-section')">Contacta con nosotros</button>
+        <div id="contact-section" class="collapsible-section">
+          <p>Accede a Slack y escríbenos al chat privado de Patience!</p>
+          <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+          <p>O también puedes escribirnos un email a <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Pantalla de Ayuda -->
-  <div class="card" id="help-screen" style="display: none;">
-    <h2>Ayuda</h2>
-    <div class="help-section">
-      <button onclick="toggleSection('faqs-section')">Preguntas Frecuentes</button>
-      <div id="faqs-section" class="collapsible-section">
-        <p>Desafíos durante la oposición...</p>
-        <!-- Aquí va todo el contenido de las Preguntas Frecuentes -->
-      </div>
-
-      <button onclick="toggleSection('contact-section')">Contacta con nosotros</button>
-      <div id="contact-section" class="collapsible-section">
-        <p>Accede a Slack y escríbenos al chat privado de Patience!</p>
-        <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
-        <p>O también puedes escribirnos un email a <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
-      </div>
+    <!-- Pantalla de Próximamente -->
+    <div class="card" id="coming-soon-screen" style="display: none;">
+      <h2>Próximamente</h2>
+      <p>Esta funcionalidad estará disponible pronto.</p>
     </div>
-  </div>
-
-  <!-- Pantalla de Próximamente -->
-  <div class="card" id="coming-soon-screen" style="display: none;">
-    <h2>Próximamente</h2>
-    <p>Esta funcionalidad estará disponible pronto.</p>
-  </div>
   </div>
 
   <footer>

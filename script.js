@@ -2,15 +2,13 @@ const users = JSON.parse(localStorage.getItem('users')) || {};
 
 document.addEventListener('DOMContentLoaded', () => {
     const menu = document.getElementById('menu-desplegable');
-    const mainContent = document.querySelector('.main-content');
-    const headerLeft = document.querySelector('.header-left');
     const headerRight = document.querySelector('.header-right img');
     const dropdown = document.getElementById('profile-dropdown');
 
+    // Mostrar la pantalla de inicio si el usuario está logueado
     if (localStorage.getItem('loggedIn') === 'true') {
         showHomeScreen();
         menu.style.display = 'block';
-        updateDocumentOverview();
     } else {
         showLoginScreen();
         menu.style.display = 'none';
@@ -77,7 +75,6 @@ function handleLogout() {
     localStorage.removeItem('email');
     localStorage.removeItem('name');
     const menu = document.getElementById('menu-desplegable');
-    menu.classList.remove('show');
     menu.style.display = 'none';
     hideAllScreens();
     showLoginScreen();
@@ -235,19 +232,10 @@ function showDirectory() {
 }
 
 function hideAllScreens() {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('registration-screen').style.display = 'none';
-    document.getElementById('home-screen').style.display = 'none';
-    document.getElementById('profile-screen').style.display = 'none';
-    document.getElementById('groups-screen').style.display = 'none';
-    document.getElementById('training-screen').style.display = 'none';
-    document.getElementById('news-screen').style.display = 'none';
-    document.getElementById('coming-soon-screen').style.display = 'none';
-    document.getElementById('ia-specialized-screen').style.display = 'none';
-    document.getElementById('help-screen').style.display = 'none';
-    document.getElementById('documents-screen').style.display = 'none';
-    document.getElementById('guide-screen').style.display = 'none';
-    document.getElementById('directory-screen').style.display = 'none';
+    const screens = document.querySelectorAll('.card');
+    screens.forEach(screen => {
+        screen.style.display = 'none';
+    });
 }
 
 function redirectToURL(url) {

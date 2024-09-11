@@ -29,7 +29,7 @@
             <li><a href="#" onclick="showGroups()">Mis grupos</a></li>
             <li><a href="#" onclick="showDocuments()">Mis Documentos</a></li>
             <li><a href="#" onclick="showTraining()">¿Qué es Patience?</a></li>
-            <li><a href="#" onclick="showDirectory()">¿Dónde te puedes preparar?</a></li>
+            <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
             <li><a href="#" onclick="showNews()">Últimas noticias</a></li>
         </ul>
     </div>
@@ -56,14 +56,19 @@
             <form id="registration-form" onsubmit="handleRegistration(event)">
                 <label for="reg-name">Nombre:</label>
                 <input type="text" id="reg-name" name="name" required>
+                
                 <label for="reg-email">Correo Electrónico:</label>
                 <input type="email" id="reg-email" name="email" required>
+                
                 <label for="reg-password">Contraseña:</label>
                 <input type="password" id="reg-password" name="password" required>
-
+                
                 <!-- Iframe de Stripe -->
                 <div class="payment-section">
-                    <iframe src="https://buy.stripe.com/eVa2c55Q12gjbW88ww" width="100%" height="650" frameborder="0" scrolling="no"></iframe>
+                    <iframe src="https://buy.stripe.com/eVa2c55Q12gjbW88ww" 
+                            width="100%" height="650" 
+                            frameborder="0" 
+                            scrolling="no"></iframe>
                 </div>
 
                 <!-- Checkbox de confirmación de pago -->
@@ -85,7 +90,6 @@
             <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
             <div class="welcome-message">
                 <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
-                <p>Utiliza el menú lateral para navegar por las diferentes secciones y acceder a las herramientas y recursos que hemos preparado para ti.</p>
             </div>
             <div class="home-section">
                 <!-- Mis Documentos -->
@@ -98,7 +102,9 @@
                 <div class="overview groups-overview" onclick="showGroups()">
                     <h3>Mis Grupos</h3>
                     <p>Accede a Slack para colaborar y comunicarte con otros usuarios.</p>
-                    <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+                    <button class="slack-button"
+                        onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede
+                        a Slack</button>
                 </div>
 
                 <!-- Guía para aprovechar al máximo la IA -->
@@ -316,4 +322,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

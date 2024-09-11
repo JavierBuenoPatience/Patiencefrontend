@@ -404,13 +404,17 @@ function displayDocuments() {
         const docElement = document.createElement('div');
         docElement.classList.add('document');
         docElement.textContent = doc.name;
+
+        // Nuevo: Abrir el documento
         docElement.addEventListener('click', () => {
             doc.lastOpened = new Date();
             localStorage.setItem('users', JSON.stringify(users));
-            alert(`Abriendo documento: ${doc.name}`);
+            const fileWindow = window.open();
+            fileWindow.document.write(`<iframe width="100%" height="100%" src="${doc.fileContent}"></iframe>`);
             updateDocumentOverview();
         });
 
+        // Botón para mover a carpeta
         const moveButton = document.createElement('button');
         moveButton.textContent = 'Mover a carpeta';
         moveButton.style.marginTop = '5px';

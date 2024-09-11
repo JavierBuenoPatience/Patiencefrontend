@@ -49,40 +49,40 @@
             <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">Regístrate!</button></p>
         </div>
 
-<!-- Pantalla de Registro -->
-<div class="card" id="registration-screen" style="display: none;">
-    <img src="assets/logo.png" alt="Patience Logo" class="logo">
-    <h2>Registro</h2>
-    <form id="registration-form" onsubmit="handleRegistration(event)">
-        <label for="reg-name">Nombre:</label>
-        <input type="text" id="reg-name" name="name" required>
-        
-        <label for="reg-email">Correo Electrónico:</label>
-        <input type="email" id="reg-email" name="email" required>
-        
-        <label for="reg-password">Contraseña:</label>
-        <input type="password" id="reg-password" name="password" required>
-        
-        <!-- Iframe de Stripe -->
-        <div class="payment-section">
-            <iframe src="https://buy.stripe.com/eVa2c55Q12gjbW88ww" 
-                    width="100%" height="650" 
-                    frameborder="0" 
-                    scrolling="no"></iframe>
-        </div>
+        <!-- Pantalla de Registro -->
+        <div class="card" id="registration-screen" style="display: none;">
+            <img src="assets/logo.png" alt="Patience Logo" class="logo">
+            <h2>Registro</h2>
+            <form id="registration-form" onsubmit="handleRegistration(event)">
+                <label for="reg-name">Nombre:</label>
+                <input type="text" id="reg-name" name="name" required>
+                
+                <label for="reg-email">Correo Electrónico:</label>
+                <input type="email" id="reg-email" name="email" required>
+                
+                <label for="reg-password">Contraseña:</label>
+                <input type="password" id="reg-password" name="password" required>
+                
+                <!-- Iframe de Stripe -->
+                <div class="payment-section">
+                    <iframe src="https://buy.stripe.com/eVa2c55Q12gjbW88ww" 
+                            width="100%" height="650" 
+                            frameborder="0" 
+                            scrolling="no"></iframe>
+                </div>
 
-        <!-- Checkbox de confirmación de pago -->
-        <div class="payment-confirmation">
-            <input type="checkbox" id="payment-confirmed" name="payment-confirmed" required>
-            <label for="payment-confirmed">He completado el pago y quiero continuar con el registro.</label>
+                <!-- Checkbox de confirmación de pago -->
+                <div class="payment-confirmation">
+                    <input type="checkbox" id="payment-confirmed" name="payment-confirmed" required>
+                    <label for="payment-confirmed">He completado el pago y quiero continuar con el registro.</label>
+                </div>
+                
+                <button type="submit">Registrarse</button>
+            </form>
+            <p id="registration-message" style="display: none;">¡Gracias por registrarte! Ahora puedes iniciar sesión.</p>
+            <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
+            <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
         </div>
-        
-        <button type="submit">Registrarse</button>
-    </form>
-    <p id="registration-message" style="display: none;">¡Gracias por registrarte! Ahora puedes iniciar sesión.</p>
-    <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
-    <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
-</div>
 
         <!-- Pantalla de Inicio -->
         <div class="card" id="home-screen" style="display: none;">
@@ -161,66 +161,6 @@
                 </div>
                 <button type="submit">Guardar</button>
             </form>
-        </div>
-
-        <!-- Pantalla de Guía para aprovechar al máximo la IA -->
-        <div class="card" id="guide-screen" style="display: none;">
-            <h2>Guía para aprovechar al máximo la IA</h2>
-            <div class="guide-section">
-                <div class="prompt-section">
-                    <h4>Cómo pedir a la IA que genere un examen aleatorio:</h4>
-                    <p>Prompt: Genera un examen de oposición de profesorado de educación secundaria obligatoria aleatorio para la especialidad de <span class="prompt-hint">[nombre de tu especialidad]</span>. Debes darme <span class="prompt-hint">[nº de bolas que saca el tribunal]</span> títulos de temas aleatorios de mi especialidad, así como <span class="prompt-hint">[X]</span> ejercicio(s) prácticos que sean <span class="prompt-hint">[tipo de ejercicios prácticos de tu especialidad; ejemplo: un texto para traducir de EN>ES o un problema de genética]</span>. Además, genera un cronómetro de <span class="prompt-hint">[X]</span> horas y <span class="prompt-hint">[X]</span> minutos y avísame cuando termine el tiempo.</p>
-                </div>
-                <div class="prompt-section">
-                    <h4>Cómo pedir a la IA que genere una introducción desde 0:</h4>
-                    <p>Prompt: Genera una introducción para el tema <span class="prompt-hint">[X]</span> en <span class="prompt-hint">[idioma]</span>. Utiliza un estilo formal, evita todo formato que pueda inducir a pensar que se ha generado con IA y emplea el estilo de redacción que usaría un opositor de educación secundaria de la especialidad de <span class="prompt-hint">[tu especialidad]</span>.</p>
-                </div>
-                <div class="prompt-section">
-                    <h4>Cómo pedir a la IA que genere ejercicios prácticos corregidos para tu especialidad:</h4>
-                    <p>Prompt: Genera 3 ejercicios prácticos de la oposición de educación secundaria para la especialidad de <span class="prompt-hint">[tu especialidad]</span> con las soluciones.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pantalla de ¿Dónde te puedes preparar? -->
-        <div class="card" id="directory-screen" style="display: none;">
-            <h2>¿Dónde te puedes preparar?</h2>
-            <div class="directory-container">
-                <div class="directory-item">
-                    <h3>TecnosZubia</h3>
-                    <p><strong>Dirección:</strong> Calle García Lorca, 27-A Local 1, 18140 La Zubia, Granada</p>
-                    <p><strong>Teléfono:</strong> 958 890 387</p>
-                </div>
-                <div class="directory-item">
-                    <h3>ECOEM Sevilla</h3>
-                    <p><strong>Dirección:</strong> C/ Balbino Marrón, Edificio Viapol A, planta 3ª módulo 3, 41018 Sevilla</p>
-                    <p><strong>Teléfonos:</strong> 954 65 23 21, 954 65 21 06, 655 460 324</p>
-                    <p><strong>Email:</strong> sevilla@ecoemformacion.es</p>
-                </div>
-                <div class="directory-item">
-                    <h3>ECOEM Huelva</h3>
-                    <p><strong>Dirección:</strong> C/ Vázquez López 21, entreplanta 3, 21001 Huelva</p>
-                    <p><strong>Teléfonos:</strong> 959 24 68 07, 682 060 940</p>
-                    <p><strong>Email:</strong> huelva@ecoemformacion.es</p>
-                </div>
-                <div class="directory-item">
-                    <h3>CEN Oposiciones Sevilla</h3>
-                    <p><strong>Dirección:</strong> C. Luis de Morales, 32, Edificio Forum 1ª Planta - Módulo 2, 41018 Sevilla</p>
-                    <p><strong>Teléfono:</strong> 954 05 40 41</p>
-                </div>
-                <div class="directory-item">
-                    <h3>Preparador de Oposiciones de Biología y Geología</h3>
-                    <p><strong>Teléfono:</strong> 653 109 128</p>
-                    <p><strong>Email:</strong> contacto@preparadorbiologia.com</p>
-                    <p><strong>Redes sociales:</strong> Instagram (preparadorbiologia)</p>
-                </div>
-                <div class="directory-item">
-                    <h3>Cartuja Oposiciones</h3>
-                    <p><strong>Dirección:</strong> Avd. Camino de los Descubrimientos 19, Isla de La Cartuja, Sevilla, 41092</p>
-                    <p><strong>Teléfonos:</strong> 954 467 464, 610 609 320</p>
-                    <p><strong>Horario de atención:</strong> Lunes a viernes: 8:30 a 21:00 h. | Sábados: 9:00 a 14:00 h. | Domingos: cerrado.</p>
-                </div>
-            </div>
         </div>
 
         <!-- Pantalla de Mis Documentos -->
@@ -324,5 +264,4 @@
 
     <script src="script.js"></script>
 </body>
-
 </html>

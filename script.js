@@ -380,6 +380,17 @@ function deleteFolder(folderName) {
     }
 }
 
+function deleteDocument(documentName) {
+    const email = localStorage.getItem('email');
+    const documentIndex = users[email].documents.findIndex(doc => doc.name === documentName);
+    if (documentIndex > -1) {
+        users[email].documents.splice(documentIndex, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+        displayDocuments();
+        updateDocumentOverview();
+    }
+}
+
 function displayDocuments() {
     const email = localStorage.getItem('email');
     const documentsContainer = document.getElementById('documents-container');
@@ -391,92 +402,65 @@ function displayDocuments() {
         folderElement.classList.add('folder');
         folderElement.textContent = folder.name;
 
-        folderElement.addEventListener('click', () => {
-            toggleFolderContent(folder.name);
-        });
+        const openFolderButton = document.createElement('button');
+        openFolderButton.textContent = 'Abrir carpeta';
+        openFolderButton.onclick = () => openFolder(folder);
 
-        const deleteButton = document.createElement('button');
-        deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
-        deleteButton.onclick = () => deleteFolder(folder.name);
+        const deleteFolderButton = document.createElement('button');
+        deleteFolderButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        deleteFolderButton.onclick = () => deleteFolder(folder.name);
 
-        folderElement.appendChild(deleteButton);
+        folderElement.appendChild(openFolderButton);
+        folderElement.appendChild(deleteFolderButton);
         documentsContainer.appendChild(folderElement);
-
-        const folderContent = document.createElement('div');
-        folderContent.classList.add('folder-content');
-        folderContent.id = `folder-content-${folder.name}`;
-        folderContent.style.display = 'none';
-
-        folder.documents.forEach(doc => {
-            const docElement = document.createElement('div');
-            docElement.classList.add('document');
-            docElement.textContent = doc.name;
-
-            docElement.addEventListener('click', () => {
-                doc.lastOpened = new Date();
-                localStorage.setItem('users', JSON.stringify(users));
-                alert(`Abriendo documento: ${doc.name}`);
-                updateDocumentOverview();
-            });
-
-            folderContent.appendChild(docElement);
-        });
-
-        documentsContainer.appendChild(folderContent);
     });
 
     const userDocuments = users[email].documents || [];
     userDocuments.forEach(doc => {
-        if (!doc.folder) {
-            const docElement = document.createElement('div');
-            docElement.classList.add('document');
-            docElement.textContent = doc.name;
+        const docElement = document.createElement('div');
+        docElement.classList.add('document');
+        docElement.textContent = doc.name;
 
-            docElement.addEventListener('click', () => {
-                doc.lastOpened = new Date();
-                localStorage.setItem('users', JSON.stringify(users));
-                alert(`Abriendo documento: ${doc.name}`);
-                updateDocumentOverview();
-            });
+        const openButton = document.createElement('button');
+        openButton.textContent = 'Abrir documento';
+        openButton.onclick = () => openDocument(doc);
 
-            const moveButton = document.createElement('button');
-            moveButton.textContent = 'Mover a carpeta';
-            moveButton.style.marginTop = '5px';
-            moveButton.onclick = () => {
-                moveDocumentToFolder(email, doc.name);
-            };
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        deleteButton.onclick = () => deleteDocument(doc.name);
 
-            docElement.appendChild(moveButton);
-            documentsContainer.appendChild(docElement);
-        }
+        docElement.appendChild(openButton);
+        docElement.appendChild(deleteButton);
+        documentsContainer.appendChild(docElement);
     });
 }
 
-function toggleFolderContent(folderName) {
-    const folderContent = document.getElementById(`folder-content-${folderName}`);
-    if (folderContent.style.display === 'none' || folderContent.style.display === '') {
-        folderContent.style.display = 'block';
-    } else {
-        folderContent.style.display = 'none';
-    }
+function openFolder(folder) {
+    const documentsContainer = document.getElementById('documents-container');
+    documentsContainer.innerHTML = ''; // Limpiar la vista anterior
+
+    folder.documents.forEach(doc => {
+        const docElement = document.createElement('div');
+        docElement.classList.add('document');
+        docElement.textContent = doc.name;
+
+        const openButton = document.createElement('button');
+        openButton.textContent = 'Abrir documento';
+        openButton.onclick = () => openDocument(doc);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        deleteButton.onclick = () => deleteDocument(doc.name);
+
+        docElement.appendChild(openButton);
+        docElement.appendChild(deleteButton);
+        documentsContainer.appendChild(docElement);
+    });
 }
 
-function moveDocumentToFolder(email, documentName) {
-    const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
-    if (selectedFolder) {
-        const folder = users[email].folders.find(f => f.name === selectedFolder);
-        if (folder) {
-            const documentIndex = users[email].documents.findIndex(doc => doc.name === documentName);
-            if (documentIndex > -1) {
-                const document = users[email].documents.splice(documentIndex, 1)[0];
-                folder.documents.push(document);
-                localStorage.setItem('users', JSON.stringify(users));
-                displayDocuments();
-            } else {
-                alert('Documento no encontrado.');
-            }
-        } else {
-            alert('Carpeta no encontrada.');
-        }
-    }
+function openDocument(doc) {
+    doc.lastOpened = new Date();
+    localStorage.setItem('users', JSON.stringify(users));
+    alert(`Abriendo documento: ${doc.name}`);
+    updateDocumentOverview();
 }

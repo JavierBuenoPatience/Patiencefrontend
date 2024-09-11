@@ -391,36 +391,74 @@ function displayDocuments() {
         folderElement.classList.add('folder');
         folderElement.textContent = folder.name;
 
+        folderElement.addEventListener('click', () => {
+            toggleFolderContent(folder.name);
+        });
+
         const deleteButton = document.createElement('button');
         deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
         deleteButton.onclick = () => deleteFolder(folder.name);
 
         folderElement.appendChild(deleteButton);
         documentsContainer.appendChild(folderElement);
+
+        const folderContent = document.createElement('div');
+        folderContent.classList.add('folder-content');
+        folderContent.id = `folder-content-${folder.name}`;
+        folderContent.style.display = 'none';
+
+        folder.documents.forEach(doc => {
+            const docElement = document.createElement('div');
+            docElement.classList.add('document');
+            docElement.textContent = doc.name;
+
+            docElement.addEventListener('click', () => {
+                doc.lastOpened = new Date();
+                localStorage.setItem('users', JSON.stringify(users));
+                alert(`Abriendo documento: ${doc.name}`);
+                updateDocumentOverview();
+            });
+
+            folderContent.appendChild(docElement);
+        });
+
+        documentsContainer.appendChild(folderContent);
     });
 
     const userDocuments = users[email].documents || [];
     userDocuments.forEach(doc => {
-        const docElement = document.createElement('div');
-        docElement.classList.add('document');
-        docElement.textContent = doc.name;
-        docElement.addEventListener('click', () => {
-            doc.lastOpened = new Date();
-            localStorage.setItem('users', JSON.stringify(users));
-            alert(`Abriendo documento: ${doc.name}`);
-            updateDocumentOverview();
-        });
+        if (!doc.folder) {
+            const docElement = document.createElement('div');
+            docElement.classList.add('document');
+            docElement.textContent = doc.name;
 
-        const moveButton = document.createElement('button');
-        moveButton.textContent = 'Mover a carpeta';
-        moveButton.style.marginTop = '5px';
-        moveButton.onclick = () => {
-            moveDocumentToFolder(email, doc.name);
-        };
+            docElement.addEventListener('click', () => {
+                doc.lastOpened = new Date();
+                localStorage.setItem('users', JSON.stringify(users));
+                alert(`Abriendo documento: ${doc.name}`);
+                updateDocumentOverview();
+            });
 
-        docElement.appendChild(moveButton);
-        documentsContainer.appendChild(docElement);
+            const moveButton = document.createElement('button');
+            moveButton.textContent = 'Mover a carpeta';
+            moveButton.style.marginTop = '5px';
+            moveButton.onclick = () => {
+                moveDocumentToFolder(email, doc.name);
+            };
+
+            docElement.appendChild(moveButton);
+            documentsContainer.appendChild(docElement);
+        }
     });
+}
+
+function toggleFolderContent(folderName) {
+    const folderContent = document.getElementById(`folder-content-${folderName}`);
+    if (folderContent.style.display === 'none' || folderContent.style.display === '') {
+        folderContent.style.display = 'block';
+    } else {
+        folderContent.style.display = 'none';
+    }
 }
 
 function moveDocumentToFolder(email, documentName) {

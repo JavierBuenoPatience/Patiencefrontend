@@ -279,6 +279,7 @@ footer {
     width: 100%;
 }
 
+/* Estilo para documentos y carpetas */
 .folder,
 .document {
     padding: 10px;
@@ -295,6 +296,24 @@ footer {
 .folder:hover,
 .document:hover {
     background-color: #eaeaea;
+}
+
+.folder button,
+.document button {
+    background-color: #01C0B4;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.folder button:hover,
+.document button:hover {
+    background-color: #019A92;
 }
 
 /* Estilo mejorado para las indicaciones en prompts */

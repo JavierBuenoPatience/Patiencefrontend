@@ -63,8 +63,6 @@
                 <label for="reg-password">Contraseña:</label>
                 <input type="password" id="reg-password" name="password" required>
                 
-                </div>
-                
                 <button type="submit">Registrarse</button>
             </form>
             <p id="registration-message" style="display: none;">¡Gracias por registrarte! Ahora puedes iniciar sesión.</p>
@@ -147,6 +145,19 @@
                 </div>
                 <button type="submit">Guardar</button>
             </form>
+        </div>
+
+        <!-- Pop-up de Cambio de Contraseña Obligatorio -->
+        <div id="password-change-popup" class="popup" style="display: none;">
+            <div class="popup-content">
+                <h2>Cambiar Contraseña</h2>
+                <p>Es necesario que cambies tu contraseña para continuar.</p>
+                <form id="password-change-form" onsubmit="handleFirstPasswordChange(event)">
+                    <label for="new-password">Nueva Contraseña:</label>
+                    <input type="password" id="new-password" name="new-password" required>
+                    <button type="submit">Guardar Contraseña</button>
+                </form>
+            </div>
         </div>
 
         <!-- Pantalla de Guía para aprovechar al máximo la IA -->

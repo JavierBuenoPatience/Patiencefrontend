@@ -327,11 +327,9 @@ function updateDocumentOverview() {
     }
 }
 
-// Esta función permite que el documento se abra en una nueva ventana.
-function openDocument(fileContent, fileName) {
-    const fileBlob = new Blob([fileContent], { type: 'application/octet-stream' });
-    const fileURL = URL.createObjectURL(fileBlob);
-    const newWindow = window.open(fileURL, '_blank');
+// Función que abre el documento en una nueva pestaña utilizando su URL base64.
+function openDocument(url) {
+    const newWindow = window.open(url, '_blank');
     if (!newWindow) {
         alert('Pop-up bloqueado. Habilita las ventanas emergentes para ver el archivo.');
     }
@@ -354,7 +352,7 @@ function uploadDocuments(event) {
                 name: file.name,
                 lastOpened: null,
                 folder: null,
-                fileContent: e.target.result
+                fileContent: e.target.result // Guardamos el contenido como una URL base64.
             };
             users[email].documents.push(documentData);
             localStorage.setItem('users', JSON.stringify(users));
@@ -362,7 +360,7 @@ function uploadDocuments(event) {
             updateDocumentOverview();
         };
 
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file); // Leemos el archivo como una Data URL (base64).
     }
 }
 
@@ -427,7 +425,7 @@ function displayDocuments() {
         docElement.addEventListener('click', () => {
             doc.lastOpened = new Date();
             localStorage.setItem('users', JSON.stringify(users));
-            openDocument(doc.fileContent, doc.name); // Aquí abrimos el documento
+            openDocument(doc.fileContent); // Usamos el contenido base64 para abrir el documento.
             updateDocumentOverview();
         });
 

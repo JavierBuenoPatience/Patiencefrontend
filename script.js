@@ -1,4 +1,5 @@
 const users = JSON.parse(localStorage.getItem('users')) || {};
+let currentUser = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const menu = document.getElementById('menu-desplegable');
@@ -6,9 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropdown = document.getElementById('profile-dropdown');
 
     if (localStorage.getItem('loggedIn') === 'true') {
+        currentUser = users[localStorage.getItem('email')];
         showHomeScreen();
         menu.style.display = 'block';
-        updateDocumentOverview();
+        checkIfPasswordNeedsChange(); // Verificar si necesita cambiar contraseña temporal
     } else {
         showLoginScreen();
         menu.style.display = 'none';
@@ -28,34 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('upload-document').addEventListener('change', uploadDocuments);
 });
 
-function handleRegistration(event) {
-    event.preventDefault();
-    const name = document.getElementById('reg-name').value;
-    const email = document.getElementById('reg-email').value;
-    const password = document.getElementById('reg-password').value;
-    const paymentConfirmed = document.getElementById('payment-confirmed').checked;
-
-    if (!validateEmail(email)) {
-        alert('Por favor, utiliza un correo de Gmail o Hotmail.');
-        return;
-    }
-
-    if (users[email]) {
-        alert('Correo ya registrado. Por favor, inicia sesión.');
-        return;
-    }
-
-    if (!paymentConfirmed) {
-        alert('Por favor, completa el pago antes de registrarte.');
-        return;
-    }
-
-    users[email] = { name, email, password, profile: {}, documents: [], folders: [] };
-    localStorage.setItem('users', JSON.stringify(users));
-
-    document.getElementById('registration-form').reset();
-    document.getElementById('registration-message').style.display = 'block';
-    document.getElementById('welcome-button').style.display = 'block';
+function redirectToTypeform() {
+    window.location.href = "https://tu-enlace-de-typeform.com"; // Cambia este enlace por tu Typeform
 }
 
 function handleLogin(event) {
@@ -63,29 +39,41 @@ function handleLogin(event) {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
-    if (!validateEmail(email)) {
-        alert('Por favor, utiliza un correo de Gmail o Hotmail.');
-        return;
-    }
-
     if (users[email] && users[email].password === password) {
         localStorage.setItem('loggedIn', 'true');
         localStorage.setItem('email', email);
-        localStorage.setItem('name', users[email].name);
+        currentUser = users[email];
         showHomeScreen();
         document.getElementById('menu-desplegable').style.display = 'block';
+        checkIfPasswordNeedsChange(); // Verificar si necesita cambiar contraseña temporal
     } else {
         alert('Correo o contraseña incorrectos.');
+    }
+}
+
+function checkIfPasswordNeedsChange() {
+    if (currentUser && currentUser.temporaryPassword) {
+        document.getElementById('password-change-popup').style.display = 'block';
+    }
+}
+
+function handleFirstPasswordChange(event) {
+    event.preventDefault();
+    const newPassword = document.getElementById('new-password').value;
+
+    if (currentUser) {
+        currentUser.password = newPassword;
+        delete currentUser.temporaryPassword;
+        localStorage.setItem('users', JSON.stringify(users));
+        alert('Contraseña cambiada con éxito.');
+        document.getElementById('password-change-popup').style.display = 'none';
     }
 }
 
 function handleLogout() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('email');
-    localStorage.removeItem('name');
-    const menu = document.getElementById('menu-desplegable');
-    menu.classList.remove('show');
-    menu.style.display = 'none';
+    currentUser = null;
     hideAllScreens();
     showLoginScreen();
 }
@@ -117,13 +105,6 @@ function validateEmail(email) {
 function showLoginScreen() {
     hideAllScreens();
     document.getElementById('login-screen').style.display = 'block';
-    document.querySelector('header').style.display = 'none';
-    document.querySelector('footer').style.display = 'none';
-}
-
-function showRegistrationScreen() {
-    hideAllScreens();
-    document.getElementById('registration-screen').style.display = 'block';
     document.querySelector('header').style.display = 'none';
     document.querySelector('footer').style.display = 'none';
 }

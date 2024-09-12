@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function redirectToTypeform() {
-    window.location.href = "https://tu-enlace-de-typeform.com"; // Cambia este enlace por tu Typeform
+    window.location.href = "https://qz232a8zljw.typeform.com/to/AHskzuV5?typeform-source=javierbuenopatience.github.io"; // Cambia este enlace por tu Typeform
 }
 
 function handleLogin(event) {

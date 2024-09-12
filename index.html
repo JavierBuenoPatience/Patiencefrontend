@@ -46,17 +46,28 @@
                 <input type="password" id="login-password" name="password" required>
                 <button type="submit">Iniciar Sesión</button>
             </form>
-            <p>¿No tienes una cuenta todavía? 
-                <button type="button" onclick="redirectTohttps://qz232a8zljw.typeform.com/to/AHskzuV5?typeform-source=javierbuenopatience.github.io()">Regístrate!</button>
-            </p>
+            <p>¿No tienes una cuenta todavía? <button type="button" onclick="redirectToTypeform()">Regístrate!</button></p>
         </div>
 
-        <!-- Pantalla de Registro Redirigida a Typeform -->
+        <!-- Pantalla de Registro -->
         <div class="card" id="registration-screen" style="display: none;">
             <img src="assets/logo.png" alt="Patience Logo" class="logo">
             <h2>Registro</h2>
-            <p>Para registrarte, por favor completa el siguiente formulario:</p>
-            <a href="https://qz232a8zljw.typeform.com/to/AHskzuV5?typeform-source=javierbuenopatience.github.io" target="_blank" class="typeform-link">Ir a Typeform</a>
+            <form id="registration-form" onsubmit="redirectToTypeform(event)">
+                <label for="reg-name">Nombre:</label>
+                <input type="text" id="reg-name" name="name" required>
+
+                <label for="reg-email">Correo Electrónico:</label>
+                <input type="email" id="reg-email" name="email" required>
+
+                <label for="reg-password">Contraseña:</label>
+                <input type="password" id="reg-password" name="password" required>
+
+                <button type="submit">Registrarse</button>
+            </form>
+            <p id="registration-message" style="display: none;">¡Gracias por registrarte! Ahora puedes iniciar sesión.</p>
+            <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
+            <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
         </div>
 
         <!-- Pantalla de Inicio -->
@@ -149,25 +160,7 @@
             </div>
         </div>
 
-        <!-- Pantalla de Documentos -->
-        <div class="card" id="documents-screen" style="display: none;">
-            <h2>Mis Documentos</h2>
-            <div class="document-management">
-                <label for="upload-document" class="upload-label">Subir Documentos</label>
-                <input type="file" id="upload-document" multiple>
-                <button class="create-folder-button" onclick="createFolder()">Crear Carpeta</button>
-                <div id="documents-container"></div>
-            </div>
-        </div>
-
-        <!-- Pantalla de Grupos -->
-        <div class="card" id="groups-screen" style="display: none;">
-            <h2>Mis Grupos</h2>
-            <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
-            <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
-        </div>
-
-        <!-- Pantalla de Guía -->
+        <!-- Pantalla de Guía para aprovechar al máximo la IA -->
         <div class="card" id="guide-screen" style="display: none;">
             <h2>Guía para aprovechar al máximo la IA</h2>
             <div class="guide-section">
@@ -186,7 +179,7 @@
             </div>
         </div>
 
-        <!-- Pantalla de Academias -->
+        <!-- Pantalla de ¿Dónde te puedes preparar? -->
         <div class="card" id="directory-screen" style="display: none;">
             <h2>¿Dónde te puedes preparar?</h2>
             <div class="directory-container">
@@ -227,7 +220,55 @@
             </div>
         </div>
 
-        <!-- Pantalla de Noticias -->
+        <!-- Pantalla de Mis Documentos -->
+        <div class="card" id="documents-screen" style="display: none;">
+            <h2>Mis Documentos</h2>
+            <div class="document-management">
+                <label for="upload-document" class="upload-label">Subir Documentos</label>
+                <input type="file" id="upload-document" multiple>
+                <button class="create-folder-button" onclick="createFolder()">Crear Carpeta</button>
+                <div id="documents-container"></div>
+            </div>
+        </div>
+
+        <!-- Pantalla de Mis Grupos -->
+        <div class="card" id="groups-screen" style="display: none;">
+            <h2>Mis Grupos</h2>
+            <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
+            <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+        </div>
+
+        <!-- Pantalla de ¿Qué es Patience? -->
+        <div class="card" id="training-screen" style="display: none;">
+            <h2>🤔 ¿Qué es Patience?</h2>
+            <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
+            <div class="training-section">
+                <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
+                <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
+            </div>
+            <div class="training-section">
+                <h3>🛠️ Cómo usar Patience - IA para opositores</h3>
+                <ul>
+                    <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
+                    <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
+                    <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
+                    <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
+                </ul>
+            </div>
+            <div class="training-section">
+                <h3>📚 Casos de uso para opositores</h3>
+                <ul>
+                    <li><strong>Generar Resúmenes 📝:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
+                    <li><strong>Crear Esquemas 📊:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
+                    <li><strong>Buscar Información Rápida 🔍:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
+                    <li><strong>Corregir Documentos 🖋️:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo, y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
+                    <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
+                    <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Pantalla de Últimas noticias -->
         <div class="card" id="news-screen" style="display: none;">
             <h2>Últimas noticias</h2>
             <div class="news-section">
@@ -238,7 +279,7 @@
             </div>
         </div>
 
-        <!-- Pantalla de IA Especializada -->
+        <!-- Pantalla de Selección de IA Especializada -->
         <div class="card" id="ia-specialized-screen" style="display: none;">
             <h2>Selecciona tu especialidad</h2>
             <div class="ia-options">

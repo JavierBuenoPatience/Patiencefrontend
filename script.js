@@ -79,6 +79,62 @@ function handleLogout() {
     showLoginScreen();
 }
 
+// Validar si el usuario es administrador (solo javibueda@gmail.com)
+function checkIfAdmin() {
+    if (currentUser && currentUser.email === "javibueda@gmail.com") {
+        showAdminPanel();
+    } else {
+        alert("No tienes acceso a esta sección.");
+    }
+}
+
+// Mostrar el panel de administración
+function showAdminPanel() {
+    hideAllScreens();
+    document.getElementById('admin-panel').style.display = 'block';
+    updateUserList();
+}
+
+// Crear nuevo usuario (función para el formulario del administrador)
+function handleCreateUser(event) {
+    event.preventDefault();
+    const name = document.getElementById('admin-name').value;
+    const email = document.getElementById('admin-email').value;
+    const password = document.getElementById('admin-password').value;
+
+    if (users[email]) {
+        alert('El correo electrónico ya está registrado.');
+        return;
+    }
+
+    users[email] = {
+        name: name,
+        email: email,
+        password: password,
+        temporaryPassword: true, // Se marca como contraseña temporal
+        profile: {},
+        documents: [],
+        folders: []
+    };
+
+    localStorage.setItem('users', JSON.stringify(users));
+    document.getElementById('create-user-form').reset();
+    alert('Usuario creado con éxito.');
+    updateUserList();
+}
+
+// Mostrar la lista de usuarios en el panel de administración
+function updateUserList() {
+    const userList = document.getElementById('user-list');
+    userList.innerHTML = '';
+
+    Object.keys(users).forEach(email => {
+        const li = document.createElement('li');
+        li.textContent = `${users[email].name} (${email})`;
+        userList.appendChild(li);
+    });
+}
+
 function handleProfileUpdate(event) {
     event.preventDefault();
     const email = localStorage.getItem('email');

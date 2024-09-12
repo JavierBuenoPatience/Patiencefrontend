@@ -306,6 +306,20 @@ footer {
     margin-top: 10px;
 }
 
+.folder.open .folder-content {
+    display: block;
+}
+
+.document .fas {
+    margin-left: 10px;
+    color: #666;
+    cursor: pointer;
+}
+
+.document .fas:hover {
+    color: #ff0000;
+}
+
 /* Estilo mejorado para las indicaciones en prompts */
 .prompt-hint {
     color: #01C0B4;

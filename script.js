@@ -30,8 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('upload-document').addEventListener('change', uploadDocuments);
 });
 
+// Redirigir a Typeform para el registro
 function redirectToTypeform() {
-    window.location.href = "https://qz232a8zljw.typeform.com/to/AHskzuV5?typeform-source=javierbuenopatience.github.io"; // Cambia este enlace por tu Typeform
+    window.location.href = "https://qz232a8zljw.typeform.com/to/AHskzuV5?typeform-source=javierbuenopatience.github.io";
 }
 
 function handleLogin(event) {

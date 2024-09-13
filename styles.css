@@ -1,3 +1,4 @@
+/* Estilos base */
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f4f4f4;
@@ -43,6 +44,7 @@ header {
     margin-right: 16px;
 }
 
+/* Menú desplegable */
 .menu-desplegable {
     position: fixed;
     top: 50%;
@@ -115,6 +117,7 @@ header {
     color: #666;
 }
 
+/* Estilos para las tarjetas y formularios */
 .card {
     width: 100%;
     max-width: 800px;
@@ -584,6 +587,7 @@ footer {
     display: block;
 }
 
+/* Sección de ayuda */
 .help-section {
     display: flex;
     flex-direction: column;
@@ -613,4 +617,38 @@ footer {
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 10px;
+}
+
+/* Panel de Administración */
+.admin-table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-table th,
+.admin-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.admin-table th {
+    background-color: #01C0B4;
+    color: white;
+}
+
+.admin-table td {
+    background-color: #f9f9f9;
+}
+
+.admin-section {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const headerRight = document.querySelector('.header-right img');
     const dropdown = document.getElementById('profile-dropdown');
 
+    // Verificar si el usuario ha iniciado sesión
     if (localStorage.getItem('loggedIn') === 'true') {
         currentUser = users[localStorage.getItem('email')];
         showHomeScreen();
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         menu.style.display = 'none';
     }
 
+    // Mostrar u ocultar el menú desplegable del perfil
     headerRight.addEventListener('click', () => {
         dropdown.classList.toggle('show-dropdown');
     });
@@ -30,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Manejo de la subida de documentos
     document.getElementById('upload-document').addEventListener('change', uploadDocuments);
 
-    // Mostrar pantalla de administración si es administrador
+    // Mostrar botón de administración si el usuario es el administrador
     const adminButton = document.getElementById('admin-panel-button');
     if (adminButton) {
         adminButton.addEventListener('click', showAdminPanel);
@@ -145,7 +147,7 @@ function createNewUser(event) {
     const newUserEmail = document.getElementById('new-user-email').value;
     const newUserName = document.getElementById('new-user-name').value;
     const newUserPassword = document.getElementById('new-user-password').value;
-    
+
     if (users[newUserEmail]) {
         alert('El correo ya está registrado.');
         return;

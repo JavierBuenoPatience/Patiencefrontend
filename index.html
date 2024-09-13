@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,6 @@
             <div id="profile-dropdown" class="dropdown-content">
                 <a href="#" onclick="handleLogout()">Cerrar sesión</a>
                 <a href="#" onclick="showHelp()">Ayuda</a>
-                <a href="#" onclick="checkIfAdmin()">Panel de Administración</a> <!-- Enlace para Admin -->
             </div>
         </div>
     </header>
@@ -32,6 +31,7 @@
             <li><a href="#" onclick="showTraining()">¿Qué es Patience?</a></li>
             <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
             <li><a href="#" onclick="showNews()">Últimas noticias</a></li>
+            <li><a href="#" onclick="showAdminPanel()">Panel Admin</a></li>
         </ul>
     </div>
 
@@ -50,47 +50,10 @@
             <p>¿No tienes una cuenta todavía? <button type="button" onclick="redirectToTypeform()">Regístrate!</button></p>
         </div>
 
-        <!-- Pop-up de Cambio de Contraseña Obligatorio -->
-        <div id="password-change-popup" class="popup" style="display: none;">
-            <div class="popup-content">
-                <h2>Cambiar Contraseña</h2>
-                <p>Es necesario que cambies tu contraseña para continuar.</p>
-                <form id="password-change-form" onsubmit="handleFirstPasswordChange(event)">
-                    <label for="new-password">Nueva Contraseña:</label>
-                    <input type="password" id="new-password" name="new-password" required>
-                    <button type="submit">Guardar Contraseña</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Pantalla de Administración (solo visible para el administrador) -->
-        <div class="card" id="admin-panel" style="display: none;">
-            <h2>Panel de Administración</h2>
-            <form id="create-user-form" onsubmit="handleCreateUser(event)">
-                <label for="admin-name">Nombre del Usuario:</label>
-                <input type="text" id="admin-name" name="name" required>
-
-                <label for="admin-email">Correo Electrónico del Usuario:</label>
-                <input type="email" id="admin-email" name="email" required>
-
-                <label for="admin-password">Contraseña Temporal:</label>
-                <input type="password" id="admin-password" name="password" required>
-
-                <button type="submit">Crear Usuario</button>
-            </form>
-            <div id="admin-user-list">
-                <h3>Usuarios Registrados</h3>
-                <ul id="user-list"></ul>
-            </div>
-        </div>
-
         <!-- Pantalla de Inicio -->
         <div class="card" id="home-screen" style="display: none;">
             <img src="assets/logo.png" alt="Patience Logo" class="logo">
             <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
-            <div class="welcome-message">
-                <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
-            </div>
             <div class="home-section">
                 <!-- Mis Documentos -->
                 <div class="overview documents-overview" onclick="showDocuments()">
@@ -102,9 +65,7 @@
                 <div class="overview groups-overview" onclick="showGroups()">
                     <h3>Mis Grupos</h3>
                     <p>Accede a Slack para colaborar y comunicarte con otros usuarios.</p>
-                    <button class="slack-button"
-                        onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede
-                        a Slack</button>
+                    <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
                 </div>
 
                 <!-- Guía para aprovechar al máximo la IA -->
@@ -161,15 +122,21 @@
             </form>
         </div>
 
-        <!-- Pantalla de Mis Documentos -->
-        <div class="card" id="documents-screen" style="display: none;">
-            <h2>Mis Documentos</h2>
-            <div class="document-management">
-                <label for="upload-document" class="upload-label">Subir Documentos</label>
-                <input type="file" id="upload-document" multiple>
-                <button class="create-folder-button" onclick="createFolder()">Crear Carpeta</button>
-                <div id="documents-container"></div>
-            </div>
+        <!-- Pantalla de Administración -->
+        <div class="card" id="admin-panel" style="display: none;">
+            <h2>Panel de Administración</h2>
+            <form id="admin-create-user-form" onsubmit="handleAdminCreateUser(event)">
+                <label for="admin-email">Correo Electrónico:</label>
+                <input type="email" id="admin-email" name="admin-email" required>
+                <label for="admin-name">Nombre Completo:</label>
+                <input type="text" id="admin-name" name="admin-name" required>
+                <label for="admin-password">Contraseña Temporal:</label>
+                <input type="password" id="admin-password" name="admin-password" required>
+                <button type="submit">Crear Usuario</button>
+            </form>
+            <ul class="user-list" id="user-list">
+                <!-- Lista de usuarios -->
+            </ul>
         </div>
 
         <!-- Pantalla de Guía para aprovechar al máximo la IA -->
@@ -191,25 +158,55 @@
             </div>
         </div>
 
-        <!-- Pantalla de Últimas noticias -->
-        <div class="card" id="news-screen" style="display: none;">
-            <h2>Últimas noticias</h2>
-            <div class="news-section">
-                <button onclick="showNewsContent('csif')">CSIF</button>
-                <button onclick="showNewsContent('sipri')">SIPRI</button>
-                <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es/es/categoria/andalucia/educacion/oposiciones"></iframe>
-                <iframe id="sipri-iframe" class="news-iframe" src="https://sipri.es/oposiciones/"></iframe>
+        <!-- Pantalla de Directorio de Academias -->
+        <div class="card" id="directory-screen" style="display: none;">
+            <h2>¿Dónde te puedes preparar?</h2>
+            <div class="directory-container">
+                <div class="directory-item">
+                    <h3>TecnosZubia</h3>
+                    <p><strong>Dirección:</strong> Calle García Lorca, 27-A Local 1, 18140 La Zubia, Granada</p>
+                    <p><strong>Teléfono:</strong> 958 890 387</p>
+                </div>
+                <div class="directory-item">
+                    <h3>ECOEM Sevilla</h3>
+                    <p><strong>Dirección:</strong> C/ Balbino Marrón, Edificio Viapol A, planta 3ª módulo 3, 41018 Sevilla</p>
+                    <p><strong>Teléfonos:</strong> 954 65 23 21, 954 65 21 06, 655 460 324</p>
+                    <p><strong>Email:</strong> sevilla@ecoemformacion.es</p>
+                </div>
+                <div class="directory-item">
+                    <h3>ECOEM Huelva</h3>
+                    <p><strong>Dirección:</strong> C/ Vázquez López 21, entreplanta 3, 21001 Huelva</p>
+                    <p><strong>Teléfonos:</strong> 959 24 68 07, 682 060 940</p>
+                    <p><strong>Email:</strong> huelva@ecoemformacion.es</p>
+                </div>
+                <div class="directory-item">
+                    <h3>CEN Oposiciones Sevilla</h3>
+                    <p><strong>Dirección:</strong> C. Luis de Morales, 32, Edificio Forum 1ª Planta - Módulo 2, 41018 Sevilla</p>
+                    <p><strong>Teléfono:</strong> 954 05 40 41</p>
+                </div>
+                <div class="directory-item">
+                    <h3>Preparador de Oposiciones de Biología y Geología</h3>
+                    <p><strong>Teléfono:</strong> 653 109 128</p>
+                    <p><strong>Email:</strong> contacto@preparadorbiologia.com</p>
+                    <p><strong>Redes sociales:</strong> Instagram (preparadorbiologia)</p>
+                </div>
+                <div class="directory-item">
+                    <h3>Cartuja Oposiciones</h3>
+                    <p><strong>Dirección:</strong> Avd. Camino de los Descubrimientos 19, Isla de La Cartuja, Sevilla, 41092</p>
+                    <p><strong>Teléfonos:</strong> 954 467 464, 610 609 320</p>
+                    <p><strong>Horario de atención:</strong> Lunes a viernes: 8:30 a 21:00 h. | Sábados: 9:00 a 14:00 h. | Domingos: cerrado.</p>
+                </div>
             </div>
         </div>
 
-        <!-- Pantalla de Selección de IA Especializada -->
-        <div class="card" id="ia-specialized-screen" style="display: none;">
-            <h2>Selecciona tu especialidad</h2>
-            <div class="ia-options">
-                <button onclick="redirectToIA('biologia')">Biología y Geología</button>
-                <button onclick="redirectToIA('ingles')">Inglés</button>
-                <button onclick="redirectToIA('lengua')">Lengua Castellana y Literatura</button>
-                <button onclick="redirectToIA('matematicas')">Matemáticas</button>
+        <!-- Pantalla de Mis Documentos -->
+        <div class="card" id="documents-screen" style="display: none;">
+            <h2>Mis Documentos</h2>
+            <div class="document-management">
+                <label for="upload-document" class="upload-label">Subir Documentos</label>
+                <input type="file" id="upload-document" multiple>
+                <button class="create-folder-button" onclick="createFolder()">Crear Carpeta</button>
+                <div id="documents-container"></div>
             </div>
         </div>
 
@@ -247,6 +244,46 @@
                     <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
                     <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
                 </ul>
+            </div>
+        </div>
+
+        <!-- Pantalla de Últimas noticias -->
+        <div class="card" id="news-screen" style="display: none;">
+            <h2>Últimas noticias</h2>
+            <div class="news-section">
+                <button onclick="showNewsContent('csif')">CSIF</button>
+                <button onclick="showNewsContent('sipri')">SIPRI</button>
+                <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es/es/categoria/andalucia/educacion/oposiciones"></iframe>
+                <iframe id="sipri-iframe" class="news-iframe" src="https://sipri.es/oposiciones/"></iframe>
+            </div>
+        </div>
+
+        <!-- Pantalla de Selección de IA Especializada -->
+        <div class="card" id="ia-specialized-screen" style="display: none;">
+            <h2>Selecciona tu especialidad</h2>
+            <div class="ia-options">
+                <button onclick="redirectToIA('biologia')">Biología y Geología</button>
+                <button onclick="redirectToIA('ingles')">Inglés</button>
+                <button onclick="redirectToIA('lengua')">Lengua Castellana y Literatura</button>
+                <button onclick="redirectToIA('matematicas')">Matemáticas</button>
+            </div>
+        </div>
+
+        <!-- Pantalla de Ayuda -->
+        <div class="card" id="help-screen" style="display: none;">
+            <h2>Ayuda</h2>
+            <div class="help-section">
+                <button onclick="toggleSection('faqs-section')">Preguntas Frecuentes</button>
+                <div id="faqs-section" class="collapsible-section">
+                    <p>Desafíos durante la oposición...</p>
+                </div>
+
+                <button onclick="toggleSection('contact-section')">Contacta con nosotros</button>
+                <div id="contact-section" class="collapsible-section">
+                    <p>Accede a Slack y escríbenos al chat privado de Patience!</p>
+                    <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+                    <p>O también puedes escribirnos un email a <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
+                </div>
             </div>
         </div>
 

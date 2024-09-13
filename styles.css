@@ -1,4 +1,3 @@
-/* Estilos generales */
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f4f4f4;
@@ -44,7 +43,6 @@ header {
     margin-right: 16px;
 }
 
-/* Menú desplegable */
 .menu-desplegable {
     position: fixed;
     top: 50%;
@@ -89,7 +87,6 @@ header {
     background-color: #019A92;
 }
 
-/* Contenido principal */
 .main-content {
     flex: 1;
     padding: 16px;
@@ -180,7 +177,35 @@ header {
     background-color: #019A92;
 }
 
-/* Estilo para las opciones de la pantalla de inicio */
+.card .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card .form-group > div {
+    flex: 0 0 48%;
+}
+
+.logo {
+    max-width: 100px;
+    margin-bottom: 16px;
+}
+
+footer {
+    text-align: center;
+    padding: 8px 16px;
+    border-top: 1px solid #ddd;
+    background-color: #333;
+    color: #fff;
+    font-size: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+
 .home-section {
     display: flex;
     flex-wrap: wrap;
@@ -214,25 +239,6 @@ header {
     margin-bottom: 16px;
 }
 
-/* Estilo para los botones de administración */
-.admin-button {
-    background-color: #01C0B4;
-    color: #fff;
-    border: none;
-    padding: 12px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 10px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    text-align: center;
-}
-
-.admin-button:hover {
-    background-color: #019A92;
-}
-
-/* Estilo para los documentos */
 .document-management {
     display: flex;
     flex-direction: column;
@@ -302,6 +308,16 @@ header {
 
 .folder.open .folder-content {
     display: block;
+}
+
+.document .fas {
+    margin-left: 10px;
+    color: #666;
+    cursor: pointer;
+}
+
+.document .fas:hover {
+    color: #ff0000;
 }
 
 /* Pop-up de cambio de contraseña */
@@ -375,7 +391,7 @@ header {
     font-style: italic;
 }
 
-/* Estilo para la sección de la guía */
+/* Estilo mejorado para la sección de la guía */
 .guide-section {
     margin-top: 20px;
     background-color: #f9f9f9;
@@ -453,6 +469,92 @@ header {
     margin-bottom: 5px;
 }
 
+/* Estilos adicionales para Slack */
+.slack-button {
+    background-color: #01C0B4;
+    color: #fff;
+    border: none;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.slack-button:hover {
+    background-color: #019A92;
+}
+
+/* Estilo para las noticias */
+.news-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 700px;
+    margin-top: 16px;
+}
+
+.news-section button {
+    width: 100%;
+    background-color: #01C0B4;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+}
+
+.news-section button:hover {
+    background-color: #019A92;
+}
+
+.news-iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 16px;
+    display: none;
+}
+
+/* Estilos adicionales para las opciones de IA Especializada */
+.ia-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.ia-options button {
+    width: 100%;
+    background-color: #01C0B4;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.ia-options button:hover {
+    background-color: #019A92;
+}
+
 /* Estilos adicionales para el menú desplegable */
 .dropdown-content {
     display: none;
@@ -482,43 +584,52 @@ header {
     display: block;
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 8px 16px;
-    border-top: 1px solid #ddd;
-    background-color: #333;
-    color: #fff;
-    font-size: 10px;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-}
-
-/* Estilos adicionales para los botones en el panel de administración */
-.admin-panel {
+.help-section {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    max-width: 300px;
-    margin: auto;
+    gap: 10px;
 }
 
-.admin-button {
+.help-section button {
+    width: 100%;
     background-color: #01C0B4;
     color: #fff;
-    padding: 10px;
     border: none;
-    border-radius: 5px;
+    padding: 12px;
     cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    width: 100%;
+    font-size: 16px;
+    border-radius: 10px;
     text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.help-section button:hover {
+    background-color: #019A92;
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* Estilo para el botón de administrador */
+.admin-button {
+    width: 100%;
+    background-color: #FF5733;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
 }
 
 .admin-button:hover {
-    background-color: #019A92;
+    background-color: #E74C3C;
 }

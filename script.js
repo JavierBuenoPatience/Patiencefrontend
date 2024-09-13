@@ -26,8 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Manejo de la subida de documentos
     document.getElementById('upload-document').addEventListener('change', uploadDocuments);
+
+    // Solo muestra la opción de "Admin" si el usuario es el administrador
+    if (currentUser?.email === 'javibueda@gmail.com') {
+        document.getElementById('admin-button').style.display = 'block';
+    }
 });
 
 // Redirigir a Typeform para el registro
@@ -35,6 +39,7 @@ function redirectToTypeform() {
     window.location.href = "https://qz232a8zljw.typeform.com/to/AHskzuV5?typeform-source=javierbuenopatience.github.io";
 }
 
+// Manejo del login
 function handleLogin(event) {
     event.preventDefault();
     const email = document.getElementById('login-email').value;
@@ -52,12 +57,14 @@ function handleLogin(event) {
     }
 }
 
+// Mostrar el popup si la contraseña es temporal
 function checkIfPasswordNeedsChange() {
     if (currentUser && currentUser.temporaryPassword) {
         document.getElementById('password-change-popup').style.display = 'block';
     }
 }
 
+// Cambiar la contraseña temporal por una nueva
 function handleFirstPasswordChange(event) {
     event.preventDefault();
     const newPassword = document.getElementById('new-password').value;
@@ -71,6 +78,7 @@ function handleFirstPasswordChange(event) {
     }
 }
 
+// Cerrar sesión
 function handleLogout() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('email');
@@ -79,62 +87,7 @@ function handleLogout() {
     showLoginScreen();
 }
 
-// Validar si el usuario es administrador (solo javibueda@gmail.com)
-function checkIfAdmin() {
-    if (currentUser && currentUser.email === "javibueda@gmail.com") {
-        showAdminPanel();
-    } else {
-        alert("No tienes acceso a esta sección.");
-    }
-}
-
-// Mostrar el panel de administración
-function showAdminPanel() {
-    hideAllScreens();
-    document.getElementById('admin-panel').style.display = 'block';
-    updateUserList();
-}
-
-// Crear nuevo usuario (función para el formulario del administrador)
-function handleCreateUser(event) {
-    event.preventDefault();
-    const name = document.getElementById('admin-name').value;
-    const email = document.getElementById('admin-email').value;
-    const password = document.getElementById('admin-password').value;
-
-    if (users[email]) {
-        alert('El correo electrónico ya está registrado.');
-        return;
-    }
-
-    users[email] = {
-        name: name,
-        email: email,
-        password: password,
-        temporaryPassword: true, // Se marca como contraseña temporal
-        profile: {},
-        documents: [],
-        folders: []
-    };
-
-    localStorage.setItem('users', JSON.stringify(users));
-    document.getElementById('create-user-form').reset();
-    alert('Usuario creado con éxito.');
-    updateUserList();
-}
-
-// Mostrar la lista de usuarios en el panel de administración
-function updateUserList() {
-    const userList = document.getElementById('user-list');
-    userList.innerHTML = '';
-
-    Object.keys(users).forEach(email => {
-        const li = document.createElement('li');
-        li.textContent = `${users[email].name} (${email})`;
-        userList.appendChild(li);
-    });
-}
-
+// Actualizar perfil de usuario
 function handleProfileUpdate(event) {
     event.preventDefault();
     const email = localStorage.getItem('email');
@@ -153,12 +106,14 @@ function handleProfileUpdate(event) {
     updateProfileIcon();
 }
 
+// Validar si el correo es de Gmail o Hotmail
 function validateEmail(email) {
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     const hotmailRegex = /^[a-zA-Z0-9._%+-]+@hotmail\.com$/;
     return gmailRegex.test(email) || hotmailRegex.test(email);
 }
 
+// Mostrar la pantalla de inicio de sesión
 function showLoginScreen() {
     hideAllScreens();
     document.getElementById('login-screen').style.display = 'block';
@@ -166,6 +121,7 @@ function showLoginScreen() {
     document.querySelector('footer').style.display = 'none';
 }
 
+// Mostrar la pantalla de inicio
 function showHomeScreen() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
@@ -180,6 +136,7 @@ function showHomeScreen() {
     }
 }
 
+// Mostrar el perfil del usuario
 function showProfile() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
@@ -198,6 +155,7 @@ function showProfile() {
     }
 }
 
+// Mostrar pantalla de grupos
 function showGroups() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
@@ -207,6 +165,7 @@ function showGroups() {
     }
 }
 
+// Mostrar opciones de IA especializada
 function showIASpecializedOptions() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
@@ -216,6 +175,7 @@ function showIASpecializedOptions() {
     }
 }
 
+// Redirigir a IA especializada según la especialidad
 function redirectToIA(specialty) {
     if (specialty === 'biologia') {
         window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank');
@@ -224,6 +184,7 @@ function redirectToIA(specialty) {
     }
 }
 
+// Mostrar pantalla de capacitación
 function showTraining() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
@@ -233,6 +194,7 @@ function showTraining() {
     }
 }
 
+// Mostrar pantalla "Próximamente"
 function showComingSoon() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
@@ -242,6 +204,7 @@ function showComingSoon() {
     }
 }
 
+// Mostrar pantalla de noticias
 function showNews() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
@@ -251,6 +214,7 @@ function showNews() {
     }
 }
 
+// Mostrar pantalla de documentos
 function showDocuments() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
@@ -261,6 +225,7 @@ function showDocuments() {
     }
 }
 
+// Mostrar pantalla de la guía
 function showGuide() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
@@ -270,6 +235,7 @@ function showGuide() {
     }
 }
 
+// Mostrar directorio de academias
 function showDirectory() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
@@ -279,11 +245,13 @@ function showDirectory() {
     }
 }
 
+// Ocultar todas las pantallas
 function hideAllScreens() {
     const screens = document.querySelectorAll('.card');
     screens.forEach(screen => screen.style.display = 'none');
 }
 
+// Redirigir a una URL
 function redirectToURL(url) {
     if (localStorage.getItem('loggedIn') === 'true') {
         window.open(url, '_blank');
@@ -293,6 +261,7 @@ function redirectToURL(url) {
     }
 }
 
+// Manejo del clic en el logo
 function handleLogoClick() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showHomeScreen();
@@ -301,6 +270,7 @@ function handleLogoClick() {
     }
 }
 
+// Subir imagen de perfil
 function handleImageUpload(event) {
     const reader = new FileReader();
     reader.onload = function (e) {
@@ -309,6 +279,7 @@ function handleImageUpload(event) {
     reader.readAsDataURL(event.target.files[0]);
 }
 
+// Actualizar el icono del perfil
 function updateProfileIcon() {
     const email = localStorage.getItem('email');
     const profile = users[email].profile || {};
@@ -318,6 +289,7 @@ function updateProfileIcon() {
     }
 }
 
+// Mostrar contenido de noticias
 function showNewsContent(newsType) {
     const csifIframe = document.getElementById('csif-iframe');
     const sipriIframe = document.getElementById('sipri-iframe');
@@ -332,6 +304,7 @@ function showNewsContent(newsType) {
     }
 }
 
+// Mostrar pantalla de ayuda
 function showHelp() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
@@ -341,11 +314,13 @@ function showHelp() {
     }
 }
 
+// Alternar la visualización de secciones (FAQs, Contacto)
 function toggleSection(sectionId) {
     const section = document.getElementById(sectionId);
     section.style.display = section.style.display === 'none' || section.style.display === '' ? 'block' : 'none';
 }
 
+// Mostrar resumen de documentos recientes
 function updateDocumentOverview() {
     const email = localStorage.getItem('email');
     const userDocuments = users[email]?.documents || [];
@@ -365,7 +340,7 @@ function updateDocumentOverview() {
     }
 }
 
-// Función que abre el documento en una nueva pestaña utilizando su URL base64.
+// Abrir documento en una nueva ventana
 function openDocument(url) {
     const newWindow = window.open(url, '_blank');
     if (!newWindow) {
@@ -373,6 +348,7 @@ function openDocument(url) {
     }
 }
 
+// Subir documentos
 function uploadDocuments(event) {
     const email = localStorage.getItem('email');
     const files = event.target.files;
@@ -402,6 +378,7 @@ function uploadDocuments(event) {
     }
 }
 
+// Crear nueva carpeta
 function createFolder() {
     const folderName = prompt('Nombre de la nueva carpeta:');
     if (folderName) {
@@ -416,6 +393,7 @@ function createFolder() {
     }
 }
 
+// Borrar carpeta
 function deleteFolder(folderName) {
     const email = localStorage.getItem('email');
     const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
@@ -426,6 +404,7 @@ function deleteFolder(folderName) {
     }
 }
 
+// Borrar documento
 function deleteDocument(documentName) {
     const email = localStorage.getItem('email');
     const documentIndex = users[email].documents.findIndex(doc => doc.name === documentName);
@@ -436,6 +415,7 @@ function deleteDocument(documentName) {
     }
 }
 
+// Mostrar documentos
 function displayDocuments() {
     const email = localStorage.getItem('email');
     const documentsContainer = document.getElementById('documents-container');
@@ -476,6 +456,7 @@ function displayDocuments() {
     });
 }
 
+// Mover documento a una carpeta
 function moveDocumentToFolder(email, documentName) {
     const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
     if (selectedFolder) {

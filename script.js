@@ -147,9 +147,15 @@ function showAdminPanel() {
 
 function createNewUser(event) {
     event.preventDefault();
+    
     const newUserEmail = document.getElementById('new-user-email').value;
     const newUserName = document.getElementById('new-user-name').value;
     const newUserPassword = document.getElementById('new-user-password').value;
+
+    if (!newUserEmail || !newUserName || !newUserPassword) {
+        alert('Por favor, completa todos los campos.');
+        return;
+    }
 
     if (users[newUserEmail]) {
         alert('El correo ya está registrado.');

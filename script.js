@@ -33,9 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('upload-document').addEventListener('change', uploadDocuments);
 
     // Mostrar botón de administración si el usuario es el administrador
-    if (localStorage.getItem('email') === adminEmail) {
-        document.querySelector('li a[onclick="showAdminPanel()"]').style.display = 'block';
+    const adminButton = document.getElementById('admin-panel-button');
+    if (adminButton) {
+        adminButton.addEventListener('click', showAdminPanel);
     }
+
+    updateUserList(); // Actualizar la lista de usuarios al cargar la pantalla de administración
 });
 
 // Redirigir a Typeform para el registro
@@ -136,7 +139,7 @@ function showAdminPanel() {
     if (localStorage.getItem('email') === adminEmail) {
         hideAllScreens();
         document.getElementById('admin-panel').style.display = 'block';
-        loadUserList(); // Cargar lista de usuarios en el panel de administración
+        updateUserList();
     } else {
         alert('No tienes permiso para acceder a esta página.');
     }
@@ -153,37 +156,35 @@ function createNewUser(event) {
         return;
     }
 
-    const registrationDate = new Date().toLocaleDateString();
-
     users[newUserEmail] = {
         name: newUserName,
         password: newUserPassword,
         profile: {},
         documents: [],
         folders: [],
-        registrationDate: registrationDate, // Guardar fecha de registro
         temporaryPassword: true // Señal de que el usuario debe cambiar su contraseña
     };
 
     localStorage.setItem('users', JSON.stringify(users));
     document.getElementById('create-user-form').reset();
     alert('Usuario creado con éxito.');
-    loadUserList(); // Actualizar la lista de usuarios
+    updateUserList(); // Actualizar la lista de usuarios al crear uno nuevo
 }
 
-function loadUserList() {
-    const userList = document.getElementById('user-list');
-    userList.innerHTML = ''; // Limpiar la lista antes de agregar los usuarios
+function updateUserList() {
+    const userListContainer = document.getElementById('user-list');
+    userListContainer.innerHTML = '';
 
     Object.keys(users).forEach(email => {
         const user = users[email];
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${user.name}</td>
-            <td>${email}</td>
-            <td>${user.registrationDate || 'No especificado'}</td>
+        const userItem = document.createElement('div');
+        userItem.classList.add('user-item');
+        userItem.innerHTML = `
+            <strong>Nombre:</strong> ${user.name || 'N/A'}<br>
+            <strong>Email:</strong> ${email}<br>
+            <strong>Registrado:</strong> ${new Date().toLocaleDateString()}
         `;
-        userList.appendChild(row);
+        userListContainer.appendChild(userItem);
     });
 }
 

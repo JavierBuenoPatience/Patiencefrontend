@@ -7,7 +7,12 @@
 
     // Manejo seguro de la obtención de usuarios desde localStorage
     try {
-        users = JSON.parse(localStorage.getItem('users')) || {};
+        const storedUsers = localStorage.getItem('users');
+        if (storedUsers) {
+            users = JSON.parse(storedUsers);
+        } else {
+            users = {};
+        }
     } catch (e) {
         console.error('Error al parsear los usuarios del localStorage', e);
         localStorage.removeItem('users');
@@ -50,62 +55,16 @@
             if (menu) menu.style.display = 'none';
         }
 
-        // Añadir event listeners a headerRight si existe
-        if (headerRight) {
-            headerRight.addEventListener('click', () => {
-                if (dropdown) {
-                    dropdown.classList.toggle('show-dropdown');
-                }
-            });
-
-            document.addEventListener('click', (event) => {
-                if (!headerRight.contains(event.target) && !dropdown.contains(event.target)) {
-                    if (dropdown) {
-                        dropdown.classList.remove('show-dropdown');
-                    }
-                }
-            });
-        }
-
         // Manejo de la subida de documentos
         const uploadDocumentElement = document.getElementById('upload-document');
         if (uploadDocumentElement) {
             uploadDocumentElement.addEventListener('change', uploadDocuments);
         }
 
-        // Mostrar botón de administración si el usuario es el administrador
-        const adminButton = document.getElementById('admin-panel-button');
-        if (adminButton) {
-            adminButton.addEventListener('click', showAdminPanel);
-        }
-
-        // Actualizar la lista de usuarios al cargar la pantalla de administración
-        updateUserList();
-
         // Event listeners adicionales
         const logo = document.getElementById('logo');
         if (logo) {
             logo.addEventListener('click', handleLogoClick);
-        }
-
-        const profileForm = document.getElementById('profile-form');
-        if (profileForm) {
-            profileForm.addEventListener('submit', handleProfileUpdate);
-        }
-
-        const loginForm = document.getElementById('login-form');
-        if (loginForm) {
-            loginForm.addEventListener('submit', handleLogin);
-        }
-
-        const logoutButton = document.getElementById('logout-button');
-        if (logoutButton) {
-            logoutButton.addEventListener('click', handleLogout);
-        }
-
-        const createUserForm = document.getElementById('create-user-form');
-        if (createUserForm) {
-            createUserForm.addEventListener('submit', createNewUser);
         }
 
         const profileImageInput = document.getElementById('profile-image-input');
@@ -170,6 +129,8 @@
         currentUser = null;
         hideAllScreens();
         showLoginScreen();
+        const menu = document.getElementById('menu-desplegable');
+        if (menu) menu.style.display = 'none';
     }
 
     function handleProfileUpdate(event) {
@@ -217,7 +178,7 @@
             const homeScreen = document.getElementById('home-screen');
             if (homeScreen) homeScreen.style.display = 'block';
             const userNameHome = document.getElementById('user-name-home');
-            if (userNameHome) userNameHome.textContent = localStorage.getItem('name');
+            if (userNameHome && currentUser) userNameHome.textContent = currentUser.name || '';
             const header = document.querySelector('header');
             const footer = document.querySelector('footer');
             if (header) header.style.display = 'flex';
@@ -281,14 +242,20 @@
 
             Object.keys(users).forEach(email => {
                 const user = users[email];
-                const userItem = document.createElement('div');
-                userItem.classList.add('user-item');
-                userItem.innerHTML = `
-                    <strong>Nombre:</strong> ${user.name || 'N/A'}<br>
-                    <strong>Email:</strong> ${email}<br>
-                    <strong>Registrado:</strong> ${user.registeredAt ? new Date(user.registeredAt).toLocaleDateString() : 'N/A'}
-                `;
-                userListContainer.appendChild(userItem);
+                const row = document.createElement('tr');
+
+                const nameCell = document.createElement('td');
+                nameCell.textContent = user.name || 'N/A';
+                const emailCell = document.createElement('td');
+                emailCell.textContent = email;
+                const dateCell = document.createElement('td');
+                dateCell.textContent = user.registeredAt ? new Date(user.registeredAt).toLocaleDateString() : 'N/A';
+
+                row.appendChild(nameCell);
+                row.appendChild(emailCell);
+                row.appendChild(dateCell);
+
+                userListContainer.appendChild(row);
             });
         }
     }
@@ -301,6 +268,7 @@
             const email = localStorage.getItem('email');
             const profile = users[email].profile || {};
             document.getElementById('full-name').value = profile.fullName || '';
+            document.getElementById('profile-email').value = email || '';
             document.getElementById('phone').value = profile.phone || '';
             document.getElementById('study-time').value = profile.studyTime || '';
             document.getElementById('specialty').value = profile.specialty || '';
@@ -334,10 +302,15 @@
     }
 
     function redirectToIA(specialty) {
-        if (specialty === 'biologia') {
-            window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank');
+        if (localStorage.getItem('loggedIn') === 'true') {
+            if (specialty === 'biologia') {
+                window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank');
+            } else {
+                alert('La especialidad seleccionada estará disponible pronto.');
+            }
         } else {
-            alert('La especialidad seleccionada estará disponible pronto.');
+            alert('Por favor, inicia sesión para acceder a esta funcionalidad.');
+            showLoginScreen();
         }
     }
 
@@ -437,7 +410,7 @@
 
     function updateProfileIcon() {
         const email = localStorage.getItem('email');
-        const profile = users[email].profile || {};
+        const profile = users[email]?.profile || {};
         const profileIcon = document.getElementById('profile-icon');
         if (profileIcon) {
             profileIcon.src = profile.profileImage || 'assets/default-profile.png';
@@ -595,6 +568,7 @@
                 const docElement = document.createElement('div');
                 docElement.classList.add('document');
                 docElement.textContent = doc.name;
+
                 docElement.addEventListener('click', () => {
                     doc.lastOpened = new Date();
                     localStorage.setItem('users', JSON.stringify(users));
@@ -604,7 +578,10 @@
 
                 const deleteButton = document.createElement('button');
                 deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
-                deleteButton.onclick = () => deleteDocument(doc.name);
+                deleteButton.onclick = (event) => {
+                    event.stopPropagation(); // Evitar que se abra el documento al hacer clic en borrar
+                    deleteDocument(doc.name);
+                };
 
                 docElement.appendChild(deleteButton);
                 documentsContainer.appendChild(docElement);

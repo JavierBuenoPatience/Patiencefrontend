@@ -14,7 +14,7 @@
         <div class="header-left" onclick="handleLogoClick()">Patience</div>
         <div class="header-right">
             <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon" onclick="toggleProfileMenu()">
-            <div id="profile-dropdown" class="dropdown-content">
+            <div id="profile-dropdown" class="dropdown-content" style="display: none;">
                 <a href="#" onclick="handleLogout()">Cerrar sesión</a>
                 <a href="#" onclick="showHelp()">Ayuda</a>
                 <a href="#" onclick="showTraining()">¿Qué es Patience?</a>
@@ -38,7 +38,7 @@
 
     <div class="main-content">
         <!-- Pantalla de Inicio de Sesión -->
-        <div class="card" id="login-screen">
+        <div class="card" id="login-screen" style="display: block;">
             <img src="assets/logo.png" alt="Patience Logo" class="logo">
             <h2>Inicio de Sesión</h2>
             <form id="login-form" onsubmit="handleLogin(event)">

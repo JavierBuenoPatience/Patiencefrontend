@@ -54,8 +54,8 @@
         <div class="card" id="registration-screen" style="display: none;">
             <img src="assets/logo.png" alt="Patience Logo" class="logo">
             <h2>Registro</h2>
-            <form id="registration-form" onsubmit="redirectToTypeform(event)">
-                <label for="reg-name">Nombre:</label>
+            <form id="registration-form" onsubmit="handleRegistration(event)">
+                <label for="reg-name">Nombre Completo:</label>
                 <input type="text" id="reg-name" name="name" required>
 
                 <label for="reg-email">Correo Electrónico:</label>
@@ -67,7 +67,6 @@
                 <button type="submit">Registrarse</button>
             </form>
             <p id="registration-message" style="display: none;">¡Gracias por registrarte! Ahora puedes iniciar sesión.</p>
-            <button id="welcome-button" class="welcome-button" style="display: none;" onclick="showLoginScreen()">Iniciar Sesión</button>
             <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
         </div>
 

@@ -49,16 +49,6 @@ function handleLogin(event) {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
-    if (email === adminEmail) {
-        // Acceso directo para el administrador sin verificar la contraseña
-        localStorage.setItem('loggedIn', 'true');
-        localStorage.setItem('email', adminEmail);
-        currentUser = users[adminEmail];
-        showHomeScreen();
-        document.getElementById('menu-desplegable').style.display = 'block';
-        return;
-    }
-
     if (users[email] && users[email].password === password) {
         localStorage.setItem('loggedIn', 'true');
         localStorage.setItem('email', email);

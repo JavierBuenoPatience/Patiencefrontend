@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showHomeScreen();
         menu.style.display = 'block';
         checkIfPasswordNeedsChange(); // Verificar si necesita cambiar contraseña temporal
+        showAdminButtonIfAdmin(); // Mostrar botón del panel de administración si es el admin
     } else {
         showLoginScreen();
         menu.style.display = 'none';
@@ -32,16 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Manejo de la subida de documentos
     document.getElementById('upload-document').addEventListener('change', uploadDocuments);
 
-    // Mostrar botón de administración si el usuario es el administrador
-    const adminButton = document.getElementById('admin-panel-button');
-    if (adminButton) {
-        adminButton.addEventListener('click', showAdminPanel);
-    }
-
     updateUserList(); // Actualizar la lista de usuarios al cargar la pantalla de administración
 });
 
-// Redirigir a Typeform para el registro
 function redirectToTypeform() {
     window.location.href = "https://qz232a8zljw.typeform.com/to/AHskzuV5?typeform-source=javierbuenopatience.github.io";
 }
@@ -58,6 +52,7 @@ function handleLogin(event) {
         showHomeScreen();
         document.getElementById('menu-desplegable').style.display = 'block';
         checkIfPasswordNeedsChange(); // Verificar si necesita cambiar contraseña temporal
+        showAdminButtonIfAdmin(); // Mostrar botón del panel de administración si es el admin
     } else {
         alert('Correo o contraseña incorrectos.');
     }
@@ -135,6 +130,14 @@ function showHomeScreen() {
     }
 }
 
+function showAdminButtonIfAdmin() {
+    if (localStorage.getItem('email') === adminEmail) {
+        document.querySelector('li a[onclick="showAdminPanel()"]').style.display = 'block';
+    } else {
+        document.querySelector('li a[onclick="showAdminPanel()"]').style.display = 'none';
+    }
+}
+
 function showAdminPanel() {
     if (localStorage.getItem('email') === adminEmail) {
         hideAllScreens();
@@ -177,18 +180,27 @@ function createNewUser(event) {
     updateUserList(); // Actualizar la lista de usuarios al crear uno nuevo
 }
 
+function deleteUser(email) {
+    if (confirm('¿Seguro que deseas eliminar este usuario?')) {
+        delete users[email];
+        localStorage.setItem('users', JSON.stringify(users));
+        updateUserList();
+        alert('Usuario eliminado con éxito.');
+    }
+}
+
 function updateUserList() {
     const userListContainer = document.getElementById('user-list');
     userListContainer.innerHTML = '';
 
     Object.keys(users).forEach(email => {
         const user = users[email];
-        const userItem = document.createElement('div');
-        userItem.classList.add('user-item');
+        const userItem = document.createElement('tr');
         userItem.innerHTML = `
-            <strong>Nombre:</strong> ${user.name || 'N/A'}<br>
-            <strong>Email:</strong> ${email}<br>
-            <strong>Registrado:</strong> ${new Date().toLocaleDateString()}
+            <td>${user.name || 'N/A'}</td>
+            <td>${email}</td>
+            <td>${new Date().toLocaleDateString()}</td>
+            <td><button onclick="deleteUser('${email}')">Eliminar</button></td>
         `;
         userListContainer.appendChild(userItem);
     });

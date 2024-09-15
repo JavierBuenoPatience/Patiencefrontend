@@ -61,18 +61,69 @@
             uploadDocumentElement.addEventListener('change', uploadDocuments);
         }
 
-        // Event listeners adicionales
-        const logo = document.getElementById('logo');
-        if (logo) {
-            logo.addEventListener('click', handleLogoClick);
+        // Event listeners para botones del menú
+        document.getElementById('inicio-button').addEventListener('click', showHomeScreen);
+        document.getElementById('perfil-button').addEventListener('click', showProfile);
+        document.getElementById('ia-button').addEventListener('click', showIASpecializedOptions);
+        document.getElementById('grupos-button').addEventListener('click', showGroups);
+        document.getElementById('documentos-button').addEventListener('click', showDocuments);
+        document.getElementById('training-button').addEventListener('click', showTraining);
+        document.getElementById('centro-button').addEventListener('click', showComingSoon);
+        document.getElementById('noticias-button').addEventListener('click', showNews);
+        document.getElementById('admin-button').addEventListener('click', showAdminPanel);
+
+        // Event listeners para otros botones
+        document.getElementById('register-button').addEventListener('click', redirectToTypeform);
+        document.getElementById('slack-button').addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA'));
+        document.getElementById('slack-button-2').addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA'));
+        document.getElementById('slack-button-3').addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA'));
+        document.getElementById('help-button').addEventListener('click', showHelp);
+        document.getElementById('logout-button').addEventListener('click', handleLogout);
+
+        // Manejo del formulario de inicio de sesión
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', handleLogin);
         }
 
+        // Manejo del formulario de cambio de contraseña
+        const passwordChangeForm = document.getElementById('password-change-form');
+        if (passwordChangeForm) {
+            passwordChangeForm.addEventListener('submit', handleFirstPasswordChange);
+        }
+
+        // Manejo del formulario de perfil
+        const profileForm = document.getElementById('profile-form');
+        if (profileForm) {
+            profileForm.addEventListener('submit', handleProfileUpdate);
+        }
+
+        // Manejo de la imagen de perfil
         const profileImageInput = document.getElementById('profile-image-input');
         if (profileImageInput) {
             profileImageInput.addEventListener('change', handleImageUpload);
         }
 
-        // Añade aquí otros event listeners necesarios para tus funcionalidades
+        // Event listeners para los botones de IA especializada
+        document.getElementById('biologia-button').addEventListener('click', () => redirectToIA('biologia'));
+        document.getElementById('ingles-button').addEventListener('click', () => redirectToIA('ingles'));
+        document.getElementById('lengua-button').addEventListener('click', () => redirectToIA('lengua'));
+        document.getElementById('matematicas-button').addEventListener('click', () => redirectToIA('matematicas'));
+
+        // Event listeners para la sección de ayuda
+        document.getElementById('faqs-button').addEventListener('click', () => toggleSection('faqs-section'));
+        document.getElementById('contact-button').addEventListener('click', () => toggleSection('contact-section'));
+
+        // Event listeners para la sección de noticias
+        document.getElementById('csif-button').addEventListener('click', () => showNewsContent('csif'));
+        document.getElementById('sipri-button').addEventListener('click', () => showNewsContent('sipri'));
+
+        // Event listener para el botón de crear carpeta
+        const createFolderButton = document.getElementById('create-folder-button');
+        if (createFolderButton) {
+            createFolderButton.addEventListener('click', createFolder);
+        }
+
     });
 
     // Función para redirigir al registro en Typeform
@@ -196,6 +247,12 @@
             const adminPanel = document.getElementById('admin-panel');
             if (adminPanel) adminPanel.style.display = 'block';
             updateUserList();
+
+            // Manejo del formulario de crear usuario
+            const createUserForm = document.getElementById('create-user-form');
+            if (createUserForm) {
+                createUserForm.addEventListener('submit', createNewUser);
+            }
         } else {
             alert('No tienes permiso para acceder a esta página.');
         }
@@ -555,9 +612,12 @@
                 folderElement.classList.add('folder');
                 folderElement.textContent = folder.name;
 
-                const deleteButton = document.createElement('button');
-                deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
-                deleteButton.onclick = () => deleteFolder(folder.name);
+                const deleteButton = document.createElement('i');
+                deleteButton.classList.add('fas', 'fa-trash-alt');
+                deleteButton.onclick = (event) => {
+                    event.stopPropagation();
+                    deleteFolder(folder.name);
+                };
 
                 folderElement.appendChild(deleteButton);
                 documentsContainer.appendChild(folderElement);
@@ -576,8 +636,8 @@
                     updateDocumentOverview();
                 });
 
-                const deleteButton = document.createElement('button');
-                deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                const deleteButton = document.createElement('i');
+                deleteButton.classList.add('fas', 'fa-trash-alt');
                 deleteButton.onclick = (event) => {
                     event.stopPropagation(); // Evitar que se abra el documento al hacer clic en borrar
                     deleteDocument(doc.name);

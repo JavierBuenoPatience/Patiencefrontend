@@ -42,24 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUserList(); // Actualizar la lista de usuarios al cargar la pantalla de administración
 });
 
-// Crear usuario administrador por defecto
-function createAdminUser() {
-    if (!users[adminEmail]) {
-        users[adminEmail] = {
-            name: "Javier",
-            password: "Alfonsogroso1!",
-            profile: {
-                fullName: "Javier Bueno Rueda",
-                specialty: "Inglés",
-                hobbies: "Pádel"
-            },
-            documents: [],
-            folders: [],
-            temporaryPassword: false
-        };
-        localStorage.setItem('users', JSON.stringify(users));
-    }
-}
 
 // Manejar el inicio de sesión
 function handleLogin(event) {

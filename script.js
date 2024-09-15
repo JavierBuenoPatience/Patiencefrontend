@@ -3,9 +3,21 @@ let currentUser = null;
 const adminEmail = 'javibueda@gmail.com'; // Correo del administrador
 
 document.addEventListener('DOMContentLoaded', () => {
-    const menu = document.getElementById('menu-desplegable');
     const headerRight = document.querySelector('.header-right img');
     const dropdown = document.getElementById('profile-dropdown');
+
+    // Mostrar u ocultar el menú desplegable del perfil
+    headerRight.addEventListener('click', () => {
+        dropdown.classList.toggle('show-dropdown');
+    });
+
+    // Ocultar el menú si haces clic fuera de él
+    document.addEventListener('click', (event) => {
+        if (!headerRight.contains(event.target) && !dropdown.contains(event.target)) {
+            dropdown.classList.remove('show-dropdown');
+        }
+    });
+});
 
     // Verificar si el usuario ha iniciado sesión
     if (localStorage.getItem('loggedIn') === 'true') {

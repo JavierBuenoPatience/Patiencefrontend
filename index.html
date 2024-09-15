@@ -50,31 +50,6 @@
             </form>
             <p>¿No tienes una cuenta todavía? <button type="button" onclick="redirectToTypeform()">Regístrate!</button></p>
         </div>
-
-
-        <!-- Pantalla de Planning -->
-        <div class="card" id="plan-screen" style="display: none;">
-            <h2>Configuración del Plan de Estudio</h2>
-            <form id="study-plan-form" onsubmit="handlePlanCalculation(event)">
-                <label for="exam-date">Fecha del Examen:</label>
-                <input type="date" id="exam-date" name="exam-date" required>
-
-                <label for="daily-hours">Horas de Estudio Diarias:</label>
-                <input type="number" id="daily-hours" name="daily-hours" min="1" required>
-
-                <label for="total-topics">Número Total de Temas:</label>
-                <input type="number" id="total-topics" name="total-topics" min="1" required>
-
-                <button type="submit">Calcular Plan</button>
-            </form>
-
-            <div id="plan-result" style="display: none;">
-                <h3>Plan de Estudio</h3>
-                <p id="topics-per-day"></p>
-                <p id="days-left"></p>
-                <button onclick="markAsCompleted()">Marcar Temas del Día como Completados</button>
-            </div>
-        </div>
         
         <!-- Pantalla de Registro -->
         <div class="card" id="registration-screen" style="display: none;">
@@ -105,6 +80,31 @@
                 <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
             </div>
             <div class="home-section">
+
+
+         <!-- Pantalla de Planning (nueva funcionalidad) -->
+    <div class="card" id="plan-screen" style="display: none;">
+        <h2>Configuración del Plan de Estudio</h2>
+        <form id="study-plan-form" onsubmit="handlePlanCalculation(event)">
+            <label for="exam-date">Fecha del Examen:</label>
+            <input type="date" id="exam-date" name="exam-date" required>
+
+            <label for="daily-hours">Horas de Estudio Diarias:</label>
+            <input type="number" id="daily-hours" name="daily-hours" min="1" required>
+
+            <label for="total-topics">Número Total de Temas:</label>
+            <input type="number" id="total-topics" name="total-topics" min="1" required>
+
+            <button type="submit">Calcular Plan</button>
+        </form>
+
+        <div id="plan-result" style="display: none;">
+            <h3>Plan de Estudio</h3>
+            <p id="topics-per-day"></p>
+            <p id="days-left"></p>
+            <button onclick="markAsCompleted()">Marcar Temas del Día como Completados</button>
+        </div>
+    </div>
                 <!-- Mis Documentos -->
                 <div class="overview documents-overview" onclick="showDocuments()">
                     <h3>Mis Documentos</h3>

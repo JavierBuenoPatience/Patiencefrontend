@@ -13,11 +13,10 @@
     <header>
         <div class="header-left" onclick="handleLogoClick()">Patience</div>
         <div class="header-right">
-            <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon" onclick="toggleProfileMenu()">
+            <img src="assets/patience-default-color.png" alt="Profile Icon" id="profile-icon"> <!-- Imagen por defecto de Patience -->
             <div id="profile-dropdown" class="dropdown-content">
                 <a href="#" onclick="handleLogout()">Cerrar sesión</a>
                 <a href="#" onclick="showHelp()">Ayuda</a>
-                <a href="#" onclick="showTraining()">¿Qué es Patience?</a>
             </div>
         </div>
     </header>
@@ -26,19 +25,20 @@
         <ul>
             <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
             <li><a href="#" onclick="showProfile()">Perfil</a></li>
-            <li><a href="#" onclick="showPlanning()">Planning</a></li>
             <li><a href="#" onclick="showIASpecializedOptions()">IA especializada</a></li>
             <li><a href="#" onclick="showGroups()">Mis grupos</a></li>
             <li><a href="#" onclick="showDocuments()">Mis Documentos</a></li>
+            <li><a href="#" onclick="showTraining()">¿Qué es Patience?</a></li>
             <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
             <li><a href="#" onclick="showNews()">Últimas noticias</a></li>
-            <li><a href="#" onclick="showAdminPanel()">Panel de Administración</a></li>
+            <!-- Panel de administración visible solo para el administrador -->
+            <li id="admin-panel-button" style="display: none;"><a href="#" onclick="showAdminPanel()">Panel de Administración</a></li>
         </ul>
     </div>
 
     <div class="main-content">
         <!-- Pantalla de Inicio de Sesión -->
-        <div class="card" id="login-screen" style="display: block;">
+        <div class="card" id="login-screen">
             <img src="assets/logo.png" alt="Patience Logo" class="logo">
             <h2>Inicio de Sesión</h2>
             <form id="login-form" onsubmit="handleLogin(event)">
@@ -54,45 +54,35 @@
         <!-- Pantalla de Inicio -->
         <div class="card" id="home-screen" style="display: none;">
             <img src="assets/logo.png" alt="Patience Logo" class="logo">
-            <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
+            <h1 id="home-welcome-message">Bienvenid@</h1> <!-- Muestra el nombre del usuario si está definido -->
             <div class="welcome-message">
                 <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
             </div>
-            <!-- Barra de progreso del planning -->
-            <div class="planning-overview" id="planning-overview" style="display: none;">
-                <h3>Progreso de tu Plan de Estudio</h3>
-                <div class="progress-bar">
-                    <div class="progress" id="home-progress-bar" style="width: 0%;"></div>
+            <div class="home-section">
+                <!-- Mis Documentos -->
+                <div class="overview documents-overview" onclick="showDocuments()">
+                    <h3>Mis Documentos</h3>
+                    <div class="document-list" id="document-list"></div>
                 </div>
-                <p><span id="home-progress-text">0%</span> completado</p>
-            </div>
-        </div>
 
-        <!-- Pantalla de Planning -->
-        <div class="card" id="planning-screen" style="display: none;">
-            <h2>Configura tu Plan de Estudios</h2>
-            <form id="study-planner-form" onsubmit="setupStudyPlan(event)">
-                <label for="exam-date">Fecha de tu examen:</label>
-                <input type="date" id="exam-date" required>
-
-                <label for="daily-hours">Horas disponibles al día:</label>
-                <input type="number" id="daily-hours" min="1" max="12" required>
-
-                <label for="total-topics">Número total de temas:</label>
-                <input type="number" id="total-topics" min="1" required>
-
-                <button type="submit">Generar Plan</button>
-            </form>
-
-            <!-- Visualización del plan de estudios -->
-            <div id="study-plan" style="display: none;">
-                <h2>Tu Plan de Estudios</h2>
-                <p>Debes estudiar <span id="topics-per-day"></span> temas por día hasta el <span id="exam-date-display"></span>.</p>
-                <p>Días restantes: <span id="days-left"></span></p>
-                <div class="progress-bar">
-                    <div class="progress" id="progress-bar" style="width: 0%;"></div>
+                <!-- Mis Grupos -->
+                <div class="overview groups-overview" onclick="showGroups()">
+                    <h3>Mis Grupos</h3>
+                    <p>Accede a Slack para colaborar y comunicarte con otros usuarios.</p>
+                    <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
                 </div>
-                <button onclick="markTopicsAsCompleted()">He completado los temas de hoy</button>
+
+                <!-- Guía para aprovechar al máximo la IA -->
+                <div class="overview guide-overview" onclick="showGuide()">
+                    <h3>Guía para aprovechar al máximo la IA</h3>
+                    <p>Aprende a utilizar la IA especializada de la mejor manera.</p>
+                </div>
+
+                <!-- ¿Dónde te puedes preparar? -->
+                <div class="overview directory-overview" onclick="showDirectory()">
+                    <h3>¿Dónde te puedes preparar?</h3>
+                    <p>Explora academias y preparadores para tu oposición.</p>
+                </div>
             </div>
         </div>
 
@@ -101,7 +91,7 @@
             <h2>Perfil</h2>
             <form id="profile-form" onsubmit="handleProfileUpdate(event)">
                 <div class="profile-field">
-                    <img id="profile-img" src="assets/default-profile.png" alt="Profile Image" class="profile-img">
+                    <img id="profile-img" src="assets/patience-default-color.png" alt="Profile Image" class="profile-img"> <!-- Imagen por defecto de Patience -->
                     <input type="file" id="profile-img-upload" class="profile-img-upload" accept="image/*" onchange="handleImageUpload(event)">
                 </div>
                 <div class="profile-field">
@@ -185,78 +175,63 @@
             </div>
         </div>
 
-        <!-- Pantalla de Ayuda -->
-        <div class="card" id="help-screen" style="display: none;">
-            <h2>Ayuda</h2>
-            <div class="help-section">
-                <button onclick="toggleSection('faqs-section')">Preguntas Frecuentes</button>
-                <div id="faqs-section" class="collapsible-section">
-                    <p>Desafíos durante la oposición...</p>
+        <!-- Pantalla de Guía para aprovechar al máximo la IA -->
+        <div class="card" id="guide-screen" style="display: none;">
+            <h2>Guía para aprovechar al máximo la IA</h2>
+            <div class="guide-section">
+                <div class="prompt-section">
+                    <h4>Cómo pedir a la IA que genere un examen aleatorio:</h4>
+                    <p>Prompt: Genera un examen de oposición de profesorado de educación secundaria obligatoria aleatorio para la especialidad de <span class="prompt-hint">[nombre de tu especialidad]</span>. Debes darme <span class="prompt-hint">[nº de bolas que saca el tribunal]</span> títulos de temas aleatorios de mi especialidad, así como <span class="prompt-hint">[X]</span> ejercicio(s) prácticos que sean <span class="prompt-hint">[tipo de ejercicios prácticos de tu especialidad]</span>. Además, genera un cronómetro de <span class="prompt-hint">[X]</span> horas y <span class="prompt-hint">[X]</span> minutos y avísame cuando termine el tiempo.</p>
                 </div>
-
-                <button onclick="toggleSection('contact-section')">Contacta con nosotros</button>
-                <div id="contact-section" class="collapsible-section">
-                    <p>Accede a Slack y escríbenos al chat privado de Patience!</p>
-                    <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
-                    <p>O también puedes escribirnos un email a <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
+                <div class="prompt-section">
+                    <h4>Cómo pedir a la IA que genere una introducción desde 0:</h4>
+                    <p>Prompt: Genera una introducción para el tema <span class="prompt-hint">[X]</span> en <span class="prompt-hint">[idioma]</span>. Utiliza un estilo formal, evita todo formato que pueda inducir a pensar que se ha generado con IA y emplea el estilo de redacción que usaría un opositor de educación secundaria de la especialidad de <span class="prompt-hint">[tu especialidad]</span>.</p>
                 </div>
-
-                <!-- Nueva sección: Dónde me puedo preparar -->
-                <h3>📍 Dónde me puedo preparar</h3>
-                <div class="directory-container">
-                    <div class="directory-item">
-                        <h3>TecnosZubia</h3>
-                        <p><strong>Dirección:</strong> Calle García Lorca, 27-A Local 1, 18140 La Zubia, Granada</p>
-                        <p><strong>Teléfono:</strong> 958 890 387</p>
-                    </div>
-                    <div class="directory-item">
-                        <h3>ECOEM Sevilla</h3>
-                        <p><strong>Dirección:</strong> C/ Balbino Marrón, Edificio Viapol A, planta 3ª módulo 3, 41018 Sevilla</p>
-                        <p><strong>Teléfonos:</strong> 954 65 23 21, 954 65 21 06, 655 460 324</p>
-                        <p><strong>Email:</strong> sevilla@ecoemformacion.es</p>
-                    </div>
-                    <div class="directory-item">
-                        <h3>ECOEM Huelva</h3>
-                        <p><strong>Dirección:</strong> C/ Vázquez López 21, entreplanta 3, 21001 Huelva</p>
-                        <p><strong>Teléfonos:</strong> 959 24 68 07, 682 060 940</p>
-                        <p><strong>Email:</strong> huelva@ecoemformacion.es</p>
-                    </div>
-                    <div class="directory-item">
-                        <h3>CEN Oposiciones Sevilla</h3>
-                        <p><strong>Dirección:</strong> C. Luis de Morales, 32, Edificio Forum 1ª Planta - Módulo 2, 41018 Sevilla</p>
-                        <p><strong>Teléfono:</strong> 954 05 40 41</p>
-                    </div>
-                    <div class="directory-item">
-                        <h3>Preparador de Oposiciones de Biología y Geología</h3>
-                        <p><strong>Teléfono:</strong> 653 109 128</p>
-                        <p><strong>Email:</strong> contacto@preparadorbiologia.com</p>
-                        <p><strong>Redes sociales:</strong> Instagram (preparadorbiologia)</p>
-                    </div>
-                    <div class="directory-item">
-                        <h3>Cartuja Oposiciones</h3>
-                        <p><strong>Dirección:</strong> Avd. Camino de los Descubrimientos 19, Isla de La Cartuja, Sevilla, 41092</p>
-                        <p><strong>Teléfonos:</strong> 954 467 464, 610 609 320</p>
-                        <p><strong>Horario de atención:</strong> Lunes a viernes: 8:30 a 21:00 h. | Sábados: 9:00 a 14:00 h. | Domingos: cerrado.</p>
-                    </div>
+                <div class="prompt-section">
+                    <h4>Cómo pedir a la IA que genere ejercicios prácticos corregidos para tu especialidad:</h4>
+                    <p>Prompt: Genera 3 ejercicios prácticos de la oposición de educación secundaria para la especialidad de <span class="prompt-hint">[tu especialidad]</span> con las soluciones.</p>
                 </div>
+            </div>
+        </div>
 
-                <!-- Nueva sección: Cómo usar la IA -->
-                <h3>🛠️ Cómo usar Patience - IA para opositores</h3>
-                <ul>
-                    <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
-                    <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
-                    <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
-                    <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
-                </ul>
-                <h3>📚 Casos de uso para opositores</h3>
-                <ul>
-                    <li><strong>Generar Resúmenes 📝:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
-                    <li><strong>Crear Esquemas 📊:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
-                    <li><strong>Buscar Información Rápida 🔍:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
-                    <li><strong>Corregir Documentos 🖋️:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales y de estilo.</li>
-                    <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje.</li>
-                    <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto es esencial para exámenes escritos y pruebas.</li>
-                </ul>
+        <!-- Pantalla de ¿Dónde te puedes preparar? -->
+        <div class="card" id="directory-screen" style="display: none;">
+            <h2>¿Dónde te puedes preparar?</h2>
+            <div class="directory-container">
+                <div class="directory-item">
+                    <h3>TecnosZubia</h3>
+                    <p><strong>Dirección:</strong> Calle García Lorca, 27-A Local 1, 18140 La Zubia, Granada</p>
+                    <p><strong>Teléfono:</strong> 958 890 387</p>
+                </div>
+                <div class="directory-item">
+                    <h3>ECOEM Sevilla</h3>
+                    <p><strong>Dirección:</strong> C/ Balbino Marrón, Edificio Viapol A, planta 3ª módulo 3, 41018 Sevilla</p>
+                    <p><strong>Teléfonos:</strong> 954 65 23 21, 954 65 21 06, 655 460 324</p>
+                    <p><strong>Email:</strong> sevilla@ecoemformacion.es</p>
+                </div>
+                <div class="directory-item">
+                    <h3>ECOEM Huelva</h3>
+                    <p><strong>Dirección:</strong> C/ Vázquez López 21, entreplanta 3, 21001 Huelva</p>
+                    <p><strong>Teléfonos:</strong> 959 24 68 07, 682 060 940</p>
+                    <p><strong>Email:</strong> huelva@ecoemformacion.es</p>
+                </div>
+                <div class="directory-item">
+                    <h3>CEN Oposiciones Sevilla</h3>
+                    <p><strong>Dirección:</strong> C. Luis de Morales, 32, Edificio Forum 1ª Planta - Módulo 2, 41018 Sevilla</p>
+                    <p><strong>Teléfono:</strong> 954 05 40 41</p>
+                </div>
+                <div class="directory-item">
+                    <h3>Preparador de Oposiciones de Biología y Geología</h3>
+                    <p><strong>Teléfono:</strong> 653 109 128</p>
+                    <p><strong>Email:</strong> contacto@preparadorbiologia.com</p>
+                    <p><strong>Redes sociales:</strong> Instagram (preparadorbiologia)</p>
+                </div>
+                <div class="directory-item">
+                    <h3>Cartuja Oposiciones</h3>
+                    <p><strong>Dirección:</strong> Avd. Camino de los Descubrimientos 19, Isla de La Cartuja, Sevilla, 41092</p>
+                    <p><strong>Teléfonos:</strong> 954 467 464, 610 609 320</p>
+                    <p><strong>Horario de atención:</strong> Lunes a viernes: 8:30 a 21:00 h. | Sábados: 9:00 a 14:00 h. | Domingos: cerrado.</p>
+                </div>
             </div>
         </div>
 
@@ -276,6 +251,76 @@
             <h2>Mis Grupos</h2>
             <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
             <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+        </div>
+
+        <!-- Pantalla de ¿Qué es Patience? -->
+        <div class="card" id="training-screen" style="display: none;">
+            <h2>🤔 ¿Qué es Patience?</h2>
+            <p>Aprende cómo usar Patience - IA para opositores y cómo puede ayudarte en tus estudios para la oposición.</p>
+            <div class="training-section">
+                <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
+                <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
+            </div>
+            <div class="training-section">
+                <h3>🛠️ Cómo usar Patience - IA para opositores</h3>
+                <ul>
+                    <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
+                    <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
+                    <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
+                    <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
+                </ul>
+            </div>
+            <div class="training-section">
+                <h3>📚 Casos de uso para opositores</h3>
+                <ul>
+                    <li><strong>Generar Resúmenes 📝:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
+                    <li><strong>Crear Esquemas 📊:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
+                    <li><strong>Buscar Información Rápida 🔍:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
+                    <li><strong>Corregir Documentos 🖋️:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo, y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
+                    <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
+                    <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Pantalla de Últimas noticias -->
+        <div class="card" id="news-screen" style="display: none;">
+            <h2>Últimas noticias</h2>
+            <div class="news-section">
+                <button onclick="showNewsContent('csif')">CSIF</button>
+                <button onclick="showNewsContent('sipri')">SIPRI</button>
+                <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es/es/categoria/andalucia/educacion/oposiciones"></iframe>
+                <iframe id="sipri-iframe" class="news-iframe" src="https://sipri.es/oposiciones/"></iframe>
+            </div>
+        </div>
+
+        <!-- Pantalla de Selección de IA Especializada -->
+        <div class="card" id="ia-specialized-screen" style="display: none;">
+            <h2>Selecciona tu especialidad</h2>
+            <div class="ia-options">
+                <button onclick="redirectToIA('biologia')">Biología y Geología</button>
+                <button onclick="redirectToIA('ingles')">Inglés</button>
+                <button onclick="redirectToIA('lengua')">Lengua Castellana y Literatura</button>
+                <button onclick="redirectToIA('matematicas')">Matemáticas</button>
+            </div>
+        </div>
+
+        <!-- Pantalla de Ayuda -->
+        <div class="card" id="help-screen" style="display: none;">
+            <h2>Ayuda</h2>
+            <div class="help-section">
+                <button onclick="toggleSection('faqs-section')">Preguntas Frecuentes</button>
+                <div id="faqs-section" class="collapsible-section">
+                    <p>Desafíos durante la oposición...</p>
+                </div>
+
+                <button onclick="toggleSection('contact-section')">Contacta con nosotros</button>
+                <div id="contact-section" class="collapsible-section">
+                    <p>Accede a Slack y escríbenos al chat privado de Patience!</p>
+                    <button class="slack-button" onclick="redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA')">Accede a Slack</button>
+                    <p>O también puedes escribirnos un email a <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
+                </div>
+            </div>
         </div>
 
         <!-- Pantalla de Próximamente -->

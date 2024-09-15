@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showHomeScreen();
         menu.style.display = 'block';
         checkIfPasswordNeedsChange(); // Verificar si necesita cambiar contraseña temporal
-        showAdminButtonIfAdmin(); // Mostrar botón del panel de administración si es el admin
     } else {
         showLoginScreen();
         menu.style.display = 'none';
@@ -31,14 +30,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Manejo de la subida de documentos
-    const uploadDocumentBtn = document.getElementById('upload-document');
-    if (uploadDocumentBtn) {
-        uploadDocumentBtn.addEventListener('change', uploadDocuments);
+    document.getElementById('upload-document').addEventListener('change', uploadDocuments);
+
+    // Mostrar botón de administración si el usuario es el administrador
+    const adminButton = document.getElementById('admin-panel-button');
+    if (adminButton) {
+        adminButton.addEventListener('click', showAdminPanel);
     }
 
     updateUserList(); // Actualizar la lista de usuarios al cargar la pantalla de administración
 });
 
+// Redirigir a Typeform para el registro
 function redirectToTypeform() {
     window.location.href = "https://qz232a8zljw.typeform.com/to/AHskzuV5?typeform-source=javierbuenopatience.github.io";
 }
@@ -55,7 +58,6 @@ function handleLogin(event) {
         showHomeScreen();
         document.getElementById('menu-desplegable').style.display = 'block';
         checkIfPasswordNeedsChange(); // Verificar si necesita cambiar contraseña temporal
-        showAdminButtonIfAdmin(); // Mostrar botón del panel de administración si es el admin
     } else {
         alert('Correo o contraseña incorrectos.');
     }
@@ -128,17 +130,8 @@ function showHomeScreen() {
         document.querySelector('footer').style.display = 'block';
         updateProfileIcon();
         updateDocumentOverview();
-        updateHomeProgress(); // Actualizar la barra de progreso de planificación en el home
     } else {
         showLoginScreen();
-    }
-}
-
-function showAdminButtonIfAdmin() {
-    if (localStorage.getItem('email') === adminEmail) {
-        document.querySelector('li a[onclick="showAdminPanel()"]').style.display = 'block';
-    } else {
-        document.querySelector('li a[onclick="showAdminPanel()"]').style.display = 'none';
     }
 }
 
@@ -152,104 +145,9 @@ function showAdminPanel() {
     }
 }
 
-// Función de actualización del progreso del plan en la pantalla de inicio
-function updateHomeProgress() {
-    const studyPlan = JSON.parse(localStorage.getItem('studyPlan'));
-    if (!studyPlan) return;
-
-    const progressPercentage = Math.min((studyPlan.completedTopics / studyPlan.totalTopics) * 100, 100);
-    document.getElementById('home-progress-bar').style.width = `${progressPercentage}%`;
-    document.getElementById('home-progress-text').textContent = `${Math.floor(progressPercentage)}%`;
-
-    document.getElementById('planning-overview').style.display = 'block'; // Mostrar la barra en el home
-}
-
-// Función para ocultar todas las pantallas
-function hideAllScreens() {
-    const screens = document.querySelectorAll('.card');
-    screens.forEach(screen => screen.style.display = 'none');
-}
-
-// Funciones del planificador de estudios
-function setupStudyPlan(event) {
-    event.preventDefault();
-
-    const examDate = new Date(document.getElementById('exam-date').value);
-    const dailyHours = parseInt(document.getElementById('daily-hours').value);
-    const totalTopics = parseInt(document.getElementById('total-topics').value);
-
-    const today = new Date();
-    const daysUntilExam = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
-
-    const topicsPerDay = Math.ceil(totalTopics / daysUntilExam);
-
-    const studyPlan = {
-        examDate: examDate,
-        dailyHours: dailyHours,
-        totalTopics: totalTopics,
-        topicsPerDay: topicsPerDay,
-        daysUntilExam: daysUntilExam,
-        completedTopics: 0,
-        currentDay: 1
-    };
-
-    localStorage.setItem('studyPlan', JSON.stringify(studyPlan));
-
-    showStudyPlan();
-    updateHomeProgress();
-}
-
-function showStudyPlan() {
-    const studyPlan = JSON.parse(localStorage.getItem('studyPlan'));
-    if (!studyPlan) return;
-
-    const topicsPerDay = studyPlan.topicsPerDay;
-    const daysLeft = studyPlan.daysUntilExam - studyPlan.currentDay;
-    const completedTopics = studyPlan.completedTopics;
-
-    document.getElementById('topics-per-day').textContent = topicsPerDay;
-    document.getElementById('exam-date-display').textContent = new Date(studyPlan.examDate).toLocaleDateString();
-    document.getElementById('days-left').textContent = daysLeft;
-
-    const progressPercentage = Math.min((completedTopics / studyPlan.totalTopics) * 100, 100);
-    document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
-
-    document.getElementById('study-plan').style.display = 'block';
-    document.getElementById('study-planner-form').style.display = 'none';
-}
-
-function markTopicsAsCompleted() {
-    const studyPlan = JSON.parse(localStorage.getItem('studyPlan'));
-    if (!studyPlan) return;
-
-    studyPlan.completedTopics += studyPlan.topicsPerDay;
-    studyPlan.currentDay++;
-
-    if (studyPlan.completedTopics >= studyPlan.totalTopics) {
-        alert('¡Felicidades! Has completado todos los temas.');
-        localStorage.removeItem('studyPlan');
-        document.getElementById('study-plan').style.display = 'none';
-        document.getElementById('study-planner-form').style.display = 'block';
-    } else {
-        localStorage.setItem('studyPlan', JSON.stringify(studyPlan));
-        showStudyPlan();
-        updateHomeProgress();
-    }
-}
-
-function showPlanning() {
-    hideAllScreens();
-    document.getElementById('planning-screen').style.display = 'block';
-
-    const studyPlan = JSON.parse(localStorage.getItem('studyPlan'));
-    if (studyPlan) {
-        showStudyPlan();
-    }
-}
-
-// Funciones adicionales de usuarios y documentos
 function createNewUser(event) {
     event.preventDefault();
+    
     const newUserEmail = document.getElementById('new-user-email').value;
     const newUserName = document.getElementById('new-user-name').value;
     const newUserPassword = document.getElementById('new-user-password').value;
@@ -270,22 +168,13 @@ function createNewUser(event) {
         profile: {},
         documents: [],
         folders: [],
-        temporaryPassword: true
+        temporaryPassword: true // Señal de que el usuario debe cambiar su contraseña
     };
 
     localStorage.setItem('users', JSON.stringify(users));
     document.getElementById('create-user-form').reset();
     alert('Usuario creado con éxito.');
-    updateUserList();
-}
-
-function deleteUser(email) {
-    if (confirm('¿Seguro que deseas eliminar este usuario?')) {
-        delete users[email];
-        localStorage.setItem('users', JSON.stringify(users));
-        updateUserList();
-        alert('Usuario eliminado con éxito.');
-    }
+    updateUserList(); // Actualizar la lista de usuarios al crear uno nuevo
 }
 
 function updateUserList() {
@@ -294,18 +183,210 @@ function updateUserList() {
 
     Object.keys(users).forEach(email => {
         const user = users[email];
-        const userItem = document.createElement('tr');
+        const userItem = document.createElement('div');
+        userItem.classList.add('user-item');
         userItem.innerHTML = `
-            <td>${user.name || 'N/A'}</td>
-            <td>${email}</td>
-            <td>${new Date().toLocaleDateString()}</td>
-            <td><button onclick="deleteUser('${email}')">Eliminar</button></td>
+            <strong>Nombre:</strong> ${user.name || 'N/A'}<br>
+            <strong>Email:</strong> ${email}<br>
+            <strong>Registrado:</strong> ${new Date().toLocaleDateString()}
         `;
         userListContainer.appendChild(userItem);
     });
 }
 
-// Funciones relacionadas con documentos y carpetas
+function showProfile() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('profile-screen').style.display = 'block';
+        const email = localStorage.getItem('email');
+        const profile = users[email].profile || {};
+        document.getElementById('full-name').value = profile.fullName || '';
+        document.getElementById('phone').value = profile.phone || '';
+        document.getElementById('study-time').value = profile.studyTime || '';
+        document.getElementById('specialty').value = profile.specialty || '';
+        document.getElementById('hobbies').value = profile.hobbies || '';
+        document.getElementById('location').value = profile.location || '';
+        document.getElementById('profile-img').src = profile.profileImage || 'assets/default-profile.png';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showGroups() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('groups-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showIASpecializedOptions() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('ia-specialized-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function redirectToIA(specialty) {
+    if (specialty === 'biologia') {
+        window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank');
+    } else {
+        alert('La especialidad seleccionada estará disponible pronto.');
+    }
+}
+
+function showTraining() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('training-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showComingSoon() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('coming-soon-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showNews() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('news-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showDocuments() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('documents-screen').style.display = 'block';
+        displayDocuments();
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showGuide() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('guide-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showDirectory() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('directory-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function hideAllScreens() {
+    const screens = document.querySelectorAll('.card');
+    screens.forEach(screen => screen.style.display = 'none');
+}
+
+function redirectToURL(url) {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        window.open(url, '_blank');
+    } else {
+        alert('Por favor, inicia sesión para acceder a esta funcionalidad.');
+        showLoginScreen();
+    }
+}
+
+function handleLogoClick() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        showHomeScreen();
+    } else {
+        showLoginScreen();
+    }
+}
+
+function handleImageUpload(event) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        document.getElementById('profile-img').src = e.target.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+function updateProfileIcon() {
+    const email = localStorage.getItem('email');
+    const profile = users[email].profile || {};
+    const profileIcon = document.getElementById('profile-icon');
+    if (profileIcon) {
+        profileIcon.src = profile.profileImage || 'assets/default-profile.png';
+    }
+}
+
+function showNewsContent(newsType) {
+    const csifIframe = document.getElementById('csif-iframe');
+    const sipriIframe = document.getElementById('sipri-iframe');
+
+    csifIframe.style.display = 'none';
+    sipriIframe.style.display = 'none';
+
+    if (newsType === 'csif') {
+        csifIframe.style.display = 'block';
+    } else if (newsType === 'sipri') {
+        sipriIframe.style.display = 'block';
+    }
+}
+
+function showHelp() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('help-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    section.style.display = section.style.display === 'none' || section.style.display === '' ? 'block' : 'none';
+}
+
+function updateDocumentOverview() {
+    const email = localStorage.getItem('email');
+    const userDocuments = users[email]?.documents || [];
+
+    const documentList = document.getElementById('document-list');
+    documentList.innerHTML = '';
+
+    if (userDocuments.length === 0) {
+        documentList.textContent = 'Sin documentos';
+    } else {
+        const lastOpenedDocuments = userDocuments.slice(-2);
+        lastOpenedDocuments.forEach(doc => {
+            const docElement = document.createElement('p');
+            docElement.textContent = doc.name;
+            documentList.appendChild(docElement);
+        });
+    }
+}
+
+// Función que abre el documento en una nueva pestaña utilizando su URL base64.
+function openDocument(url) {
+    const newWindow = window.open(url, '_blank');
+    if (!newWindow) {
+        alert('Pop-up bloqueado. Habilita las ventanas emergentes para ver el archivo.');
+    }
+}
+
 function uploadDocuments(event) {
     const email = localStorage.getItem('email');
     const files = event.target.files;
@@ -323,7 +404,7 @@ function uploadDocuments(event) {
                 name: file.name,
                 lastOpened: null,
                 folder: null,
-                fileContent: e.target.result
+                fileContent: e.target.result // Guardamos el contenido como una URL base64.
             };
             users[email].documents.push(documentData);
             localStorage.setItem('users', JSON.stringify(users));
@@ -331,14 +412,17 @@ function uploadDocuments(event) {
             updateDocumentOverview();
         };
 
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file); // Leemos el archivo como una Data URL (base64).
     }
 }
 
 function createFolder() {
     const folderName = prompt('Nombre de la nueva carpeta:');
     if (folderName) {
-        const folderData = { name: folderName, documents: [] };
+        const folderData = {
+            name: folderName,
+            documents: []
+        };
         const email = localStorage.getItem('email');
         users[email].folders.push(folderData);
         localStorage.setItem('users', JSON.stringify(users));
@@ -393,7 +477,7 @@ function displayDocuments() {
         docElement.addEventListener('click', () => {
             doc.lastOpened = new Date();
             localStorage.setItem('users', JSON.stringify(users));
-            openDocument(doc.fileContent);
+            openDocument(doc.fileContent); // Usamos el contenido base64 para abrir el documento.
             updateDocumentOverview();
         });
 
@@ -404,13 +488,6 @@ function displayDocuments() {
         docElement.appendChild(deleteButton);
         documentsContainer.appendChild(docElement);
     });
-}
-
-function openDocument(url) {
-    const newWindow = window.open(url, '_blank');
-    if (!newWindow) {
-        alert('Pop-up bloqueado. Habilita las ventanas emergentes para ver el archivo.');
-    }
 }
 
 function moveDocumentToFolder(email, documentName) {
@@ -430,33 +507,5 @@ function moveDocumentToFolder(email, documentName) {
         } else {
             alert('Carpeta no encontrada.');
         }
-    }
-}
-
-function updateDocumentOverview() {
-    const email = localStorage.getItem('email');
-    const userDocuments = users[email]?.documents || [];
-
-    const documentList = document.getElementById('document-list');
-    documentList.innerHTML = '';
-
-    if (userDocuments.length === 0) {
-        documentList.textContent = 'Sin documentos';
-    } else {
-        const lastOpenedDocuments = userDocuments.slice(-2);
-        lastOpenedDocuments.forEach(doc => {
-            const docElement = document.createElement('p');
-            docElement.textContent = doc.name;
-            documentList.appendChild(docElement);
-        });
-    }
-}
-
-function updateProfileIcon() {
-    const email = localStorage.getItem('email');
-    const profile = users[email].profile || {};
-    const profileIcon = document.getElementById('profile-icon');
-    if (profileIcon) {
-        profileIcon.src = profile.profileImage || 'assets/default-profile.png';
     }
 }

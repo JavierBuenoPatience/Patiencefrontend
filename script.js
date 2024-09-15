@@ -31,7 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Manejo de la subida de documentos
-    document.getElementById('upload-document').addEventListener('change', uploadDocuments);
+    const uploadDocumentBtn = document.getElementById('upload-document');
+    if (uploadDocumentBtn) {
+        uploadDocumentBtn.addEventListener('change', uploadDocuments);
+    }
 
     updateUserList(); // Actualizar la lista de usuarios al cargar la pantalla de administración
 });
@@ -427,5 +430,33 @@ function moveDocumentToFolder(email, documentName) {
         } else {
             alert('Carpeta no encontrada.');
         }
+    }
+}
+
+function updateDocumentOverview() {
+    const email = localStorage.getItem('email');
+    const userDocuments = users[email]?.documents || [];
+
+    const documentList = document.getElementById('document-list');
+    documentList.innerHTML = '';
+
+    if (userDocuments.length === 0) {
+        documentList.textContent = 'Sin documentos';
+    } else {
+        const lastOpenedDocuments = userDocuments.slice(-2);
+        lastOpenedDocuments.forEach(doc => {
+            const docElement = document.createElement('p');
+            docElement.textContent = doc.name;
+            documentList.appendChild(docElement);
+        });
+    }
+}
+
+function updateProfileIcon() {
+    const email = localStorage.getItem('email');
+    const profile = users[email].profile || {};
+    const profileIcon = document.getElementById('profile-icon');
+    if (profileIcon) {
+        profileIcon.src = profile.profileImage || 'assets/default-profile.png';
     }
 }

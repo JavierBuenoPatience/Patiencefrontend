@@ -149,8 +149,17 @@ header {
 .card h2 {
     margin-bottom: 16px;
     color: var(--primary-color);
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
+    text-align: center;
+}
+
+.card h1 {
+    margin-bottom: 16px;
+    color: var(--primary-color);
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .card form {
@@ -166,7 +175,8 @@ header {
 }
 
 .card form input,
-.card form select {
+.card form select,
+.card form textarea {
     width: 100%;
     padding: 12px;
     margin-bottom: 16px;
@@ -257,6 +267,76 @@ footer {
     margin-bottom: 16px;
 }
 
+.document-list {
+    font-size: 14px;
+    color: var(--text-color);
+    text-align: left;
+}
+
+.document-list p {
+    margin: 4px 0;
+}
+
+.welcome-message {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.welcome-message p {
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+/* Estilos para el formulario de perfil */
+.profile-field {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.profile-field label {
+    font-weight: bold;
+    color: var(--secondary-color);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.profile-field input,
+.profile-field select,
+.profile-field textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-family: var(--font-family);
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.profile-img-upload {
+    display: block;
+    margin-top: 10px;
+}
+
+.profile-img-upload input[type="file"] {
+    display: none;
+}
+
+.profile-img-upload label {
+    cursor: pointer;
+    color: var(--primary-color);
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+/* Documentos */
 .document-management {
     display: flex;
     flex-direction: column;
@@ -308,6 +388,7 @@ footer {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     width: 100%;
     box-sizing: border-box;
+    position: relative;
 }
 
 .folder:hover,
@@ -328,12 +409,16 @@ footer {
     display: block;
 }
 
+.folder .fas,
 .document .fas {
-    margin-left: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
     color: var(--text-color);
     cursor: pointer;
 }
 
+.folder .fas:hover,
 .document .fas:hover {
     color: #ff0000;
 }
@@ -476,7 +561,7 @@ footer {
 }
 
 .directory-item h3 {
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 8px;
     color: var(--secondary-color);
 }
@@ -574,7 +659,7 @@ footer {
     background-color: var(--primary-hover-color);
 }
 
-/* Estilos para el menú desplegable */
+/* Estilos para el menú desplegable del perfil */
 .dropdown-content {
     display: none;
     position: absolute;
@@ -637,38 +722,13 @@ footer {
     margin-top: 10px;
 }
 
-.profile-img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
+.collapsible-section p {
+    font-size: 14px;
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
 /* Panel de Administración */
-.admin-table {
-    width: 100%;
-    max-width: 600px;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.admin-table th,
-.admin-table td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: center;
-}
-
-.admin-table th {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-}
-
-.admin-table td {
-    background-color: var(--background-color);
-}
-
 .admin-section {
     width: 100%;
     max-width: 600px;
@@ -677,4 +737,74 @@ footer {
     border-radius: 10px;
     background-color: var(--white-color);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 16px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.admin-section form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-section form label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.admin-section form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-family: var(--font-family);
+    font-weight: 500;
+}
+
+.admin-section form button {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 10px;
+    font-family: var(--font-family);
+    font-weight: bold;
+}
+
+.admin-section form button:hover {
+    background-color: var(--primary-hover-color);
+}
+
+.admin-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-section table th,
+.admin-section table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.admin-section table th {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.admin-section table td {
+    background-color: var(--background-color);
 }

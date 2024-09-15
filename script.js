@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function createAdminUser() {
     if (!users[adminEmail]) {
         users[adminEmail] = {
-            name: "Javier Bueno Rueda",
+            name: "Javier",
             password: "Alfonsogroso1!",
             profile: {
                 fullName: "Javier Bueno Rueda",

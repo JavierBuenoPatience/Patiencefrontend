@@ -146,7 +146,7 @@ function showHomeScreen() {
 function showAdminPanel() {
     if (localStorage.getItem('email') === adminEmail) {
         hideAllScreens();
-        document.getElementById('admin-panel').style.display = 'block';
+        document.getElementById('admin-panel').style.display = 'none';
         updateUserList();
     } else {
         alert('No tienes permiso para acceder a esta página.');

@@ -14,7 +14,7 @@
     <header>
         <div class="header-left" onclick="handleLogoClick()">Patience</div>
         <div class="header-right" id="header-right">
-            <img src="assets/logo.png" alt="Profile Icon" id="profile-icon">
+            <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon">
             <div id="profile-dropdown" class="dropdown-content">
                 <a href="#" onclick="handleLogout()">Cerrar sesión</a>
                 <a href="#" onclick="showHelp()">Ayuda</a>
@@ -22,7 +22,7 @@
         </div>
     </header>
 
-    <div class="menu-desplegable" id="menu-desplegable">
+    <div class="menu-desplegable" id="menu-desplegable" style="display: none;">
         <ul>
             <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
             <li><a href="#" onclick="showProfile()">Perfil</a></li>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="profile-field">
                     <label for="profile-email">Email:</label>
-                    <input type="email" id="profile-email" name="profile-email" required>
+                    <input type="email" id="profile-email" name="profile-email" required readonly>
                 </div>
                 <div class="profile-field">
                     <label for="phone">Teléfono:</label>
@@ -178,7 +178,6 @@
         <!-- Pantalla de Guía para aprovechar al máximo la IA -->
         <div class="card" id="guide-screen" style="display: none;">
             <h2>Guía para aprovechar al máximo la IA</h2>
-            <!-- Aquí incluyo el contenido que habías proporcionado -->
             <div class="guide-section">
                 <div class="prompt-section">
                     <h4>Cómo pedir a la IA que genere un examen aleatorio:</h4>
@@ -291,8 +290,8 @@
             <div class="news-section">
                 <button onclick="showNewsContent('csif')">CSIF</button>
                 <button onclick="showNewsContent('sipri')">SIPRI</button>
-                <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es/es/categoria/andalucia/educacion/oposiciones"></iframe>
-                <iframe id="sipri-iframe" class="news-iframe" src="https://sipri.es/oposiciones/"></iframe>
+                <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es/es/categoria/andalucia/educacion/oposiciones" style="display: none;"></iframe>
+                <iframe id="sipri-iframe" class="news-iframe" src="https://sipri.es/oposiciones/" style="display: none;"></iframe>
             </div>
         </div>
 
@@ -313,7 +312,12 @@
             <div class="help-section">
                 <button onclick="toggleSection('faqs-section')">Preguntas Frecuentes</button>
                 <div id="faqs-section" class="collapsible-section" style="display: none;">
-                    <p>Desafíos durante la oposición...</p>
+                    <p><strong>¿Cómo accedo a mi perfil?</strong></p>
+                    <p>Puedes acceder a tu perfil haciendo clic en la opción "Perfil" en el menú lateral. Desde allí, puedes actualizar tu información personal y ajustar tus preferencias.</p>
+                    <p><strong>¿Cómo subo documentos?</strong></p>
+                    <p>Ve a la sección "Mis Documentos" y haz clic en "Subir Documentos". Puedes seleccionar los archivos que deseas subir desde tu dispositivo.</p>
+                    <p><strong>¿Cómo puedo contactar con soporte?</strong></p>
+                    <p>Puedes contactarnos a través de Slack o enviando un correo electrónico a nuestro equipo de soporte.</p>
                 </div>
 
                 <button onclick="toggleSection('contact-section')">Contacta con nosotros</button>

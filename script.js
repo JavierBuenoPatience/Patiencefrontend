@@ -3,17 +3,18 @@ let currentUser = null;
 const adminEmail = 'javibueda@gmail.com'; // Correo del administrador
 
 document.addEventListener('DOMContentLoaded', () => {
-    const headerRight = document.querySelector('.header-right img');
+    const profileIcon = document.getElementById('profile-icon'); // Mejor usar un id único
     const dropdown = document.getElementById('profile-dropdown');
 
     // Mostrar u ocultar el menú desplegable del perfil
-    headerRight.addEventListener('click', () => {
+    profileIcon.addEventListener('click', (event) => {
+        event.stopPropagation(); // Para evitar que se cierre inmediatamente
         dropdown.classList.toggle('show-dropdown');
     });
 
-    // Ocultar el menú si haces clic fuera de él
+    // Cerrar el dropdown si se hace clic fuera de él
     document.addEventListener('click', (event) => {
-        if (!headerRight.contains(event.target) && !dropdown.contains(event.target)) {
+        if (!profileIcon.contains(event.target) && !dropdown.contains(event.target)) {
             dropdown.classList.remove('show-dropdown');
         }
     });

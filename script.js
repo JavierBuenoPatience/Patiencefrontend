@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createAdminUser();
 
     // Verificar si el usuario ha iniciado sesión
-    if (localStorage.getItem('loggedIn') === 'true') {
+    if (localStorage.getItem('loggedIn') === 'true' && users[localStorage.getItem('email')]) {
         currentUser = users[localStorage.getItem('email')];
         showHomeScreen();
         menu.style.display = 'block';
@@ -42,6 +42,24 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUserList(); // Actualizar la lista de usuarios al cargar la pantalla de administración
 });
 
+// Crear usuario administrador si no existe
+function createAdminUser() {
+    if (!users[adminEmail]) {
+        users[adminEmail] = {
+            name: 'Javier Bueno Rueda',
+            password: 'Alfonsogroso1!',
+            profile: {
+                fullName: 'Javier Bueno Rueda',
+                specialty: 'Inglés',
+                hobbies: 'Pádel'
+            },
+            documents: [],
+            folders: [],
+            temporaryPassword: false
+        };
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+}
 
 // Manejar el inicio de sesión
 function handleLogin(event) {
@@ -104,12 +122,6 @@ function handleProfileUpdate(event) {
     localStorage.setItem('users', JSON.stringify(users));
     alert('Perfil actualizado con éxito');
     updateProfileIcon();
-}
-
-function validateEmail(email) {
-    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-    const hotmailRegex = /^[a-zA-Z0-9._%+-]+@hotmail\.com$/;
-    return gmailRegex.test(email) || hotmailRegex.test(email);
 }
 
 function showLoginScreen() {
@@ -204,84 +216,12 @@ function showProfile() {
     }
 }
 
-function showGroups() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        hideAllScreens();
-        document.getElementById('groups-screen').style.display = 'block';
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showIASpecializedOptions() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        hideAllScreens();
-        document.getElementById('ia-specialized-screen').style.display = 'block';
-    } else {
-        showLoginScreen();
-    }
-}
-
-function redirectToIA(specialty) {
-    if (specialty === 'biologia') {
-        window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank');
-    } else {
-        alert('La especialidad seleccionada estará disponible pronto.');
-    }
-}
-
-function showTraining() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        hideAllScreens();
-        document.getElementById('training-screen').style.display = 'block';
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showComingSoon() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        hideAllScreens();
-        document.getElementById('coming-soon-screen').style.display = 'block';
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showNews() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        hideAllScreens();
-        document.getElementById('news-screen').style.display = 'block';
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showDocuments() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        hideAllScreens();
-        document.getElementById('documents-screen').style.display = 'block';
-        displayDocuments();
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showGuide() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        hideAllScreens();
-        document.getElementById('guide-screen').style.display = 'block';
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showDirectory() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        hideAllScreens();
-        document.getElementById('directory-screen').style.display = 'block';
-    } else {
-        showLoginScreen();
+function updateProfileIcon() {
+    const email = localStorage.getItem('email');
+    const profile = users[email].profile || {};
+    const profileIcon = document.getElementById('profile-icon');
+    if (profileIcon) {
+        profileIcon.src = profile.profileImage || 'assets/default-profile.png';
     }
 }
 
@@ -296,45 +236,6 @@ function redirectToURL(url) {
     } else {
         alert('Por favor, inicia sesión para acceder a esta funcionalidad.');
         showLoginScreen();
-    }
-}
-
-function handleLogoClick() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showHomeScreen();
-    } else {
-        showLoginScreen();
-    }
-}
-
-function handleImageUpload(event) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        document.getElementById('profile-img').src = e.target.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-}
-
-function updateProfileIcon() {
-    const email = localStorage.getItem('email');
-    const profile = users[email].profile || {};
-    const profileIcon = document.getElementById('profile-icon');
-    if (profileIcon) {
-        profileIcon.src = profile.profileImage || 'assets/default-profile.png';
-    }
-}
-
-function showNewsContent(newsType) {
-    const csifIframe = document.getElementById('csif-iframe');
-    const sipriIframe = document.getElementById('sipri-iframe');
-
-    csifIframe.style.display = 'none';
-    sipriIframe.style.display = 'none';
-
-    if (newsType === 'csif') {
-        csifIframe.style.display = 'block';
-    } else if (newsType === 'sipri') {
-        sipriIframe.style.display = 'block';
     }
 }
 
@@ -394,40 +295,6 @@ function uploadDocuments(event) {
     }
 }
 
-function createFolder() {
-    const folderName = prompt('Nombre de la nueva carpeta:');
-    if (folderName) {
-        const folderData = {
-            name: folderName,
-            documents: []
-        };
-        const email = localStorage.getItem('email');
-        users[email].folders.push(folderData);
-        localStorage.setItem('users', JSON.stringify(users));
-        displayDocuments();
-    }
-}
-
-function deleteFolder(folderName) {
-    const email = localStorage.getItem('email');
-    const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
-    if (folderIndex > -1) {
-        users[email].folders.splice(folderIndex, 1);
-        localStorage.setItem('users', JSON.stringify(users));
-        displayDocuments();
-    }
-}
-
-function deleteDocument(documentName) {
-    const email = localStorage.getItem('email');
-    const documentIndex = users[email].documents.findIndex(doc => doc.name === documentName);
-    if (documentIndex > -1) {
-        users[email].documents.splice(documentIndex, 1);
-        localStorage.setItem('users', JSON.stringify(users));
-        displayDocuments();
-    }
-}
-
 function displayDocuments() {
     const email = localStorage.getItem('email');
     const documentsContainer = document.getElementById('documents-container');
@@ -466,6 +333,26 @@ function displayDocuments() {
         docElement.appendChild(deleteButton);
         documentsContainer.appendChild(docElement);
     });
+}
+
+function deleteFolder(folderName) {
+    const email = localStorage.getItem('email');
+    const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
+    if (folderIndex > -1) {
+        users[email].folders.splice(folderIndex, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+        displayDocuments();
+    }
+}
+
+function deleteDocument(documentName) {
+    const email = localStorage.getItem('email');
+    const documentIndex = users[email].documents.findIndex(doc => doc.name === documentName);
+    if (documentIndex > -1) {
+        users[email].documents.splice(documentIndex, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+        displayDocuments();
+    }
 }
 
 function moveDocumentToFolder(email, documentName) {

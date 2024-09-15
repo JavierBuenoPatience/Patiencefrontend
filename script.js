@@ -7,9 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const headerRight = document.querySelector('.header-right img');
     const dropdown = document.getElementById('profile-dropdown');
 
-    // Crear usuario administrador si no existe
-    createAdminUser();
-
     // Verificar si el usuario ha iniciado sesión
     if (localStorage.getItem('loggedIn') === 'true') {
         currentUser = users[localStorage.getItem('email')];
@@ -32,8 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Manejo de la subida de documentos
     document.getElementById('upload-document').addEventListener('change', uploadDocuments);
 
+    // Mostrar botón de administración si el usuario es el administrador
     const adminButton = document.getElementById('admin-panel-button');
     if (adminButton) {
         adminButton.addEventListener('click', showAdminPanel);
@@ -42,23 +41,15 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUserList(); // Actualizar la lista de usuarios al cargar la pantalla de administración
 });
 
+// Redirigir a Typeform para el registro
+function redirectToTypeform() {
+    window.location.href = "https://qz232a8zljw.typeform.com/to/AHskzuV5?typeform-source=javierbuenopatience.github.io";
 }
 
-// Manejar el inicio de sesión
 function handleLogin(event) {
     event.preventDefault();
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
-
-    if (email === adminEmail) {
-        // Acceso directo para el administrador sin verificar la contraseña
-        localStorage.setItem('loggedIn', 'true');
-        localStorage.setItem('email', adminEmail);
-        currentUser = users[adminEmail];
-        showHomeScreen();
-        document.getElementById('menu-desplegable').style.display = 'block';
-        return;
-    }
 
     if (users[email] && users[email].password === password) {
         localStorage.setItem('loggedIn', 'true');
@@ -134,7 +125,7 @@ function showHomeScreen() {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideAllScreens();
         document.getElementById('home-screen').style.display = 'block';
-        document.getElementById('user-name-home').textContent = currentUser.name;
+        document.getElementById('user-name-home').textContent = localStorage.getItem('name');
         document.querySelector('header').style.display = 'flex';
         document.querySelector('footer').style.display = 'block';
         updateProfileIcon();
@@ -156,9 +147,15 @@ function showAdminPanel() {
 
 function createNewUser(event) {
     event.preventDefault();
+    
     const newUserEmail = document.getElementById('new-user-email').value;
     const newUserName = document.getElementById('new-user-name').value;
     const newUserPassword = document.getElementById('new-user-password').value;
+
+    if (!newUserEmail || !newUserName || !newUserPassword) {
+        alert('Por favor, completa todos los campos.');
+        return;
+    }
 
     if (users[newUserEmail]) {
         alert('El correo ya está registrado.');
@@ -347,6 +344,20 @@ function showNewsContent(newsType) {
     } else if (newsType === 'sipri') {
         sipriIframe.style.display = 'block';
     }
+}
+
+function showHelp() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('help-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    section.style.display = section.style.display === 'none' || section.style.display === '' ? 'block' : 'none';
 }
 
 function updateDocumentOverview() {

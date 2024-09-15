@@ -509,3 +509,84 @@ function moveDocumentToFolder(email, documentName) {
         }
     }
 }
+
+// Función para calcular el plan de estudio
+function handlePlanCalculation(event) {
+    event.preventDefault();
+
+    // Obtener los valores del formulario
+    const examDate = new Date(document.getElementById('exam-date').value);
+    const dailyHours = parseInt(document.getElementById('daily-hours').value);
+    const totalTopics = parseInt(document.getElementById('total-topics').value);
+
+    // Calcular los días restantes hasta el examen
+    const today = new Date();
+    const daysLeft = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
+
+    // Calcular los temas por día
+    const topicsPerDay = Math.ceil(totalTopics / daysLeft);
+
+    // Mostrar los resultados
+    document.getElementById('topics-per-day').textContent = `Debes estudiar ${topicsPerDay} temas por día.`;
+    document.getElementById('days-left').textContent = `Quedan ${daysLeft} días hasta el examen.`;
+    document.getElementById('plan-result').style.display = 'block';
+
+    // Guardar datos en localStorage
+    localStorage.setItem('topicsPerDay', topicsPerDay);
+    localStorage.setItem('totalTopics', totalTopics);
+    localStorage.setItem('daysLeft', daysLeft);
+    localStorage.setItem('completedTopics', 0);
+}
+
+// Función para marcar los temas como completados y ajustar el plan
+function markAsCompleted() {
+    const examDate = new Date(document.getElementById('exam-date').value);
+    const today = new Date();
+    const daysLeft = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
+
+    let completedTopics = parseInt(localStorage.getItem('completedTopics'));
+    let totalTopics = parseInt(localStorage.getItem('totalTopics'));
+
+    // Actualizar los temas completados
+    completedTopics += parseInt(localStorage.getItem('topicsPerDay'));
+    localStorage.setItem('completedTopics', completedTopics);
+
+    // Calcular los temas restantes
+    const remainingTopics = totalTopics - completedTopics;
+
+    // Ajustar el plan si quedan días
+    if (remainingTopics > 0 && daysLeft > 0) {
+        const newTopicsPerDay = Math.ceil(remainingTopics / daysLeft);
+        localStorage.setItem('topicsPerDay', newTopicsPerDay);
+        document.getElementById('topics-per-day').textContent = `Debes estudiar ${newTopicsPerDay} temas por día. Te faltan ${remainingTopics} temas.`;
+    } else {
+        document.getElementById('topics-per-day').textContent = '¡Has completado todos los temas! ¡Buen trabajo!';
+    }
+}
+
+// Función para mostrar la pantalla de planificación
+function showPlanning() {
+    hideAllScreens();
+    document.getElementById('plan-screen').style.display = 'block';
+}
+
+// Función para ocultar todas las pantallas (función de apoyo)
+function hideAllScreens() {
+    const screens = document.querySelectorAll('.card');
+    screens.forEach(screen => {
+        screen.style.display = 'none';
+    });
+}
+
+// Función para mostrar el menú de inicio
+function showHomeScreen() {
+    hideAllScreens();
+    document.getElementById('home-screen').style.display = 'block';
+}
+
+// Función para mostrar la pantalla de perfil
+function showProfile() {
+    hideAllScreens();
+    document.getElementById('profile-screen').style.display = 'block';
+}
+

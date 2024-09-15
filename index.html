@@ -21,20 +21,19 @@
         </div>
     </header>
 
-  <div class="menu-desplegable" id="menu-desplegable">
-    <ul>
-        <li><button onclick="showHomeScreen(event)">Inicio</button></li>
-        <li><button onclick="showProfile(event)">Perfil</button></li>
-        <li><button onclick="showIASpecializedOptions(event)">IA especializada</button></li>
-        <li><button onclick="showGroups(event)">Mis grupos</button></li>
-        <li><button onclick="showDocuments(event)">Mis Documentos</button></li>
-        <li><button onclick="showTraining(event)">¿Qué es Patience?</button></li>
-        <li><button onclick="showComingSoon(event)">Mi centro</button></li>
-        <li><button onclick="showNews(event)">Últimas noticias</button></li>
-        <li><button onclick="showAdminPanel(event)">Panel de Administración</button></li>
-    </ul>
-</div>
-
+    <div class="menu-desplegable" id="menu-desplegable">
+        <ul>
+            <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
+            <li><a href="#" onclick="showProfile()">Perfil</a></li>
+            <li><a href="#" onclick="showIASpecializedOptions()">IA especializada</a></li>
+            <li><a href="#" onclick="showGroups()">Mis grupos</a></li>
+            <li><a href="#" onclick="showDocuments()">Mis Documentos</a></li>
+            <li><a href="#" onclick="showTraining()">¿Qué es Patience?</a></li>
+            <li><a href="#" onclick="showComingSoon()">Mi centro</a></li>
+            <li><a href="#" onclick="showNews()">Últimas noticias</a></li>
+            <li><a href="#" onclick="showAdminPanel()">Panel de Administración</a></li>
+        </ul>
+    </div>
 
     <div class="main-content">
         <!-- Pantalla de Inicio de Sesión -->
@@ -74,7 +73,7 @@
         <!-- Pantalla de Inicio -->
         <div class="card" id="home-screen" style="display: none;">
             <img src="assets/logo.png" alt="Patience Logo" class="logo">
-            <h1>Bienvenid@, <span id="user-name-home"></span> 🚀!</h1>
+            <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
             <div class="welcome-message">
                 <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
             </div>

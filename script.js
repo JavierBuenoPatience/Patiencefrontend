@@ -62,23 +62,45 @@
         }
 
         // Event listeners para botones del menú
-        document.getElementById('inicio-button').addEventListener('click', showHomeScreen);
-        document.getElementById('perfil-button').addEventListener('click', showProfile);
-        document.getElementById('ia-button').addEventListener('click', showIASpecializedOptions);
-        document.getElementById('grupos-button').addEventListener('click', showGroups);
-        document.getElementById('documentos-button').addEventListener('click', showDocuments);
-        document.getElementById('training-button').addEventListener('click', showTraining);
-        document.getElementById('centro-button').addEventListener('click', showComingSoon);
-        document.getElementById('noticias-button').addEventListener('click', showNews);
-        document.getElementById('admin-button').addEventListener('click', showAdminPanel);
+        const inicioButton = document.getElementById('inicio-button');
+        if (inicioButton) inicioButton.addEventListener('click', showHomeScreen);
+
+        const perfilButton = document.getElementById('perfil-button');
+        if (perfilButton) perfilButton.addEventListener('click', showProfile);
+
+        const iaButton = document.getElementById('ia-button');
+        if (iaButton) iaButton.addEventListener('click', showIASpecializedOptions);
+
+        const gruposButton = document.getElementById('grupos-button');
+        if (gruposButton) gruposButton.addEventListener('click', showGroups);
+
+        const documentosButton = document.getElementById('documentos-button');
+        if (documentosButton) documentosButton.addEventListener('click', showDocuments);
+
+        const trainingButton = document.getElementById('training-button');
+        if (trainingButton) trainingButton.addEventListener('click', showTraining);
+
+        const centroButton = document.getElementById('centro-button');
+        if (centroButton) centroButton.addEventListener('click', showComingSoon);
+
+        const noticiasButton = document.getElementById('noticias-button');
+        if (noticiasButton) noticiasButton.addEventListener('click', showNews);
+
+        const adminButton = document.getElementById('admin-button');
+        if (adminButton) adminButton.addEventListener('click', showAdminPanel);
 
         // Event listeners para otros botones
-        document.getElementById('register-button').addEventListener('click', redirectToTypeform);
-        document.getElementById('slack-button').addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA'));
-        document.getElementById('slack-button-2').addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA'));
-        document.getElementById('slack-button-3').addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA'));
-        document.getElementById('help-button').addEventListener('click', showHelp);
-        document.getElementById('logout-button').addEventListener('click', handleLogout);
+        const registerButton = document.getElementById('register-button');
+        if (registerButton) registerButton.addEventListener('click', redirectToTypeform);
+
+        const slackButton = document.getElementById('slack-button');
+        if (slackButton) slackButton.addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/...'));
+
+        const helpButton = document.getElementById('help-button');
+        if (helpButton) helpButton.addEventListener('click', showHelp);
+
+        const logoutButton = document.getElementById('logout-button');
+        if (logoutButton) logoutButton.addEventListener('click', handleLogout);
 
         // Manejo del formulario de inicio de sesión
         const loginForm = document.getElementById('login-form');
@@ -98,33 +120,28 @@
             profileForm.addEventListener('submit', handleProfileUpdate);
         }
 
+        // Manejo del formulario de crear usuario (panel de administración)
+        const createUserForm = document.getElementById('create-user-form');
+        if (createUserForm) {
+            createUserForm.addEventListener('submit', createNewUser);
+        }
+
         // Manejo de la imagen de perfil
         const profileImageInput = document.getElementById('profile-image-input');
         if (profileImageInput) {
             profileImageInput.addEventListener('change', handleImageUpload);
         }
 
-        // Event listeners para los botones de IA especializada
-        document.getElementById('biologia-button').addEventListener('click', () => redirectToIA('biologia'));
-        document.getElementById('ingles-button').addEventListener('click', () => redirectToIA('ingles'));
-        document.getElementById('lengua-button').addEventListener('click', () => redirectToIA('lengua'));
-        document.getElementById('matematicas-button').addEventListener('click', () => redirectToIA('matematicas'));
-
-        // Event listeners para la sección de ayuda
-        document.getElementById('faqs-button').addEventListener('click', () => toggleSection('faqs-section'));
-        document.getElementById('contact-button').addEventListener('click', () => toggleSection('contact-section'));
-
-        // Event listeners para la sección de noticias
-        document.getElementById('csif-button').addEventListener('click', () => showNewsContent('csif'));
-        document.getElementById('sipri-button').addEventListener('click', () => showNewsContent('sipri'));
-
-        // Event listener para el botón de crear carpeta
-        const createFolderButton = document.getElementById('create-folder-button');
-        if (createFolderButton) {
-            createFolderButton.addEventListener('click', createFolder);
+        // Manejo del logo para volver al inicio
+        const logo = document.getElementById('logo');
+        if (logo) {
+            logo.addEventListener('click', handleLogoClick);
         }
 
+        // Añade aquí otros event listeners necesarios para tus funcionalidades
     });
+
+    // Resto del código JavaScript (funciones como handleLogin, showHomeScreen, etc.)
 
     // Función para redirigir al registro en Typeform
     function redirectToTypeform() {
@@ -153,7 +170,7 @@
         if (currentUser && currentUser.temporaryPassword) {
             const passwordChangePopup = document.getElementById('password-change-popup');
             if (passwordChangePopup) {
-                passwordChangePopup.style.display = 'block';
+                passwordChangePopup.style.display = 'flex';
             }
         }
     }
@@ -247,12 +264,6 @@
             const adminPanel = document.getElementById('admin-panel');
             if (adminPanel) adminPanel.style.display = 'block';
             updateUserList();
-
-            // Manejo del formulario de crear usuario
-            const createUserForm = document.getElementById('create-user-form');
-            if (createUserForm) {
-                createUserForm.addEventListener('submit', createNewUser);
-            }
         } else {
             alert('No tienes permiso para acceder a esta página.');
         }
@@ -612,8 +623,8 @@
                 folderElement.classList.add('folder');
                 folderElement.textContent = folder.name;
 
-                const deleteButton = document.createElement('i');
-                deleteButton.classList.add('fas', 'fa-trash-alt');
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
                 deleteButton.onclick = (event) => {
                     event.stopPropagation();
                     deleteFolder(folder.name);
@@ -636,8 +647,8 @@
                     updateDocumentOverview();
                 });
 
-                const deleteButton = document.createElement('i');
-                deleteButton.classList.add('fas', 'fa-trash-alt');
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
                 deleteButton.onclick = (event) => {
                     event.stopPropagation(); // Evitar que se abra el documento al hacer clic en borrar
                     deleteDocument(doc.name);

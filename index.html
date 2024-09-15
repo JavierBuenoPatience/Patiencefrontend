@@ -21,10 +21,12 @@
         </div>
     </header>
 
-    <div class="menu-desplegable" id="menu-desplegable">
+     <div class="menu-desplegable" id="menu-desplegable">
         <ul>
             <li><a href="#" onclick="showHomeScreen()">Inicio</a></li>
             <li><a href="#" onclick="showProfile()">Perfil</a></li>
+                        <!-- Nueva opción de Planning -->
+            <li><a href="#" onclick="showPlanning()">Planning</a></li>
             <li><a href="#" onclick="showIASpecializedOptions()">IA especializada</a></li>
             <li><a href="#" onclick="showGroups()">Mis grupos</a></li>
             <li><a href="#" onclick="showDocuments()">Mis Documentos</a></li>
@@ -71,6 +73,7 @@
             <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
         </div>
 
+      <div class="main-content">
         <!-- Pantalla de Inicio -->
         <div class="card" id="home-screen" style="display: none;">
             <img src="assets/logo.png" alt="Patience Logo" class="logo">
@@ -78,6 +81,44 @@
             <div class="welcome-message">
                 <p>Patience es una plataforma 360 centrada en la preparación de oposiciones.</p>
             </div>
+ <!-- Barra de progreso del planning -->
+            <div class="planning-overview" id="planning-overview" style="display: none;">
+                <h3>Progreso de tu Plan de Estudio</h3>
+                <div class="progress-bar">
+                    <div class="progress" id="home-progress-bar" style="width: 0%;"></div>
+                </div>
+                <p><span id="home-progress-text">0%</span> completado</p>
+            </div>
+        </div>
+
+        <!-- Pantalla de Planning -->
+        <div class="card" id="planning-screen" style="display: none;">
+            <h2>Configura tu Plan de Estudios</h2>
+            <form id="study-planner-form" onsubmit="setupStudyPlan(event)">
+                <label for="exam-date">Fecha de tu examen:</label>
+                <input type="date" id="exam-date" required>
+
+                <label for="daily-hours">Horas disponibles al día:</label>
+                <input type="number" id="daily-hours" min="1" max="12" required>
+
+                <label for="total-topics">Número total de temas:</label>
+                <input type="number" id="total-topics" min="1" required>
+
+                <button type="submit">Generar Plan</button>
+            </form>
+
+            <!-- Visualización del plan de estudios -->
+            <div id="study-plan" style="display: none;">
+                <h2>Tu Plan de Estudios</h2>
+                <p>Debes estudiar <span id="topics-per-day"></span> temas por día hasta el <span id="exam-date-display"></span>.</p>
+                <p>Días restantes: <span id="days-left"></span></p>
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar" style="width: 0%;"></div>
+                </div>
+                <button onclick="markTopicsAsCompleted()">He completado los temas de hoy</button>
+            </div>
+        </div>
+
             <div class="home-section">
                 <!-- Mis Documentos -->
                 <div class="overview documents-overview" onclick="showDocuments()">

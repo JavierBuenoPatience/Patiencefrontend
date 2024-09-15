@@ -560,23 +560,19 @@ footer {
 
 /* Estilos adicionales para el menú desplegable */
 .dropdown-content {
-    display: none;
+    display: none; /* Oculto por defecto */
     position: absolute;
     background-color: #f9f9f9;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    padding: 12px;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    right: 10px;
-    top: 40px;
-    border-radius: 10px;
 }
 
 .dropdown-content a {
     color: black;
-    padding: 8px 16px;
+    padding: 12px 16px;
     text-decoration: none;
     display: block;
-    border-radius: 5px;
 }
 
 .dropdown-content a:hover {
@@ -584,7 +580,7 @@ footer {
 }
 
 .show-dropdown {
-    display: block;
+    display: block; /* Cuando se añade la clase, muestra el menú */
 }
 
 /* Sección de ayuda */

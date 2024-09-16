@@ -1,35 +1,36 @@
 (function() {
     // Encapsulamos el código en una función autoejecutable para evitar variables globales
 
-const adminEmail = 'javibueda@gmail.com'; // Correo del administrador
-const adminPassword = '123456789'; // Reemplaza con la contraseña real del administrador
+    const adminEmail = 'javibueda@gmail.com'; // Reemplaza con el correo del administrador
+    const adminPassword = '123456789'; // Reemplaza con la contraseña real del administrador
 
-let users = {
-    [adminEmail]: {
-        name: 'Administrador',
-        password: hashPassword(adminPassword),
-        profile: {},
-        documents: [],
-        folders: [],
-        temporaryPassword: false,
-        registeredAt: new Date().toISOString()
-    }
-};
-let currentUser = null;
-
+    let users = {
+        [adminEmail]: {
+            name: 'Administrador',
+            password: hashPassword(adminPassword),
+            profile: {},
+            documents: [],
+            folders: [],
+            temporaryPassword: false,
+            registeredAt: new Date().toISOString()
+        }
+    };
+    let currentUser = null;
 
     // Manejo seguro de la obtención de usuarios desde localStorage
     try {
         const storedUsers = localStorage.getItem('users');
         if (storedUsers) {
-            users = JSON.parse(storedUsers);
-        } else {
-            users = {};
+            const parsedUsers = JSON.parse(storedUsers);
+            users = { ...users, ...parsedUsers }; // Fusionar usuarios existentes con el administrador
         }
     } catch (e) {
         console.error('Error al parsear los usuarios del localStorage', e);
         localStorage.removeItem('users');
     }
+
+    // Guardar el objeto users actualizado en localStorage
+    localStorage.setItem('users', JSON.stringify(users));
 
     document.addEventListener('DOMContentLoaded', () => {
         const profileIcon = document.getElementById('profile-icon');
@@ -57,7 +58,7 @@ let currentUser = null;
             currentUser = users[localStorage.getItem('email')];
             if (currentUser) {
                 showHomeScreen();
-                if (menu) menu.style.display = 'block';
+                if (menu) menu.style.display = 'flex';
                 checkIfPasswordNeedsChange(); // Verificar si necesita cambiar contraseña temporal
             } else {
                 // Si el usuario no se encuentra, cerrar sesión
@@ -107,7 +108,16 @@ let currentUser = null;
         if (registerButton) registerButton.addEventListener('click', redirectToTypeform);
 
         const slackButton = document.getElementById('slack-button');
-        if (slackButton) slackButton.addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/...'));
+        if (slackButton) slackButton.addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-1v8qj5xip-1Tc4qYv~oOx3xJp9jEq8pg'));
+
+        const slackButtonGroups = document.getElementById('slack-button-groups');
+        if (slackButtonGroups) slackButtonGroups.addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-1v8qj5xip-1Tc4qYv~oOx3xJp9jEq8pg'));
+
+        const guideButton = document.getElementById('guide-button');
+        if (guideButton) guideButton.addEventListener('click', showGuide);
+
+        const directoryButton = document.getElementById('directory-button');
+        if (directoryButton) directoryButton.addEventListener('click', showDirectory);
 
         const helpButton = document.getElementById('help-button');
         if (helpButton) helpButton.addEventListener('click', showHelp);
@@ -154,8 +164,6 @@ let currentUser = null;
         // Añade aquí otros event listeners necesarios para tus funcionalidades
     });
 
-    // Resto del código JavaScript (funciones como handleLogin, showHomeScreen, etc.)
-
     // Función para redirigir al registro en Typeform
     function redirectToTypeform() {
         window.location.href = "https://qz232a8zljw.typeform.com/to/AHskzuV5?typeform-source=javierbuenopatience.github.io";
@@ -172,7 +180,7 @@ let currentUser = null;
             currentUser = users[email];
             showHomeScreen();
             const menu = document.getElementById('menu-desplegable');
-            if (menu) menu.style.display = 'block';
+            if (menu) menu.style.display = 'flex';
             checkIfPasswordNeedsChange();
         } else {
             alert('Correo o contraseña incorrectos.');
@@ -264,6 +272,8 @@ let currentUser = null;
             const footer = document.querySelector('footer');
             if (header) header.style.display = 'flex';
             if (footer) footer.style.display = 'block';
+            const menu = document.getElementById('menu-desplegable');
+            if (menu) menu.style.display = 'flex';
             updateProfileIcon();
             updateDocumentOverview();
         } else {
@@ -272,7 +282,8 @@ let currentUser = null;
     }
 
     function showAdminPanel() {
-        if (localStorage.getItem('email') === adminEmail) {
+        const email = localStorage.getItem('email');
+        if (email === adminEmail) {
             hideAllScreens();
             const adminPanel = document.getElementById('admin-panel');
             if (adminPanel) adminPanel.style.display = 'block';
@@ -385,7 +396,7 @@ let currentUser = null;
     function redirectToIA(specialty) {
         if (localStorage.getItem('loggedIn') === 'true') {
             if (specialty === 'biologia') {
-                window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank');
+                window.open('https://chat.openai.com/share/71882e0f-3773-4778-9e97-b74e4756f81f', '_blank');
             } else {
                 alert('La especialidad seleccionada estará disponible pronto.');
             }

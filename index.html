@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <header>
+    <header style="display: none;">
         <div class="header-left" id="logo">Patience</div>
         <div class="header-right" id="header-right">
             <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon">
@@ -83,6 +83,19 @@
                     <h3>¿Dónde te puedes preparar?</h3>
                     <p>Explora academias y preparadores para tu oposición.</p>
                 </div>
+            </div>
+        </div>
+
+        <!-- Pop-up de Cambio de Contraseña Obligatorio -->
+        <div id="password-change-popup" class="popup" style="display: none;">
+            <div class="popup-content">
+                <h2>Cambiar Contraseña</h2>
+                <p>Es necesario que cambies tu contraseña para continuar.</p>
+                <form id="password-change-form">
+                    <label for="new-password">Nueva Contraseña:</label>
+                    <input type="password" id="new-password" name="new-password" required>
+                    <button type="submit">Guardar Contraseña</button>
+                </form>
             </div>
         </div>
 
@@ -163,16 +176,14 @@
             </div>
         </div>
 
-        <!-- Pop-up de Cambio de Contraseña Obligatorio -->
-        <div id="password-change-popup" class="popup" style="display: none;">
-            <div class="popup-content">
-                <h2>Cambiar Contraseña</h2>
-                <p>Es necesario que cambies tu contraseña para continuar.</p>
-                <form id="password-change-form">
-                    <label for="new-password">Nueva Contraseña:</label>
-                    <input type="password" id="new-password" name="new-password" required>
-                    <button type="submit">Guardar Contraseña</button>
-                </form>
+        <!-- Pantalla de IA Especializada -->
+        <div class="card" id="ia-specialized-screen" style="display: none;">
+            <h2>Selecciona tu especialidad</h2>
+            <div class="ia-options">
+                <button id="biologia-button">Secundaria - Biología y Geología</button>
+                <button id="ingles-button">Secundaria - Inglés</button>
+                <button id="lengua-button">Secundaria - Lengua Castellana y Literatura</button>
+                <button id="matematicas-button">Secundaria - Matemáticas</button>
             </div>
         </div>
 
@@ -214,7 +225,7 @@
             <h2>Mis Documentos</h2>
             <div class="document-management">
                 <label for="upload-document" class="upload-label">Subir Documentos</label>
-                <input type="file" id="upload-document" multiple>
+                <input type="file" id="upload-document" multiple style="display: none;">
                 <button class="create-folder-button" id="create-folder-button">Crear Carpeta</button>
                 <div id="documents-container"></div>
             </div>
@@ -263,17 +274,6 @@
             </div>
         </div>
 
-        <!-- Pantalla de Selección de IA Especializada -->
-        <div class="card" id="ia-specialized-screen" style="display: none;">
-            <h2>Selecciona tu especialidad</h2>
-            <div class="ia-options">
-                <button id="biologia-button">Secundaria - Biología y Geología</button>
-                <button id="ingles-button">Secundaria - Inglés</button>
-                <button id="lengua-button">Secundaria - Lengua Castellana y Literatura</button>
-                <button id="matematicas-button">Secundaria - Matemáticas</button>
-            </div>
-        </div>
-
         <!-- Pantalla de Ayuda -->
         <div class="card" id="help-screen" style="display: none;">
             <h2>Ayuda</h2>
@@ -304,7 +304,7 @@
         </div>
     </div>
 
-    <footer>
+    <footer style="display: none;">
         <p>© 2024 Patience. Todos los derechos reservados.</p>
     </footer>
 

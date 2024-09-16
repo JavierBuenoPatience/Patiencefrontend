@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patience - Biología y Geología</title>
+    <title>Patience - Plataforma 360 para Opositores</title>
     <link rel="stylesheet" href="styles.css">
     <!-- Actualizado a la última versión de Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -63,7 +63,6 @@
                 <div class="overview documents-overview">
                     <h3>Mis Documentos</h3>
                     <div class="document-list" id="document-list"></div>
-                    <button id="home-documents-button">Ver Documentos</button>
                 </div>
 
                 <!-- Mis Grupos -->
@@ -71,21 +70,18 @@
                     <h3>Mis Grupos</h3>
                     <p>Accede a Slack para colaborar y comunicarte con otros usuarios.</p>
                     <button class="slack-button" id="slack-button">Accede a Slack</button>
-                    <button id="home-groups-button">Ver Grupos</button>
                 </div>
 
                 <!-- Guía para aprovechar al máximo la IA -->
-                <div class="overview guide-overview">
+                <div class="overview guide-overview" id="guide-button-home">
                     <h3>Guía para aprovechar al máximo la IA</h3>
                     <p>Aprende a utilizar la IA especializada de la mejor manera.</p>
-                    <button id="guide-button">Ver Guía</button>
                 </div>
 
                 <!-- ¿Dónde te puedes preparar? -->
-                <div class="overview directory-overview">
+                <div class="overview directory-overview" id="directory-button-home">
                     <h3>¿Dónde te puedes preparar?</h3>
                     <p>Explora academias y preparadores para tu oposición.</p>
-                    <button id="directory-button">Ver Directorio</button>
                 </div>
             </div>
         </div>
@@ -312,8 +308,6 @@
         <p>© 2024 Patience. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Incluimos la librería CryptoJS para el hash de contraseñas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="script.js"></script>
 </body>
 

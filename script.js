@@ -108,13 +108,13 @@
         if (registerButton) registerButton.addEventListener('click', redirectToTypeform);
 
         const slackButton = document.getElementById('slack-button');
-        if (slackButton) slackButton.addEventListener('click', () => redirectToURL('https://join.slack.com/...'));
+        if (slackButton) slackButton.addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-1v8qj5xip-1Tc4qYv~oOx3xJp9jEq8pg'));
 
         const slackButtonGroups = document.getElementById('slack-button-groups');
-        if (slackButtonGroups) slackButtonGroups.addEventListener('click', () => redirectToURL('https://join.slack.com/...'));
+        if (slackButtonGroups) slackButtonGroups.addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-1v8qj5xip-1Tc4qYv~oOx3xJp9jEq8pg'));
 
         const slackButtonHelp = document.getElementById('slack-button-help');
-        if (slackButtonHelp) slackButtonHelp.addEventListener('click', () => redirectToURL('https://join.slack.com/...'));
+        if (slackButtonHelp) slackButtonHelp.addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-1v8qj5xip-1Tc4qYv~oOx3xJp9jEq8pg'));
 
         const guideButton = document.getElementById('guide-button');
         if (guideButton) guideButton.addEventListener('click', showGuide);
@@ -195,7 +195,7 @@
         const createFolderButton = document.getElementById('create-folder-button');
         if (createFolderButton) createFolderButton.addEventListener('click', createFolder);
 
-        // Event listeners para los botones en la pantalla de inicio
+        // Event listeners para los recuadros en la pantalla de inicio
         const homeGuideButton = document.getElementById('guide-button-home');
         if (homeGuideButton) homeGuideButton.addEventListener('click', showGuide);
 
@@ -437,7 +437,7 @@
     function redirectToIA(specialty) {
         if (localStorage.getItem('loggedIn') === 'true') {
             if (specialty === 'biologia') {
-                window.open('https://chat.openai.com/share/71882e0f-3773-4778-9e97-b74e4756f81f', '_blank');
+                window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank');
             } else {
                 alert('La especialidad seleccionada estará disponible pronto.');
             }

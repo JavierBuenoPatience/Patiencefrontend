@@ -6,7 +6,7 @@
 
     let users = {
         [adminEmail]: {
-            name: 'Administrador',
+            name: 'Javier',
             password: hashPassword(adminPassword),
             profile: {},
             documents: [],

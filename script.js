@@ -1,8 +1,8 @@
 (function() {
     // Encapsulamos el código en una función autoejecutable para evitar variables globales
 
-    const adminEmail = 'javibueda@gmail.com'; // Reemplaza con el correo del administrador
-    const adminPassword = '123456789'; // Reemplaza con la contraseña real del administrador
+    const adminEmail = 'javibueda@gmail.com'; // Correo del administrador
+    const adminPassword = '123456789'; // Contraseña del administrador
 
     let users = {
         [adminEmail]: {
@@ -108,10 +108,13 @@
         if (registerButton) registerButton.addEventListener('click', redirectToTypeform);
 
         const slackButton = document.getElementById('slack-button');
-        if (slackButton) slackButton.addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-1v8qj5xip-1Tc4qYv~oOx3xJp9jEq8pg'));
+        if (slackButton) slackButton.addEventListener('click', () => redirectToURL('https://join.slack.com/...'));
 
         const slackButtonGroups = document.getElementById('slack-button-groups');
-        if (slackButtonGroups) slackButtonGroups.addEventListener('click', () => redirectToURL('https://join.slack.com/t/patienceespacio/shared_invite/zt-1v8qj5xip-1Tc4qYv~oOx3xJp9jEq8pg'));
+        if (slackButtonGroups) slackButtonGroups.addEventListener('click', () => redirectToURL('https://join.slack.com/...'));
+
+        const slackButtonHelp = document.getElementById('slack-button-help');
+        if (slackButtonHelp) slackButtonHelp.addEventListener('click', () => redirectToURL('https://join.slack.com/...'));
 
         const guideButton = document.getElementById('guide-button');
         if (guideButton) guideButton.addEventListener('click', showGuide);
@@ -124,6 +127,33 @@
 
         const logoutButton = document.getElementById('logout-button');
         if (logoutButton) logoutButton.addEventListener('click', handleLogout);
+
+        // Event listeners para los botones de noticias
+        const csifButton = document.getElementById('csif-button');
+        if (csifButton) csifButton.addEventListener('click', () => showNewsContent('csif'));
+
+        const sipriButton = document.getElementById('sipri-button');
+        if (sipriButton) sipriButton.addEventListener('click', () => showNewsContent('sipri'));
+
+        // Event listeners para la sección de ayuda
+        const faqsButton = document.getElementById('faqs-button');
+        if (faqsButton) faqsButton.addEventListener('click', () => toggleSection('faqs-section'));
+
+        const contactButton = document.getElementById('contact-button');
+        if (contactButton) contactButton.addEventListener('click', () => toggleSection('contact-section'));
+
+        // Event listeners para los botones de IA especializada
+        const biologiaButton = document.getElementById('biologia-button');
+        if (biologiaButton) biologiaButton.addEventListener('click', () => redirectToIA('biologia'));
+
+        const inglesButton = document.getElementById('ingles-button');
+        if (inglesButton) inglesButton.addEventListener('click', () => redirectToIA('ingles'));
+
+        const lenguaButton = document.getElementById('lengua-button');
+        if (lenguaButton) lenguaButton.addEventListener('click', () => redirectToIA('lengua'));
+
+        const matematicasButton = document.getElementById('matematicas-button');
+        if (matematicasButton) matematicasButton.addEventListener('click', () => redirectToIA('matematicas'));
 
         // Manejo del formulario de inicio de sesión
         const loginForm = document.getElementById('login-form');
@@ -160,6 +190,17 @@
         if (logo) {
             logo.addEventListener('click', handleLogoClick);
         }
+
+        // Event listener para el botón de crear carpeta en documentos
+        const createFolderButton = document.getElementById('create-folder-button');
+        if (createFolderButton) createFolderButton.addEventListener('click', createFolder);
+
+        // Event listeners para los botones en la pantalla de inicio
+        const homeGuideButton = document.getElementById('guide-button-home');
+        if (homeGuideButton) homeGuideButton.addEventListener('click', showGuide);
+
+        const homeDirectoryButton = document.getElementById('directory-button-home');
+        if (homeDirectoryButton) homeDirectoryButton.addEventListener('click', showDirectory);
 
         // Añade aquí otros event listeners necesarios para tus funcionalidades
     });

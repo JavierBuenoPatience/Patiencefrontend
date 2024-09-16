@@ -96,7 +96,7 @@ header {
     background: none;
     border: none;
     color: var(--white-color);
-    text-align: left;
+    text-align: center;
     padding: 8px;
     font-size: 14px;
     cursor: pointer;

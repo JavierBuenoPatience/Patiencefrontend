@@ -1,9 +1,22 @@
 (function() {
     // Encapsulamos el código en una función autoejecutable para evitar variables globales
 
-    const adminEmail = 'javibueda@gmail.com'; // Correo del administrador
-    let users = {};
-    let currentUser = null;
+const adminEmail = 'javibueda@gmail.com'; // Correo del administrador
+const adminPassword = '123456789'; // Reemplaza con la contraseña real del administrador
+
+let users = {
+    [adminEmail]: {
+        name: 'Administrador',
+        password: hashPassword(adminPassword),
+        profile: {},
+        documents: [],
+        folders: [],
+        temporaryPassword: false,
+        registeredAt: new Date().toISOString()
+    }
+};
+let currentUser = null;
+
 
     // Manejo seguro de la obtención de usuarios desde localStorage
     try {

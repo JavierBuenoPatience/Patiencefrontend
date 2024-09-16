@@ -63,6 +63,7 @@
                 <div class="overview documents-overview">
                     <h3>Mis Documentos</h3>
                     <div class="document-list" id="document-list"></div>
+                    <button id="home-documents-button">Ver Documentos</button>
                 </div>
 
                 <!-- Mis Grupos -->
@@ -70,18 +71,21 @@
                     <h3>Mis Grupos</h3>
                     <p>Accede a Slack para colaborar y comunicarte con otros usuarios.</p>
                     <button class="slack-button" id="slack-button">Accede a Slack</button>
+                    <button id="home-groups-button">Ver Grupos</button>
                 </div>
 
                 <!-- Guía para aprovechar al máximo la IA -->
                 <div class="overview guide-overview">
                     <h3>Guía para aprovechar al máximo la IA</h3>
                     <p>Aprende a utilizar la IA especializada de la mejor manera.</p>
+                    <button id="guide-button">Ver Guía</button>
                 </div>
 
                 <!-- ¿Dónde te puedes preparar? -->
                 <div class="overview directory-overview">
                     <h3>¿Dónde te puedes preparar?</h3>
                     <p>Explora academias y preparadores para tu oposición.</p>
+                    <button id="directory-button">Ver Directorio</button>
                 </div>
             </div>
         </div>
@@ -224,7 +228,7 @@
         <div class="card" id="groups-screen" style="display: none;">
             <h2>Mis Grupos</h2>
             <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
-            <button class="slack-button" id="slack-button-2">Accede a Slack</button>
+            <button class="slack-button" id="slack-button-groups">Accede a Slack</button>
         </div>
 
         <!-- Pantalla de ¿Qué es Patience? -->
@@ -291,7 +295,7 @@
                 <button id="contact-button">Contacta con nosotros</button>
                 <div id="contact-section" class="collapsible-section" style="display: none;">
                     <p>Accede a Slack y escríbenos al chat privado de Patience!</p>
-                    <button class="slack-button" id="slack-button-3">Accede a Slack</button>
+                    <button class="slack-button" id="slack-button-help">Accede a Slack</button>
                     <p>O también puedes escribirnos un email a <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
                 </div>
             </div>
@@ -308,6 +312,8 @@
         <p>© 2024 Patience. Todos los derechos reservados.</p>
     </footer>
 
+    <!-- Incluimos la librería CryptoJS para el hash de contraseñas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="script.js"></script>
 </body>
 

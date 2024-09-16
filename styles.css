@@ -3,12 +3,12 @@
 
 /* Variables CSS para colores y fuentes */
 :root {
-    --primary-color: #01C0B4;
-    --primary-hover-color: #019A92;
-    --secondary-color: #333;
-    --text-color: #666;
-    --background-color: #f4f4f4;
-    --white-color: #fff;
+    --primary-color: #00796B;
+    --primary-hover-color: #00574B;
+    --secondary-color: #37474F;
+    --text-color: #546E7A;
+    --background-color: #ECEFF1;
+    --white-color: #FFFFFF;
     --font-family: 'Poppins', sans-serif;
 }
 
@@ -21,6 +21,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    color: var(--text-color);
 }
 
 header {
@@ -39,7 +40,7 @@ header {
 }
 
 .header-left {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -51,12 +52,16 @@ header {
 }
 
 .header-right img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     border-radius: 50%;
     margin-left: 0;
     margin-right: 16px;
+}
+
+.header-right img:focus {
+    outline: 2px solid var(--primary-color);
 }
 
 /* Menú desplegable */
@@ -65,25 +70,22 @@ header {
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    width: 200px;
+    width: 220px;
     max-height: 80vh;
     background-color: var(--primary-color);
     color: var(--white-color);
-    padding: 10px;
+    padding: 20px 10px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: none; /* Oculto por defecto */
     flex-direction: column;
-    border-radius: 10px;
+    border-radius: 0 10px 10px 0;
 }
 
 .menu-desplegable ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    text-align: center;
     width: 100%;
 }
 
@@ -96,14 +98,18 @@ header {
     background: none;
     border: none;
     color: var(--white-color);
-    text-align: center;
-    padding: 8px;
-    font-size: 14px;
+    text-align: left;
+    padding: 10px;
+    font-size: 16px;
     cursor: pointer;
+    font-family: var(--font-family);
+    transition: background-color 0.3s ease;
 }
 
-.menu-desplegable ul li button:hover {
+.menu-desplegable ul li button:hover,
+.menu-desplegable ul li button:focus {
     background-color: var(--primary-hover-color);
+    outline: none;
 }
 
 .main-content {
@@ -113,8 +119,9 @@ header {
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
-    margin-top: 64px;
-    margin-bottom: 40px;
+    margin-top: 80px;
+    margin-bottom: 60px;
+    box-sizing: border-box;
 }
 
 .branding {
@@ -123,13 +130,13 @@ header {
 }
 
 .main-title {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: bold;
     color: var(--secondary-color);
 }
 
 .tagline {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     color: var(--text-color);
 }
@@ -142,16 +149,17 @@ header {
     padding: 24px;
     margin-bottom: 16px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: none; /* Ocultamos por defecto y se muestran dinámicamente */
     flex-direction: column;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .card h2 {
     margin-bottom: 16px;
     color: var(--primary-color);
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
     text-align: center;
 }
@@ -159,7 +167,7 @@ header {
 .card h1 {
     margin-bottom: 16px;
     color: var(--primary-color);
-    font-size: 28px;
+    font-size: 30px;
     font-weight: bold;
     text-align: center;
 }
@@ -180,14 +188,22 @@ header {
 .card form select,
 .card form textarea {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    border: 1px solid #B0BEC5;
+    border-radius: 8px;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 15px;
     font-family: var(--font-family);
     font-weight: 500;
+}
+
+.card form input:focus,
+.card form select:focus,
+.card form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
 }
 
 .card form button {
@@ -195,16 +211,19 @@ header {
     background-color: var(--primary-color);
     color: var(--white-color);
     border: none;
-    padding: 12px;
+    padding: 14px;
     cursor: pointer;
-    font-size: 16px;
-    border-radius: 10px;
+    font-size: 18px;
+    border-radius: 8px;
     font-family: var(--font-family);
     font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
-.card form button:hover {
+.card form button:hover,
+.card form button:focus {
     background-color: var(--primary-hover-color);
+    outline: none;
 }
 
 .card .form-group {
@@ -218,17 +237,17 @@ header {
 }
 
 .logo {
-    max-width: 100px;
+    max-width: 120px;
     margin-bottom: 16px;
 }
 
 footer {
     text-align: center;
-    padding: 8px 16px;
+    padding: 12px 16px;
     border-top: 1px solid #ddd;
     background-color: var(--secondary-color);
     color: var(--white-color);
-    font-size: 10px;
+    font-size: 12px;
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -240,31 +259,37 @@ footer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 16px;
+    gap: 24px;
     width: 100%;
     max-width: 1000px;
-    margin: 16px auto;
+    margin: 24px auto;
 }
 
 .overview {
     width: 100%;
     max-width: 300px;
-    background-color: var(--background-color);
-    padding: 16px;
+    background-color: var(--white-color);
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.overview:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .overview h3 {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--secondary-color);
     margin-bottom: 12px;
 }
 
 .overview p {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-color);
     margin-bottom: 16px;
 }
@@ -285,7 +310,7 @@ footer {
 }
 
 .welcome-message p {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--text-color);
 }
 
@@ -306,17 +331,25 @@ footer {
 .profile-field select,
 .profile-field textarea {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid #B0BEC5;
+    border-radius: 8px;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 15px;
     font-family: var(--font-family);
 }
 
+.profile-field input:focus,
+.profile-field select:focus,
+.profile-field textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
+}
+
 .profile-img {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 10px;
@@ -325,17 +358,18 @@ footer {
 .profile-img-upload {
     display: block;
     margin-top: 10px;
+    color: var(--primary-color);
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 15px;
+}
+
+.profile-img-upload:hover {
+    color: var(--primary-hover-color);
 }
 
 .profile-img-upload input[type="file"] {
     display: none;
-}
-
-.profile-img-upload label {
-    cursor: pointer;
-    color: var(--primary-color);
-    text-decoration: underline;
-    font-size: 14px;
 }
 
 /* Documentos */
@@ -356,22 +390,26 @@ footer {
     background-color: var(--primary-color);
     color: var(--white-color);
     border: none;
-    padding: 12px 16px;
-    font-size: 14px;
+    padding: 14px 16px;
+    font-size: 16px;
     font-family: var(--font-family);
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     display: inline-block;
     text-align: center;
     width: 100%;
     box-sizing: border-box;
     text-decoration: none;
+    transition: background-color 0.3s ease;
 }
 
 .upload-label:hover,
-.create-folder-button:hover {
+.create-folder-button:hover,
+.upload-label:focus,
+.create-folder-button:focus {
     background-color: var(--primary-hover-color);
+    outline: none;
 }
 
 #documents-container {
@@ -381,48 +419,44 @@ footer {
 
 .folder,
 .document {
-    padding: 10px;
-    background-color: var(--background-color);
-    border-radius: 10px;
+    padding: 14px;
+    background-color: var(--white-color);
+    border-radius: 8px;
     margin-bottom: 10px;
     cursor: pointer;
-    text-align: center;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    box-sizing: border-box;
+    text-align: left;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.3s ease;
 }
 
 .folder:hover,
 .document:hover {
-    background-color: #eaeaea;
+    background-color: #CFD8DC;
 }
 
-.folder-content {
-    display: none;
-    padding: 10px;
-    background-color: var(--background-color);
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    margin-top: 10px;
+.folder .actions-container,
+.document .actions-container {
+    display: flex;
+    gap: 8px;
 }
 
-.folder.open .folder-content {
-    display: block;
-}
-
-.folder .fas,
-.document .fas {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: var(--text-color);
+.actions-container button {
+    background: none;
+    border: none;
     cursor: pointer;
+    color: var(--text-color);
+    font-size: 18px;
+    transition: color 0.3s ease;
 }
 
-.folder .fas:hover,
-.document .fas:hover {
-    color: #ff0000;
+.actions-container button:hover,
+.actions-container button:focus {
+    color: var(--primary-hover-color);
+    outline: none;
 }
 
 /* Pop-up de cambio de contraseña */
@@ -441,22 +475,22 @@ footer {
 
 .popup-content {
     background-color: var(--white-color);
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     text-align: center;
     width: 100%;
     max-width: 400px;
 }
 
 .popup-content h2 {
-    font-size: 20px;
+    font-size: 22px;
     color: var(--primary-color);
     margin-bottom: 16px;
 }
 
 .popup-content p {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-color);
     margin-bottom: 20px;
 }
@@ -467,26 +501,35 @@ footer {
 }
 
 .popup-content input {
-    padding: 12px;
+    padding: 14px;
     margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    font-size: 14px;
+    border: 1px solid #B0BEC5;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.popup-content input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
 }
 
 .popup-content button {
     background-color: var(--primary-color);
     color: var(--white-color);
     border: none;
-    padding: 12px;
-    border-radius: 10px;
+    padding: 14px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
-.popup-content button:hover {
+.popup-content button:hover,
+.popup-content button:focus {
     background-color: var(--primary-hover-color);
+    outline: none;
 }
 
 /* Estilo para las indicaciones en prompts */
@@ -499,10 +542,10 @@ footer {
 /* Estilo para la sección de la guía */
 .guide-section {
     margin-top: 20px;
-    background-color: var(--background-color);
-    padding: 20px;
+    background-color: var(--white-color);
+    padding: 24px;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
 .guide-section h3 {
@@ -514,35 +557,42 @@ footer {
 .prompt-section h4 {
     color: var(--secondary-color);
     margin-bottom: 8px;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .prompt-section p {
     color: var(--text-color);
     line-height: 1.8;
     margin-bottom: 20px;
+    font-size: 16px;
 }
 
 /* Estilo para el directorio de academias */
 .directory-overview {
     width: 100%;
     max-width: 300px;
-    background-color: var(--background-color);
-    padding: 16px;
+    background-color: var(--white-color);
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.directory-overview:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .directory-overview h3 {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--secondary-color);
     margin-bottom: 12px;
 }
 
 .directory-overview p {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-color);
     margin-bottom: 16px;
 }
@@ -555,21 +605,21 @@ footer {
 }
 
 .directory-item {
-    padding: 15px;
-    background-color: var(--background-color);
+    padding: 20px;
+    background-color: var(--white-color);
     border-radius: 10px;
     margin-bottom: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .directory-item h3 {
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 8px;
     color: var(--secondary-color);
 }
 
 .directory-item p {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-color);
     margin-bottom: 5px;
 }
@@ -579,11 +629,11 @@ footer {
     background-color: var(--primary-color);
     color: var(--white-color);
     border: none;
-    padding: 12px 16px;
-    font-size: 14px;
+    padding: 14px 16px;
+    font-size: 16px;
     font-family: var(--font-family);
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     display: inline-block;
     text-align: center;
@@ -593,8 +643,10 @@ footer {
     transition: background-color 0.3s ease;
 }
 
-.slack-button:hover {
+.slack-button:hover,
+.slack-button:focus {
     background-color: var(--primary-hover-color);
+    outline: none;
 }
 
 /* Estilo para las noticias */
@@ -612,17 +664,20 @@ footer {
     background-color: var(--primary-color);
     color: var(--white-color);
     border: none;
-    padding: 12px;
+    padding: 14px;
     cursor: pointer;
-    font-size: 16px;
-    border-radius: 10px;
+    font-size: 18px;
+    border-radius: 8px;
     margin-bottom: 8px;
     text-align: center;
     font-family: var(--font-family);
+    transition: background-color 0.3s ease;
 }
 
-.news-section button:hover {
+.news-section button:hover,
+.news-section button:focus {
     background-color: var(--primary-hover-color);
+    outline: none;
 }
 
 .news-iframe {
@@ -630,7 +685,7 @@ footer {
     height: 500px;
     border: none;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     margin-top: 16px;
     display: none;
 }
@@ -640,7 +695,7 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     width: 100%;
 }
 
@@ -649,16 +704,19 @@ footer {
     background-color: var(--primary-color);
     color: var(--white-color);
     border: none;
-    padding: 12px;
+    padding: 14px;
     cursor: pointer;
-    font-size: 16px;
-    border-radius: 10px;
+    font-size: 18px;
+    border-radius: 8px;
     text-align: center;
     font-family: var(--font-family);
+    transition: background-color 0.3s ease;
 }
 
-.ia-options button:hover {
+.ia-options button:hover,
+.ia-options button:focus {
     background-color: var(--primary-hover-color);
+    outline: none;
 }
 
 /* Estilos para el menú desplegable del perfil */
@@ -667,27 +725,32 @@ footer {
     position: absolute;
     background-color: var(--white-color);
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
     z-index: 1;
     right: 0;
-    border-radius: 10px;
+    border-radius: 8px;
     overflow: hidden;
 }
 
-.dropdown-content button {
+.dropdown-content a {
     width: 100%;
     background: none;
     border: none;
     color: var(--secondary-color);
     padding: 12px 16px;
     text-align: left;
-    font-size: 14px;
+    font-size: 15px;
     font-family: var(--font-family);
     cursor: pointer;
+    display: block;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
 }
 
-.dropdown-content button:hover {
-    background-color: #f1f1f1;
+.dropdown-content a:hover,
+.dropdown-content a:focus {
+    background-color: #ECEFF1;
+    outline: none;
 }
 
 .show-dropdown {
@@ -698,7 +761,7 @@ footer {
 .help-section {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     width: 100%;
 }
 
@@ -707,28 +770,32 @@ footer {
     background-color: var(--primary-color);
     color: var(--white-color);
     border: none;
-    padding: 12px;
+    padding: 14px;
     cursor: pointer;
-    font-size: 16px;
-    border-radius: 10px;
+    font-size: 18px;
+    border-radius: 8px;
     text-align: center;
     font-family: var(--font-family);
+    transition: background-color 0.3s ease;
 }
 
-.help-section button:hover {
+.help-section button:hover,
+.help-section button:focus {
     background-color: var(--primary-hover-color);
+    outline: none;
 }
 
 .collapsible-section {
-    background-color: var(--background-color);
+    background-color: var(--white-color);
     padding: 16px;
-    border-radius: 10px;
+    border-radius: 8px;
     display: none;
     margin-top: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .collapsible-section p {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-color);
     line-height: 1.6;
 }
@@ -738,16 +805,16 @@ footer {
     width: 100%;
     max-width: 600px;
     margin-top: 20px;
-    padding: 20px;
+    padding: 24px;
     border-radius: 10px;
     background-color: var(--white-color);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
 .admin-section h3 {
     color: var(--primary-color);
     margin-bottom: 16px;
-    font-size: 20px;
+    font-size: 22px;
     text-align: center;
 }
 
@@ -765,14 +832,20 @@ footer {
 
 .admin-section form input {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    border: 1px solid #B0BEC5;
+    border-radius: 8px;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 15px;
     font-family: var(--font-family);
     font-weight: 500;
+}
+
+.admin-section form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
 }
 
 .admin-section form button {
@@ -780,16 +853,19 @@ footer {
     background-color: var(--primary-color);
     color: var(--white-color);
     border: none;
-    padding: 12px;
+    padding: 14px;
     cursor: pointer;
-    font-size: 16px;
-    border-radius: 10px;
+    font-size: 18px;
+    border-radius: 8px;
     font-family: var(--font-family);
     font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
-.admin-section form button:hover {
+.admin-section form button:hover,
+.admin-section form button:focus {
     background-color: var(--primary-hover-color);
+    outline: none;
 }
 
 .admin-section table {
@@ -801,8 +877,9 @@ footer {
 .admin-section table th,
 .admin-section table td {
     border: 1px solid #ddd;
-    padding: 12px;
+    padding: 14px;
     text-align: center;
+    font-size: 15px;
 }
 
 .admin-section table th {
@@ -812,4 +889,43 @@ footer {
 
 .admin-section table td {
     background-color: var(--background-color);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .menu-desplegable {
+        width: 180px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    .header-left {
+        font-size: 20px;
+    }
+
+    .overview {
+        max-width: 100%;
+    }
+
+    .ia-options button,
+    .news-section button,
+    .help-section button,
+    .upload-label,
+    .create-folder-button,
+    .slack-button {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .admin-section form input,
+    .admin-section form button {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .popup-content {
+        padding: 20px;
+    }
 }

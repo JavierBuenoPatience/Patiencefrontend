@@ -195,14 +195,13 @@
         const createFolderButton = document.getElementById('create-folder-button');
         if (createFolderButton) createFolderButton.addEventListener('click', createFolder);
 
-        // Event listeners para los recuadros en la pantalla de inicio
-        const homeGuideButton = document.getElementById('guide-button-home');
-        if (homeGuideButton) homeGuideButton.addEventListener('click', showGuide);
-
-        const homeDirectoryButton = document.getElementById('directory-button-home');
-        if (homeDirectoryButton) homeDirectoryButton.addEventListener('click', showDirectory);
-
         // Añade aquí otros event listeners necesarios para tus funcionalidades
+
+        // Event listener para el botón de enviar en el chat
+        const chatSendButton = document.getElementById('chat-send-button');
+        if (chatSendButton) {
+            chatSendButton.addEventListener('click', handleChatSend);
+        }
     });
 
     // Función para redirigir al registro en Typeform
@@ -273,7 +272,7 @@
             studyTime: document.getElementById('study-time').value,
             specialty: document.getElementById('specialty').value,
             hobbies: document.getElementById('hobbies').value,
-            location: document.getElementById('location').value,
+            location: document.getElementName('location').value,
             profileImage: profileImgElement ? profileImgElement.src : 'assets/default-profile.png'
         };
         if (users[email]) {
@@ -437,7 +436,9 @@
     function redirectToIA(specialty) {
         if (localStorage.getItem('loggedIn') === 'true') {
             if (specialty === 'biologia') {
-                window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank');
+                hideAllScreens();
+                const chatScreen = document.getElementById('chat-screen');
+                if (chatScreen) chatScreen.style.display = 'block';
             } else {
                 alert('La especialidad seleccionada estará disponible pronto.');
             }
@@ -836,6 +837,13 @@
 
     function verifyPassword(inputPassword, storedPasswordHash) {
         return hashPassword(inputPassword) === storedPasswordHash;
+    }
+
+    // Funciones relacionadas con el chat (si deseas implementar interacción con la API de OpenAI)
+    function handleChatSend() {
+        // Esta función manejaría el envío de mensajes en el chat
+        // Puedes implementar aquí la lógica para enviar mensajes a la API de OpenAI
+        alert('Funcionalidad de chat no implementada en este ejemplo.');
     }
 
 })();

@@ -34,7 +34,7 @@ import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/
 
 // Configuración de Firebase
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
+  apiKey: "AIzaSyDpCwvvgd047aMQj3wvnGZRULklq04OqKM",
   authDomain: "patience-b1063.firebaseapp.com",
   projectId: "patience-b1063",
   storageBucket: "patience-b1063.appspot.com",

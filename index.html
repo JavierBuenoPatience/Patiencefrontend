@@ -30,7 +30,7 @@
             <li><button id="grupos-button">Mis grupos</button></li>
             <li><button id="documentos-button">Mis Documentos</button></li>
             <li><button id="centro-button">Mi centro</button></li>
-            <li><button id="admin-button">Panel de Administración</button></li>
+            <li><button id="admin-button" style="display: none;">Panel de Administración</button>
         </ul>
     </div>
 
@@ -71,15 +71,17 @@
                 </div>
 
                 <!-- Guía para aprovechar al máximo la IA -->
-                <div class="overview guide-overview" id="guide-button-home">
+                <div class="overview guide-overview">
                     <h3>Guía para aprovechar al máximo la IA</h3>
                     <p>Aprende a utilizar la IA especializada de la mejor manera.</p>
+                    <button id="guide-button">Ver Guía</button>
                 </div>
 
                 <!-- ¿Dónde te puedes preparar? -->
-                <div class="overview directory-overview" id="directory-button-home">
+                <div class="overview directory-overview">
                     <h3>¿Dónde te puedes preparar?</h3>
                     <p>Explora academias y preparadores para tu oposición.</p>
+                    <button id="directory-button">Ver Directorio</button>
                 </div>
             </div>
         </div>
@@ -222,7 +224,7 @@
                     <p><strong>Dirección:</strong> Calle García Lorca, 27-A Local 1, 18140 La Zubia, Granada</p>
                     <p><strong>Teléfono:</strong> 958 890 387</p>
                 </div>
-                <!-- Agrega más elementos del directorio según sea necesario -->
+                <!-- Puedes agregar más elementos del directorio aquí -->
             </div>
         </div>
 
@@ -317,93 +319,8 @@
         <p>© 2024 Patience. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Firebase Configuration and Logic -->
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDpCwvvgd047aMQj3wvnGZRULklq04OqKM",
-            authDomain: "patience-b1063.firebaseapp.com",
-            projectId: "patience-b1063",
-            storageBucket: "patience-b1063.appspot.com",
-            messagingSenderId: "733466730686",
-            appId: "1:733466730686:web:de1e1f8fa8783491ecbeef",
-            measurementId: "G-TD50WYPDTC"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth();
-
-        // Register User
-        document.getElementById('register-button').addEventListener('click', () => {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                    console.log("Usuario registrado:", user);
-                    document.getElementById('home-screen').style.display = 'block';
-                    document.getElementById('login-screen').style.display = 'none';
-                    document.getElementById('user-name-home').innerText = user.email;
-                })
-                .catch((error) => {
-                    console.error("Error al registrar:", error.message);
-                });
-        });
-
-        // Login User
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                    console.log("Usuario logueado:", user);
-                    document.getElementById('home-screen').style.display = 'block';
-                    document.getElementById('login-screen').style.display = 'none';
-                    document.getElementById('user-name-home').innerText = user.email;
-                })
-                .catch((error) => {
-                    console.error("Error al iniciar sesión:", error.message);
-                });
-        });
-
-        // Manage Auth State
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // User is signed in
-                document.getElementById('home-screen').style.display = 'block';
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('user-name-home').innerText = user.email;
-            } else {
-                // User is signed out
-                document.getElementById('home-screen').style.display = 'none';
-                document.getElementById('login-screen').style.display = 'block';
-            }
-        });
-
-        // Logout User
-        document.getElementById('logout-button').addEventListener('click', () => {
-            signOut(auth).then(() => {
-                console.log("Usuario deslogueado");
-                document.getElementById('home-screen').style.display = 'none';
-                document.getElementById('login-screen').style.display = 'block';
-            }).catch((error) => {
-                console.error("Error al cerrar sesión:", error);
-            });
-        });
-    </script>
-
-    <script src="script.js"></script>
+    <!-- Incluir script.js como módulo -->
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>

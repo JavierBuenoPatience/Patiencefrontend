@@ -3,7 +3,7 @@
 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 
     // Firebase configuration
     const firebaseConfig = {
@@ -19,7 +19,7 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth();
-    const db = getFirestore(app);
+    const db = getFirestore();
 
     let currentUser = null;
 
@@ -27,7 +27,6 @@
         const profileIcon = document.getElementById('profile-icon');
         const dropdown = document.getElementById('profile-dropdown');
         const menu = document.getElementById('menu-desplegable');
-        const headerRight = document.getElementById('header-right');
 
         // Mostrar u ocultar el menú desplegable del perfil
         if (profileIcon && dropdown) {
@@ -45,11 +44,20 @@
         }
 
         // Manejo del estado de sesión
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUser = user;
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    currentUser.role = userDoc.data().role;
+                } else {
+                    currentUser.role = 'user';
+                }
                 showHomeScreen();
                 if (menu) menu.style.display = 'flex';
+                if (currentUser.role === 'superadmin') {
+                    document.getElementById('admin-button').style.display = 'block';
+                }
             } else {
                 currentUser = null;
                 showLoginScreen();
@@ -68,56 +76,168 @@
         if (registerButton) {
             registerButton.addEventListener('click', handleRegister);
         }
+
+        // Event listeners para botones del menú
+        const inicioButton = document.getElementById('inicio-button');
+        if (inicioButton) inicioButton.addEventListener('click', showHomeScreen);
+
+        const perfilButton = document.getElementById('perfil-button');
+        if (perfilButton) perfilButton.addEventListener('click', showProfile);
+
+        const iaButton = document.getElementById('ia-button');
+        if (iaButton) iaButton.addEventListener('click', showIASpecializedOptions);
+
+        const gruposButton = document.getElementById('grupos-button');
+        if (gruposButton) gruposButton.addEventListener('click', showGroups);
+
+        const documentosButton = document.getElementById('documentos-button');
+        if (documentosButton) documentosButton.addEventListener('click', showDocuments);
+
+        const adminButton = document.getElementById('admin-button');
+        if (adminButton) adminButton.addEventListener('click', showAdminPanel);
+
+        const logoutButton = document.getElementById('logout-button');
+        if (logoutButton) logoutButton.addEventListener('click', handleLogout);
+
+        // Manejo del formulario de perfil
+        const profileForm = document.getElementById('profile-form');
+        if (profileForm) {
+            profileForm.addEventListener('submit', handleProfileUpdate);
+        }
+
+        // Manejo del formulario de crear usuario (panel de administración)
+        const createUserForm = document.getElementById('create-user-form');
+        if (createUserForm) {
+            createUserForm.addEventListener('submit', createNewUser);
+        }
     });
 
-    async function handleLogin(event) {
+    function handleLogin(event) {
         event.preventDefault();
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
 
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            currentUser = userCredential.user;
-            showHomeScreen();
-            const menu = document.getElementById('menu-desplegable');
-            if (menu) menu.style.display = 'flex';
-        } catch (error) {
-            console.error("Error al iniciar sesión:", error.message);
-            alert('Correo o contraseña incorrectos.');
-        }
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                currentUser = userCredential.user;
+                showHomeScreen();
+                const menu = document.getElementById('menu-desplegable');
+                if (menu) menu.style.display = 'flex';
+            })
+            .catch((error) => {
+                console.error("Error al iniciar sesión:", error.message);
+                alert('Correo o contraseña incorrectos.');
+            });
     }
 
-    async function handleRegister() {
+    function handleRegister() {
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
 
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            currentUser = userCredential.user;
-            await addDoc(collection(db, "users"), {
-                uid: currentUser.uid,
-                email: currentUser.email,
-                registeredAt: new Date().toISOString()
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(async (userCredential) => {
+                currentUser = userCredential.user;
+                await setDoc(doc(db, "users", currentUser.uid), {
+                    email: currentUser.email,
+                    role: 'user'
+                });
+                alert('Registro exitoso, ahora puedes iniciar sesión.');
+                showLoginScreen();
+            })
+            .catch((error) => {
+                console.error("Error al registrar:", error.message);
+                alert('No se pudo completar el registro.');
             });
-            alert('Registro exitoso, ahora puedes iniciar sesión.');
-            showLoginScreen();
-        } catch (error) {
-            console.error("Error al registrar:", error.message);
-            alert('No se pudo completar el registro.');
-        }
     }
 
-    async function handleLogout() {
-        try {
-            await signOut(auth);
+    function handleLogout() {
+        signOut(auth).then(() => {
             console.log("Usuario deslogueado");
             currentUser = null;
             showLoginScreen();
             const menu = document.getElementById('menu-desplegable');
             if (menu) menu.style.display = 'none';
-        } catch (error) {
+        }).catch((error) => {
             console.error("Error al cerrar sesión:", error);
+        });
+    }
+
+    async function createNewUser(event) {
+        event.preventDefault();
+
+        const newUserEmail = document.getElementById('new-user-email').value;
+        const newUserName = document.getElementById('new-user-name').value;
+        const newUserPassword = document.getElementById('new-user-password').value;
+
+        if (!newUserEmail || !newUserName || !newUserPassword) {
+            alert('Por favor, completa todos los campos.');
+            return;
         }
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, newUserEmail, newUserPassword);
+            const newUser = userCredential.user;
+            await setDoc(doc(db, "users", newUser.uid), {
+                name: newUserName,
+                email: newUserEmail,
+                role: 'user',
+                registeredAt: new Date().toISOString()
+            });
+            alert('Usuario creado con éxito.');
+            updateUserList();
+        } catch (error) {
+            console.error("Error al crear usuario:", error.message);
+            alert('No se pudo crear el usuario.');
+        }
+    }
+
+    async function updateUserList() {
+        const userListContainer = document.getElementById('user-list');
+        if (userListContainer) {
+            userListContainer.innerHTML = '';
+            const querySnapshot = await getDocs(collection(db, "users"));
+            querySnapshot.forEach((doc) => {
+                const user = doc.data();
+                const row = document.createElement('tr');
+
+                const nameCell = document.createElement('td');
+                nameCell.textContent = user.name || 'N/A';
+                const emailCell = document.createElement('td');
+                emailCell.textContent = user.email;
+                const dateCell = document.createElement('td');
+                dateCell.textContent = user.registeredAt ? new Date(user.registeredAt).toLocaleDateString() : 'N/A';
+
+                row.appendChild(nameCell);
+                row.appendChild(emailCell);
+                row.appendChild(dateCell);
+
+                userListContainer.appendChild(row);
+            });
+        }
+    }
+
+    function handleProfileUpdate(event) {
+        event.preventDefault();
+        const email = currentUser.email;
+        const profileImgElement = document.getElementById('profile-img');
+        const profile = {
+            fullName: document.getElementById('full-name').value,
+            phone: document.getElementById('phone').value,
+            studyTime: document.getElementById('study-time').value,
+            specialty: document.getElementById('specialty').value,
+            hobbies: document.getElementById('hobbies').value,
+            location: document.getElementById('location').value,
+            profileImage: profileImgElement ? profileImgElement.src : 'assets/default-profile.png'
+        };
+        updateDoc(doc(db, "users", currentUser.uid), profile)
+            .then(() => {
+                alert('Perfil actualizado con éxito');
+                updateProfileIcon();
+            })
+            .catch((error) => {
+                console.error("Error al actualizar perfil:", error);
+                alert('No se pudo actualizar el perfil.');
+            });
     }
 
     function showLoginScreen() {
@@ -143,51 +263,6 @@
         const menu = document.getElementById('menu-desplegable');
         if (menu) menu.style.display = 'flex';
         updateProfileIcon();
-        updateDocumentOverview();
-    }
-
-    async function showProfile() {
-        if (currentUser) {
-            hideAllScreens();
-            const profileScreen = document.getElementById('profile-screen');
-            if (profileScreen) profileScreen.style.display = 'block';
-
-            try {
-                const docRef = doc(db, "users", currentUser.uid);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const userData = docSnap.data();
-                    document.getElementById('profile-email').value = userData.email;
-                    document.getElementById('full-name').value = userData.fullName || '';
-                    document.getElementById('phone').value = userData.phone || '';
-                }
-            } catch (error) {
-                console.error("Error al obtener los datos del perfil:", error);
-            }
-        } else {
-            showLoginScreen();
-        }
-    }
-
-    async function updateProfile() {
-        if (currentUser) {
-            const fullName = document.getElementById('full-name').value;
-            const phone = document.getElementById('phone').value;
-
-            try {
-                const docRef = doc(db, "users", currentUser.uid);
-                await setDoc(docRef, {
-                    fullName: fullName,
-                    phone: phone
-                }, { merge: true });
-
-                alert('Perfil actualizado con éxito');
-            } catch (error) {
-                console.error("Error al actualizar el perfil:", error);
-                alert('No se pudo actualizar el perfil.');
-            }
-        }
     }
 
     function hideAllScreens() {
@@ -197,12 +272,8 @@
 
     function updateProfileIcon() {
         const profileIcon = document.getElementById('profile-icon');
-        if (profileIcon && currentUser) {
-            profileIcon.src = 'assets/default-profile.png'; // Puedes cambiarlo para obtener una imagen personalizada del usuario
+        if (profileIcon) {
+            profileIcon.src = 'assets/default-profile.png'; // Aquí podrías actualizar con la imagen de perfil real si está almacenada
         }
-    }
-
-    function updateDocumentOverview() {
-        // Esta función se puede actualizar para interactuar con Firestore si se quiere almacenar documentos específicos de cada usuario
     }
 })();

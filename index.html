@@ -250,7 +250,7 @@
             <div class="training-section">
                 <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
                 <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
-                <h3>🛠️ Cómo usar Patience - IA para opositores</h3>
+                <h3>🔧 Cómo usar Patience - IA para opositores</h3>
                 <ul>
                     <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
                     <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
@@ -316,6 +316,92 @@
     <footer style="display: none;">
         <p>© 2024 Patience. Todos los derechos reservados.</p>
     </footer>
+
+    <!-- Firebase Configuration and Logic -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDpCwvvgd047aMQj3wvnGZRULklq04OqKM",
+            authDomain: "patience-b1063.firebaseapp.com",
+            projectId: "patience-b1063",
+            storageBucket: "patience-b1063.appspot.com",
+            messagingSenderId: "733466730686",
+            appId: "1:733466730686:web:de1e1f8fa8783491ecbeef",
+            measurementId: "G-TD50WYPDTC"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        // Register User
+        document.getElementById('register-button').addEventListener('click', () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log("Usuario registrado:", user);
+                    document.getElementById('home-screen').style.display = 'block';
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('user-name-home').innerText = user.email;
+                })
+                .catch((error) => {
+                    console.error("Error al registrar:", error.message);
+                });
+        });
+
+        // Login User
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log("Usuario logueado:", user);
+                    document.getElementById('home-screen').style.display = 'block';
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('user-name-home').innerText = user.email;
+                })
+                .catch((error) => {
+                    console.error("Error al iniciar sesión:", error.message);
+                });
+        });
+
+        // Manage Auth State
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in
+                document.getElementById('home-screen').style.display = 'block';
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('user-name-home').innerText = user.email;
+            } else {
+                // User is signed out
+                document.getElementById('home-screen').style.display = 'none';
+                document.getElementById('login-screen').style.display = 'block';
+            }
+        });
+
+        // Logout User
+        document.getElementById('logout-button').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                console.log("Usuario deslogueado");
+                document.getElementById('home-screen').style.display = 'none';
+                document.getElementById('login-screen').style.display = 'block';
+            }).catch((error) => {
+                console.error("Error al cerrar sesión:", error);
+            });
+        });
+    </script>
 
     <script src="script.js"></script>
 </body>

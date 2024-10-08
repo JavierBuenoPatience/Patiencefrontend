@@ -1,12 +1,11 @@
 (function() {
     // Encapsulamos el código en una función autoejecutable para evitar variables globales
 
-    // Importar las funcionalidades de Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 
-    // Configuración de Firebase
+    // Firebase configuration
     const firebaseConfig = {
         apiKey: "AIzaSyDpCwvvgd047aMQj3wvnGZRULklq04OqKM",
         authDomain: "patience-b1063.firebaseapp.com",
@@ -17,10 +16,10 @@
         measurementId: "G-TD50WYPDTC"
     };
 
-    // Inicializar Firebase
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth();
-    const db = getFirestore();
+    const db = getFirestore(app);
 
     let currentUser = null;
 
@@ -46,21 +45,9 @@
         }
 
         // Manejo del estado de sesión
-        onAuthStateChanged(auth, async (user) => {
+        onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUser = user;
-                const userDoc = await getDoc(doc(db, "users", user.uid));
-                if (!userDoc.exists()) {
-                    // Si es un nuevo usuario, crear un documento en Firestore
-                    await setDoc(doc(db, "users", user.uid), {
-                        email: user.email,
-                        name: "",
-                        profileImage: "assets/default-profile.png",
-                        documents: [],
-                        folders: [],
-                        registeredAt: new Date().toISOString()
-                    });
-                }
                 showHomeScreen();
                 if (menu) menu.style.display = 'flex';
             } else {
@@ -69,34 +56,6 @@
                 if (menu) menu.style.display = 'none';
             }
         });
-
-        // Event listeners para botones del menú
-        const inicioButton = document.getElementById('inicio-button');
-        if (inicioButton) inicioButton.addEventListener('click', showHomeScreen);
-
-        const perfilButton = document.getElementById('perfil-button');
-        if (perfilButton) perfilButton.addEventListener('click', showProfile);
-
-        const iaButton = document.getElementById('ia-button');
-        if (iaButton) iaButton.addEventListener('click', showIASpecializedOptions);
-
-        const gruposButton = document.getElementById('grupos-button');
-        if (gruposButton) gruposButton.addEventListener('click', showGroups);
-
-        const documentosButton = document.getElementById('documentos-button');
-        if (documentosButton) documentosButton.addEventListener('click', showDocuments);
-
-        const trainingButton = document.getElementById('training-button');
-        if (trainingButton) trainingButton.addEventListener('click', showTraining);
-
-        const centroButton = document.getElementById('centro-button');
-        if (centroButton) centroButton.addEventListener('click', showComingSoon);
-
-        const noticiasButton = document.getElementById('noticias-button');
-        if (noticiasButton) noticiasButton.addEventListener('click', showNews);
-
-        const adminButton = document.getElementById('admin-button');
-        if (adminButton) adminButton.addEventListener('click', showAdminPanel);
 
         // Manejo del formulario de inicio de sesión
         const loginForm = document.getElementById('login-form');
@@ -109,55 +68,56 @@
         if (registerButton) {
             registerButton.addEventListener('click', handleRegister);
         }
-
-        const logoutButton = document.getElementById('logout-button');
-        if (logoutButton) logoutButton.addEventListener('click', handleLogout);
     });
 
-    function handleLogin(event) {
+    async function handleLogin(event) {
         event.preventDefault();
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
 
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                currentUser = userCredential.user;
-                showHomeScreen();
-                const menu = document.getElementById('menu-desplegable');
-                if (menu) menu.style.display = 'flex';
-            })
-            .catch((error) => {
-                console.error("Error al iniciar sesión:", error.message);
-                alert('Correo o contraseña incorrectos.');
-            });
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            currentUser = userCredential.user;
+            showHomeScreen();
+            const menu = document.getElementById('menu-desplegable');
+            if (menu) menu.style.display = 'flex';
+        } catch (error) {
+            console.error("Error al iniciar sesión:", error.message);
+            alert('Correo o contraseña incorrectos.');
+        }
     }
 
-    function handleRegister() {
+    async function handleRegister() {
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                currentUser = userCredential.user;
-                alert('Registro exitoso, ahora puedes iniciar sesión.');
-                showLoginScreen();
-            })
-            .catch((error) => {
-                console.error("Error al registrar:", error.message);
-                alert('No se pudo completar el registro.');
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            currentUser = userCredential.user;
+            await addDoc(collection(db, "users"), {
+                uid: currentUser.uid,
+                email: currentUser.email,
+                registeredAt: new Date().toISOString()
             });
+            alert('Registro exitoso, ahora puedes iniciar sesión.');
+            showLoginScreen();
+        } catch (error) {
+            console.error("Error al registrar:", error.message);
+            alert('No se pudo completar el registro.');
+        }
     }
 
-    function handleLogout() {
-        signOut(auth).then(() => {
+    async function handleLogout() {
+        try {
+            await signOut(auth);
             console.log("Usuario deslogueado");
             currentUser = null;
             showLoginScreen();
             const menu = document.getElementById('menu-desplegable');
             if (menu) menu.style.display = 'none';
-        }).catch((error) => {
+        } catch (error) {
             console.error("Error al cerrar sesión:", error);
-        });
+        }
     }
 
     function showLoginScreen() {
@@ -183,26 +143,50 @@
         const menu = document.getElementById('menu-desplegable');
         if (menu) menu.style.display = 'flex';
         updateProfileIcon();
+        updateDocumentOverview();
     }
 
-    function showProfile() {
+    async function showProfile() {
         if (currentUser) {
             hideAllScreens();
             const profileScreen = document.getElementById('profile-screen');
             if (profileScreen) profileScreen.style.display = 'block';
-            document.getElementById('profile-email').value = currentUser.email;
+
+            try {
+                const docRef = doc(db, "users", currentUser.uid);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const userData = docSnap.data();
+                    document.getElementById('profile-email').value = userData.email;
+                    document.getElementById('full-name').value = userData.fullName || '';
+                    document.getElementById('phone').value = userData.phone || '';
+                }
+            } catch (error) {
+                console.error("Error al obtener los datos del perfil:", error);
+            }
         } else {
             showLoginScreen();
         }
     }
 
-    function showIASpecializedOptions() {
+    async function updateProfile() {
         if (currentUser) {
-            hideAllScreens();
-            const iaSpecializedScreen = document.getElementById('ia-specialized-screen');
-            if (iaSpecializedScreen) iaSpecializedScreen.style.display = 'block';
-        } else {
-            showLoginScreen();
+            const fullName = document.getElementById('full-name').value;
+            const phone = document.getElementById('phone').value;
+
+            try {
+                const docRef = doc(db, "users", currentUser.uid);
+                await setDoc(docRef, {
+                    fullName: fullName,
+                    phone: phone
+                }, { merge: true });
+
+                alert('Perfil actualizado con éxito');
+            } catch (error) {
+                console.error("Error al actualizar el perfil:", error);
+                alert('No se pudo actualizar el perfil.');
+            }
         }
     }
 
@@ -214,7 +198,11 @@
     function updateProfileIcon() {
         const profileIcon = document.getElementById('profile-icon');
         if (profileIcon && currentUser) {
-            profileIcon.src = "assets/default-profile.png"; // En el futuro se puede mejorar para cargar la imagen del perfil del usuario desde Firestore
+            profileIcon.src = 'assets/default-profile.png'; // Puedes cambiarlo para obtener una imagen personalizada del usuario
         }
+    }
+
+    function updateDocumentOverview() {
+        // Esta función se puede actualizar para interactuar con Firestore si se quiere almacenar documentos específicos de cada usuario
     }
 })();

@@ -9,6 +9,7 @@ import {
   onAuthStateChanged,
   signOut,
   updatePassword,
+  sendEmailVerification,
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
 import {
   getFirestore,
@@ -79,6 +80,16 @@ document.addEventListener("DOMContentLoaded", () => {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       currentUser = user;
+
+      // Verificar si el correo electrónico ha sido verificado
+      if (!currentUser.emailVerified) {
+        alert("Por favor, verifica tu correo electrónico antes de continuar.");
+        await sendEmailVerification(currentUser);
+        await signOut(auth);
+        showLoginScreen();
+        return;
+      }
+
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
         currentUser.profile = userDoc.data().profile || {};
@@ -97,7 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       showHomeScreen();
       if (menu) menu.style.display = "flex";
-      checkIfPasswordNeedsChange(); // Verificar si necesita cambiar contraseña temporal
     } else {
       currentUser = null;
       showLoginScreen();
@@ -125,7 +135,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (gruposButton) gruposButton.addEventListener("click", showGroups);
 
   const documentosButton = document.getElementById("documentos-button");
-  if (documentosButton) documentosButton.addEventListener("click", showDocuments);
+  if (documentosButton)
+    documentosButton.addEventListener("click", showDocuments);
 
   const trainingButton = document.getElementById("training-button");
   if (trainingButton) trainingButton.addEventListener("click", showTraining);
@@ -141,7 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Event listeners para otros botones
   const registerButton = document.getElementById("register-button");
-  if (registerButton) registerButton.addEventListener("click", handleRegister);
+  if (registerButton)
+    registerButton.addEventListener("click", showRegisterScreen);
 
   const slackButton = document.getElementById("slack-button");
   if (slackButton)
@@ -171,7 +183,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (guideButton) guideButton.addEventListener("click", showGuide);
 
   const directoryButton = document.getElementById("directory-button");
-  if (directoryButton) directoryButton.addEventListener("click", showDirectory);
+  if (directoryButton)
+    directoryButton.addEventListener("click", showDirectory);
 
   const helpButton = document.getElementById("help-button");
   if (helpButton) helpButton.addEventListener("click", showHelp);
@@ -224,10 +237,16 @@ document.addEventListener("DOMContentLoaded", () => {
     loginForm.addEventListener("submit", handleLogin);
   }
 
+  // Manejo del formulario de registro
+  const registerForm = document.getElementById("register-form");
+  if (registerForm) {
+    registerForm.addEventListener("submit", handleRegister);
+  }
+
   // Manejo del formulario de cambio de contraseña
   const passwordChangeForm = document.getElementById("password-change-form");
   if (passwordChangeForm) {
-    passwordChangeForm.addEventListener("submit", handleFirstPasswordChange);
+    passwordChangeForm.addEventListener("submit", handlePasswordChange);
   }
 
   // Manejo del formulario de perfil
@@ -259,8 +278,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (createFolderButton)
     createFolderButton.addEventListener("click", createFolder);
 
-  // Añade aquí otros event listeners necesarios para tus funcionalidades
-
   // Event listener para el botón de enviar en el chat
   const chatSendButton = document.getElementById("chat-send-button");
   if (chatSendButton) {
@@ -269,9 +286,15 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Función para manejar el registro de usuarios
-async function handleRegister() {
-  const email = document.getElementById("login-email").value;
-  const password = document.getElementById("login-password").value;
+async function handleRegister(event) {
+  event.preventDefault();
+  const email = document.getElementById("register-email").value;
+  const password = document.getElementById("register-password").value;
+
+  if (password.length < 6) {
+    alert("La contraseña debe tener al menos 6 caracteres.");
+    return;
+  }
 
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -281,20 +304,25 @@ async function handleRegister() {
     );
     currentUser = userCredential.user;
 
+    // Enviar correo de verificación
+    await sendEmailVerification(currentUser);
+
     // Almacenar información adicional del usuario en Firestore
     await setDoc(doc(db, "users", currentUser.uid), {
       email: currentUser.email,
       profile: {},
       role: "user",
       registeredAt: new Date().toISOString(),
-      temporaryPassword: true,
+      temporaryPassword: false,
     });
 
-    alert("Registro exitoso. Por favor, inicia sesión.");
+    alert(
+      "Registro exitoso. Por favor, verifica tu correo electrónico antes de iniciar sesión."
+    );
     showLoginScreen();
   } catch (error) {
     console.error("Error al registrar:", error);
-    alert("No se pudo completar el registro.");
+    alert("No se pudo completar el registro. " + error.message);
   }
 }
 
@@ -305,38 +333,37 @@ function handleLogin(event) {
   const password = document.getElementById("login-password").value;
 
   signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then(async (userCredential) => {
       currentUser = userCredential.user;
+
+      // Verificar si el correo electrónico ha sido verificado
+      if (!currentUser.emailVerified) {
+        alert("Por favor, verifica tu correo electrónico antes de continuar.");
+        await sendEmailVerification(currentUser);
+        await signOut(auth);
+        showLoginScreen();
+        return;
+      }
+
       showHomeScreen();
       const menu = document.getElementById("menu-desplegable");
       if (menu) menu.style.display = "flex";
-      checkIfPasswordNeedsChange();
     })
     .catch((error) => {
       console.error("Error al iniciar sesión:", error);
-      alert("Correo o contraseña incorrectos.");
+      alert("Correo o contraseña incorrectos. " + error.message);
     });
 }
 
-// Verificar si el usuario necesita cambiar su contraseña temporal
-async function checkIfPasswordNeedsChange() {
-  if (currentUser) {
-    const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-    if (userDoc.exists() && userDoc.data().temporaryPassword) {
-      const passwordChangePopup = document.getElementById(
-        "password-change-popup"
-      );
-      if (passwordChangePopup) {
-        passwordChangePopup.style.display = "flex";
-      }
-    }
-  }
-}
-
-// Manejar el cambio de contraseña inicial
-async function handleFirstPasswordChange(event) {
+// Función para manejar el cambio de contraseña
+async function handlePasswordChange(event) {
   event.preventDefault();
   const newPassword = document.getElementById("new-password").value;
+
+  if (newPassword.length < 6) {
+    alert("La contraseña debe tener al menos 6 caracteres.");
+    return;
+  }
 
   try {
     await updatePassword(currentUser, newPassword);
@@ -357,18 +384,17 @@ async function handleFirstPasswordChange(event) {
 }
 
 // Manejar el cierre de sesión
-function handleLogout() {
-  signOut(auth)
-    .then(() => {
-      console.log("Usuario deslogueado");
-      currentUser = null;
-      showLoginScreen();
-      const menu = document.getElementById("menu-desplegable");
-      if (menu) menu.style.display = "none";
-    })
-    .catch((error) => {
-      console.error("Error al cerrar sesión:", error);
-    });
+async function handleLogout() {
+  try {
+    await signOut(auth);
+    console.log("Usuario deslogueado");
+    currentUser = null;
+    showLoginScreen();
+    const menu = document.getElementById("menu-desplegable");
+    if (menu) menu.style.display = "none";
+  } catch (error) {
+    console.error("Error al cerrar sesión:", error);
+  }
 }
 
 // Manejar la actualización del perfil
@@ -383,7 +409,9 @@ async function handleProfileUpdate(event) {
     specialty: document.getElementById("specialty").value,
     hobbies: document.getElementById("hobbies").value,
     location: document.getElementById("location").value,
-    profileImage: profileImgElement ? profileImgElement.src : "assets/default-profile.png",
+    profileImage: profileImgElement
+      ? profileImgElement.src
+      : "assets/default-profile.png",
   };
 
   try {
@@ -396,6 +424,17 @@ async function handleProfileUpdate(event) {
     console.error("Error al actualizar el perfil:", error);
     alert("No se pudo actualizar el perfil.");
   }
+}
+
+// Mostrar la pantalla de registro
+function showRegisterScreen() {
+  hideAllScreens();
+  const registerScreen = document.getElementById("register-screen");
+  if (registerScreen) registerScreen.style.display = "block";
+  const header = document.querySelector("header");
+  const footer = document.querySelector("footer");
+  if (header) header.style.display = "none";
+  if (footer) footer.style.display = "none";
 }
 
 // Mostrar la pantalla de inicio de sesión
@@ -416,7 +455,8 @@ function showHomeScreen() {
   if (homeScreen) homeScreen.style.display = "block";
   const userNameHome = document.getElementById("user-name-home");
   if (userNameHome && currentUser)
-    userNameHome.textContent = currentUser.profile.fullName || currentUser.email;
+    userNameHome.textContent =
+      currentUser.profile.fullName || currentUser.email;
   const header = document.querySelector("header");
   const footer = document.querySelector("footer");
   if (header) header.style.display = "flex";
@@ -980,10 +1020,7 @@ function showAdminPanel() {
   }
 }
 
-// Funciones adicionales según tus necesidades...
-
 // Manejar el envío en el chat (puedes implementar interacción con la API de OpenAI)
 function handleChatSend() {
   alert("Funcionalidad de chat no implementada en este ejemplo.");
 }
-

@@ -31,7 +31,10 @@ import {
   getDownloadURL,
   deleteObject,
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-storage.js";
-import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-functions.js";
+import {
+  getFunctions,
+  httpsCallable,
+} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-functions.js";
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -138,9 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (documentosButton)
     documentosButton.addEventListener("click", showDocuments);
 
-  const trainingButton = document.getElementById("training-button");
-  if (trainingButton) trainingButton.addEventListener("click", showTraining);
-
   const centroButton = document.getElementById("centro-button");
   if (centroButton) centroButton.addEventListener("click", showComingSoon);
 
@@ -156,8 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
     registerButton.addEventListener("click", showRegisterScreen);
 
   const loginButton = document.getElementById("login-button");
-  if (loginButton)
-    loginButton.addEventListener("click", showLoginScreen);
+  if (loginButton) loginButton.addEventListener("click", showLoginScreen);
 
   const slackButton = document.getElementById("slack-button");
   if (slackButton)
@@ -215,6 +214,11 @@ document.addEventListener("DOMContentLoaded", () => {
     contactButton.addEventListener("click", () =>
       toggleSection("contact-section")
     );
+
+  // Event listener para el botón "¿Qué es Patience?" en el menú de ayuda
+  const trainingButtonHelp = document.getElementById("training-button-help");
+  if (trainingButtonHelp)
+    trainingButtonHelp.addEventListener("click", showTraining);
 
   // Event listeners para los botones de IA especializada
   const biologiaButton = document.getElementById("biologia-button");
@@ -929,9 +933,44 @@ async function openFolder(folderId, folderName) {
 
 // Eliminar carpeta y sus contenidos
 async function deleteFolder(folderId) {
-  // Eliminar subcarpetas y documentos dentro de la carpeta
-  // Implementa esta función según tus necesidades
-  alert("Funcionalidad de eliminación de carpetas no implementada.");
+  try {
+    // Eliminar documentos dentro de la carpeta
+    const docsSnapshot = await getDocs(
+      query(
+        collection(db, "users", currentUser.uid, "documents"),
+        where("folderId", "==", folderId)
+      )
+    );
+
+    const deletePromises = [];
+
+    docsSnapshot.forEach((doc) => {
+      deletePromises.push(deleteDocument(doc.id, doc.data().name));
+    });
+
+    // Eliminar subcarpetas dentro de la carpeta
+    const subFoldersSnapshot = await getDocs(
+      query(
+        collection(db, "users", currentUser.uid, "folders"),
+        where("parentId", "==", folderId)
+      )
+    );
+
+    subFoldersSnapshot.forEach((folderDoc) => {
+      deletePromises.push(deleteFolder(folderDoc.id));
+    });
+
+    // Esperar a que todas las eliminaciones se completen
+    await Promise.all(deletePromises);
+
+    // Eliminar la carpeta actual
+    await deleteDoc(doc(db, "users", currentUser.uid, "folders", folderId));
+
+    displayDocuments();
+  } catch (error) {
+    console.error("Error al eliminar la carpeta:", error);
+    alert("No se pudo eliminar la carpeta.");
+  }
 }
 
 // Eliminar documento

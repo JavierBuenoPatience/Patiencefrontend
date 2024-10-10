@@ -3,15 +3,14 @@
 
 /* Variables CSS para colores y fuentes */
 :root {
-    --primary-color: #32CD32; /* Verde lima */
-    --primary-hover-color: #2BAB2B; /* Verde lima más oscuro */
-    --secondary-color: #00BFFF; /* Azul cielo */
+    --primary-color: #4682B4; /* Azul acero */
+    --primary-hover-color: #36648B; /* Azul acero más oscuro */
+    --secondary-color: #FF8C69; /* Naranja melocotón */
     --text-color: #2F2F2F; /* Gris oscuro para el texto */
-    --background-color: #F0FFF0; /* Blanco verdoso */
+    --background-color: #F5F5F5; /* Gris muy claro para el fondo */
     --white-color: #FFFFFF; /* Blanco puro */
     --font-family: 'Poppins', sans-serif;
 }
-
 /* Estilos base */
 body {
     font-family: var(--font-family);

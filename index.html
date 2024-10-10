@@ -30,9 +30,9 @@
             <li><button id="grupos-button">Mis grupos</button></li>
             <li><button id="documentos-button">Mis Documentos</button></li>
             <li><button id="centro-button">Mi centro</button></li>
-            <li><button id="admin-button" style="display: none;">Panel de Administración</button></li>
-            <li><button id="training-button">¿Qué es Patience?</button></li>
+            <!-- Eliminado el botón "¿Qué es Patience?" del menú lateral -->
             <li><button id="noticias-button">Últimas noticias</button></li>
+            <li><button id="admin-button" style="display: none;">Panel de Administración</button>
         </ul>
     </div>
 
@@ -121,6 +121,7 @@
             <form id="profile-form">
                 <div class="profile-field">
                     <img id="profile-img" src="assets/default-profile.png" alt="Imagen de Perfil" class="profile-img">
+                    <!-- Conectar el label con el input usando 'for' e 'id' -->
                     <label for="profile-image-input" class="profile-img-upload">Cambiar imagen de perfil</label>
                     <input type="file" id="profile-image-input" accept="image/*" style="display: none;">
                 </div>
@@ -215,10 +216,10 @@
             </div>
         </div>
 
-        <!-- Pantalla de Guía para aprovechar al máximo la IA -->
+      <!-- Pantalla de Guía para aprovechar al máximo la IA -->
         <div class="card" id="guide-screen" style="display: none;">
             <h2>Guía para aprovechar al máximo la IA</h2>
-           <div class="guide-section">
+            <div class="guide-section">
                 <div class="prompt-section">
                     <h4>Cómo pedir a la IA que genere un examen aleatorio:</h4>
                     <p>Prompt: Genera un examen de oposición de profesorado de educación secundaria obligatoria aleatorio para la especialidad de <span class="prompt-hint">[nombre de tu especialidad]</span>. Debes darme <span class="prompt-hint">[nº de bolas que saca el tribunal]</span> títulos de temas aleatorios de mi especialidad, así como <span class="prompt-hint">[X]</span> ejercicio(s) prácticos que sean <span class="prompt-hint">[tipo de ejercicios prácticos de tu especialidad; ejemplo: un texto para traducir de EN>ES o un problema de genética]</span>. Además, genera un cronómetro de <span class="prompt-hint">[X]</span> horas y <span class="prompt-hint">[X]</span> minutos y avísame cuando termine el tiempo.</p>
@@ -252,6 +253,7 @@
         <div class="card" id="documents-screen" style="display: none;">
             <h2>Mis Documentos</h2>
             <div class="document-management">
+                <!-- Conectar el label con el input usando 'for' e 'id' -->
                 <label for="upload-document" class="upload-label">Subir Documentos</label>
                 <input type="file" id="upload-document" multiple style="display: none;">
                 <button class="create-folder-button" id="create-folder-button">Crear Carpeta</button>
@@ -264,31 +266,6 @@
             <h2>Mis Grupos</h2>
             <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
             <button class="slack-button" id="slack-button-groups">Accede a Slack</button>
-        </div>
-
-        <!-- Pantalla de ¿Qué es Patience? -->
-        <div class="card" id="training-screen" style="display: none;">
-            <h2>🤔 ¿Qué es Patience?</h2>
-           <div class="training-section">
-                <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
-                <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
-                <h3>🔧 Cómo usar Patience - IA para opositores</h3>
-                <ul>
-                    <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
-                    <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
-                    <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
-                    <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
-                </ul>
-                <h3>📚 Casos de uso para opositores</h3>
-                <ul>
-                    <li><strong>Generar Resúmenes 📝:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
-                    <li><strong>Crear Esquemas 📊:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
-                    <li><strong>Buscar Información Rápida 🔍:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
-                    <li><strong>Corregir Documentos 🖋️:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo, y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
-                    <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
-                    <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
-                </ul>
-            </div>
         </div>
 
         <!-- Pantalla de Últimas noticias -->
@@ -318,10 +295,38 @@
                     <p>O también puedes escribirnos un email a <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
                 </div>
 
-                <button id="training-button">¿Qué es Patience?</button>
+                <button id="training-button-help">¿Qué es Patience?</button>
+                <!-- Actualizado el ID del botón para evitar conflictos -->
+
                 <button id="noticias-button">Últimas noticias</button>
             </div>
         </div>
+
+        <!-- Pantalla de ¿Qué es Patience? -->
+        <div class="card" id="training-screen" style="display: none;">
+            <h2>🤔 ¿Qué es Patience?</h2>
+                <div class="training-section">
+                <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
+                <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
+                <h3>🔧 Cómo usar Patience - IA para opositores</h3>
+                <ul>
+                    <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
+                    <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
+                    <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
+                    <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
+                </ul>
+                <h3>📚 Casos de uso para opositores</h3>
+                <ul>
+                    <li><strong>Generar Resúmenes 📝:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
+                    <li><strong>Crear Esquemas 📊:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
+                    <li><strong>Buscar Información Rápida 🔍:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
+                    <li><strong>Corregir Documentos 🖋️:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo, y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
+                    <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
+                    <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
+                </ul>
+            </div>
+        </div>
+
 
         <!-- Pantalla de Próximamente -->
         <div class="card" id="coming-soon-screen" style="display: none;">

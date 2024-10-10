@@ -48,7 +48,7 @@
                 <input type="password" id="login-password" name="password" required>
                 <button type="submit">Iniciar Sesión</button>
             </form>
-            <p>¿No tienes una cuenta todavía? <button type="button" id="go-to-register-button">¡Regístrate!</button></p>
+            <p>¿No tienes una cuenta todavía? <button type="button" id="register-button">¡Regístrate!</button></p>
         </div>
 
         <!-- Pantalla de Registro -->
@@ -62,7 +62,7 @@
                 <input type="password" id="register-password" name="password" required>
                 <button type="submit">Registrarse</button>
             </form>
-            <p>¿Ya tienes una cuenta? <button type="button" id="go-to-login-button">Inicia Sesión</button></p>
+            <p>¿Ya tienes una cuenta? <button type="button" id="login-button">Inicia Sesión</button></p>
         </div>
 
         <!-- Pantalla de Inicio -->
@@ -218,7 +218,7 @@
         <!-- Pantalla de Guía para aprovechar al máximo la IA -->
         <div class="card" id="guide-screen" style="display: none;">
             <h2>Guía para aprovechar al máximo la IA</h2>
-            <div class="guide-section">
+           <div class="guide-section">
                 <div class="prompt-section">
                     <h4>Cómo pedir a la IA que genere un examen aleatorio:</h4>
                     <p>Prompt: Genera un examen de oposición de profesorado de educación secundaria obligatoria aleatorio para la especialidad de <span class="prompt-hint">[nombre de tu especialidad]</span>. Debes darme <span class="prompt-hint">[nº de bolas que saca el tribunal]</span> títulos de temas aleatorios de mi especialidad, así como <span class="prompt-hint">[X]</span> ejercicio(s) prácticos que sean <span class="prompt-hint">[tipo de ejercicios prácticos de tu especialidad; ejemplo: un texto para traducir de EN>ES o un problema de genética]</span>. Además, genera un cronómetro de <span class="prompt-hint">[X]</span> horas y <span class="prompt-hint">[X]</span> minutos y avísame cuando termine el tiempo.</p>
@@ -269,7 +269,7 @@
         <!-- Pantalla de ¿Qué es Patience? -->
         <div class="card" id="training-screen" style="display: none;">
             <h2>🤔 ¿Qué es Patience?</h2>
-            <div class="training-section">
+           <div class="training-section">
                 <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
                 <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
                 <h3>🔧 Cómo usar Patience - IA para opositores</h3>
@@ -308,12 +308,7 @@
             <div class="help-section">
                 <button id="faqs-button">Preguntas Frecuentes</button>
                 <div id="faqs-section" class="collapsible-section" style="display: none;">
-                    <p><strong>¿Cómo accedo a mi perfil?</strong></p>
-                    <p>Puedes acceder a tu perfil haciendo clic en la opción "Perfil" en el menú lateral. Desde allí, puedes actualizar tu información personal y ajustar tus preferencias.</p>
-                    <p><strong>¿Cómo subo documentos?</strong></p>
-                    <p>Ve a la sección "Mis Documentos" y haz clic en "Subir Documentos". Puedes seleccionar los archivos que deseas subir desde tu dispositivo.</p>
-                    <p><strong>¿Cómo puedo contactar con soporte?</strong></p>
-                    <p>Puedes contactarnos a través de Slack o enviando un correo electrónico a nuestro equipo de soporte.</p>
+                    <!-- Contenido de FAQs -->
                 </div>
 
                 <button id="contact-button">Contacta con nosotros</button>

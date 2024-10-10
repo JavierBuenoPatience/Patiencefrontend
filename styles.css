@@ -3,12 +3,12 @@
 
 /* Variables CSS para colores y fuentes */
 :root {
-    --primary-color: #50C878; /* Verde esmeralda */
-    --primary-hover-color: #3DA45A; /* Verde esmeralda más oscuro */
-    --secondary-color: #5C5C5C; /* Gris oscuro */
+    --primary-color: #FF6F61; /* Coral */
+    --primary-hover-color: #E65A50; /* Coral más oscuro */
+    --secondary-color: #003366; /* Azul marino */
     --text-color: #2F2F2F; /* Gris oscuro para el texto */
-    --background-color: #EDEDED; /* Gris muy claro */
-    --white-color: #FFFFFF; /* Blanco */
+    --background-color: #FFF8F0; /* Blanco cálido */
+    --white-color: #FFFFFF; /* Blanco puro */
     --font-family: 'Poppins', sans-serif;
 }
 

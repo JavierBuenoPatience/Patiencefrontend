@@ -3,11 +3,11 @@
 
 /* Variables CSS para colores y fuentes */
 :root {
-    --primary-color: #9F7AEA; /* Lavanda */
-    --primary-hover-color: #7A4EB4; /* Lavanda más oscuro */
-    --secondary-color: #5A5A5A; /* Gris oscuro */
+    --primary-color: #FF6F61; /* Coral */
+    --primary-hover-color: #D55B4F; /* Coral más oscuro */
+    --secondary-color: #4A6572; /* Azul grisáceo */
     --text-color: #333333; /* Gris oscuro para el texto */
-    --background-color: #F2F3F5; /* Gris muy claro */
+    --background-color: #ECEFF1; /* Gris muy claro */
     --white-color: #FFFFFF; /* Blanco */
     --font-family: 'Poppins', sans-serif;
 }

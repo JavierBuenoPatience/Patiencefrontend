@@ -155,6 +155,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (registerButton)
     registerButton.addEventListener("click", showRegisterScreen);
 
+  const loginButton = document.getElementById("login-button");
+  if (loginButton)
+    loginButton.addEventListener("click", showLoginScreen);
+
   const slackButton = document.getElementById("slack-button");
   if (slackButton)
     slackButton.addEventListener("click", () =>
@@ -857,12 +861,9 @@ function createDocumentElement(docId, docData) {
 
   docElement.addEventListener("click", async () => {
     // Actualizar la última apertura
-    await updateDoc(
-      doc(db, "users", currentUser.uid, "documents", docId),
-      {
-        lastOpened: new Date().toISOString(),
-      }
-    );
+    await updateDoc(doc(db, "users", currentUser.uid, "documents", docId), {
+      lastOpened: new Date().toISOString(),
+    });
     openDocument(docData.url);
     updateDocumentOverview();
   });
@@ -937,10 +938,7 @@ async function deleteFolder(folderId) {
 async function deleteDocument(docId, fileName) {
   try {
     await deleteDoc(doc(db, "users", currentUser.uid, "documents", docId));
-    const storageRef = ref(
-      storage,
-      `documents/${currentUser.uid}/${fileName}`
-    );
+    const storageRef = ref(storage, `documents/${currentUser.uid}/${fileName}`);
     await deleteObject(storageRef);
     displayDocuments();
     updateDocumentOverview();

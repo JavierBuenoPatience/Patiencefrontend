@@ -714,7 +714,7 @@ async function updateDocumentOverview() {
       documentList.textContent = "Sin documentos";
     } else {
       const lastOpenedDocuments = documents
-        .sort((a, b) => b.lastOpened - a.lastOpened)
+        .sort((a, b) => new Date(b.lastOpened) - new Date(a.lastOpened))
         .slice(0, 2);
       lastOpenedDocuments.forEach((doc) => {
         const docElement = document.createElement("p");
@@ -1057,7 +1057,96 @@ function showAdminPanel() {
   }
 }
 
-// Manejar el envío en el chat (puedes implementar interacción con la API de OpenAI)
-function handleChatSend() {
-  alert("Funcionalidad de chat no implementada en este ejemplo.");
+// Manejar el envío en el chat
+async function handleChatSend(event) {
+  event.preventDefault();
+  const chatInput = document.getElementById("chat-input");
+  const chatSendButton = document.getElementById("chat-send-button");
+
+  if (chatInput && chatInput.value.trim() !== '') {
+    const userMessage = chatInput.value.trim();
+    chatInput.value = '';
+
+    // Deshabilitar el botón y mostrar indicador de carga
+    chatSendButton.disabled = true;
+    chatSendButton.textContent = "Enviando...";
+
+    // Mostrar el mensaje del usuario en la interfaz
+    addMessageToChat('user', userMessage);
+
+    // Llamar a la función de Firebase
+    const chatWithGPT = httpsCallable(functions, 'chatWithGPT');
+
+    try {
+      const result = await chatWithGPT({ message: userMessage, specialty: currentSpecialty });
+      const assistantMessage = result.data.reply;
+
+      // Mostrar la respuesta de la IA en la interfaz
+      addMessageToChat('assistant', assistantMessage);
+
+      // Actualizar el historial
+      chatHistory.push({ role: 'user', content: userMessage });
+      chatHistory.push({ role: 'assistant', content: assistantMessage });
+
+      // (Opcional) Guardar el historial actualizado en Firestore
+      // Esto ya lo haces desde la función backend, por lo que no es necesario aquí
+    } catch (error) {
+      console.error('Error al comunicarse con la función:', error);
+      alert('Error al comunicarse con la IA.');
+    } finally {
+      // Rehabilitar el botón y restablecer el texto
+      chatSendButton.disabled = false;
+      chatSendButton.textContent = "Enviar";
+    }
+  }
 }
+
+// Función para añadir mensajes al chat en la interfaz
+function addMessageToChat(role, content) {
+  const chatMessagesContainer = document.getElementById("chat-messages");
+  if (chatMessagesContainer) {
+    const messageElement = document.createElement("div");
+    messageElement.classList.add('chat-message', role);
+    messageElement.textContent = content;
+    chatMessagesContainer.appendChild(messageElement);
+
+    // Desplazar el contenedor hacia abajo
+    chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+  }
+}
+
+// Función para cargar el historial del chat desde Firestore
+async function loadChatHistory() {
+  const chatMessagesContainer = document.getElementById("chat-messages");
+  if (chatMessagesContainer) {
+    chatMessagesContainer.innerHTML = '';
+
+    const chatHistoryRef = doc(db, 'users', currentUser.uid, 'chats', currentSpecialty);
+    const chatDoc = await getDoc(chatHistoryRef);
+
+    if (chatDoc.exists()) {
+      const messages = chatDoc.data().messages;
+      chatHistory = messages; // Actualizar el historial global
+      messages.forEach((msg) => {
+        addMessageToChat(msg.role, msg.content);
+      });
+    }
+  }
+}
+
+// Función para actualizar el historial de chat en Firestore
+async function updateChatHistory() {
+  const chatHistoryRef = doc(db, 'users', currentUser.uid, 'chats', currentSpecialty);
+  try {
+    await setDoc(chatHistoryRef, { messages: chatHistory });
+  } catch (error) {
+    console.error("Error al actualizar el historial de chat:", error);
+  }
+}
+
+// Asegurarse de que el historial de chat se guarda al salir de la página
+window.addEventListener("beforeunload", () => {
+  if (currentUser && currentSpecialty && chatHistory.length > 0) {
+    updateChatHistory();
+  }
+});

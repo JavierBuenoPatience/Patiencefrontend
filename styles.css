@@ -11,6 +11,7 @@
     --white-color: #FFFFFF; /* Blanco puro */
     --font-family: 'Poppins', sans-serif;
 }
+
 /* Estilos base */
 body {
     font-family: var(--font-family);
@@ -346,6 +347,7 @@ footer {
 .profile-field textarea {
     width: 100%;
     padding: 14px;
+    margin-bottom: 16px;
     border: 1px solid #B0BEC5;
     border-radius: 8px;
     box-sizing: border-box;
@@ -809,7 +811,7 @@ footer {
     background-color: var(--background-color);
 }
 
-/* Responsividad */
+/* Responsive Design */
 @media (max-width: 768px) {
     .menu-desplegable {
         width: 180px;
@@ -845,5 +847,113 @@ footer {
 
     .popup-content {
         padding: 20px;
+    }
+}
+
+/* ---------------------------------
+   Nuevas Modificaciones para ChatGPT
+----------------------------------- */
+
+/* Estilos para la pantalla de Chat */
+.chat-container {
+    width: 100%;
+    max-width: 800px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+
+.chat-input {
+    display: flex;
+    border-top: 1px solid #ddd;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    font-size: 16px;
+}
+
+.chat-input button {
+    padding: 12px 16px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.chat-input button:hover,
+.chat-input button:focus {
+    background-color: var(--primary-hover-color);
+    outline: none;
+}
+
+.chat-message {
+    margin-bottom: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    max-width: 80%;
+}
+
+.chat-message.user {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    align-self: flex-end;
+}
+
+.chat-message.assistant {
+    background-color: #e0e0e0;
+    align-self: flex-start;
+}
+
+/* Scrollbar personalizado para chat-messages */
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: var(--primary-color); 
+    border-radius: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover-color); 
+}
+
+/* Ajustes para pantallas pequeñas en la sección de chat */
+@media (max-width: 600px) {
+    .chat-container {
+        height: 500px;
+    }
+
+    .chat-input input {
+        font-size: 14px;
+    }
+
+    .chat-input button {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    .chat-message {
+        font-size: 14px;
     }
 }

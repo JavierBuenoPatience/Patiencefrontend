@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <!-- Header -->
     <header style="display: none;">
         <div class="header-left" id="logo">Patience</div>
         <div class="header-right" id="header-right">
@@ -22,6 +23,7 @@
         </div>
     </header>
 
+    <!-- Menú Desplegable -->
     <div class="menu-desplegable" id="menu-desplegable" style="display: none;">
         <ul>
             <li><button id="inicio-button">Inicio</button></li>
@@ -32,10 +34,11 @@
             <li><button id="centro-button">Mi centro</button></li>
             <!-- Eliminado el botón "¿Qué es Patience?" del menú lateral -->
             <li><button id="noticias-button">Últimas noticias</button></li>
-            <li><button id="admin-button" style="display: none;">Panel de Administración</button>
+            <li><button id="admin-button" style="display: none;">Panel de Administración</button></li>
         </ul>
     </div>
 
+    <!-- Contenido Principal -->
     <div class="main-content">
         <!-- Pantalla de Inicio de Sesión -->
         <div class="card" id="login-screen">
@@ -206,17 +209,21 @@
 
         <!-- Pantalla de Chat -->
         <div class="card" id="chat-screen" style="display: none;">
-            <h2>IA Especializada - Secundaria - Biología y Geología</h2>
+            <!-- Modificación: Añadido id="chat-title" para sincronizar con script.js -->
+            <h2 id="chat-title">Chat con IA Especializada</h2>
             <div class="chat-container">
                 <div class="chat-messages" id="chat-messages"></div>
-                <div class="chat-input">
-                    <input type="text" id="chat-input" placeholder="Escribe tu mensaje...">
-                    <button id="chat-send-button">Enviar</button>
-                </div>
+                <!-- Modificación: Envolver chat-input y chat-send-button dentro de un form con id="chat-form" -->
+                <form id="chat-form">
+                    <div class="chat-input">
+                        <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." required>
+                        <button type="submit" id="chat-send-button">Enviar</button>
+                    </div>
+                </form>
             </div>
         </div>
 
-      <!-- Pantalla de Guía para aprovechar al máximo la IA -->
+        <!-- Pantalla de Guía para aprovechar al máximo la IA -->
         <div class="card" id="guide-screen" style="display: none;">
             <h2>Guía para aprovechar al máximo la IA</h2>
             <div class="guide-section">
@@ -327,7 +334,6 @@
             </div>
         </div>
 
-
         <!-- Pantalla de Próximamente -->
         <div class="card" id="coming-soon-screen" style="display: none;">
             <h2>Próximamente</h2>
@@ -335,6 +341,7 @@
         </div>
     </div>
 
+    <!-- Footer -->
     <footer style="display: none;">
         <p>© 2024 Patience. Todos los derechos reservados.</p>
     </footer>

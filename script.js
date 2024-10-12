@@ -1,6 +1,6 @@
 // script.js
 
-// Importaciones al nivel superior
+// Importaciones al nivel superior usando el Modular SDK de Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
 import {
   getAuth,
@@ -54,12 +54,94 @@ const db = getFirestore();
 const storage = getStorage();
 const functions = getFunctions();
 
+// Variable global para almacenar el usuario actual
 let currentUser = null;
 
+// Variable global para la especialidad seleccionada
+let currentSpecialty = null;
+
+// Variable global para el historial de chat
+let chatHistory = [];
+
+// Referencias a elementos del DOM
+const loginScreen = document.getElementById("login-screen");
+const registerScreen = document.getElementById("register-screen");
+const homeScreen = document.getElementById("home-screen");
+const profileScreen = document.getElementById("profile-screen");
+const adminPanel = document.getElementById("admin-panel");
+const iaSpecializedScreen = document.getElementById("ia-specialized-screen");
+const chatScreen = document.getElementById("chat-screen");
+const guideScreen = document.getElementById("guide-screen");
+const directoryScreen = document.getElementById("directory-screen");
+const documentsScreen = document.getElementById("documents-screen");
+const groupsScreen = document.getElementById("groups-screen");
+const newsScreen = document.getElementById("news-screen");
+const helpScreen = document.getElementById("help-screen");
+const trainingScreen = document.getElementById("training-screen");
+const comingSoonScreen = document.getElementById("coming-soon-screen");
+const passwordChangePopup = document.getElementById("password-change-popup");
+const header = document.querySelector("header");
+const footer = document.querySelector("footer");
+const userNameHome = document.getElementById("user-name-home");
+
+// Botones de navegación
+const loginButton = document.getElementById("login-button");
+const registerButton = document.getElementById("register-button");
+const logoutButton = document.getElementById("logout-button");
+const iaButton = document.getElementById("ia-button");
+const inicioButton = document.getElementById("inicio-button");
+const perfilButton = document.getElementById("perfil-button");
+const gruposButton = document.getElementById("grupos-button");
+const documentosButton = document.getElementById("documentos-button");
+const centroButton = document.getElementById("centro-button");
+const noticiasButton = document.getElementById("noticias-button");
+const adminButton = document.getElementById("admin-button");
+
+// Botones dentro de pantallas específicas
+const iaSpecializedButtons = {
+  biologia: document.getElementById("biologia-button"),
+  ingles: document.getElementById("ingles-button"),
+  lengua: document.getElementById("lengua-button"),
+  matematicas: document.getElementById("matematicas-button"),
+};
+
+// Formularios
+const loginFormElement = document.getElementById("login-form");
+const registerFormElement = document.getElementById("register-form");
+const passwordChangeFormElement = document.getElementById("password-change-form");
+const profileFormElement = document.getElementById("profile-form");
+const createUserFormElement = document.getElementById("create-user-form");
+const chatFormElement = document.getElementById("chat-form");
+
+// Otros elementos
+const testButton = document.getElementById("test-button");
+
+// Inicializar el historial de chat desde Firestore
+async function initializeChatHistory(specialty) {
+  currentSpecialty = specialty;
+  chatHistory = []; // Reiniciar el historial
+
+  // Llamar a la función getChatHistory desde Firebase Functions
+  const getChatHistoryFunction = httpsCallable(functions, "getChatHistory");
+  try {
+    const result = await getChatHistoryFunction({ specialty: specialty });
+    const messages = result.data.messages;
+    if (messages && Array.isArray(messages)) {
+      chatHistory = messages;
+      messages.forEach((msg) => {
+        addMessageToChat(msg.role, msg.content);
+      });
+    }
+  } catch (error) {
+    console.error("Error al obtener el historial de chat:", error);
+    alert("No se pudo cargar el historial de chat.");
+  }
+}
+
+// Event Listener al cargar el DOM
 document.addEventListener("DOMContentLoaded", () => {
   const profileIcon = document.getElementById("profile-icon");
   const dropdown = document.getElementById("profile-dropdown");
-  const menu = document.getElementById("menu-desplegable");
 
   // Mostrar u ocultar el menú desplegable del perfil
   if (profileIcon && dropdown) {
@@ -79,85 +161,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Manejo del estado de autenticación
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      currentUser = user;
-
-      // Verificar si el correo electrónico ha sido verificado
-      if (!currentUser.emailVerified) {
-        alert("Por favor, verifica tu correo electrónico antes de continuar.");
-        await sendEmailVerification(currentUser);
-        await signOut(auth);
-        showLoginScreen();
-        return;
-      }
-
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      if (userDoc.exists()) {
-        currentUser.profile = userDoc.data().profile || {};
-        currentUser.role = userDoc.data().role || "user";
-      } else {
-        // Si el documento no existe, crear uno nuevo
-        await setDoc(doc(db, "users", currentUser.uid), {
-          email: currentUser.email,
-          profile: {},
-          role: "user",
-          registeredAt: new Date().toISOString(),
-          temporaryPassword: false,
-        });
-        currentUser.profile = {};
-        currentUser.role = "user";
-      }
-      showHomeScreen();
-      if (menu) menu.style.display = "flex";
-    } else {
-      currentUser = null;
-      showLoginScreen();
-      if (menu) menu.style.display = "none";
-    }
-  });
-
-  // Manejo de la subida de documentos
-  const uploadDocumentElement = document.getElementById("upload-document");
-  if (uploadDocumentElement) {
-    uploadDocumentElement.addEventListener("change", uploadDocuments);
-  }
-
   // Event listeners para botones del menú
-  const inicioButton = document.getElementById("inicio-button");
   if (inicioButton) inicioButton.addEventListener("click", showHomeScreen);
-
-  const perfilButton = document.getElementById("perfil-button");
   if (perfilButton) perfilButton.addEventListener("click", showProfile);
-
-  const iaButton = document.getElementById("ia-button");
   if (iaButton) iaButton.addEventListener("click", showIASpecializedOptions);
-
-  const gruposButton = document.getElementById("grupos-button");
   if (gruposButton) gruposButton.addEventListener("click", showGroups);
-
-  const documentosButton = document.getElementById("documentos-button");
-  if (documentosButton)
-    documentosButton.addEventListener("click", showDocuments);
-
-  const centroButton = document.getElementById("centro-button");
+  if (documentosButton) documentosButton.addEventListener("click", showDocuments);
   if (centroButton) centroButton.addEventListener("click", showComingSoon);
-
-  const noticiasButton = document.getElementById("noticias-button");
   if (noticiasButton) noticiasButton.addEventListener("click", showNews);
-
-  const adminButton = document.getElementById("admin-button");
   if (adminButton) adminButton.addEventListener("click", showAdminPanel);
 
-  // Event listeners para otros botones
-  const registerButton = document.getElementById("register-button");
-  if (registerButton)
-    registerButton.addEventListener("click", showRegisterScreen);
+  // Event listeners para botones dentro de pantallas específicas
+  for (const [key, button] of Object.entries(iaSpecializedButtons)) {
+    if (button) {
+      button.addEventListener("click", () => {
+        redirectToIA(key);
+      });
+    }
+  }
 
-  const loginButton = document.getElementById("login-button");
+  // Event listeners para botones de navegación entre pantallas
+  if (registerButton) registerButton.addEventListener("click", showRegisterScreen);
   if (loginButton) loginButton.addEventListener("click", showLoginScreen);
 
+  // Event listeners para botones de Slack
   const slackButton = document.getElementById("slack-button");
   if (slackButton)
     slackButton.addEventListener("click", () =>
@@ -182,28 +209,6 @@ document.addEventListener("DOMContentLoaded", () => {
       )
     );
 
-  const guideButton = document.getElementById("guide-button");
-  if (guideButton) guideButton.addEventListener("click", showGuide);
-
-  const directoryButton = document.getElementById("directory-button");
-  if (directoryButton)
-    directoryButton.addEventListener("click", showDirectory);
-
-  const helpButton = document.getElementById("help-button");
-  if (helpButton) helpButton.addEventListener("click", showHelp);
-
-  const logoutButton = document.getElementById("logout-button");
-  if (logoutButton) logoutButton.addEventListener("click", handleLogout);
-
-  // Event listeners para los botones de noticias
-  const csifButton = document.getElementById("csif-button");
-  if (csifButton)
-    csifButton.addEventListener("click", () => showNewsContent("csif"));
-
-  const sipriButton = document.getElementById("sipri-button");
-  if (sipriButton)
-    sipriButton.addEventListener("click", () => showNewsContent("sipri"));
-
   // Event listeners para la sección de ayuda
   const faqsButton = document.getElementById("faqs-button");
   if (faqsButton)
@@ -220,53 +225,38 @@ document.addEventListener("DOMContentLoaded", () => {
   if (trainingButtonHelp)
     trainingButtonHelp.addEventListener("click", showTraining);
 
-  // Event listeners para los botones de IA especializada
-  const biologiaButton = document.getElementById("biologia-button");
-  if (biologiaButton)
-    biologiaButton.addEventListener("click", () => redirectToIA("biologia"));
+  // Event listeners para noticias
+  const csifButton = document.getElementById("csif-button");
+  if (csifButton)
+    csifButton.addEventListener("click", () => showNewsContent("csif"));
 
-  const inglesButton = document.getElementById("ingles-button");
-  if (inglesButton)
-    inglesButton.addEventListener("click", () => redirectToIA("ingles"));
-
-  const lenguaButton = document.getElementById("lengua-button");
-  if (lenguaButton)
-    lenguaButton.addEventListener("click", () => redirectToIA("lengua"));
-
-  const matematicasButton = document.getElementById("matematicas-button");
-  if (matematicasButton)
-    matematicasButton.addEventListener("click", () =>
-      redirectToIA("matematicas")
-    );
+  const sipriButton = document.getElementById("sipri-button");
+  if (sipriButton)
+    sipriButton.addEventListener("click", () => showNewsContent("sipri"));
 
   // Manejo del formulario de inicio de sesión
-  const loginForm = document.getElementById("login-form");
-  if (loginForm) {
-    loginForm.addEventListener("submit", handleLogin);
+  if (loginFormElement) {
+    loginFormElement.addEventListener("submit", handleLogin);
   }
 
   // Manejo del formulario de registro
-  const registerForm = document.getElementById("register-form");
-  if (registerForm) {
-    registerForm.addEventListener("submit", handleRegister);
+  if (registerFormElement) {
+    registerFormElement.addEventListener("submit", handleRegister);
   }
 
   // Manejo del formulario de cambio de contraseña
-  const passwordChangeForm = document.getElementById("password-change-form");
-  if (passwordChangeForm) {
-    passwordChangeForm.addEventListener("submit", handlePasswordChange);
+  if (passwordChangeFormElement) {
+    passwordChangeFormElement.addEventListener("submit", handlePasswordChange);
   }
 
   // Manejo del formulario de perfil
-  const profileForm = document.getElementById("profile-form");
-  if (profileForm) {
-    profileForm.addEventListener("submit", handleProfileUpdate);
+  if (profileFormElement) {
+    profileFormElement.addEventListener("submit", handleProfileUpdate);
   }
 
   // Manejo del formulario de crear usuario (panel de administración)
-  const createUserForm = document.getElementById("create-user-form");
-  if (createUserForm) {
-    createUserForm.addEventListener("submit", createNewUser);
+  if (createUserFormElement) {
+    createUserFormElement.addEventListener("submit", createNewUser);
   }
 
   // Manejo de la imagen de perfil
@@ -286,10 +276,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (createFolderButton)
     createFolderButton.addEventListener("click", createFolder);
 
-  // Event listener para el botón de enviar en el chat
-  const chatSendButton = document.getElementById("chat-send-button");
-  if (chatSendButton) {
-    chatSendButton.addEventListener("click", handleChatSend);
+  // Manejo del formulario de chat
+  if (chatFormElement) {
+    chatFormElement.addEventListener("submit", handleChatSend);
   }
 });
 
@@ -310,14 +299,14 @@ async function handleRegister(event) {
       email,
       password
     );
-    currentUser = userCredential.user;
+    const user = userCredential.user;
 
     // Enviar correo de verificación
-    await sendEmailVerification(currentUser);
+    await sendEmailVerification(user);
 
     // Almacenar información adicional del usuario en Firestore
-    await setDoc(doc(db, "users", currentUser.uid), {
-      email: currentUser.email,
+    await setDoc(doc(db, "users", user.uid), {
+      email: user.email,
       profile: {},
       role: "user",
       registeredAt: new Date().toISOString(),
@@ -335,32 +324,31 @@ async function handleRegister(event) {
 }
 
 // Función para manejar el inicio de sesión
-function handleLogin(event) {
+async function handleLogin(event) {
   event.preventDefault();
   const email = document.getElementById("login-email").value;
   const password = document.getElementById("login-password").value;
 
-  signInWithEmailAndPassword(auth, email, password)
-    .then(async (userCredential) => {
-      currentUser = userCredential.user;
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-      // Verificar si el correo electrónico ha sido verificado
-      if (!currentUser.emailVerified) {
-        alert("Por favor, verifica tu correo electrónico antes de continuar.");
-        await sendEmailVerification(currentUser);
-        await signOut(auth);
-        showLoginScreen();
-        return;
-      }
+    // Verificar si el correo electrónico ha sido verificado
+    if (!user.emailVerified) {
+      alert("Por favor, verifica tu correo electrónico antes de continuar.");
+      await sendEmailVerification(user);
+      await signOut(auth);
+      showLoginScreen();
+      return;
+    }
 
-      showHomeScreen();
-      const menu = document.getElementById("menu-desplegable");
-      if (menu) menu.style.display = "flex";
-    })
-    .catch((error) => {
-      console.error("Error al iniciar sesión:", error);
-      alert("Correo o contraseña incorrectos. " + error.message);
-    });
+    showHomeScreen();
+    const menu = document.getElementById("menu-desplegable");
+    if (menu) menu.style.display = "flex";
+  } catch (error) {
+    console.error("Error al iniciar sesión:", error);
+    alert("Correo o contraseña incorrectos. " + error.message);
+  }
 }
 
 // Función para manejar el cambio de contraseña
@@ -374,14 +362,12 @@ async function handlePasswordChange(event) {
   }
 
   try {
-    await updatePassword(currentUser, newPassword);
-    await updateDoc(doc(db, "users", currentUser.uid), {
+    await updatePassword(auth.currentUser, newPassword);
+    await updateDoc(doc(db, "users", auth.currentUser.uid), {
       temporaryPassword: false,
     });
     alert("Contraseña cambiada con éxito.");
-    const passwordChangePopup = document.getElementById(
-      "password-change-popup"
-    );
+    const passwordChangePopup = document.getElementById("password-change-popup");
     if (passwordChangePopup) {
       passwordChangePopup.style.display = "none";
     }
@@ -423,7 +409,7 @@ async function handleProfileUpdate(event) {
   };
 
   try {
-    await updateDoc(doc(db, "users", currentUser.uid), {
+    await updateDoc(doc(db, "users", auth.currentUser.uid), {
       profile: profileData,
     });
     alert("Perfil actualizado con éxito");
@@ -437,10 +423,7 @@ async function handleProfileUpdate(event) {
 // Mostrar la pantalla de registro
 function showRegisterScreen() {
   hideAllScreens();
-  const registerScreen = document.getElementById("register-screen");
   if (registerScreen) registerScreen.style.display = "block";
-  const header = document.querySelector("header");
-  const footer = document.querySelector("footer");
   if (header) header.style.display = "none";
   if (footer) footer.style.display = "none";
 }
@@ -448,10 +431,7 @@ function showRegisterScreen() {
 // Mostrar la pantalla de inicio de sesión
 function showLoginScreen() {
   hideAllScreens();
-  const loginScreen = document.getElementById("login-screen");
   if (loginScreen) loginScreen.style.display = "block";
-  const header = document.querySelector("header");
-  const footer = document.querySelector("footer");
   if (header) header.style.display = "none";
   if (footer) footer.style.display = "none";
 }
@@ -459,14 +439,11 @@ function showLoginScreen() {
 // Mostrar la pantalla principal
 function showHomeScreen() {
   hideAllScreens();
-  const homeScreen = document.getElementById("home-screen");
   if (homeScreen) homeScreen.style.display = "block";
-  const userNameHome = document.getElementById("user-name-home");
-  if (userNameHome && currentUser)
+  if (userNameHome && auth.currentUser) {
     userNameHome.textContent =
-      currentUser.profile.fullName || currentUser.email;
-  const header = document.querySelector("header");
-  const footer = document.querySelector("footer");
+      auth.currentUser.displayName || auth.currentUser.email;
+  }
   if (header) header.style.display = "flex";
   if (footer) footer.style.display = "block";
   const menu = document.getElementById("menu-desplegable");
@@ -477,16 +454,15 @@ function showHomeScreen() {
 
 // Funciones para mostrar diferentes pantallas
 async function showProfile() {
-  if (currentUser) {
+  if (auth.currentUser) {
     hideAllScreens();
-    const profileScreen = document.getElementById("profile-screen");
     if (profileScreen) profileScreen.style.display = "block";
 
-    const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+    const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
     if (userDoc.exists()) {
       const profile = userDoc.data().profile || {};
       document.getElementById("full-name").value = profile.fullName || "";
-      document.getElementById("profile-email").value = currentUser.email || "";
+      document.getElementById("profile-email").value = auth.currentUser.email || "";
       document.getElementById("phone").value = profile.phone || "";
       document.getElementById("study-time").value = profile.studyTime || "";
       document.getElementById("specialty").value = profile.specialty || "";
@@ -502,9 +478,8 @@ async function showProfile() {
 }
 
 function showGroups() {
-  if (currentUser) {
+  if (auth.currentUser) {
     hideAllScreens();
-    const groupsScreen = document.getElementById("groups-screen");
     if (groupsScreen) groupsScreen.style.display = "block";
   } else {
     showLoginScreen();
@@ -512,26 +487,19 @@ function showGroups() {
 }
 
 function showIASpecializedOptions() {
-  if (currentUser) {
+  if (auth.currentUser) {
     hideAllScreens();
-    const iaSpecializedScreen = document.getElementById(
-      "ia-specialized-screen"
-    );
     if (iaSpecializedScreen) iaSpecializedScreen.style.display = "block";
   } else {
     showLoginScreen();
   }
 }
 
-function redirectToIA(specialty) {
-  if (currentUser) {
-    if (specialty === "biologia") {
-      hideAllScreens();
-      const chatScreen = document.getElementById("chat-screen");
-      if (chatScreen) chatScreen.style.display = "block";
-    } else {
-      alert("La especialidad seleccionada estará disponible pronto.");
-    }
+async function redirectToIA(specialty) {
+  if (auth.currentUser) {
+    hideAllScreens();
+    if (chatScreen) chatScreen.style.display = "block";
+    await initializeChatHistory(specialty);
   } else {
     alert("Por favor, inicia sesión para acceder a esta funcionalidad.");
     showLoginScreen();
@@ -539,9 +507,8 @@ function redirectToIA(specialty) {
 }
 
 function showTraining() {
-  if (currentUser) {
+  if (auth.currentUser) {
     hideAllScreens();
-    const trainingScreen = document.getElementById("training-screen");
     if (trainingScreen) trainingScreen.style.display = "block";
   } else {
     showLoginScreen();
@@ -549,9 +516,8 @@ function showTraining() {
 }
 
 function showComingSoon() {
-  if (currentUser) {
+  if (auth.currentUser) {
     hideAllScreens();
-    const comingSoonScreen = document.getElementById("coming-soon-screen");
     if (comingSoonScreen) comingSoonScreen.style.display = "block";
   } else {
     showLoginScreen();
@@ -559,9 +525,8 @@ function showComingSoon() {
 }
 
 function showNews() {
-  if (currentUser) {
+  if (auth.currentUser) {
     hideAllScreens();
-    const newsScreen = document.getElementById("news-screen");
     if (newsScreen) newsScreen.style.display = "block";
   } else {
     showLoginScreen();
@@ -569,9 +534,8 @@ function showNews() {
 }
 
 function showDocuments() {
-  if (currentUser) {
+  if (auth.currentUser) {
     hideAllScreens();
-    const documentsScreen = document.getElementById("documents-screen");
     if (documentsScreen) documentsScreen.style.display = "block";
     displayDocuments();
   } else {
@@ -580,9 +544,8 @@ function showDocuments() {
 }
 
 function showGuide() {
-  if (currentUser) {
+  if (auth.currentUser) {
     hideAllScreens();
-    const guideScreen = document.getElementById("guide-screen");
     if (guideScreen) guideScreen.style.display = "block";
   } else {
     showLoginScreen();
@@ -590,9 +553,8 @@ function showGuide() {
 }
 
 function showDirectory() {
-  if (currentUser) {
+  if (auth.currentUser) {
     hideAllScreens();
-    const directoryScreen = document.getElementById("directory-screen");
     if (directoryScreen) directoryScreen.style.display = "block";
   } else {
     showLoginScreen();
@@ -600,22 +562,23 @@ function showDirectory() {
 }
 
 function showHelp() {
-  if (currentUser) {
+  if (auth.currentUser) {
     hideAllScreens();
-    const helpScreen = document.getElementById("help-screen");
     if (helpScreen) helpScreen.style.display = "block";
   } else {
     showLoginScreen();
   }
 }
 
+// Función para ocultar todas las pantallas
 function hideAllScreens() {
   const screens = document.querySelectorAll(".card");
   screens.forEach((screen) => (screen.style.display = "none"));
 }
 
+// Función para redirigir a una URL externa
 function redirectToURL(url) {
-  if (currentUser) {
+  if (auth.currentUser) {
     window.open(url, "_blank");
   } else {
     alert("Por favor, inicia sesión para acceder a esta funcionalidad.");
@@ -623,8 +586,9 @@ function redirectToURL(url) {
   }
 }
 
+// Manejar el logo para volver al inicio
 function handleLogoClick() {
-  if (currentUser) {
+  if (auth.currentUser) {
     showHomeScreen();
   } else {
     showLoginScreen();
@@ -634,11 +598,8 @@ function handleLogoClick() {
 // Manejar la imagen de perfil
 async function handleImageUpload(event) {
   const file = event.target.files[0];
-  if (file) {
-    const storageRef = ref(
-      storage,
-      `profileImages/${currentUser.uid}/${file.name}`
-    );
+  if (file && auth.currentUser) {
+    const storageRef = ref(storage, `profileImages/${auth.currentUser.uid}/${file.name}`);
     try {
       await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(storageRef);
@@ -646,12 +607,13 @@ async function handleImageUpload(event) {
       if (profileImg) {
         profileImg.src = downloadURL;
       }
-      await updateDoc(doc(db, "users", currentUser.uid), {
+      await updateDoc(doc(db, "users", auth.currentUser.uid), {
         "profile.profileImage": downloadURL,
       });
       updateProfileIcon();
     } catch (error) {
       console.error("Error al subir la imagen de perfil:", error);
+      alert("No se pudo subir la imagen de perfil.");
     }
   }
 }
@@ -659,8 +621,8 @@ async function handleImageUpload(event) {
 // Actualizar el ícono de perfil en el header
 async function updateProfileIcon() {
   const profileIcon = document.getElementById("profile-icon");
-  if (profileIcon && currentUser) {
-    const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+  if (profileIcon && auth.currentUser) {
+    const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
     if (userDoc.exists()) {
       const profileImage = userDoc.data().profile.profileImage;
       profileIcon.src = profileImage || "assets/default-profile.png";
@@ -697,11 +659,11 @@ function toggleSection(sectionId) {
 // Manejar la actualización del resumen de documentos en la pantalla principal
 async function updateDocumentOverview() {
   const documentList = document.getElementById("document-list");
-  if (documentList && currentUser) {
+  if (documentList && auth.currentUser) {
     documentList.innerHTML = "";
 
     const q = query(
-      collection(db, "users", currentUser.uid, "documents"),
+      collection(db, "users", auth.currentUser.uid, "documents"),
       where("lastOpened", "!=", null)
     );
     const querySnapshot = await getDocs(q);
@@ -736,10 +698,7 @@ async function uploadDocuments(event) {
 
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    const storageRef = ref(
-      storage,
-      `documents/${currentUser.uid}/${file.name}`
-    );
+    const storageRef = ref(storage, `documents/${auth.currentUser.uid}/${file.name}`);
 
     try {
       await uploadBytes(storageRef, file);
@@ -754,14 +713,12 @@ async function uploadDocuments(event) {
         uploadedAt: new Date().toISOString(),
       };
 
-      await addDoc(
-        collection(db, "users", currentUser.uid, "documents"),
-        docData
-      );
+      await addDoc(collection(db, "users", auth.currentUser.uid, "documents"), docData);
       displayDocuments();
       updateDocumentOverview();
     } catch (error) {
       console.error("Error al subir el documento:", error);
+      alert("No se pudo subir el documento: " + error.message);
     }
   }
 }
@@ -769,7 +726,7 @@ async function uploadDocuments(event) {
 // Crear carpeta (puedes expandir esta función para manejar carpetas)
 async function createFolder() {
   const folderName = prompt("Nombre de la nueva carpeta:");
-  if (folderName) {
+  if (folderName && auth.currentUser) {
     const folderData = {
       name: folderName,
       parentId: null,
@@ -777,13 +734,12 @@ async function createFolder() {
     };
 
     try {
-      await addDoc(
-        collection(db, "users", currentUser.uid, "folders"),
-        folderData
-      );
+      await addDoc(collection(db, "users", auth.currentUser.uid, "folders"), folderData);
       displayDocuments();
+      alert("Carpeta creada con éxito.");
     } catch (error) {
       console.error("Error al crear la carpeta:", error);
+      alert("No se pudo crear la carpeta.");
     }
   }
 }
@@ -791,13 +747,13 @@ async function createFolder() {
 // Mostrar documentos y carpetas
 async function displayDocuments() {
   const documentsContainer = document.getElementById("documents-container");
-  if (documentsContainer && currentUser) {
+  if (documentsContainer && auth.currentUser) {
     documentsContainer.innerHTML = "";
 
     // Obtener carpetas raíz
     const foldersSnapshot = await getDocs(
       query(
-        collection(db, "users", currentUser.uid, "folders"),
+        collection(db, "users", auth.currentUser.uid, "folders"),
         where("parentId", "==", null)
       )
     );
@@ -811,7 +767,7 @@ async function displayDocuments() {
     // Obtener documentos en la raíz
     const documentsSnapshot = await getDocs(
       query(
-        collection(db, "users", currentUser.uid, "documents"),
+        collection(db, "users", auth.currentUser.uid, "documents"),
         where("folderId", "==", null)
       )
     );
@@ -844,9 +800,9 @@ function createFolderElement(folderId, folderData) {
 
   const openButton = document.createElement("button");
   openButton.innerHTML = '<i class="fas fa-folder-open"></i>';
-  openButton.onclick = (event) => {
+  openButton.onclick = async (event) => {
     event.stopPropagation();
-    openFolder(folderId, folderData.name);
+    await openFolder(folderId, folderData.name);
   };
 
   const actionsContainer = document.createElement("div");
@@ -865,7 +821,7 @@ function createDocumentElement(docId, docData) {
 
   docElement.addEventListener("click", async () => {
     // Actualizar la última apertura
-    await updateDoc(doc(db, "users", currentUser.uid, "documents", docId), {
+    await updateDoc(doc(db, "users", auth.currentUser.uid, "documents", docId), {
       lastOpened: new Date().toISOString(),
     });
     openDocument(docData.url);
@@ -892,7 +848,7 @@ function createDocumentElement(docId, docData) {
 // Abrir carpeta
 async function openFolder(folderId, folderName) {
   const documentsContainer = document.getElementById("documents-container");
-  if (documentsContainer && currentUser) {
+  if (documentsContainer && auth.currentUser) {
     documentsContainer.innerHTML = "";
 
     // Botón para regresar a la raíz
@@ -904,7 +860,7 @@ async function openFolder(folderId, folderName) {
     // Obtener subcarpetas
     const subFoldersSnapshot = await getDocs(
       query(
-        collection(db, "users", currentUser.uid, "folders"),
+        collection(db, "users", auth.currentUser.uid, "folders"),
         where("parentId", "==", folderId)
       )
     );
@@ -918,7 +874,7 @@ async function openFolder(folderId, folderName) {
     // Obtener documentos en la carpeta
     const documentsSnapshot = await getDocs(
       query(
-        collection(db, "users", currentUser.uid, "documents"),
+        collection(db, "users", auth.currentUser.uid, "documents"),
         where("folderId", "==", folderId)
       )
     );
@@ -937,7 +893,7 @@ async function deleteFolder(folderId) {
     // Eliminar documentos dentro de la carpeta
     const docsSnapshot = await getDocs(
       query(
-        collection(db, "users", currentUser.uid, "documents"),
+        collection(db, "users", auth.currentUser.uid, "documents"),
         where("folderId", "==", folderId)
       )
     );
@@ -951,7 +907,7 @@ async function deleteFolder(folderId) {
     // Eliminar subcarpetas dentro de la carpeta
     const subFoldersSnapshot = await getDocs(
       query(
-        collection(db, "users", currentUser.uid, "folders"),
+        collection(db, "users", auth.currentUser.uid, "folders"),
         where("parentId", "==", folderId)
       )
     );
@@ -964,9 +920,10 @@ async function deleteFolder(folderId) {
     await Promise.all(deletePromises);
 
     // Eliminar la carpeta actual
-    await deleteDoc(doc(db, "users", currentUser.uid, "folders", folderId));
+    await deleteDoc(doc(db, "users", auth.currentUser.uid, "folders", folderId));
 
     displayDocuments();
+    alert("Carpeta eliminada con éxito.");
   } catch (error) {
     console.error("Error al eliminar la carpeta:", error);
     alert("No se pudo eliminar la carpeta.");
@@ -976,13 +933,15 @@ async function deleteFolder(folderId) {
 // Eliminar documento
 async function deleteDocument(docId, fileName) {
   try {
-    await deleteDoc(doc(db, "users", currentUser.uid, "documents", docId));
-    const storageRef = ref(storage, `documents/${currentUser.uid}/${fileName}`);
+    await deleteDoc(doc(db, "users", auth.currentUser.uid, "documents", docId));
+    const storageRef = ref(storage, `documents/${auth.currentUser.uid}/${fileName}`);
     await deleteObject(storageRef);
     displayDocuments();
     updateDocumentOverview();
+    alert("Documento eliminado con éxito.");
   } catch (error) {
     console.error("Error al eliminar el documento:", error);
+    alert("No se pudo eliminar el documento.");
   }
 }
 
@@ -1010,9 +969,10 @@ async function createNewUser(event) {
     });
     alert("Usuario creado con éxito.");
     updateUserList();
+    createUserFormElement.reset();
   } catch (error) {
     console.error("Error al crear usuario:", error);
-    alert("No se pudo crear el usuario.");
+    alert("No se pudo crear el usuario. " + error.message);
   }
 }
 
@@ -1046,58 +1006,110 @@ async function updateUserList() {
 }
 
 // Mostrar el panel de administración
-function showAdminPanel() {
-  if (currentUser && currentUser.role === "admin") {
+async function showAdminPanel() {
+  if (auth.currentUser && currentUser.role === "admin") {
     hideAllScreens();
-    const adminPanel = document.getElementById("admin-panel");
     if (adminPanel) adminPanel.style.display = "block";
-    updateUserList();
+    await updateUserList();
   } else {
     alert("No tienes permiso para acceder a esta página.");
   }
 }
 
-// Manejar el envío en el chat
+// Manejar la selección de especialidad y redirigir al chat
+async function handleIASpecialtySelection(specialty) {
+  if (auth.currentUser) {
+    hideAllScreens();
+    if (chatScreen) chatScreen.style.display = "block";
+    await initializeChatHistory(specialty);
+  } else {
+    alert("Por favor, inicia sesión para acceder a esta funcionalidad.");
+    showLoginScreen();
+  }
+}
+
+// Función para redirigir a la IA especializada
+async function redirectToIA(specialty) {
+  currentSpecialty = specialty;
+  hideAllScreens();
+  if (chatScreen) chatScreen.style.display = "block";
+  await initializeChatHistory(specialty);
+}
+
+// Función para inicializar el chat
+async function initializeChatHistory(specialty) {
+  currentSpecialty = specialty;
+  chatHistory = []; // Reiniciar el historial
+
+  // Llamar a la función getChatHistory desde Firebase Functions
+  const getChatHistoryFunction = httpsCallable(functions, "getChatHistory");
+  try {
+    const result = await getChatHistoryFunction({ specialty: specialty });
+    const messages = result.data.messages;
+    if (messages && Array.isArray(messages)) {
+      chatHistory = messages;
+      messages.forEach((msg) => {
+        addMessageToChat(msg.role, msg.content);
+      });
+    }
+  } catch (error) {
+    console.error("Error al obtener el historial de chat:", error);
+    alert("No se pudo cargar el historial de chat.");
+  }
+}
+
+// Función para enviar mensaje al chat
+async function sendMessage(message, specialty) {
+  const chatWithGPT = httpsCallable(functions, "chatWithGPT");
+  try {
+    const result = await chatWithGPT({ message: message, specialty: specialty });
+    return result.data.reply;
+  } catch (error) {
+    console.error("Error al llamar a la función chatWithGPT:", error);
+    return "Lo siento, ha ocurrido un error al procesar tu solicitud.";
+  }
+}
+
+// Función para manejar el envío del chat
 async function handleChatSend(event) {
   event.preventDefault();
   const chatInput = document.getElementById("chat-input");
   const chatSendButton = document.getElementById("chat-send-button");
 
-  if (chatInput && chatInput.value.trim() !== '') {
+  if (chatInput && chatInput.value.trim() !== "") {
     const userMessage = chatInput.value.trim();
-    chatInput.value = '';
+    chatInput.value = "";
 
     // Deshabilitar el botón y mostrar indicador de carga
     chatSendButton.disabled = true;
     chatSendButton.textContent = "Enviando...";
 
     // Mostrar el mensaje del usuario en la interfaz
-    addMessageToChat('user', userMessage);
+    addMessageToChat("user", userMessage);
 
-    // Llamar a la función de Firebase
-    const chatWithGPT = httpsCallable(functions, 'chatWithGPT');
+    // Mostrar el indicador de carga
+    showLoadingIndicator();
 
-    try {
-      const result = await chatWithGPT({ message: userMessage, specialty: currentSpecialty });
-      const assistantMessage = result.data.reply;
+    // Obtener la especialidad seleccionada
+    const specialty = currentSpecialty || "biologia"; // Valor por defecto
 
-      // Mostrar la respuesta de la IA en la interfaz
-      addMessageToChat('assistant', assistantMessage);
+    // Llamar a la función chatWithGPT
+    const reply = await sendMessage(userMessage, specialty);
 
-      // Actualizar el historial
-      chatHistory.push({ role: 'user', content: userMessage });
-      chatHistory.push({ role: 'assistant', content: assistantMessage });
+    // Ocultar el indicador de carga
+    hideLoadingIndicator();
 
-      // (Opcional) Guardar el historial actualizado en Firestore
-      // Esto ya lo haces desde la función backend, por lo que no es necesario aquí
-    } catch (error) {
-      console.error('Error al comunicarse con la función:', error);
-      alert('Error al comunicarse con la IA.');
-    } finally {
-      // Rehabilitar el botón y restablecer el texto
-      chatSendButton.disabled = false;
-      chatSendButton.textContent = "Enviar";
+    // Mostrar la respuesta de la IA en el chat
+    if (reply) {
+      addMessageToChat("assistant", reply);
+      chatHistory.push({ role: "user", content: userMessage });
+      chatHistory.push({ role: "assistant", content: reply });
+      await updateChatHistory();
     }
+
+    // Rehabilitar el botón y restablecer el texto
+    chatSendButton.disabled = false;
+    chatSendButton.textContent = "Enviar";
   }
 }
 
@@ -1106,7 +1118,7 @@ function addMessageToChat(role, content) {
   const chatMessagesContainer = document.getElementById("chat-messages");
   if (chatMessagesContainer) {
     const messageElement = document.createElement("div");
-    messageElement.classList.add('chat-message', role);
+    messageElement.classList.add("chat-message", role);
     messageElement.textContent = content;
     chatMessagesContainer.appendChild(messageElement);
 
@@ -1115,13 +1127,34 @@ function addMessageToChat(role, content) {
   }
 }
 
-// Función para cargar el historial del chat desde Firestore
+// Función para mostrar el indicador de carga
+function showLoadingIndicator() {
+  const chatMessages = document.getElementById("chat-messages");
+  if (chatMessages) {
+    const loadingElement = document.createElement("div");
+    loadingElement.classList.add("chat-message", "assistant");
+    loadingElement.textContent = "...";
+    loadingElement.id = "loading-indicator";
+    chatMessages.appendChild(loadingElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+}
+
+// Función para ocultar el indicador de carga
+function hideLoadingIndicator() {
+  const loadingElement = document.getElementById("loading-indicator");
+  if (loadingElement) {
+    loadingElement.remove();
+  }
+}
+
+// Función para cargar el historial del chat desde Firestore (si es necesario)
 async function loadChatHistory() {
   const chatMessagesContainer = document.getElementById("chat-messages");
-  if (chatMessagesContainer) {
-    chatMessagesContainer.innerHTML = '';
+  if (chatMessagesContainer && auth.currentUser && currentSpecialty) {
+    chatMessagesContainer.innerHTML = "";
 
-    const chatHistoryRef = doc(db, 'users', currentUser.uid, 'chats', currentSpecialty);
+    const chatHistoryRef = doc(db, "users", auth.currentUser.uid, "chats", currentSpecialty);
     const chatDoc = await getDoc(chatHistoryRef);
 
     if (chatDoc.exists()) {
@@ -1136,17 +1169,50 @@ async function loadChatHistory() {
 
 // Función para actualizar el historial de chat en Firestore
 async function updateChatHistory() {
-  const chatHistoryRef = doc(db, 'users', currentUser.uid, 'chats', currentSpecialty);
-  try {
-    await setDoc(chatHistoryRef, { messages: chatHistory });
-  } catch (error) {
-    console.error("Error al actualizar el historial de chat:", error);
+  if (auth.currentUser && currentSpecialty) {
+    const chatHistoryRef = doc(db, "users", auth.currentUser.uid, "chats", currentSpecialty);
+    try {
+      await setDoc(chatHistoryRef, { messages: chatHistory });
+    } catch (error) {
+      console.error("Error al actualizar el historial de chat:", error);
+    }
   }
 }
 
-// Asegurarse de que el historial de chat se guarda al salir de la página
+// Manejar el historial de chat al salir de la página
 window.addEventListener("beforeunload", () => {
-  if (currentUser && currentSpecialty && chatHistory.length > 0) {
+  if (auth.currentUser && currentSpecialty && chatHistory.length > 0) {
     updateChatHistory();
   }
 });
+
+// Función para mostrar el historial de chat al cargar la pantalla de chat
+async function displayChatHistory() {
+  if (auth.currentUser && currentSpecialty) {
+    await loadChatHistory();
+  }
+}
+
+// Función para mostrar el historial de chat al mostrar la pantalla de chat
+async function showChatScreen() {
+  if (auth.currentUser && currentSpecialty) {
+    hideAllScreens();
+    if (chatScreen) chatScreen.style.display = "block";
+    await displayChatHistory();
+  } else {
+    showLoginScreen();
+  }
+}
+
+// Manejo del historial de chat al seleccionar una especialidad
+async function redirectToIA(specialty) {
+  if (auth.currentUser) {
+    currentSpecialty = specialty;
+    hideAllScreens();
+    if (chatScreen) chatScreen.style.display = "block";
+    await initializeChatHistory(specialty);
+  } else {
+    alert("Por favor, inicia sesión para acceder a esta funcionalidad.");
+    showLoginScreen();
+  }
+}

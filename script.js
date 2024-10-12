@@ -113,9 +113,6 @@ const profileFormElement = document.getElementById("profile-form");
 const createUserFormElement = document.getElementById("create-user-form");
 const chatFormElement = document.getElementById("chat-form");
 
-// Otros elementos
-const testButton = document.getElementById("test-button");
-
 // Inicializar el historial de chat desde Firestore
 async function initializeChatHistory(specialty) {
   currentSpecialty = specialty;
@@ -280,6 +277,59 @@ document.addEventListener("DOMContentLoaded", () => {
   if (chatFormElement) {
     chatFormElement.addEventListener("submit", handleChatSend);
   }
+
+  // Manejar el estado de autenticación
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      currentUser = user;
+
+      // Verificar si el correo electrónico ha sido verificado
+      if (!currentUser.emailVerified) {
+        alert("Por favor, verifica tu correo electrónico antes de continuar.");
+        await sendEmailVerification(currentUser);
+        await signOut(auth);
+        showLoginScreen();
+        return;
+      }
+
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        currentUser.profile = userDoc.data().profile || {};
+        currentUser.role = userDoc.data().role || "user";
+      } else {
+        // Si el documento no existe, crear uno nuevo
+        await setDoc(doc(db, "users", currentUser.uid), {
+          email: currentUser.email,
+          profile: {},
+          role: "user",
+          registeredAt: new Date().toISOString(),
+          temporaryPassword: false,
+        });
+        currentUser.profile = {};
+        currentUser.role = "user";
+      }
+
+      showHomeScreen();
+      if (header) header.style.display = "flex";
+      if (footer) footer.style.display = "block";
+      const menu = document.getElementById("menu-desplegable");
+      if (menu) menu.style.display = "flex";
+
+      // Mostrar el botón de administración si el usuario es admin
+      if (currentUser.role === "admin") {
+        if (adminButton) adminButton.style.display = "block";
+      } else {
+        if (adminButton) adminButton.style.display = "none";
+      }
+    } else {
+      currentUser = null;
+      showLoginScreen();
+      if (header) header.style.display = "none";
+      if (footer) footer.style.display = "none";
+      const menu = document.getElementById("menu-desplegable");
+      if (menu) menu.style.display = "none";
+    }
+  });
 });
 
 // Función para manejar el registro de usuarios
@@ -495,8 +545,10 @@ function showIASpecializedOptions() {
   }
 }
 
+// **Única declaración de redirectToIA**
 async function redirectToIA(specialty) {
   if (auth.currentUser) {
+    currentSpecialty = specialty;
     hideAllScreens();
     if (chatScreen) chatScreen.style.display = "block";
     await initializeChatHistory(specialty);
@@ -958,16 +1010,15 @@ async function createNewUser(event) {
     return;
   }
 
-  // Llamar a la Cloud Function para crear un nuevo usuario
-  const createUserFunction = httpsCallable(functions, "createUser");
-
   try {
-    await createUserFunction({
+    // Llamar a la Cloud Function para crear un nuevo usuario
+    const createUserFunction = httpsCallable(functions, "createUser");
+    const result = await createUserFunction({
       email: newUserEmail,
       password: newUserPassword,
       name: newUserName,
     });
-    alert("Usuario creado con éxito.");
+    alert(result.data.message);
     updateUserList();
     createUserFormElement.reset();
   } catch (error) {
@@ -1013,48 +1064,6 @@ async function showAdminPanel() {
     await updateUserList();
   } else {
     alert("No tienes permiso para acceder a esta página.");
-  }
-}
-
-// Manejar la selección de especialidad y redirigir al chat
-async function handleIASpecialtySelection(specialty) {
-  if (auth.currentUser) {
-    hideAllScreens();
-    if (chatScreen) chatScreen.style.display = "block";
-    await initializeChatHistory(specialty);
-  } else {
-    alert("Por favor, inicia sesión para acceder a esta funcionalidad.");
-    showLoginScreen();
-  }
-}
-
-// Función para redirigir a la IA especializada
-async function redirectToIA(specialty) {
-  currentSpecialty = specialty;
-  hideAllScreens();
-  if (chatScreen) chatScreen.style.display = "block";
-  await initializeChatHistory(specialty);
-}
-
-// Función para inicializar el chat
-async function initializeChatHistory(specialty) {
-  currentSpecialty = specialty;
-  chatHistory = []; // Reiniciar el historial
-
-  // Llamar a la función getChatHistory desde Firebase Functions
-  const getChatHistoryFunction = httpsCallable(functions, "getChatHistory");
-  try {
-    const result = await getChatHistoryFunction({ specialty: specialty });
-    const messages = result.data.messages;
-    if (messages && Array.isArray(messages)) {
-      chatHistory = messages;
-      messages.forEach((msg) => {
-        addMessageToChat(msg.role, msg.content);
-      });
-    }
-  } catch (error) {
-    console.error("Error al obtener el historial de chat:", error);
-    alert("No se pudo cargar el historial de chat.");
   }
 }
 
@@ -1185,34 +1194,3 @@ window.addEventListener("beforeunload", () => {
     updateChatHistory();
   }
 });
-
-// Función para mostrar el historial de chat al cargar la pantalla de chat
-async function displayChatHistory() {
-  if (auth.currentUser && currentSpecialty) {
-    await loadChatHistory();
-  }
-}
-
-// Función para mostrar el historial de chat al mostrar la pantalla de chat
-async function showChatScreen() {
-  if (auth.currentUser && currentSpecialty) {
-    hideAllScreens();
-    if (chatScreen) chatScreen.style.display = "block";
-    await displayChatHistory();
-  } else {
-    showLoginScreen();
-  }
-}
-
-// Manejo del historial de chat al seleccionar una especialidad
-async function redirectToIA(specialty) {
-  if (auth.currentUser) {
-    currentSpecialty = specialty;
-    hideAllScreens();
-    if (chatScreen) chatScreen.style.display = "block";
-    await initializeChatHistory(specialty);
-  } else {
-    alert("Por favor, inicia sesión para acceder a esta funcionalidad.");
-    showLoginScreen();
-  }
-}

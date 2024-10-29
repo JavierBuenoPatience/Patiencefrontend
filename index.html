@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patience - Plataforma 360 para Opositores</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Actualizado a la última versión de Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -32,7 +31,6 @@
             <li><button id="grupos-button">Mis grupos</button></li>
             <li><button id="documentos-button">Mis Documentos</button></li>
             <li><button id="centro-button">Mi centro</button></li>
-            <!-- Eliminado el botón "¿Qué es Patience?" del menú lateral -->
             <li><button id="noticias-button">Últimas noticias</button></li>
             <li><button id="admin-button" style="display: none;">Panel de Administración</button></li>
         </ul>
@@ -73,48 +71,26 @@
             <img src="assets/logo.png" alt="Patience Logo" class="logo">
             <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
             <div class="welcome-message">
-                <p>Ahora, ¡vamos a por la plaza!🚀 </p>
+                <p>Ahora, ¡vamos a por la plaza!🚀</p>
             </div>
             <div class="home-section">
-                <!-- Mis Documentos -->
                 <div class="overview documents-overview">
                     <h3>Mis Documentos</h3>
                     <div class="document-list" id="document-list"></div>
                 </div>
-
-                <!-- Mis Grupos -->
                 <div class="overview groups-overview">
                     <h3>Mis Grupos</h3>
                     <p>Accede a Slack para colaborar y comunicarte con otros usuarios.</p>
                     <button class="slack-button" id="slack-button">Accede a Slack</button>
                 </div>
-
-                <!-- Guía para aprovechar al máximo la IA -->
                 <div class="overview guide-overview">
                     <h3>Guía para aprovechar al máximo la IA</h3>
-                    <p>Aprende a utilizar la IA especializada de la mejor manera.</p>
                     <button id="guide-button">Ver Guía</button>
                 </div>
-
-                <!-- ¿Dónde te puedes preparar? -->
                 <div class="overview directory-overview">
                     <h3>¿Dónde te puedes preparar?</h3>
-                    <p>Explora academias y preparadores para tu oposición.</p>
                     <button id="directory-button">Ver Directorio</button>
                 </div>
-            </div>
-        </div>
-
-        <!-- Pop-up de Cambio de Contraseña Obligatorio -->
-        <div id="password-change-popup" class="popup" style="display: none;">
-            <div class="popup-content">
-                <h2>Cambiar Contraseña</h2>
-                <p>Es necesario que cambies tu contraseña para continuar.</p>
-                <form id="password-change-form">
-                    <label for="new-password">Nueva Contraseña:</label>
-                    <input type="password" id="new-password" name="new-password" required>
-                    <button type="submit">Guardar Contraseña</button>
-                </form>
             </div>
         </div>
 
@@ -124,7 +100,6 @@
             <form id="profile-form">
                 <div class="profile-field">
                     <img id="profile-img" src="assets/default-profile.png" alt="Imagen de Perfil" class="profile-img">
-                    <!-- Conectar el label con el input usando 'for' e 'id' -->
                     <label for="profile-image-input" class="profile-img-upload">Cambiar imagen de perfil</label>
                     <input type="file" id="profile-image-input" accept="image/*" style="display: none;">
                 </div>
@@ -168,17 +143,13 @@
                 <form id="create-user-form">
                     <label for="new-user-name">Nombre del usuario:</label>
                     <input type="text" id="new-user-name" required>
-
                     <label for="new-user-email">Correo Electrónico:</label>
                     <input type="email" id="new-user-email" required>
-
                     <label for="new-user-password">Contraseña Temporal:</label>
                     <input type="password" id="new-user-password" required>
-
                     <button type="submit">Crear Usuario</button>
                 </form>
             </div>
-
             <div class="admin-section">
                 <h3>Lista de Usuarios</h3>
                 <table>
@@ -189,9 +160,7 @@
                             <th>Fecha de Registro</th>
                         </tr>
                     </thead>
-                    <tbody id="user-list">
-                        <!-- Los usuarios serán agregados aquí dinámicamente -->
-                    </tbody>
+                    <tbody id="user-list"></tbody>
                 </table>
             </div>
         </div>
@@ -209,11 +178,9 @@
 
         <!-- Pantalla de Chat -->
         <div class="card" id="chat-screen" style="display: none;">
-            <!-- Modificación: Añadido id="chat-title" para sincronizar con script.js -->
             <h2 id="chat-title">Chat con IA Especializada</h2>
             <div class="chat-container">
                 <div class="chat-messages" id="chat-messages"></div>
-                <!-- Modificación: Envolver chat-input y chat-send-button dentro de un form con id="chat-form" -->
                 <form id="chat-form">
                     <div class="chat-input">
                         <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." required>
@@ -223,36 +190,30 @@
             </div>
         </div>
 
-        <!-- Pantalla de Guía para aprovechar al máximo la IA -->
+        <!-- Pantalla de Guía -->
         <div class="card" id="guide-screen" style="display: none;">
             <h2>Guía para aprovechar al máximo la IA</h2>
             <div class="guide-section">
                 <div class="prompt-section">
                     <h4>Cómo pedir a la IA que genere un examen aleatorio:</h4>
-                    <p>Prompt: Genera un examen de oposición de profesorado de educación secundaria obligatoria aleatorio para la especialidad de <span class="prompt-hint">[nombre de tu especialidad]</span>. Debes darme <span class="prompt-hint">[nº de bolas que saca el tribunal]</span> títulos de temas aleatorios de mi especialidad, así como <span class="prompt-hint">[X]</span> ejercicio(s) prácticos que sean <span class="prompt-hint">[tipo de ejercicios prácticos de tu especialidad; ejemplo: un texto para traducir de EN>ES o un problema de genética]</span>. Además, genera un cronómetro de <span class="prompt-hint">[X]</span> horas y <span class="prompt-hint">[X]</span> minutos y avísame cuando termine el tiempo.</p>
+                    <p>Prompt: Genera un examen de oposición...</p>
                 </div>
                 <div class="prompt-section">
                     <h4>Cómo pedir a la IA que genere una introducción desde 0:</h4>
-                    <p>Prompt: Genera una introducción para el tema <span class="prompt-hint">[X]</span> en <span class="prompt-hint">[idioma]</span>. Utiliza un estilo formal, evita todo formato que pueda inducir a pensar que se ha generado con IA y emplea el estilo de redacción que usaría un opositor de educación secundaria de la especialidad de <span class="prompt-hint">[tu especialidad]</span>.</p>
-                </div>
-                <div class="prompt-section">
-                    <h4>Cómo pedir a la IA que genere ejercicios prácticos corregidos para tu especialidad:</h4>
-                    <p>Prompt: Genera 3 ejercicios prácticos de la oposición de educación secundaria para la especialidad de <span class="prompt-hint">[tu especialidad]</span> con las soluciones.</p>
+                    <p>Prompt: Genera una introducción para el tema...</p>
                 </div>
             </div>
         </div>
 
-        <!-- Pantalla de ¿Dónde te puedes preparar? -->
+        <!-- Pantalla del Directorio -->
         <div class="card" id="directory-screen" style="display: none;">
             <h2>¿Dónde te puedes preparar?</h2>
             <div class="directory-container">
-                <!-- Aquí van los elementos del directorio -->
                 <div class="directory-item">
                     <h3>TecnosZubia</h3>
-                    <p><strong>Dirección:</strong> Calle García Lorca, 27-A Local 1, 18140 La Zubia, Granada</p>
+                    <p><strong>Dirección:</strong> Calle García Lorca...</p>
                     <p><strong>Teléfono:</strong> 958 890 387</p>
                 </div>
-                <!-- Puedes agregar más elementos del directorio aquí -->
             </div>
         </div>
 
@@ -260,7 +221,6 @@
         <div class="card" id="documents-screen" style="display: none;">
             <h2>Mis Documentos</h2>
             <div class="document-management">
-                <!-- Conectar el label con el input usando 'for' e 'id' -->
                 <label for="upload-document" class="upload-label">Subir Documentos</label>
                 <input type="file" id="upload-document" multiple style="display: none;">
                 <button class="create-folder-button" id="create-folder-button">Crear Carpeta</button>
@@ -268,77 +228,24 @@
             </div>
         </div>
 
-        <!-- Pantalla de Mis Grupos -->
+        <!-- Pantalla de Grupos -->
         <div class="card" id="groups-screen" style="display: none;">
             <h2>Mis Grupos</h2>
-            <p>Únete a nuestro grupo en Slack para colaborar y comunicarte con otros usuarios.</p>
+            <p>Únete a nuestro grupo en Slack para colaborar...</p>
             <button class="slack-button" id="slack-button-groups">Accede a Slack</button>
         </div>
 
-        <!-- Pantalla de Últimas noticias -->
+        <!-- Pantalla de Noticias -->
         <div class="card" id="news-screen" style="display: none;">
             <h2>Últimas noticias</h2>
             <div class="news-section">
                 <button id="csif-button">CSIF</button>
                 <button id="sipri-button">SIPRI</button>
-                <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es/es/categoria/andalucia/educacion/oposiciones" style="display: none;"></iframe>
-                <iframe id="sipri-iframe" class="news-iframe" src="https://sipri.es/oposiciones/" style="display: none;"></iframe>
+                <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es" style="display: none;"></iframe>
+                <iframe id="sipri-iframe" class="news-iframe" src="https://sipri.es" style="display: none;"></iframe>
             </div>
         </div>
 
-        <!-- Pantalla de Ayuda -->
-        <div class="card" id="help-screen" style="display: none;">
-            <h2>Ayuda</h2>
-            <div class="help-section">
-                <button id="faqs-button">Preguntas Frecuentes</button>
-                <div id="faqs-section" class="collapsible-section" style="display: none;">
-                    <!-- Contenido de FAQs -->
-                </div>
-
-                <button id="contact-button">Contacta con nosotros</button>
-                <div id="contact-section" class="collapsible-section" style="display: none;">
-                    <p>Accede a Slack y escríbenos al chat privado de Patience!</p>
-                    <button class="slack-button" id="slack-button-help">Accede a Slack</button>
-                    <p>O también puedes escribirnos un email a <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
-                </div>
-
-                <button id="training-button-help">¿Qué es Patience?</button>
-                <!-- Actualizado el ID del botón para evitar conflictos -->
-
-                <button id="noticias-button">Últimas noticias</button>
-            </div>
-        </div>
-
-        <!-- Pantalla de ¿Qué es Patience? -->
-        <div class="card" id="training-screen" style="display: none;">
-            <h2>🤔 ¿Qué es Patience?</h2>
-                <div class="training-section">
-                <h3>💡 ¿Qué es Patience - IA para opositores?</h3>
-                <p>Patience - IA para opositores son IAs entrenadas y especializadas en cada una de las diferentes especialidades de la oposición. Al registrarte y seleccionar tu especialidad, tendrás acceso a una IA experta en tu campo. Estas IAs están diseñadas para proporcionar asistencia específica y relevante en función de las necesidades de tu área de estudio, facilitando el aprendizaje y la preparación para tu oposición.</p>
-                <h3>🔧 Cómo usar Patience - IA para opositores</h3>
-                <ul>
-                    <li>Accede a la plataforma de Patience - IA para opositores utilizando el botón "Apóyate en la IA".</li>
-                    <li>Introduce tu consulta o tema sobre el que necesitas información.</li>
-                    <li>Patience - IA para opositores generará una respuesta que puedes utilizar para tus estudios.</li>
-                    <li>Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras.</li>
-                </ul>
-                <h3>📚 Casos de uso para opositores</h3>
-                <ul>
-                    <li><strong>Generar Resúmenes 📝:</strong> Patience puede resumir textos largos y complejos, ayudándote a extraer la información más relevante y ahorrar tiempo en la lectura y comprensión de materiales extensos.</li>
-                    <li><strong>Crear Esquemas 📊:</strong> Solicita a Patience que te ayude a crear esquemas y diagramas para tus temas de estudio. Esto facilita la organización de la información y la comprensión de conceptos clave.</li>
-                    <li><strong>Buscar Información Rápida 🔍:</strong> Utiliza Patience para obtener información rápida y precisa sobre temas específicos de tu especialidad. Esto es especialmente útil para resolver dudas puntuales o profundizar en ciertos aspectos de tu estudio.</li>
-                    <li><strong>Corregir Documentos 🖋️:</strong> Envía documentos en formato .doc o .pdf para que Patience los revise y te sugiera mejoras. Esto incluye correcciones gramaticales, de estilo, y sugerencias para mejorar la estructura y claridad de tus escritos.</li>
-                    <li><strong>Generar Actividades Prácticas 🧩:</strong> Patience puede ayudarte a crear actividades prácticas, como cuestionarios y ejercicios, para reforzar tu aprendizaje y prepararte mejor para las pruebas de la oposición.</li>
-                    <li><strong>Mejorar Redacción ✍️:</strong> Redacta textos y solicita a Patience que te brinde retroalimentación para mejorarlos. Esto te ayudará a perfeccionar tu capacidad de expresión escrita, esencial para muchos exámenes y pruebas.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Pantalla de Próximamente -->
-        <div class="card" id="coming-soon-screen" style="display: none;">
-            <h2>Próximamente</h2>
-            <p>Esta funcionalidad estará disponible pronto.</p>
-        </div>
     </div>
 
     <!-- Footer -->
@@ -346,7 +253,7 @@
         <p>© 2024 Patience. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Incluir script.js como módulo -->
+    <!-- Script JS -->
     <script type="module" src="script.js"></script>
 </body>
 

@@ -1,4 +1,4 @@
-const API_URL = "https://api.render.com/deploy/srv-csf6dfogph6c73f0d3hg?key=EbNhedHwxY4"; // Cambia esta URL por la tuya en Render
+const API_URL = "https://patience-backend.onrender.com"; // Cambia esta URL por la tuya en Render
 
 // Elementos del DOM
 const loginScreen = document.getElementById("login-screen");

@@ -14,6 +14,7 @@ const userNameHome = document.getElementById("user-name-home");
 const newsScreen = document.getElementById("news-screen");
 const directoryScreen = document.getElementById("directory-screen");
 const guideScreen = document.getElementById("guide-screen");
+const groupsScreen = document.getElementById("groups-screen");
 
 // Formularios y botones
 const loginFormElement = document.getElementById("login-form");
@@ -34,6 +35,14 @@ const documentosButton = document.getElementById("documentos-button");
 const centroButton = document.getElementById("centro-button");
 const noticiasButton = document.getElementById("noticias-button");
 const adminButton = document.getElementById("admin-button");
+
+// Botones adicionales
+const guideButton = document.getElementById("guide-button");
+const directoryButton = document.getElementById("directory-button");
+const slackButton = document.getElementById("slack-button");
+const slackButtonGroups = document.getElementById("slack-button-groups");
+const csifButton = document.getElementById("csif-button");
+const sipriButton = document.getElementById("sipri-button");
 
 // Variables globales
 let currentUser = null;
@@ -110,6 +119,7 @@ async function handleLogin(event) {
 function handleLogout() {
     authToken = null;
     currentUser = null;
+    hideHeaderAndMenu();
     showLoginScreen();
 }
 
@@ -245,10 +255,28 @@ async function showAdminPanel() {
     }
 }
 
+// Mostrar pantalla de documentos
+function showDocuments() {
+    hideAllScreens();
+    documentsScreen.style.display = "block";
+}
+
+// Mostrar pantalla de grupos
+function showGroups() {
+    hideAllScreens();
+    groupsScreen.style.display = "block";
+}
+
 // Mostrar header y menú
 function showHeaderAndMenu() {
     document.querySelector("header").style.display = "flex";
     document.getElementById("menu-desplegable").style.display = "flex";
+}
+
+// Ocultar header y menú
+function hideHeaderAndMenu() {
+    document.querySelector("header").style.display = "none";
+    document.getElementById("menu-desplegable").style.display = "none";
 }
 
 // Ocultar todas las pantallas
@@ -268,18 +296,43 @@ document.addEventListener("DOMContentLoaded", () => {
     if (loginButton) loginButton.addEventListener("click", showLoginScreen);
 
     // Botones del menú
-    inicioButton.addEventListener("click", showHomeScreen);
-    perfilButton.addEventListener("click", showProfile);
-    iaButton.addEventListener("click", showIASpecialized);
-    noticiasButton.addEventListener("click", showNews);
-    directoryButton.addEventListener("click", showDirectory);
-    guideButton.addEventListener("click", showGuide);
+    if (inicioButton) inicioButton.addEventListener("click", showHomeScreen);
+    if (perfilButton) perfilButton.addEventListener("click", showProfile);
+    if (iaButton) iaButton.addEventListener("click", showIASpecialized);
+    if (gruposButton) gruposButton.addEventListener("click", showGroups);
+    if (documentosButton) documentosButton.addEventListener("click", showDocuments);
+    if (centroButton) centroButton.addEventListener("click", showDirectory);
+    if (noticiasButton) noticiasButton.addEventListener("click", showNews);
+    if (adminButton) adminButton.addEventListener("click", showAdminPanel);
+
+    // Botones adicionales
+    if (guideButton) guideButton.addEventListener("click", showGuide);
+    if (directoryButton) directoryButton.addEventListener("click", showDirectory);
+    if (slackButton) slackButton.addEventListener("click", () => {
+        window.open("https://slack.com", "_blank");
+    });
+    if (slackButtonGroups) slackButtonGroups.addEventListener("click", () => {
+        window.open("https://slack.com", "_blank");
+    });
+    if (csifButton) csifButton.addEventListener("click", () => {
+        document.getElementById("csif-iframe").style.display = "block";
+        document.getElementById("sipri-iframe").style.display = "none";
+    });
+    if (sipriButton) sipriButton.addEventListener("click", () => {
+        document.getElementById("sipri-iframe").style.display = "block";
+        document.getElementById("csif-iframe").style.display = "none";
+    });
 
     // Botones de especialidades
-    document.getElementById("biologia-button").addEventListener("click", () => handleSpecialtySelection("Biología y Geología"));
-    document.getElementById("ingles-button").addEventListener("click", () => handleSpecialtySelection("Inglés"));
-    document.getElementById("lengua-button").addEventListener("click", () => handleSpecialtySelection("Lengua Castellana y Literatura"));
-    document.getElementById("matematicas-button").addEventListener("click", () => handleSpecialtySelection("Matemáticas"));
+    const biologiaButton = document.getElementById("biologia-button");
+    const inglesButton = document.getElementById("ingles-button");
+    const lenguaButton = document.getElementById("lengua-button");
+    const matematicasButton = document.getElementById("matematicas-button");
+
+    if (biologiaButton) biologiaButton.addEventListener("click", () => handleSpecialtySelection("Biología y Geología"));
+    if (inglesButton) inglesButton.addEventListener("click", () => handleSpecialtySelection("Inglés"));
+    if (lenguaButton) lenguaButton.addEventListener("click", () => handleSpecialtySelection("Lengua Castellana y Literatura"));
+    if (matematicasButton) matematicasButton.addEventListener("click", () => handleSpecialtySelection("Matemáticas"));
 });
 
 // Funciones para mostrar pantallas de registro e inicio de sesión

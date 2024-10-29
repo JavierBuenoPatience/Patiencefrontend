@@ -639,222 +639,7 @@ footer {
     outline: none;
 }
 
-/* Estilos para el menú desplegable del perfil */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: var(--white-color);
-    min-width: 160px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-    z-index: 1;
-    right: 0;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.dropdown-content a {
-    width: 100%;
-    background: none;
-    border: none;
-    color: var(--secondary-color);
-    padding: 12px 16px;
-    text-align: left;
-    font-size: 15px;
-    font-family: var(--font-family);
-    cursor: pointer;
-    display: block;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.dropdown-content a:hover,
-.dropdown-content a:focus {
-    background-color: #ECEFF1;
-    outline: none;
-}
-
-.show-dropdown {
-    display: block;
-}
-
-/* Sección de ayuda */
-.help-section {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-}
-
-.help-section button {
-    width: 100%;
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    border: none;
-    padding: 14px;
-    cursor: pointer;
-    font-size: 18px;
-    border-radius: 8px;
-    text-align: center;
-    font-family: var(--font-family);
-    transition: background-color 0.3s ease;
-}
-
-.help-section button:hover,
-.help-section button:focus {
-    background-color: var(--primary-hover-color);
-    outline: none;
-}
-
-.collapsible-section {
-    background-color: var(--white-color);
-    padding: 16px;
-    border-radius: 8px;
-    display: none;
-    margin-top: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.collapsible-section p {
-    font-size: 15px;
-    color: var(--text-color);
-    line-height: 1.6;
-}
-
-/* Panel de Administración */
-.admin-section {
-    width: 100%;
-    max-width: 600px;
-    margin-top: 20px;
-    padding: 24px;
-    border-radius: 10px;
-    background-color: var(--white-color);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
-
-.admin-section h3 {
-    color: var(--primary-color);
-    margin-bottom: 16px;
-    font-size: 22px;
-    text-align: center;
-}
-
-.admin-section form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.admin-section form label {
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: var(--secondary-color);
-}
-
-.admin-section form input {
-    width: 100%;
-    padding: 14px;
-    margin-bottom: 16px;
-    border: 1px solid #B0BEC5;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 15px;
-    font-family: var(--font-family);
-    font-weight: 500;
-}
-
-.admin-section form input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
-}
-
-.admin-section form button {
-    width: 100%;
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    border: none;
-    padding: 14px;
-    cursor: pointer;
-    font-size: 18px;
-    border-radius: 8px;
-    font-family: var(--font-family);
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.admin-section form button:hover,
-.admin-section form button:focus {
-    background-color: var(--primary-hover-color);
-    outline: none;
-}
-
-.admin-section table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.admin-section table th,
-.admin-section table td {
-    border: 1px solid #ddd;
-    padding: 14px;
-    text-align: center;
-    font-size: 15px;
-}
-
-.admin-section table th {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-}
-
-.admin-section table td {
-    background-color: var(--background-color);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .menu-desplegable {
-        width: 180px;
-    }
-
-    .card {
-        padding: 16px;
-    }
-
-    .header-left {
-        font-size: 20px;
-    }
-
-    .overview {
-        max-width: 100%;
-    }
-
-    .ia-options button,
-    .news-section button,
-    .help-section button,
-    .upload-label,
-    .create-folder-button,
-    .slack-button {
-        font-size: 16px;
-        padding: 12px;
-    }
-
-    .admin-section form input,
-    .admin-section form button {
-        font-size: 16px;
-        padding: 12px;
-    }
-
-    .popup-content {
-        padding: 20px;
-    }
-}
-
-/* ---------------------------------
-   Nuevas Modificaciones para ChatGPT
------------------------------------ */
-
-/* Estilos para la pantalla de Chat */
+/* Estilo para el chat */
 .chat-container {
     width: 100%;
     max-width: 800px;
@@ -955,5 +740,43 @@ footer {
 
     .chat-message {
         font-size: 14px;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .menu-desplegable {
+        width: 180px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    .header-left {
+        font-size: 20px;
+    }
+
+    .overview {
+        max-width: 100%;
+    }
+
+    .ia-options button,
+    .news-section button,
+    .upload-label,
+    .create-folder-button,
+    .slack-button {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .admin-section form input,
+    .admin-section form button {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .popup-content {
+        padding: 20px;
     }
 }

@@ -3,11 +3,11 @@
 
 /* Variables CSS para colores y fuentes */
 :root {
-    --primary-color: #4682B4; /* Azul acero */
-    --primary-hover-color: #36648B; /* Azul acero más oscuro */
-    --secondary-color: #FF8C69; /* Naranja melocotón */
+    --primary-color: #2C3E50; /* Azul oscuro */
+    --primary-hover-color: #1A252F; /* Azul más oscuro */
+    --secondary-color: #7F8C8D; /* Gris */
     --text-color: #2F2F2F; /* Gris oscuro para el texto */
-    --background-color: #F5F5F5; /* Gris muy claro para el fondo */
+    --background-color: #ECF0F1; /* Gris claro para el fondo */
     --white-color: #FFFFFF; /* Blanco puro */
     --font-family: 'Poppins', sans-serif;
 }
@@ -24,6 +24,7 @@ body {
     color: var(--text-color);
 }
 
+/* Header */
 header {
     display: flex;
     justify-content: space-between;
@@ -112,6 +113,7 @@ header {
     outline: none;
 }
 
+/* Contenido principal */
 .main-content {
     flex: 1;
     padding: 16px;
@@ -129,6 +131,7 @@ header {
     margin-bottom: 16px;
 }
 
+/* Tarjetas */
 .card {
     width: 100%;
     max-width: 800px;
@@ -190,7 +193,7 @@ header {
 .card form textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
+    box-shadow: 0 0 5px rgba(44, 62, 80, 0.3);
 }
 
 .card form button {
@@ -237,6 +240,7 @@ header {
     outline: none;
 }
 
+/* Footer */
 footer {
     text-align: center;
     padding: 12px 16px;
@@ -251,6 +255,7 @@ footer {
     font-weight: 500;
 }
 
+/* Sección de inicio */
 .home-section {
     display: flex;
     flex-wrap: wrap;
@@ -280,7 +285,7 @@ footer {
 
 .overview h3 {
     font-size: 20px;
-    color: var(--secondary-color);
+    color: var(--primary-color);
     margin-bottom: 12px;
 }
 
@@ -329,7 +334,7 @@ footer {
     color: var(--text-color);
 }
 
-/* Estilos para el formulario de perfil */
+/* Formulario de perfil */
 .profile-field {
     width: 100%;
     margin-bottom: 16px;
@@ -360,7 +365,7 @@ footer {
 .profile-field textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
+    box-shadow: 0 0 5px rgba(44, 62, 80, 0.3);
 }
 
 .profile-img {
@@ -447,7 +452,7 @@ footer {
 
 .folder:hover,
 .document:hover {
-    background-color: #CFD8DC;
+    background-color: #BDC3C7;
 }
 
 .folder .actions-container,
@@ -471,80 +476,7 @@ footer {
     outline: none;
 }
 
-/* Pop-up de cambio de contraseña */
-.popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.popup-content {
-    background-color: var(--white-color);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-}
-
-.popup-content h2 {
-    font-size: 22px;
-    color: var(--primary-color);
-    margin-bottom: 16px;
-}
-
-.popup-content p {
-    font-size: 15px;
-    color: var(--text-color);
-    margin-bottom: 20px;
-}
-
-.popup-content form {
-    display: flex;
-    flex-direction: column;
-}
-
-.popup-content input {
-    padding: 14px;
-    margin-bottom: 16px;
-    border: 1px solid #B0BEC5;
-    border-radius: 8px;
-    font-size: 15px;
-}
-
-.popup-content input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
-}
-
-.popup-content button {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.popup-content button:hover,
-.popup-content button:focus {
-    background-color: var(--primary-hover-color);
-    outline: none;
-}
-
-/* Estilos para Slack */
+/* Botón de Slack */
 .slack-button {
     background-color: var(--primary-color);
     color: var(--white-color);
@@ -569,7 +501,7 @@ footer {
     outline: none;
 }
 
-/* Estilo para las noticias */
+/* Sección de noticias */
 .news-section {
     display: flex;
     flex-direction: column;
@@ -610,7 +542,7 @@ footer {
     display: none;
 }
 
-/* Estilos para las opciones de IA Especializada */
+/* Opciones de IA Especializada */
 .ia-options {
     display: flex;
     flex-direction: column;
@@ -766,12 +698,6 @@ footer {
     .upload-label,
     .create-folder-button,
     .slack-button {
-        font-size: 16px;
-        padding: 12px;
-    }
-
-    .admin-section form input,
-    .admin-section form button {
         font-size: 16px;
         padding: 12px;
     }

@@ -130,7 +130,9 @@ function showHomeScreen() {
     hideAllScreens();
     if (homeScreen) {
         homeScreen.style.display = "block";
-        userNameHome.textContent = currentUser;
+        if (userNameHome) {
+            userNameHome.textContent = currentUser;
+        }
         showHeaderAndMenu();
     }
 }
@@ -397,6 +399,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (inglesButton) inglesButton.addEventListener("click", () => handleSpecialtySelection("Inglés"));
     if (lenguaButton) lenguaButton.addEventListener("click", () => handleSpecialtySelection("Lengua Castellana y Literatura"));
     if (matematicasButton) matematicasButton.addEventListener("click", () => handleSpecialtySelection("Matemáticas"));
+
+    // Mostrar pantalla de inicio de sesión al cargar la aplicación
+    showLoginScreen();
 });
 
 // Funciones para mostrar pantallas de registro e inicio de sesión

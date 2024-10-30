@@ -15,6 +15,8 @@ const newsScreen = document.getElementById("news-screen");
 const directoryScreen = document.getElementById("directory-screen");
 const guideScreen = document.getElementById("guide-screen");
 const groupsScreen = document.getElementById("groups-screen");
+const helpScreen = document.getElementById("help-screen");
+const centerScreen = document.getElementById("center-screen");
 
 // Formularios y botones
 const loginFormElement = document.getElementById("login-form");
@@ -25,6 +27,8 @@ const chatFormElement = document.getElementById("chat-form");
 const createUserFormElement = document.getElementById("create-user-form");
 const registerButton = document.getElementById("register-button");
 const loginButton = document.getElementById("login-button");
+const helpButton = document.getElementById("help-button");
+const logoButton = document.getElementById("logo");
 
 // Botones del menú
 const inicioButton = document.getElementById("inicio-button");
@@ -196,6 +200,43 @@ async function handleProfileUpdate(event) {
     }
 }
 
+// Manejar cambio de imagen de perfil
+function handleProfileImageChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+        // Mostrar la imagen seleccionada en el frontend
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("profile-img").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+        // Enviar la imagen al backend
+        const formData = new FormData();
+        formData.append('profile_image', file);
+
+        authorizedFetch(`${API_URL}/upload_profile_image`, {
+            method: "POST",
+            body: formData,
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+                // No establezcas 'Content-Type' para permitir que el navegador establezca el límite correcto
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Imagen de perfil actualizada con éxito.");
+            } else {
+                alert("Error al actualizar la imagen de perfil.");
+            }
+        })
+        .catch(error => {
+            console.error("Error al actualizar la imagen de perfil:", error);
+            alert("Error al actualizar la imagen de perfil. Por favor, inténtalo de nuevo más tarde.");
+        });
+    }
+}
+
 // Mostrar pantalla de IA especializada
 function showIASpecialized() {
     hideAllScreens();
@@ -277,6 +318,22 @@ function showGuide() {
     hideAllScreens();
     if (guideScreen) {
         guideScreen.style.display = "block";
+    }
+}
+
+// Mostrar pantalla de ayuda
+function showHelp() {
+    hideAllScreens();
+    if (helpScreen) {
+        helpScreen.style.display = "block";
+    }
+}
+
+// Mostrar pantalla de mi centro
+function showCenter() {
+    hideAllScreens();
+    if (centerScreen) {
+        centerScreen.style.display = "block";
     }
 }
 
@@ -376,6 +433,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (chatFormElement) chatFormElement.addEventListener("submit", handleChatSend);
     if (registerButton) registerButton.addEventListener("click", showRegisterScreen);
     if (loginButton) loginButton.addEventListener("click", showLoginScreen);
+    if (helpButton) helpButton.addEventListener("click", showHelp);
+    if (logoButton) logoButton.addEventListener("click", showHomeScreen);
 
     // Botones del menú
     if (inicioButton) inicioButton.addEventListener("click", showHomeScreen);
@@ -383,7 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (iaButton) iaButton.addEventListener("click", showIASpecialized);
     if (gruposButton) gruposButton.addEventListener("click", showGroups);
     if (documentosButton) documentosButton.addEventListener("click", showDocuments);
-    if (centroButton) centroButton.addEventListener("click", showDirectory);
+    if (centroButton) centroButton.addEventListener("click", showCenter);
     if (noticiasButton) noticiasButton.addEventListener("click", showNews);
     if (adminButton) adminButton.addEventListener("click", showAdminPanel);
 
@@ -423,6 +482,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (inglesButton) inglesButton.addEventListener("click", () => handleSpecialtySelection("Inglés"));
     if (lenguaButton) lenguaButton.addEventListener("click", () => handleSpecialtySelection("Lengua Castellana y Literatura"));
     if (matematicasButton) matematicasButton.addEventListener("click", () => handleSpecialtySelection("Matemáticas"));
+
+    // Manejar cambio de imagen de perfil
+    const profileImageInput = document.getElementById("profile-image-input");
+    if (profileImageInput) {
+        profileImageInput.addEventListener("change", handleProfileImageChange);
+    }
 
     // Mostrar pantalla de inicio de sesión al cargar la aplicación
     showLoginScreen();

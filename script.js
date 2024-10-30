@@ -67,6 +67,7 @@ async function authorizedFetch(url, options = {}) {
 async function handleRegister(event) {
     event.preventDefault();
     console.log("handleRegister llamado");
+    const username = document.getElementById("register-username").value;
     const email = document.getElementById("register-email").value;
     const password = document.getElementById("register-password").value;
 
@@ -74,7 +75,7 @@ async function handleRegister(event) {
         const response = await fetch(`${API_URL}/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ username, email, password }),
         });
 
         if (response.ok) {
@@ -107,7 +108,7 @@ async function handleLogin(event) {
         if (response.ok) {
             const data = await response.json();
             authToken = data.access_token;
-            currentUser = email;
+            currentUser = data.username || email;
             showHomeScreen();
         } else {
             const data = await response.json();
@@ -293,7 +294,7 @@ async function showAdminPanel() {
                     userList.innerHTML = "";
                     users.forEach((user) => {
                         const row = document.createElement("tr");
-                        row.innerHTML = `<td>${user.name}</td><td>${user.email}</td><td>${user.registeredAt}</td>`;
+                        row.innerHTML = `<td>${user.username}</td><td>${user.email}</td><td>${user.registeredAt}</td>`;
                         userList.appendChild(row);
                     });
                 }

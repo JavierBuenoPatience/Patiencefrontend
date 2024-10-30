@@ -66,6 +66,7 @@ async function authorizedFetch(url, options = {}) {
 // Manejar registro de usuario
 async function handleRegister(event) {
     event.preventDefault();
+    console.log("handleRegister llamado");
     const email = document.getElementById("register-email").value;
     const password = document.getElementById("register-password").value;
 
@@ -92,6 +93,7 @@ async function handleRegister(event) {
 // Manejar inicio de sesión
 async function handleLogin(event) {
     event.preventDefault();
+    console.log("handleLogin llamado");
     const email = document.getElementById("login-email").value;
     const password = document.getElementById("login-password").value;
 
@@ -343,10 +345,31 @@ function hideAllScreens() {
     screens.forEach((screen) => (screen.style.display = "none"));
 }
 
+// Funciones para mostrar pantallas de registro e inicio de sesión
+function showRegisterScreen() {
+    hideAllScreens();
+    if (registerScreen) {
+        registerScreen.style.display = "block";
+    }
+}
+
+function showLoginScreen() {
+    hideAllScreens();
+    if (loginScreen) {
+        loginScreen.style.display = "block";
+    }
+}
+
 // Event listeners
 document.addEventListener("DOMContentLoaded", () => {
-    if (loginFormElement) loginFormElement.addEventListener("submit", handleLogin);
-    if (registerFormElement) registerFormElement.addEventListener("submit", handleRegister);
+    if (loginFormElement) {
+        console.log("Asignando event listener a loginFormElement");
+        loginFormElement.addEventListener("submit", handleLogin);
+    }
+    if (registerFormElement) {
+        console.log("Asignando event listener a registerFormElement");
+        registerFormElement.addEventListener("submit", handleRegister);
+    }
     if (logoutButton) logoutButton.addEventListener("click", handleLogout);
     if (profileFormElement) profileFormElement.addEventListener("submit", handleProfileUpdate);
     if (chatFormElement) chatFormElement.addEventListener("submit", handleChatSend);
@@ -403,18 +426,3 @@ document.addEventListener("DOMContentLoaded", () => {
     // Mostrar pantalla de inicio de sesión al cargar la aplicación
     showLoginScreen();
 });
-
-// Funciones para mostrar pantallas de registro e inicio de sesión
-function showRegisterScreen() {
-    hideAllScreens();
-    if (registerScreen) {
-        registerScreen.style.display = "block";
-    }
-}
-
-function showLoginScreen() {
-    hideAllScreens();
-    if (loginScreen) {
-        loginScreen.style.display = "block";
-    }
-}

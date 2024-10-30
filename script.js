@@ -51,13 +51,14 @@ const sipriButton = document.getElementById("sipri-button");
 // Variables globales
 let currentUser = null;
 let authToken = null;
+let conversation = []; // Historial de conversación
+let selectedSpecialty = ""; // Especialidad seleccionada
 
 // Función de ayuda para manejar solicitudes con token de autorización
 async function authorizedFetch(url, options = {}) {
     options.headers = {
         ...options.headers,
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${authToken}`,
+        "Authorization": `Bearer ${authToken}`,
     };
     const response = await fetch(url, options);
     if (response.status === 401) {
@@ -70,7 +71,6 @@ async function authorizedFetch(url, options = {}) {
 // Manejar registro de usuario
 async function handleRegister(event) {
     event.preventDefault();
-    console.log("handleRegister llamado");
     const username = document.getElementById("register-username").value;
     const email = document.getElementById("register-email").value;
     const password = document.getElementById("register-password").value;
@@ -98,7 +98,6 @@ async function handleRegister(event) {
 // Manejar inicio de sesión
 async function handleLogin(event) {
     event.preventDefault();
-    console.log("handleLogin llamado");
     const email = document.getElementById("login-email").value;
     const password = document.getElementById("login-password").value;
 
@@ -186,6 +185,7 @@ async function handleProfileUpdate(event) {
     try {
         const response = await authorizedFetch(`${API_URL}/profile`, {
             method: "PUT",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(profileData),
         });
 
@@ -215,12 +215,11 @@ function handleProfileImageChange(event) {
         const formData = new FormData();
         formData.append('profile_image', file);
 
-        authorizedFetch(`${API_URL}/upload_profile_image`, {
+        fetch(`${API_URL}/upload_profile_image`, {
             method: "POST",
             body: formData,
             headers: {
                 Authorization: `Bearer ${authToken}`,
-                // No establezcas 'Content-Type' para permitir que el navegador establezca el límite correcto
             },
         })
         .then(response => {
@@ -254,6 +253,10 @@ function handleSpecialtySelection(specialty) {
         if (chatTitle) {
             chatTitle.textContent = `Chat con IA Especializada en ${specialty}`;
         }
+        // Reiniciar conversación al cambiar de especialidad
+        conversation = [];
+        clearChatMessages();
+        selectedSpecialty = specialty;
     }
 }
 
@@ -262,19 +265,31 @@ async function handleChatSend(event) {
     event.preventDefault();
     const chatInput = document.getElementById("chat-input");
     if (chatInput) {
-        const message = chatInput.value;
+        const messageContent = chatInput.value.trim();
+        if (messageContent === "") return;
+
         chatInput.value = "";
+
+        // Agregar mensaje del usuario al historial y mostrarlo
+        const userMessage = { role: "user", content: messageContent };
+        conversation.push(userMessage);
+        addMessageToChat("user", messageContent);
 
         try {
             const response = await authorizedFetch(`${API_URL}/chatgpt`, {
                 method: "POST",
-                body: JSON.stringify({ message }),
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ messages: conversation, specialty: selectedSpecialty }),
             });
 
             if (response.ok) {
                 const data = await response.json();
-                addMessageToChat("user", message);
-                addMessageToChat("assistant", data.response);
+                const assistantMessageContent = data.assistant_message;
+
+                // Agregar respuesta de la IA al historial y mostrarla
+                const assistantMessage = { role: "assistant", content: assistantMessageContent };
+                conversation.push(assistantMessage);
+                addMessageToChat("assistant", assistantMessageContent);
             } else {
                 alert("Error en el chat con IA.");
             }
@@ -295,6 +310,21 @@ function addMessageToChat(role, content) {
         chatMessagesContainer.appendChild(messageElement);
         chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
     }
+}
+
+// Limpiar mensajes del chat
+function clearChatMessages() {
+    const chatMessagesContainer = document.getElementById("chat-messages");
+    if (chatMessagesContainer) {
+        chatMessagesContainer.innerHTML = "";
+    }
+}
+
+// Manejar limpieza del chat
+function handleClearChat() {
+    conversation = [];
+    clearChatMessages();
+    alert("Se ha iniciado una nueva conversación.");
 }
 
 // Mostrar pantalla de noticias
@@ -421,11 +451,9 @@ function showLoginScreen() {
 // Event listeners
 document.addEventListener("DOMContentLoaded", () => {
     if (loginFormElement) {
-        console.log("Asignando event listener a loginFormElement");
         loginFormElement.addEventListener("submit", handleLogin);
     }
     if (registerFormElement) {
-        console.log("Asignando event listener a registerFormElement");
         registerFormElement.addEventListener("submit", handleRegister);
     }
     if (logoutButton) logoutButton.addEventListener("click", handleLogout);
@@ -482,6 +510,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (inglesButton) inglesButton.addEventListener("click", () => handleSpecialtySelection("Inglés"));
     if (lenguaButton) lenguaButton.addEventListener("click", () => handleSpecialtySelection("Lengua Castellana y Literatura"));
     if (matematicasButton) matematicasButton.addEventListener("click", () => handleSpecialtySelection("Matemáticas"));
+
+    // Botón para limpiar el chat
+    const clearChatButton = document.getElementById("clear-chat-button");
+    if (clearChatButton) clearChatButton.addEventListener("click", handleClearChat);
 
     // Manejar cambio de imagen de perfil
     const profileImageInput = document.getElementById("profile-image-input");

@@ -1,4 +1,4 @@
-// URL del backend (asegúrate de que esta URL es correcta)
+// URL del backend
 const API_URL = "https://patience-backend.onrender.com";
 
 // Elementos del DOM
@@ -114,8 +114,9 @@ async function handleLogin(event) {
             currentUser = data.username || email;
             showHomeScreen();
         } else {
-            const data = await response.json();
-            alert("Error al iniciar sesión: " + (data.error || "Inténtalo de nuevo más tarde."));
+            const errorText = await response.text();
+            console.error("Error al iniciar sesión:", errorText);
+            alert("Error al iniciar sesión: " + errorText);
         }
     } catch (error) {
         console.error("Error al iniciar sesión:", error);
@@ -204,14 +205,12 @@ async function handleProfileUpdate(event) {
 function handleProfileImageChange(event) {
     const file = event.target.files[0];
     if (file) {
-        // Mostrar la imagen seleccionada en el frontend
         const reader = new FileReader();
         reader.onload = function(e) {
             document.getElementById("profile-img").src = e.target.result;
         };
         reader.readAsDataURL(file);
 
-        // Enviar la imagen al backend
         const formData = new FormData();
         formData.append('profile_image', file);
 
@@ -253,7 +252,6 @@ function handleSpecialtySelection(specialty) {
         if (chatTitle) {
             chatTitle.textContent = `Chat con IA Especializada en ${specialty}`;
         }
-        // Reiniciar conversación al cambiar de especialidad
         conversation = [];
         clearChatMessages();
         selectedSpecialty = specialty;
@@ -270,7 +268,6 @@ async function handleChatSend(event) {
 
         chatInput.value = "";
 
-        // Agregar mensaje del usuario al historial y mostrarlo
         const userMessage = { role: "user", content: messageContent };
         conversation.push(userMessage);
         addMessageToChat("user", messageContent);
@@ -286,7 +283,6 @@ async function handleChatSend(event) {
                 const data = await response.json();
                 const assistantMessageContent = data.assistant_message;
 
-                // Agregar respuesta de la IA al historial y mostrarla
                 const assistantMessage = { role: "assistant", content: assistantMessageContent };
                 conversation.push(assistantMessage);
                 addMessageToChat("assistant", assistantMessageContent);

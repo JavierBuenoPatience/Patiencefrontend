@@ -1,38 +1,20 @@
-/* Importación de la fuente 'Poppins' desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-/* Variables CSS para colores y fuentes */
-:root {
-    --primary-color: #2C3E50; /* Azul oscuro */
-    --primary-hover-color: #1A252F; /* Azul más oscuro */
-    --secondary-color: #7F8C8D; /* Gris */
-    --accent-color: #3498DB; /* Azul claro para resaltar */
-    --text-color: #2F2F2F; /* Gris oscuro para el texto */
-    --background-color: #ECF0F1; /* Gris claro para el fondo */
-    --white-color: #FFFFFF; /* Blanco puro */
-    --font-family: 'Poppins', sans-serif;
-}
-
-/* Estilos base */
 body {
-    font-family: var(--font-family);
-    background-color: var(--background-color);
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    color: var(--text-color);
+    height: 100vh;
 }
 
-/* Header */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: var(--primary-color);
-    color: var(--white-color);
+    padding: 8px 16px;
+    background-color: #333;
+    color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: fixed;
     width: 100%;
@@ -42,16 +24,9 @@ header {
 }
 
 .header-left {
-    font-size: 26px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
-    color: var(--accent-color);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    transition: color 0.3s ease;
-}
-
-.header-left:hover {
-    color: var(--white-color);
 }
 
 .header-right {
@@ -61,87 +36,57 @@ header {
 }
 
 .header-right img {
-    width: 40px;
-    height: 40px;
+    width: 30px;
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: 30px;
+    margin-left: 0px;
     margin-right: 16px;
-    transition: transform 0.3s ease;
 }
 
-.header-right img:hover {
-    transform: scale(1.1);
-}
-
-.header-right button {
-    background-color: transparent;
-    border: none;
-    color: var(--white-color);
-    font-size: 16px;
-    margin-left: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: color 0.3s ease, background-color 0.3s ease;
-    padding: 8px 12px;
-    border-radius: 6px;
-}
-
-.header-right button:hover,
-.header-right button:focus {
-    color: var(--accent-color);
-    background-color: rgba(255, 255, 255, 0.15);
-    outline: none;
-}
-
-/* Menú desplegable */
 .menu-desplegable {
     position: fixed;
     top: 50%;
-    left: 0;
+    left: 0px;
     transform: translateY(-50%);
-    width: 220px;
+    width: 200px;
+    height: auto;
     max-height: 80vh;
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    padding: 20px 10px;
+    background-color: #01C0B4;
+    color: #fff;
+    padding: 10px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 999;
-    display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
-    border-radius: 0 10px 10px 0;
+    border-radius: 10px;
 }
 
 .menu-desplegable ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    width: 100%;
+    text-align: center;
 }
 
 .menu-desplegable ul li {
     margin: 10px 0;
 }
 
-.menu-desplegable ul li button {
-    width: 100%;
-    background: none;
-    border: none;
-    color: var(--white-color);
-    text-align: left;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    font-family: var(--font-family);
-    transition: background-color 0.3s ease;
+.menu-desplegable ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    padding: 8px;
+    border-radius: 5px;
 }
 
-.menu-desplegable ul li button:hover,
-.menu-desplegable ul li button:focus {
-    background-color: var(--primary-hover-color);
-    outline: none;
+.menu-desplegable ul li a:hover {
+    background-color: #019A92;
 }
 
-/* Contenido principal */
 .main-content {
     flex: 1;
     padding: 16px;
@@ -149,48 +94,47 @@ header {
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
-    margin-top: 80px;
-    margin-bottom: 60px;
-    box-sizing: border-box;
+    margin-top: 64px;
+    margin-bottom: 40px;
 }
 
-.logo {
-    max-width: 120px;
+.branding {
+    text-align: center;
     margin-bottom: 16px;
 }
 
-/* Tarjetas */
+.main-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+
+.tagline {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+}
+
 .card {
     width: 100%;
     max-width: 800px;
-    background-color: var(--white-color);
+    background-color: #fff;
     padding: 24px;
     margin-bottom: 16px;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    display: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
     flex-direction: column;
     align-items: center;
-    box-sizing: border-box;
 }
 
 .card h2 {
     margin-bottom: 16px;
-    color: var(--primary-color);
-    font-size: 26px;
+    color: #01C0B4;
+    font-size: 20px;
     font-weight: bold;
-    text-align: center;
 }
 
-.card h1 {
-    margin-bottom: 16px;
-    color: var(--primary-color);
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* Formularios y botones en tarjetas */
 .card form {
     width: 100%;
     display: flex;
@@ -200,225 +144,101 @@ header {
 .card form label {
     margin-bottom: 8px;
     font-weight: bold;
-    color: var(--secondary-color);
+    color: #333;
 }
 
 .card form input,
-.card form select,
-.card form textarea {
+.card form select {
     width: 100%;
-    padding: 14px;
+    padding: 12px;
     margin-bottom: 16px;
-    border: 1px solid #B0BEC5;
-    border-radius: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
     box-sizing: border-box;
-    font-size: 15px;
-    font-family: var(--font-family);
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
     font-weight: 500;
-}
-
-.card form input:focus,
-.card form select:focus,
-.card form textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(44, 62, 80, 0.3);
 }
 
 .card form button {
     width: 100%;
-    background-color: var(--primary-color);
-    color: var(--white-color);
+    background-color: #01C0B4;
+    color: #fff;
     border: none;
-    padding: 14px;
+    padding: 12px;
     cursor: pointer;
-    font-size: 18px;
-    border-radius: 8px;
-    font-family: var(--font-family);
+    font-size: 16px;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
     font-weight: bold;
-    transition: background-color 0.3s ease;
 }
 
-.card form button:hover,
-.card form button:focus {
-    background-color: var(--primary-hover-color);
-    outline: none;
+.card form button:hover {
+    background-color: #019A92;
 }
 
-.card p {
-    font-size: 15px;
-    color: var(--text-color);
-    text-align: center;
-    margin-top: 16px;
+.card .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-.card p button {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 15px;
-    text-decoration: underline;
-    transition: color 0.3s ease;
+.card .form-group > div {
+    flex: 0 0 48%;
 }
 
-.card p button:hover,
-.card p button:focus {
-    color: var(--primary-hover-color);
-    outline: none;
+.logo {
+    max-width: 100px;
+    margin-bottom: 16px;
 }
 
-/* Footer */
 footer {
     text-align: center;
-    padding: 12px 16px;
+    padding: 8px 16px;
     border-top: 1px solid #ddd;
-    background-color: var(--secondary-color);
-    color: var(--white-color);
-    font-size: 12px;
+    background-color: #333;
+    color: #fff;
+    font-size: 10px;
     position: fixed;
     width: 100%;
     bottom: 0;
-    font-family: var(--font-family);
+    font-family: 'Poppins', sans-serif;
     font-weight: 500;
 }
 
-/* Sección de inicio */
 .home-section {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 24px;
+    gap: 16px;
     width: 100%;
     max-width: 1000px;
-    margin: 24px auto;
+    margin: 16px auto;
 }
 
 .overview {
     width: 100%;
     max-width: 300px;
-    background-color: var(--white-color);
-    padding: 20px;
+    background-color: #f9f9f9;
+    padding: 16px;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.overview:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .overview h3 {
-    font-size: 20px;
-    color: var(--primary-color);
+    font-size: 18px;
+    color: #333;
     margin-bottom: 12px;
 }
 
 .overview p {
-    font-size: 15px;
-    color: var(--text-color);
-    margin-bottom: 16px;
-}
-
-.overview button {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    border: none;
-    padding: 12px 16px;
-    font-size: 16px;
-    font-family: var(--font-family);
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.overview button:hover,
-.overview button:focus {
-    background-color: var(--primary-hover-color);
-    outline: none;
-}
-
-.document-list {
     font-size: 14px;
-    color: var(--text-color);
-    text-align: left;
-}
-
-.document-list p {
-    margin: 4px 0;
-}
-
-.welcome-message {
-    margin-top: 16px;
-    text-align: center;
-}
-
-.welcome-message p {
-    font-size: 18px;
-    color: var(--text-color);
-}
-
-/* Formulario de perfil */
-.profile-field {
-    width: 100%;
+    color: #666;
     margin-bottom: 16px;
 }
 
-.profile-field label {
-    font-weight: bold;
-    color: var(--secondary-color);
-    display: block;
-    margin-bottom: 8px;
-}
-
-.profile-field input,
-.profile-field select,
-.profile-field textarea {
-    width: 100%;
-    padding: 14px;
-    margin-bottom: 16px;
-    border: 1px solid #B0BEC5;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 15px;
-    font-family: var(--font-family);
-}
-
-.profile-field input:focus,
-.profile-field select:focus,
-.profile-field textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(44, 62, 80, 0.3);
-}
-
-.profile-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-}
-
-.profile-img-upload {
-    display: inline-block;
-    margin-top: 10px;
-    color: var(--primary-color);
-    cursor: pointer;
-    text-decoration: underline;
-    font-size: 15px;
-}
-
-.profile-img-upload:hover {
-    color: var(--primary-hover-color);
-}
-
-/* Documentos */
 .document-management {
     display: flex;
     flex-direction: column;
@@ -433,29 +253,25 @@ footer {
 
 .upload-label,
 .create-folder-button {
-    background-color: var(--primary-color);
-    color: var(--white-color);
+    background-color: #01C0B4;
+    color: #fff;
     border: none;
-    padding: 14px 16px;
-    font-size: 16px;
-    font-family: var(--font-family);
+    padding: 12px 16px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
     font-weight: bold;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     display: inline-block;
     text-align: center;
     width: 100%;
     box-sizing: border-box;
     text-decoration: none;
-    transition: background-color 0.3s ease;
 }
 
 .upload-label:hover,
-.create-folder-button:hover,
-.upload-label:focus,
-.create-folder-button:focus {
-    background-color: var(--primary-hover-color);
-    outline: none;
+.create-folder-button:hover {
+    background-color: #019A92;
 }
 
 #documents-container {
@@ -465,56 +281,117 @@ footer {
 
 .folder,
 .document {
-    padding: 14px;
-    background-color: var(--white-color);
-    border-radius: 8px;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
     margin-bottom: 10px;
     cursor: pointer;
-    text-align: left;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: background-color 0.3s ease;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .folder:hover,
 .document:hover {
-    background-color: #BDC3C7;
+    background-color: #eaeaea;
 }
 
-.folder .actions-container,
-.document .actions-container {
-    display: flex;
-    gap: 8px;
-}
-
-.actions-container button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-color);
-    font-size: 18px;
-    transition: color 0.3s ease;
-}
-
-.actions-container button:hover,
-.actions-container button:focus {
-    color: var(--primary-hover-color);
-    outline: none;
-}
-
-/* Botón de Slack */
-.slack-button {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    border: none;
-    padding: 14px 16px;
-    font-size: 16px;
-    font-family: var(--font-family);
+/* Estilo mejorado para las indicaciones en prompts */
+.prompt-hint {
+    color: #01C0B4;
     font-weight: bold;
-    border-radius: 8px;
+    font-style: italic;
+}
+
+/* Estilo mejorado para la sección de la guía */
+.guide-section {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.guide-section h3 {
+    color: #019A92;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.prompt-section h4 {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.prompt-section p {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+/* Estilo para el directorio de academias */
+.directory-overview {
+    width: 100%;
+    max-width: 300px;
+    background-color: #f9f9f9;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    text-align: center;
+}
+
+.directory-overview h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.directory-overview p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.directory-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.directory-item {
+    padding: 15px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.directory-item h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.directory-item p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* Estilos adicionales para Slack */
+.slack-button {
+    background-color: #01C0B4;
+    color: #fff;
+    border: none;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    border-radius: 10px;
     cursor: pointer;
     display: inline-block;
     text-align: center;
@@ -524,13 +401,11 @@ footer {
     transition: background-color 0.3s ease;
 }
 
-.slack-button:hover,
-.slack-button:focus {
-    background-color: var(--primary-hover-color);
-    outline: none;
+.slack-button:hover {
+    background-color: #019A92;
 }
 
-/* Sección de noticias */
+/* Estilo para las noticias */
 .news-section {
     display: flex;
     flex-direction: column;
@@ -542,23 +417,20 @@ footer {
 
 .news-section button {
     width: 100%;
-    background-color: var(--primary-color);
-    color: var(--white-color);
+    background-color: #01C0B4;
+    color: #fff;
     border: none;
-    padding: 14px;
+    padding: 12px;
     cursor: pointer;
-    font-size: 18px;
-    border-radius: 8px;
+    font-size: 16px;
+    border-radius: 10px;
     margin-bottom: 8px;
-    text-align: center;
-    font-family: var(--font-family);
-    transition: background-color 0.3s ease;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
 }
 
-.news-section button:hover,
-.news-section button:focus {
-    background-color: var(--primary-hover-color);
-    outline: none;
+.news-section button:hover {
+    background-color: #019A92;
 }
 
 .news-iframe {
@@ -566,172 +438,92 @@ footer {
     height: 500px;
     border: none;
     border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 16px;
     display: none;
 }
 
-/* Opciones de IA Especializada */
+/* Estilos adicionales para las opciones de IA Especializada */
 .ia-options {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    width: 100%;
+    gap: 10px;
 }
 
 .ia-options button {
     width: 100%;
-    background-color: var(--primary-color);
-    color: var(--white-color);
+    background-color: #01C0B4;
+    color: #fff;
     border: none;
-    padding: 14px;
+    padding: 12px;
     cursor: pointer;
-    font-size: 18px;
-    border-radius: 8px;
+    font-size: 16px;
+    border-radius: 10px;
     text-align: center;
-    font-family: var(--font-family);
-    transition: background-color 0.3s ease;
+    font-family: 'Poppins', sans-serif;
 }
 
-.ia-options button:hover,
-.ia-options button:focus {
-    background-color: var(--primary-hover-color);
-    outline: none;
+.ia-options button:hover {
+    background-color: #019A92;
 }
 
-/* Estilo para el chat */
-.chat-container {
-    width: 100%;
-    max-width: 800px;
-    height: 600px;
+/* Estilos adicionales para el menú desplegable */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    z-index: 1;
+    right: 10px;
+    top: 40px;
+    border-radius: 10px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    border-radius: 5px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.show-dropdown {
+    display: block;
+}
+
+.help-section {
     display: flex;
     flex-direction: column;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-top: 20px;
+    gap: 10px;
 }
 
-.chat-messages {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-    background-color: #f9f9f9;
-}
-
-.chat-input {
-    display: flex;
-    border-top: 1px solid #ddd;
-}
-
-.chat-input input {
-    flex: 1;
+.help-section button {
+    width: 100%;
+    background-color: #01C0B4;
+    color: #fff;
+    border: none;
     padding: 12px;
-    border: none;
-    font-size: 16px;
-}
-
-.chat-input button {
-    padding: 12px 16px;
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    border: none;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
 }
 
-.chat-input button:hover,
-.chat-input button:focus {
-    background-color: var(--primary-hover-color);
-    outline: none;
+.help-section button:hover {
+    background-color: #019A92;
 }
 
-.chat-message {
-    margin-bottom: 16px;
-    padding: 12px;
-    border-radius: 8px;
-    max-width: 80%;
-}
-
-.chat-message.user {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    align-self: flex-end;
-}
-
-.chat-message.assistant {
-    background-color: #e0e0e0;
-    align-self: flex-start;
-}
-
-/* Scrollbar personalizado para chat-messages */
-.chat-messages::-webkit-scrollbar {
-    width: 8px;
-}
-
-.chat-messages::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-}
-
-.chat-messages::-webkit-scrollbar-thumb {
-    background: var(--primary-color); 
-    border-radius: 4px;
-}
-
-.chat-messages::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-hover-color); 
-}
-
-/* Ajustes para pantallas pequeñas en la sección de chat */
-@media (max-width: 600px) {
-    .chat-container {
-        height: 500px;
-    }
-
-    .chat-input input {
-        font-size: 14px;
-    }
-
-    .chat-input button {
-        font-size: 14px;
-        padding: 10px 12px;
-    }
-
-    .chat-message {
-        font-size: 14px;
-    }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .menu-desplegable {
-        width: 180px;
-    }
-
-    .card {
-        padding: 16px;
-    }
-
-    .header-left {
-        font-size: 20px;
-    }
-
-    .overview {
-        max-width: 100%;
-    }
-
-    .ia-options button,
-    .news-section button,
-    .upload-label,
-    .create-folder-button,
-    .slack-button {
-        font-size: 16px;
-        padding: 12px;
-    }
-
-    .popup-content {
-        padding: 20px;
-    }
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
 }

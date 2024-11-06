@@ -1,522 +1,444 @@
-// URL del backend
-const API_URL = "https://patience-backend.onrender.com";
+const users = JSON.parse(localStorage.getItem('users')) || {};
 
-// Elementos del DOM
-const loginScreen = document.getElementById("login-screen");
-const registerScreen = document.getElementById("register-screen");
-const homeScreen = document.getElementById("home-screen");
-const profileScreen = document.getElementById("profile-screen");
-const documentsScreen = document.getElementById("documents-screen");
-const chatScreen = document.getElementById("chat-screen");
-const iaSpecializedScreen = document.getElementById("ia-specialized-screen");
-const adminPanel = document.getElementById("admin-panel");
-const userNameHome = document.getElementById("user-name-home");
-const newsScreen = document.getElementById("news-screen");
-const directoryScreen = document.getElementById("directory-screen");
-const guideScreen = document.getElementById("guide-screen");
-const groupsScreen = document.getElementById("groups-screen");
-const helpScreen = document.getElementById("help-screen");
-const centerScreen = document.getElementById("center-screen");
+document.addEventListener('DOMContentLoaded', () => {
+    const menu = document.getElementById('menu-desplegable');
+    const headerRight = document.querySelector('.header-right img');
+    const dropdown = document.getElementById('profile-dropdown');
 
-// Formularios y botones
-const loginFormElement = document.getElementById("login-form");
-const registerFormElement = document.getElementById("register-form");
-const logoutButton = document.getElementById("logout-button");
-const profileFormElement = document.getElementById("profile-form");
-const chatFormElement = document.getElementById("chat-form");
-const createUserFormElement = document.getElementById("create-user-form");
-const registerButton = document.getElementById("register-button");
-const loginButton = document.getElementById("login-button");
-const helpButton = document.getElementById("help-button");
-const logoButton = document.getElementById("logo");
-
-// Botones del menú
-const inicioButton = document.getElementById("inicio-button");
-const perfilButton = document.getElementById("perfil-button");
-const iaButton = document.getElementById("ia-button");
-const gruposButton = document.getElementById("grupos-button");
-const documentosButton = document.getElementById("documentos-button");
-const centroButton = document.getElementById("centro-button");
-const noticiasButton = document.getElementById("noticias-button");
-const adminButton = document.getElementById("admin-button");
-
-// Botones adicionales
-const guideButton = document.getElementById("guide-button");
-const directoryButton = document.getElementById("directory-button");
-const slackButton = document.getElementById("slack-button");
-const slackButtonGroups = document.getElementById("slack-button-groups");
-const csifButton = document.getElementById("csif-button");
-const sipriButton = document.getElementById("sipri-button");
-
-// Variables globales
-let currentUser = null;
-let authToken = null;
-let conversation = []; // Historial de conversación
-let selectedSpecialty = ""; // Especialidad seleccionada
-
-// Función de ayuda para manejar solicitudes con token de autorización
-async function authorizedFetch(url, options = {}) {
-    options.headers = {
-        ...options.headers,
-        "Authorization": `Bearer ${authToken}`,
-    };
-    const response = await fetch(url, options);
-    if (response.status === 401) {
-        alert("Sesión caducada. Por favor, inicia sesión nuevamente.");
-        handleLogout();
+    if (localStorage.getItem('loggedIn') === 'true') {
+        showHomeScreen();
+        menu.style.display = 'block';
+        updateDocumentOverview();
+    } else {
+        showLoginScreen();
+        menu.style.display = 'none';
     }
-    return response;
-}
 
-// Manejar registro de usuario
-async function handleRegister(event) {
-    event.preventDefault();
-    const username = document.getElementById("register-username").value;
-    const email = document.getElementById("register-email").value;
-    const password = document.getElementById("register-password").value;
+    headerRight.addEventListener('click', () => {
+        dropdown.classList.toggle('show-dropdown');
+    });
 
-    try {
-        const response = await fetch(`${API_URL}/register`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, email, password }),
-        });
-
-        if (response.ok) {
-            alert("Registro exitoso. Por favor, inicia sesión.");
-            showLoginScreen();
-        } else {
-            const data = await response.json();
-            alert("Error en el registro: " + (data.error || "Inténtalo de nuevo más tarde."));
+    document.addEventListener('click', (event) => {
+        if (!headerRight.contains(event.target) && !dropdown.contains(event.target)) {
+            dropdown.classList.remove('show-dropdown');
         }
-    } catch (error) {
-        console.error("Error en el registro:", error);
-        alert("Error en el registro. Por favor, verifica tu conexión e inténtalo de nuevo.");
-    }
-}
+    });
 
-// Manejar inicio de sesión
-async function handleLogin(event) {
+    // Manejo de la subida de documentos
+    document.getElementById('upload-document').addEventListener('change', uploadDocuments);
+});
+
+function handleRegistration(event) {
     event.preventDefault();
-    const email = document.getElementById("login-email").value;
-    const password = document.getElementById("login-password").value;
+    const name = document.getElementById('reg-name').value;
+    const email = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-password').value;
+    const paymentConfirmed = document.getElementById('payment-confirmed').checked;
 
-    try {
-        const response = await fetch(`${API_URL}/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
-        });
+    if (!validateEmail(email)) {
+        alert('Por favor, utiliza un correo de Gmail o Hotmail.');
+        return;
+    }
 
-        if (response.ok) {
-            const data = await response.json();
-            authToken = data.access_token;
-            currentUser = data.username || email;
-            showHomeScreen();
-        } else {
-            const errorText = await response.text();
-            console.error("Error al iniciar sesión:", errorText);
-            alert("Error al iniciar sesión: " + errorText);
-        }
-    } catch (error) {
-        console.error("Error al iniciar sesión:", error);
-        alert("Error al iniciar sesión. Por favor, verifica tu conexión e inténtalo de nuevo.");
+    if (users[email]) {
+        alert('Correo ya registrado. Por favor, inicia sesión.');
+        return;
+    }
+
+    if (!paymentConfirmed) {
+        alert('Por favor, completa el pago antes de registrarte.');
+        return;
+    }
+
+    users[email] = { name, email, password, profile: {}, documents: [], folders: [] };
+    localStorage.setItem('users', JSON.stringify(users));
+
+    document.getElementById('registration-form').reset();
+    document.getElementById('registration-message').style.display = 'block';
+    document.getElementById('welcome-button').style.display = 'block';
+}
+
+function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    if (!validateEmail(email)) {
+        alert('Por favor, utiliza un correo de Gmail o Hotmail.');
+        return;
+    }
+
+    if (users[email] && users[email].password === password) {
+        localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem('email', email);
+        localStorage.setItem('name', users[email].name);
+        showHomeScreen();
+        document.getElementById('menu-desplegable').style.display = 'block';
+    } else {
+        alert('Correo o contraseña incorrectos.');
     }
 }
 
-// Manejar cierre de sesión
 function handleLogout() {
-    authToken = null;
-    currentUser = null;
-    hideHeaderAndMenu();
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    const menu = document.getElementById('menu-desplegable');
+    menu.classList.remove('show');
+    menu.style.display = 'none';
+    hideAllScreens();
     showLoginScreen();
 }
 
-// Mostrar pantalla de inicio
-function showHomeScreen() {
-    hideAllScreens();
-    if (homeScreen) {
-        homeScreen.style.display = "block";
-        if (userNameHome) {
-            userNameHome.textContent = currentUser;
-        }
-        showHeaderAndMenu();
-    }
-}
-
-// Mostrar pantalla de perfil y cargar datos
-async function showProfile() {
-    hideAllScreens();
-    if (profileScreen) {
-        profileScreen.style.display = "block";
-        try {
-            const response = await authorizedFetch(`${API_URL}/profile`);
-            if (response.ok) {
-                const data = await response.json();
-                document.getElementById("full-name").value = data.full_name || "";
-                document.getElementById("profile-email").value = data.email || "";
-                document.getElementById("phone").value = data.phone || "";
-                document.getElementById("study-time").value = data.study_hours || "";
-                document.getElementById("specialty").value = data.specialty || "";
-                document.getElementById("hobbies").value = data.hobbies || "";
-                document.getElementById("location").value = data.location || "";
-            } else {
-                alert("Error al cargar perfil.");
-            }
-        } catch (error) {
-            console.error("Error al cargar perfil:", error);
-            alert("Error al cargar perfil. Por favor, inténtalo de nuevo más tarde.");
-        }
-    }
-}
-
-// Manejar actualización de perfil
-async function handleProfileUpdate(event) {
+function handleProfileUpdate(event) {
     event.preventDefault();
-
-    const profileData = {
-        full_name: document.getElementById("full-name").value,
-        phone: document.getElementById("phone").value,
-        study_hours: document.getElementById("study-time").value,
-        specialty: document.getElementById("specialty").value,
-        hobbies: document.getElementById("hobbies").value,
-        location: document.getElementById("location").value,
+    const email = localStorage.getItem('email');
+    const profile = {
+        fullName: document.getElementById('full-name').value,
+        phone: document.getElementById('phone').value,
+        studyTime: document.getElementById('study-time').value,
+        specialty: document.getElementById('specialty').value,
+        hobbies: document.getElementById('hobbies').value,
+        location: document.getElementById('location').value,
+        profileImage: document.getElementById('profile-img').src
     };
-
-    try {
-        const response = await authorizedFetch(`${API_URL}/profile`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(profileData),
-        });
-
-        if (response.ok) {
-            alert("Perfil actualizado con éxito.");
-        } else {
-            alert("Error al actualizar perfil.");
-        }
-    } catch (error) {
-        console.error("Error al actualizar perfil:", error);
-        alert("Error al actualizar perfil. Por favor, inténtalo de nuevo más tarde.");
-    }
+    users[email].profile = profile;
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('Perfil actualizado con éxito');
+    updateProfileIcon();
 }
 
-// Manejar cambio de imagen de perfil
-function handleProfileImageChange(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById("profile-img").src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-
-        const formData = new FormData();
-        formData.append('profile_image', file);
-
-        fetch(`${API_URL}/upload_profile_image`, {
-            method: "POST",
-            body: formData,
-            headers: {
-                Authorization: `Bearer ${authToken}`,
-            },
-        })
-        .then(response => {
-            if (response.ok) {
-                alert("Imagen de perfil actualizada con éxito.");
-            } else {
-                alert("Error al actualizar la imagen de perfil.");
-            }
-        })
-        .catch(error => {
-            console.error("Error al actualizar la imagen de perfil:", error);
-            alert("Error al actualizar la imagen de perfil. Por favor, inténtalo de nuevo más tarde.");
-        });
-    }
-}
-
-// Mostrar pantalla de IA especializada
-function showIASpecialized() {
-    hideAllScreens();
-    if (iaSpecializedScreen) {
-        iaSpecializedScreen.style.display = "block";
-    }
-}
-
-// Manejar selección de especialidad y mostrar chat
-function handleSpecialtySelection(specialty) {
-    hideAllScreens();
-    if (chatScreen) {
-        chatScreen.style.display = "block";
-        const chatTitle = document.getElementById("chat-title");
-        if (chatTitle) {
-            chatTitle.textContent = `Chat con IA Especializada en ${specialty}`;
-        }
-        conversation = [];
-        clearChatMessages();
-        selectedSpecialty = specialty;
-    }
-}
-
-// Manejar envío de mensaje en el chat con IA
-async function handleChatSend(event) {
-    event.preventDefault();
-    const chatInput = document.getElementById("chat-input");
-    if (chatInput) {
-        const messageContent = chatInput.value.trim();
-        if (messageContent === "") return;
-
-        chatInput.value = "";
-
-        const userMessage = { role: "user", content: messageContent };
-        conversation.push(userMessage);
-        addMessageToChat("user", messageContent);
-
-        try {
-            const response = await authorizedFetch(`${API_URL}/chatgpt`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ messages: conversation, specialty: selectedSpecialty }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                const assistantMessageContent = data.assistant_message;
-
-                const assistantMessage = { role: "assistant", content: assistantMessageContent };
-                conversation.push(assistantMessage);
-                addMessageToChat("assistant", assistantMessageContent);
-            } else {
-                alert("Error en el chat con IA.");
-            }
-        } catch (error) {
-            console.error("Error en el chat con IA:", error);
-            alert("Error en el chat con IA. Por favor, inténtalo de nuevo más tarde.");
-        }
-    }
-}
-
-// Agregar mensajes al chat
-function addMessageToChat(role, content) {
-    const chatMessagesContainer = document.getElementById("chat-messages");
-    if (chatMessagesContainer) {
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("chat-message", role);
-        messageElement.textContent = content;
-        chatMessagesContainer.appendChild(messageElement);
-        chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
-    }
-}
-
-// Limpiar mensajes del chat
-function clearChatMessages() {
-    const chatMessagesContainer = document.getElementById("chat-messages");
-    if (chatMessagesContainer) {
-        chatMessagesContainer.innerHTML = "";
-    }
-}
-
-// Manejar limpieza del chat
-function handleClearChat() {
-    conversation = [];
-    clearChatMessages();
-    alert("Se ha iniciado una nueva conversación.");
-}
-
-// Mostrar pantalla de noticias
-function showNews() {
-    hideAllScreens();
-    if (newsScreen) {
-        newsScreen.style.display = "block";
-    }
-}
-
-// Mostrar pantalla de directorio
-function showDirectory() {
-    hideAllScreens();
-    if (directoryScreen) {
-        directoryScreen.style.display = "block";
-    }
-}
-
-// Mostrar pantalla de guía
-function showGuide() {
-    hideAllScreens();
-    if (guideScreen) {
-        guideScreen.style.display = "block";
-    }
-}
-
-// Mostrar pantalla de ayuda
-function showHelp() {
-    hideAllScreens();
-    if (helpScreen) {
-        helpScreen.style.display = "block";
-    }
-}
-
-// Mostrar pantalla de mi centro
-function showCenter() {
-    hideAllScreens();
-    if (centerScreen) {
-        centerScreen.style.display = "block";
-    }
-}
-
-// Mostrar pantalla de administración y cargar usuarios
-async function showAdminPanel() {
-    hideAllScreens();
-    if (adminPanel) {
-        adminPanel.style.display = "block";
-        try {
-            const response = await authorizedFetch(`${API_URL}/admin/users`);
-            if (response.ok) {
-                const users = await response.json();
-                const userList = document.getElementById("user-list");
-                if (userList) {
-                    userList.innerHTML = "";
-                    users.forEach((user) => {
-                        const row = document.createElement("tr");
-                        row.innerHTML = `<td>${user.username}</td><td>${user.email}</td><td>${user.registeredAt}</td>`;
-                        userList.appendChild(row);
-                    });
-                }
-            } else {
-                alert("Error al cargar usuarios.");
-            }
-        } catch (error) {
-            console.error("Error al cargar usuarios:", error);
-            alert("Error al cargar usuarios. Por favor, inténtalo de nuevo más tarde.");
-        }
-    }
-}
-
-// Mostrar pantalla de documentos
-function showDocuments() {
-    hideAllScreens();
-    if (documentsScreen) {
-        documentsScreen.style.display = "block";
-    }
-}
-
-// Mostrar pantalla de grupos
-function showGroups() {
-    hideAllScreens();
-    if (groupsScreen) {
-        groupsScreen.style.display = "block";
-    }
-}
-
-// Mostrar header y menú
-function showHeaderAndMenu() {
-    const header = document.querySelector("header");
-    const menu = document.getElementById("menu-desplegable");
-    if (header) header.style.display = "flex";
-    if (menu) menu.style.display = "flex";
-}
-
-// Ocultar header y menú
-function hideHeaderAndMenu() {
-    const header = document.querySelector("header");
-    const menu = document.getElementById("menu-desplegable");
-    if (header) header.style.display = "none";
-    if (menu) menu.style.display = "none";
-}
-
-// Ocultar todas las pantallas
-function hideAllScreens() {
-    const screens = document.querySelectorAll(".card");
-    screens.forEach((screen) => (screen.style.display = "none"));
-}
-
-// Funciones para mostrar pantallas de registro e inicio de sesión
-function showRegisterScreen() {
-    hideAllScreens();
-    if (registerScreen) {
-        registerScreen.style.display = "block";
-    }
+function validateEmail(email) {
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    const hotmailRegex = /^[a-zA-Z0-9._%+-]+@hotmail\.com$/;
+    return gmailRegex.test(email) || hotmailRegex.test(email);
 }
 
 function showLoginScreen() {
     hideAllScreens();
-    if (loginScreen) {
-        loginScreen.style.display = "block";
+    document.getElementById('login-screen').style.display = 'block';
+    document.querySelector('header').style.display = 'none';
+    document.querySelector('footer').style.display = 'none';
+}
+
+function showRegistrationScreen() {
+    hideAllScreens();
+    document.getElementById('registration-screen').style.display = 'block';
+    document.querySelector('header').style.display = 'none';
+    document.querySelector('footer').style.display = 'none';
+}
+
+function showHomeScreen() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('home-screen').style.display = 'block';
+        document.getElementById('user-name-home').textContent = localStorage.getItem('name');
+        document.querySelector('header').style.display = 'flex';
+        document.querySelector('footer').style.display = 'block';
+        updateProfileIcon();
+        updateDocumentOverview();
+    } else {
+        showLoginScreen();
     }
 }
 
-// Event listeners
-document.addEventListener("DOMContentLoaded", () => {
-    if (loginFormElement) {
-        loginFormElement.addEventListener("submit", handleLogin);
+function showProfile() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('profile-screen').style.display = 'block';
+        const email = localStorage.getItem('email');
+        const profile = users[email].profile || {};
+        document.getElementById('full-name').value = profile.fullName || '';
+        document.getElementById('phone').value = profile.phone || '';
+        document.getElementById('study-time').value = profile.studyTime || '';
+        document.getElementById('specialty').value = profile.specialty || '';
+        document.getElementById('hobbies').value = profile.hobbies || '';
+        document.getElementById('location').value = profile.location || '';
+        document.getElementById('profile-img').src = profile.profileImage || 'assets/default-profile.png';
+    } else {
+        showLoginScreen();
     }
-    if (registerFormElement) {
-        registerFormElement.addEventListener("submit", handleRegister);
+}
+
+function showGroups() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('groups-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
     }
-    if (logoutButton) logoutButton.addEventListener("click", handleLogout);
-    if (profileFormElement) profileFormElement.addEventListener("submit", handleProfileUpdate);
-    if (chatFormElement) chatFormElement.addEventListener("submit", handleChatSend);
-    if (registerButton) registerButton.addEventListener("click", showRegisterScreen);
-    if (loginButton) loginButton.addEventListener("click", showLoginScreen);
-    if (helpButton) helpButton.addEventListener("click", showHelp);
-    if (logoButton) logoButton.addEventListener("click", showHomeScreen);
+}
 
-    // Botones del menú
-    if (inicioButton) inicioButton.addEventListener("click", showHomeScreen);
-    if (perfilButton) perfilButton.addEventListener("click", showProfile);
-    if (iaButton) iaButton.addEventListener("click", showIASpecialized);
-    if (gruposButton) gruposButton.addEventListener("click", showGroups);
-    if (documentosButton) documentosButton.addEventListener("click", showDocuments);
-    if (centroButton) centroButton.addEventListener("click", showCenter);
-    if (noticiasButton) noticiasButton.addEventListener("click", showNews);
-    if (adminButton) adminButton.addEventListener("click", showAdminPanel);
+function showIASpecializedOptions() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('ia-specialized-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
 
-    // Botones adicionales
-    if (guideButton) guideButton.addEventListener("click", showGuide);
-    if (directoryButton) directoryButton.addEventListener("click", showDirectory);
-    if (slackButton) slackButton.addEventListener("click", () => {
-        window.open("https://slack.com", "_blank");
+function redirectToIA(specialty) {
+    if (specialty === 'biologia') {
+        window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank');
+    } else {
+        alert('La especialidad seleccionada estará disponible pronto.');
+    }
+}
+
+function showTraining() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('training-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showComingSoon() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('coming-soon-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showNews() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('news-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showDocuments() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('documents-screen').style.display = 'block';
+        displayDocuments();
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showGuide() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('guide-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showDirectory() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('directory-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function hideAllScreens() {
+    const screens = document.querySelectorAll('.card');
+    screens.forEach(screen => screen.style.display = 'none');
+}
+
+function redirectToURL(url) {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        window.open(url, '_blank');
+    } else {
+        alert('Por favor, inicia sesión para acceder a esta funcionalidad.');
+        showLoginScreen();
+    }
+}
+
+function handleLogoClick() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        showHomeScreen();
+    } else {
+        showLoginScreen();
+    }
+}
+
+function handleImageUpload(event) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        document.getElementById('profile-img').src = e.target.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+function updateProfileIcon() {
+    const email = localStorage.getItem('email');
+    const profile = users[email].profile || {};
+    const profileIcon = document.getElementById('profile-icon');
+    if (profileIcon) {
+        profileIcon.src = profile.profileImage || 'assets/default-profile.png';
+    }
+}
+
+function showNewsContent(newsType) {
+    const csifIframe = document.getElementById('csif-iframe');
+    const sipriIframe = document.getElementById('sipri-iframe');
+
+    csifIframe.style.display = 'none';
+    sipriIframe.style.display = 'none';
+
+    if (newsType === 'csif') {
+        csifIframe.style.display = 'block';
+    } else if (newsType === 'sipri') {
+        sipriIframe.style.display = 'block';
+    }
+}
+
+function showHelp() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideAllScreens();
+        document.getElementById('help-screen').style.display = 'block';
+    } else {
+        showLoginScreen();
+    }
+}
+
+function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    section.style.display = section.style.display === 'none' || section.style.display === '' ? 'block' : 'none';
+}
+
+function updateDocumentOverview() {
+    const email = localStorage.getItem('email');
+    const userDocuments = users[email]?.documents || [];
+
+    const documentList = document.getElementById('document-list');
+    documentList.innerHTML = '';
+
+    if (userDocuments.length === 0) {
+        documentList.textContent = 'Sin documentos';
+    } else {
+        const lastOpenedDocuments = userDocuments.slice(-2);
+        lastOpenedDocuments.forEach(doc => {
+            const docElement = document.createElement('p');
+            docElement.textContent = doc.name;
+            documentList.appendChild(docElement);
+        });
+    }
+}
+
+function uploadDocuments(event) {
+    const email = localStorage.getItem('email');
+    const files = event.target.files;
+
+    if (!users[email].documents) {
+        users[email].documents = [];
+    }
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const documentData = {
+                name: file.name,
+                lastOpened: null,
+                folder: null,
+                fileContent: e.target.result
+            };
+            users[email].documents.push(documentData);
+            localStorage.setItem('users', JSON.stringify(users));
+            displayDocuments();
+            updateDocumentOverview();
+        };
+
+        reader.readAsDataURL(file);
+    }
+}
+
+function createFolder() {
+    const folderName = prompt('Nombre de la nueva carpeta:');
+    if (folderName) {
+        const folderData = {
+            name: folderName,
+            documents: []
+        };
+        const email = localStorage.getItem('email');
+        users[email].folders.push(folderData);
+        localStorage.setItem('users', JSON.stringify(users));
+        displayDocuments();
+    }
+}
+
+function deleteFolder(folderName) {
+    const email = localStorage.getItem('email');
+    const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
+    if (folderIndex > -1) {
+        users[email].folders.splice(folderIndex, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+        displayDocuments();
+    }
+}
+
+function displayDocuments() {
+    const email = localStorage.getItem('email');
+    const documentsContainer = document.getElementById('documents-container');
+    documentsContainer.innerHTML = '';
+
+    const userFolders = users[email].folders || [];
+    userFolders.forEach(folder => {
+        const folderElement = document.createElement('div');
+        folderElement.classList.add('folder');
+        folderElement.textContent = folder.name;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        deleteButton.onclick = () => deleteFolder(folder.name);
+
+        folderElement.appendChild(deleteButton);
+        documentsContainer.appendChild(folderElement);
     });
-    if (slackButtonGroups) slackButtonGroups.addEventListener("click", () => {
-        window.open("https://slack.com", "_blank");
+
+    const userDocuments = users[email].documents || [];
+    userDocuments.forEach(doc => {
+        const docElement = document.createElement('div');
+        docElement.classList.add('document');
+        docElement.textContent = doc.name;
+        docElement.addEventListener('click', () => {
+            doc.lastOpened = new Date();
+            localStorage.setItem('users', JSON.stringify(users));
+            alert(`Abriendo documento: ${doc.name}`);
+            updateDocumentOverview();
+        });
+
+        const moveButton = document.createElement('button');
+        moveButton.textContent = 'Mover a carpeta';
+        moveButton.style.marginTop = '5px';
+        moveButton.onclick = () => {
+            moveDocumentToFolder(email, doc.name);
+        };
+
+        docElement.appendChild(moveButton);
+        documentsContainer.appendChild(docElement);
     });
-    if (csifButton) csifButton.addEventListener("click", () => {
-        const csifIframe = document.getElementById("csif-iframe");
-        const sipriIframe = document.getElementById("sipri-iframe");
-        if (csifIframe && sipriIframe) {
-            csifIframe.style.display = "block";
-            sipriIframe.style.display = "none";
+}
+
+function moveDocumentToFolder(email, documentName) {
+    const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
+    if (selectedFolder) {
+        const folder = users[email].folders.find(f => f.name === selectedFolder);
+        if (folder) {
+            const documentIndex = users[email].documents.findIndex(doc => doc.name === documentName);
+            if (documentIndex > -1) {
+                const document = users[email].documents.splice(documentIndex, 1)[0];
+                folder.documents.push(document);
+                localStorage.setItem('users', JSON.stringify(users));
+                displayDocuments();
+            } else {
+                alert('Documento no encontrado.');
+            }
+        } else {
+            alert('Carpeta no encontrada.');
         }
-    });
-    if (sipriButton) sipriButton.addEventListener("click", () => {
-        const csifIframe = document.getElementById("csif-iframe");
-        const sipriIframe = document.getElementById("sipri-iframe");
-        if (csifIframe && sipriIframe) {
-            sipriIframe.style.display = "block";
-            csifIframe.style.display = "none";
-        }
-    });
-
-    // Botones de especialidades
-    const biologiaButton = document.getElementById("biologia-button");
-    const inglesButton = document.getElementById("ingles-button");
-    const lenguaButton = document.getElementById("lengua-button");
-    const matematicasButton = document.getElementById("matematicas-button");
-
-    if (biologiaButton) biologiaButton.addEventListener("click", () => handleSpecialtySelection("Biología y Geología"));
-    if (inglesButton) inglesButton.addEventListener("click", () => handleSpecialtySelection("Inglés"));
-    if (lenguaButton) lenguaButton.addEventListener("click", () => handleSpecialtySelection("Lengua Castellana y Literatura"));
-    if (matematicasButton) matematicasButton.addEventListener("click", () => handleSpecialtySelection("Matemáticas"));
-
-    // Botón para limpiar el chat
-    const clearChatButton = document.getElementById("clear-chat-button");
-    if (clearChatButton) clearChatButton.addEventListener("click", handleClearChat);
-
-    // Manejar cambio de imagen de perfil
-    const profileImageInput = document.getElementById("profile-image-input");
-    if (profileImageInput) {
-        profileImageInput.addEventListener("change", handleProfileImageChange);
     }
-
-    // Mostrar pantalla de inicio de sesión al cargar la aplicación
-    showLoginScreen();
-});
+}

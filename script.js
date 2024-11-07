@@ -1,9 +1,9 @@
 // Definimos constantes para colores y URLs
 const COLORS = {
-    primary: '#1E1E2F',
-    secondary: '#4ECCA3',
-    accent: '#EEEEEE',
-    background: '#FFFFFF',
+    primary: '#1B263B',
+    secondary: '#FF6B6B',
+    accent: '#FFE66D',
+    background: '#F0F4F8',
     text: '#333333'
 };
 
@@ -479,7 +479,7 @@ function displayDocuments() {
     const userFolders = users[email].folders || [];
     userFolders.forEach(folder => {
         const folderElement = document.createElement('div');
-        folderElement.classList.add('folder');
+        folderElement.classList.add('folder-card');
         const folderHeader = document.createElement('div');
         folderHeader.classList.add('folder-header');
         folderHeader.textContent = folder.name;
@@ -492,31 +492,34 @@ function displayDocuments() {
         folderElement.appendChild(folderHeader);
 
         // Mostrar documentos dentro de la carpeta
+        const folderDocuments = document.createElement('div');
+        folderDocuments.classList.add('folder-documents');
+
         folder.documents.forEach(doc => {
             const docElement = document.createElement('div');
-            docElement.classList.add('document');
-            docElement.textContent = doc.name;
+            docElement.classList.add('document-card');
+            docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
             docElement.addEventListener('click', () => {
                 openDocument(email, doc);
             });
-            folderElement.appendChild(docElement);
+            folderDocuments.appendChild(docElement);
         });
 
+        folderElement.appendChild(folderDocuments);
         documentsContainer.appendChild(folderElement);
     });
 
     const userDocuments = users[email].documents || [];
     userDocuments.forEach(doc => {
         const docElement = document.createElement('div');
-        docElement.classList.add('document');
-        docElement.textContent = doc.name;
+        docElement.classList.add('document-card');
+        docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
         docElement.addEventListener('click', () => {
             openDocument(email, doc);
         });
 
         const moveButton = document.createElement('button');
         moveButton.innerHTML = '<i class="fas fa-folder"></i>';
-        moveButton.style.marginLeft = '10px';
         moveButton.onclick = (e) => {
             e.stopPropagation();
             moveDocumentToFolder(email, doc.name);
@@ -581,8 +584,8 @@ function filterDocuments() {
 
     filteredDocuments.forEach(doc => {
         const docElement = document.createElement('div');
-        docElement.classList.add('document');
-        docElement.textContent = doc.name;
+        docElement.classList.add('document-card');
+        docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
         docElement.addEventListener('click', () => {
             openDocument(email, doc);
         });

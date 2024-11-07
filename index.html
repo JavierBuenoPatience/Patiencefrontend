@@ -207,14 +207,16 @@
         <div class="card" id="documents-screen" style="display: none;">
             <h2>Mis Documentos</h2>
             <div class="document-management">
+                <div class="document-buttons">
+                    <label for="upload-document" class="upload-label"><i class="fas fa-upload"></i> Subir Documentos</label>
+                    <input type="file" id="upload-document" multiple>
+                    <button class="create-folder-button" onclick="createFolder()"><i class="fas fa-folder-plus"></i> Crear
+                        Carpeta</button>
+                </div>
                 <div class="search-filter">
                     <input type="text" id="document-search" placeholder="Buscar documentos..."
                         oninput="filterDocuments()">
                 </div>
-                <label for="upload-document" class="upload-label"><i class="fas fa-upload"></i> Subir Documentos</label>
-                <input type="file" id="upload-document" multiple>
-                <button class="create-folder-button" onclick="createFolder()"><i class="fas fa-folder-plus"></i> Crear
-                    Carpeta</button>
                 <div id="documents-container"></div>
             </div>
         </div>
@@ -226,7 +228,7 @@
                 <button class="join-slack-button" onclick="redirectToSlack()"><i class="fab fa-slack"></i> Unirse a Slack</button>
             </div>
         </div>
-    <!-- Pantalla de Guía para aprovechar al máximo la IA -->
+ <!-- Pantalla de Guía para aprovechar al máximo la IA -->
        <div class="card" id="guide-screen" style="display: none;">
             <h2>Guía para aprovechar al máximo la IA</h2>
             <div class="guide-section">

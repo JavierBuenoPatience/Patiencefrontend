@@ -1,9 +1,9 @@
 /* Variables de colores */
 :root {
-    --primary-color: #1E1E2F;
-    --secondary-color: #4ECCA3;
-    --accent-color: #EEEEEE;
-    --background-color: #FFFFFF;
+    --primary-color: #1B263B;
+    --secondary-color: #FF6B6B;
+    --accent-color: #FFE66D;
+    --background-color: #F0F4F8;
     --text-color: #333333;
     --secondary-text-color: #666666;
     --white-color: #FFFFFF;
@@ -65,7 +65,7 @@ header {
     cursor: pointer;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--secondary-color);
+    border: 2px solid var(--accent-color);
 }
 
 .dropdown-content {
@@ -106,7 +106,7 @@ header {
     position: fixed;
     top: 80px;
     left: 0;
-    width: 220px;
+    width: 250px;
     background-color: var(--primary-color);
     color: var(--white-color);
     padding: 20px 10px;
@@ -160,7 +160,7 @@ header {
 
 .card {
     width: 100%;
-    max-width: 900px;
+    max-width: 1200px;
     background-color: var(--white-color);
     padding: 32px;
     margin-bottom: 24px;
@@ -350,8 +350,131 @@ footer {
     background-color: #3E0F3E;
 }
 
-/* Otras secciones y estilos */
-/* (Mantén los estilos existentes o modifícalos para que se ajusten al nuevo diseño) */
+/* Documentos */
+.document-management {
+    width: 100%;
+}
+
+.document-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.upload-label,
+.create-folder-button {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    flex: 1;
+    transition: background-color 0.3s;
+}
+
+.upload-label:hover,
+.create-folder-button:hover {
+    background-color: var(--primary-color);
+}
+
+.search-filter {
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+#document-search {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+#documents-container {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+/* Tarjetas de documentos y carpetas */
+.document-card,
+.folder-card {
+    background-color: var(--white-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+    flex: 1 1 calc(25% - 16px);
+    max-width: calc(25% - 16px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.document-card:hover,
+.folder-card:hover {
+    transform: translateY(-5px);
+}
+
+.document-card i,
+.folder-card i {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: var(--secondary-color);
+}
+
+.document-card button,
+.folder-card button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.folder-header {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: var(--primary-color);
+}
+
+.folder-documents {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.folder-documents .document-card {
+    flex: none;
+    max-width: none;
+    padding: 10px;
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+}
+
+.folder-documents .document-card:hover {
+    transform: none;
+}
+
+@media (max-width: 1024px) {
+    .document-card,
+    .folder-card {
+        flex: 1 1 calc(33.33% - 16px);
+        max-width: calc(33.33% - 16px);
+    }
+}
 
 @media (max-width: 768px) {
     .menu-desplegable {
@@ -365,5 +488,19 @@ footer {
 
     .header-left {
         font-size: 24px;
+    }
+
+    .document-card,
+    .folder-card {
+        flex: 1 1 calc(50% - 16px);
+        max-width: calc(50% - 16px);
+    }
+}
+
+@media (max-width: 480px) {
+    .document-card,
+    .folder-card {
+        flex: 1 1 100%;
+        max-width: 100%;
     }
 }

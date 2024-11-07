@@ -1,8 +1,9 @@
 /* Variables de colores */
 :root {
-    --primary-color: #01C0B4;
-    --primary-hover-color: #019A92;
-    --background-color: #f4f4f4;
+    --primary-color: #4C4C6D;
+    --secondary-color: #1B9C85;
+    --accent-color: #E8F6EF;
+    --background-color: #F7F7F7;
     --text-color: #333;
     --secondary-text-color: #666;
     --white-color: #fff;
@@ -107,7 +108,7 @@ header {
 }
 
 .menu-desplegable ul li a:hover {
-    background-color: var(--primary-hover-color);
+    background-color: var(--secondary-color);
     padding: 8px;
     border-radius: 5px;
 }
@@ -164,7 +165,7 @@ header {
 
 .card form button {
     width: 100%;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: var(--white-color);
     border: none;
     padding: 12px;
@@ -175,7 +176,7 @@ header {
 }
 
 .card form button:hover {
-    background-color: var(--primary-hover-color);
+    background-color: var(--primary-color);
 }
 
 .logo {
@@ -192,6 +193,33 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
+}
+
+.home-card {
+    background-image: linear-gradient(135deg, var(--accent-color) 25%, transparent 25%), linear-gradient(225deg, var(--accent-color) 25%, transparent 25%), linear-gradient(45deg, var(--accent-color) 25%, transparent 25%), linear-gradient(315deg, var(--accent-color) 25%, var(--white-color) 25%);
+    background-position: 10px 0, 10px 0, 0 0, 0 0;
+    background-size: 20px 20px;
+    background-repeat: repeat;
+    text-align: center;
+}
+
+.welcome-section {
+    padding: 24px;
+    background-color: var(--white-color);
+    border-radius: 10px;
+    margin-bottom: 24px;
+    box-shadow: var(--box-shadow);
+}
+
+.welcome-section h1 {
+    font-size: 28px;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+}
+
+.welcome-section p {
+    font-size: 16px;
+    color: var(--secondary-text-color);
 }
 
 .home-section {
@@ -212,6 +240,11 @@ footer {
     box-shadow: var(--box-shadow);
     cursor: pointer;
     text-align: center;
+    transition: transform 0.2s;
+}
+
+.overview:hover {
+    transform: translateY(-5px);
 }
 
 .overview h3 {
@@ -225,8 +258,10 @@ footer {
     color: var(--secondary-text-color);
 }
 
-.overview:hover {
-    background-color: #f9f9f9;
+.overview i {
+    font-size: 40px;
+    color: var(--secondary-color);
+    margin-bottom: 12px;
 }
 
 .dashboard {
@@ -285,7 +320,7 @@ footer {
 }
 
 .user-message {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: var(--white-color);
     align-self: flex-end;
 }
@@ -313,7 +348,7 @@ footer {
 
 #ai-chat-form button {
     padding: 12px 16px;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: var(--white-color);
     border: none;
     border-radius: 10px;
@@ -321,7 +356,7 @@ footer {
 }
 
 #ai-chat-form button:hover {
-    background-color: var(--primary-hover-color);
+    background-color: var(--primary-color);
 }
 
 .document-management {
@@ -341,7 +376,7 @@ footer {
 
 .upload-label,
 .create-folder-button {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: var(--white-color);
     border: none;
     padding: 12px 16px;
@@ -357,7 +392,7 @@ footer {
 
 .upload-label:hover,
 .create-folder-button:hover {
-    background-color: var(--primary-hover-color);
+    background-color: var(--primary-color);
 }
 
 #documents-container {
@@ -368,7 +403,7 @@ footer {
 .folder,
 .document {
     padding: 10px;
-    background-color: #f9f9f9;
+    background-color: var(--white-color);
     border-radius: 10px;
     margin-bottom: 10px;
     cursor: pointer;
@@ -377,9 +412,15 @@ footer {
     position: relative;
 }
 
+.folder-header {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
 .folder:hover,
 .document:hover {
-    background-color: #eaeaea;
+    background-color: var(--accent-color);
 }
 
 .folder button,
@@ -397,8 +438,9 @@ footer {
     width: 100%;
 }
 
-.create-group-button {
-    background-color: var(--primary-color);
+.create-group-button,
+.add-friend-button {
+    background-color: var(--secondary-color);
     color: var(--white-color);
     border: none;
     padding: 12px 16px;
@@ -406,21 +448,23 @@ footer {
     font-weight: bold;
     border-radius: 10px;
     cursor: pointer;
-    width: 100%;
-    margin-bottom: 16px;
+    width: calc(50% - 8px);
+    margin: 4px;
 }
 
-.create-group-button:hover {
-    background-color: var(--primary-hover-color);
+.create-group-button:hover,
+.add-friend-button:hover {
+    background-color: var(--primary-color);
 }
 
 #groups-container {
     width: 100%;
+    margin-top: 16px;
 }
 
 .group {
     padding: 16px;
-    background-color: #f9f9f9;
+    background-color: var(--white-color);
     border-radius: 10px;
     margin-bottom: 10px;
     cursor: pointer;
@@ -429,7 +473,23 @@ footer {
 }
 
 .group:hover {
-    background-color: #eaeaea;
+    background-color: var(--accent-color);
+}
+
+.friends-list {
+    margin-top: 24px;
+}
+
+.friends-list h3 {
+    font-size: 18px;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+}
+
+.friends-list p {
+    font-size: 14px;
+    color: var(--text-color);
+    margin-bottom: 8px;
 }
 
 .dropdown-content {
@@ -470,6 +530,52 @@ footer {
 
 .profile-img-upload {
     margin-bottom: 16px;
+}
+
+.news-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 700px;
+    margin-top: 16px;
+}
+
+.news-section button {
+    width: 100%;
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.news-section button:hover {
+    background-color: var(--primary-color);
+}
+
+.news-iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    margin-top: 16px;
+    display: none;
+}
+
+#rocket-chat-iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    margin-top: 16px;
 }
 
 @media (max-width: 768px) {

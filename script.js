@@ -1,14 +1,14 @@
 // Definimos constantes para colores y URLs
 const COLORS = {
-    primary: '#4C4C6D',
-    secondary: '#1B9C85',
-    accent: '#E8F6EF',
-    background: '#F7F7F7',
-    text: '#333'
+    primary: '#1E1E2F',
+    secondary: '#4ECCA3',
+    accent: '#EEEEEE',
+    background: '#FFFFFF',
+    text: '#333333'
 };
 
 const URLS = {
-    rocketChat: 'https://open.rocket.chat/channel/general' // Reemplaza con tu instancia de Rocket.Chat
+    slack: 'https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA'
 };
 
 // Obtenemos los usuarios almacenados o inicializamos uno vacío
@@ -81,8 +81,6 @@ function handleRegistration(event) {
         profile: {},
         documents: [],
         folders: [],
-        groups: [],
-        friends: [],
         studyHours: 0,
         examDate: null,
         lastDocument: null
@@ -268,100 +266,14 @@ function showDocuments() {
 function showGroups() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('groups-screen');
-        displayGroups();
     } else {
         showLoginScreen();
     }
 }
 
-// Crear grupo
-function createGroup() {
-    const groupName = prompt('Nombre del nuevo grupo:');
-    if (groupName) {
-        const email = localStorage.getItem('email');
-        if (!users[email].groups) {
-            users[email].groups = [];
-        }
-        const groupData = {
-            name: groupName,
-            members: [email]
-        };
-        users[email].groups.push(groupData);
-        localStorage.setItem('users', JSON.stringify(users));
-        displayGroups();
-    }
-}
-
-// Añadir amigo
-function addFriend() {
-    const friendEmail = prompt('Correo electrónico del amigo a añadir:');
-    if (friendEmail && validateEmail(friendEmail)) {
-        const email = localStorage.getItem('email');
-        if (!users[friendEmail]) {
-            alert('El usuario no existe.');
-            return;
-        }
-        if (!users[email].friends) {
-            users[email].friends = [];
-        }
-        if (!users[email].friends.includes(friendEmail)) {
-            users[email].friends.push(friendEmail);
-            localStorage.setItem('users', JSON.stringify(users));
-            alert('Amigo añadido con éxito.');
-            displayGroups();
-        } else {
-            alert('Ya tienes agregado a este amigo.');
-        }
-    } else {
-        alert('Correo electrónico inválido.');
-    }
-}
-
-// Mostrar grupos
-function displayGroups() {
-    const email = localStorage.getItem('email');
-    const groupsContainer = document.getElementById('groups-container');
-    groupsContainer.innerHTML = '';
-
-    const userGroups = users[email].groups || [];
-    if (userGroups.length === 0) {
-        groupsContainer.textContent = 'No tienes grupos. Crea uno nuevo o únete a uno existente.';
-    } else {
-        userGroups.forEach(group => {
-            const groupElement = document.createElement('div');
-            groupElement.classList.add('group');
-            groupElement.textContent = group.name;
-            groupElement.addEventListener('click', () => {
-                openGroupChat(group.name);
-            });
-            groupsContainer.appendChild(groupElement);
-        });
-    }
-
-    // Mostrar amigos
-    const friendsList = document.createElement('div');
-    friendsList.classList.add('friends-list');
-    friendsList.innerHTML = '<h3>Amigos:</h3>';
-    const friends = users[email].friends || [];
-    if (friends.length === 0) {
-        friendsList.innerHTML += '<p>No has agregado amigos aún.</p>';
-    } else {
-        friends.forEach(friendEmail => {
-            const friendElement = document.createElement('p');
-            friendElement.textContent = users[friendEmail].name || friendEmail;
-            friendsList.appendChild(friendElement);
-        });
-    }
-    groupsContainer.appendChild(friendsList);
-}
-
-// Abrir chat del grupo
-function openGroupChat(groupName) {
-    const chatContainer = document.getElementById('chat-embed-container');
-    const rocketChatIframe = document.getElementById('rocket-chat-iframe');
-    chatContainer.style.display = 'block';
-    rocketChatIframe.src = URLS.rocketChat + '/' + encodeURIComponent(groupName);
-    // Puedes configurar la URL de Rocket.Chat para apuntar al canal específico
+// Función para redirigir a Slack
+function redirectToSlack() {
+    window.open(URLS.slack, '_blank');
 }
 
 // Mostrar pantalla de ¿Qué es Patience?
@@ -683,14 +595,4 @@ function filterDocuments() {
 function toggleMenu() {
     const menu = document.getElementById('menu-desplegable');
     menu.classList.toggle('show-menu');
-}
-
-// Función para redirigir a una URL
-function redirectToURL(url) {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        window.open(url, '_blank');
-    } else {
-        alert('Por favor, inicia sesión para acceder a esta funcionalidad.');
-        showLoginScreen();
-    }
 }

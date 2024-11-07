@@ -1,13 +1,13 @@
 /* Variables de colores */
 :root {
-    --primary-color: #1B263B;
-    --secondary-color: #FF6B6B;
-    --accent-color: #FFE66D;
-    --background-color: #F0F4F8;
-    --text-color: #333333;
-    --secondary-text-color: #666666;
-    --white-color: #FFFFFF;
-    --border-color: #DDDDDD;
+    --primary-color: #2E8BC0; /* Azul claro */
+    --secondary-color: #3AAFA9; /* Verde claro */
+    --accent-color: #F1F1F1; /* Gris claro */
+    --background-color: #FFFFFF; /* Blanco */
+    --text-color: #333333; /* Gris oscuro */
+    --secondary-text-color: #666666; /* Gris medio */
+    --white-color: #FFFFFF; /* Blanco */
+    --border-color: #DDDDDD; /* Gris claro */
     --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -333,8 +333,8 @@ footer {
 
 /* Botón de Slack */
 .join-slack-button {
-    background-color: #4A154B;
-    color: #FFFFFF;
+    background-color: var(--secondary-color);
+    color: var(--white-color);
     border: none;
     padding: 14px 20px;
     font-size: 16px;
@@ -347,7 +347,7 @@ footer {
 }
 
 .join-slack-button:hover {
-    background-color: #3E0F3E;
+    background-color: var(--primary-color);
 }
 
 /* Documentos */

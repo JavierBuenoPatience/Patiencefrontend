@@ -1,14 +1,14 @@
 // Definimos constantes para colores y URLs
 const COLORS = {
-    primary: '#01C0B4',
-    primaryHover: '#019A92',
-    background: '#f4f4f4',
+    primary: '#4C4C6D',
+    secondary: '#1B9C85',
+    accent: '#E8F6EF',
+    background: '#F7F7F7',
     text: '#333'
 };
 
 const URLS = {
-    slack: 'https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA',
-    iaBiologia: 'https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia'
+    rocketChat: 'https://open.rocket.chat/channel/general' // Reemplaza con tu instancia de Rocket.Chat
 };
 
 // Obtenemos los usuarios almacenados o inicializamos uno vacío
@@ -82,6 +82,7 @@ function handleRegistration(event) {
         documents: [],
         folders: [],
         groups: [],
+        friends: [],
         studyHours: 0,
         examDate: null,
         lastDocument: null
@@ -153,7 +154,7 @@ function handleProfileUpdate(event) {
 // Validación de email
 function validateEmail(email) {
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-    const hotmailRegex = /^[a-zA-Z0-9._%+-]+@hotmail\.com$/;
+    const hotmailRegex = /^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\.com$/;
     return gmailRegex.test(email) || hotmailRegex.test(email);
 }
 
@@ -235,9 +236,18 @@ function handleAISubmit(event) {
     aiMessage.textContent = 'Procesando...';
     chatWindow.appendChild(aiMessage);
 
-    // Aquí podrías integrar tu API de IA real
+    // Respuestas automáticas simuladas
+    const responses = [
+        'Claro, déjame ayudarte con eso.',
+        'Entiendo, aquí tienes la información que solicitas.',
+        'Gracias por tu pregunta, aquí está la respuesta.',
+        'Por supuesto, aquí tienes los detalles.',
+        'Déjame revisar y responderte.'
+    ];
+
     setTimeout(() => {
-        aiMessage.textContent = 'Esta es una respuesta simulada de la IA.';
+        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+        aiMessage.textContent = randomResponse;
     }, 1000);
 
     document.getElementById('ai-input').value = '';
@@ -274,12 +284,36 @@ function createGroup() {
         }
         const groupData = {
             name: groupName,
-            members: [email],
-            messages: []
+            members: [email]
         };
         users[email].groups.push(groupData);
         localStorage.setItem('users', JSON.stringify(users));
         displayGroups();
+    }
+}
+
+// Añadir amigo
+function addFriend() {
+    const friendEmail = prompt('Correo electrónico del amigo a añadir:');
+    if (friendEmail && validateEmail(friendEmail)) {
+        const email = localStorage.getItem('email');
+        if (!users[friendEmail]) {
+            alert('El usuario no existe.');
+            return;
+        }
+        if (!users[email].friends) {
+            users[email].friends = [];
+        }
+        if (!users[email].friends.includes(friendEmail)) {
+            users[email].friends.push(friendEmail);
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('Amigo añadido con éxito.');
+            displayGroups();
+        } else {
+            alert('Ya tienes agregado a este amigo.');
+        }
+    } else {
+        alert('Correo electrónico inválido.');
     }
 }
 
@@ -298,12 +332,36 @@ function displayGroups() {
             groupElement.classList.add('group');
             groupElement.textContent = group.name;
             groupElement.addEventListener('click', () => {
-                // Funcionalidad para abrir el chat del grupo
-                alert(`Abriendo grupo: ${group.name}`);
+                openGroupChat(group.name);
             });
             groupsContainer.appendChild(groupElement);
         });
     }
+
+    // Mostrar amigos
+    const friendsList = document.createElement('div');
+    friendsList.classList.add('friends-list');
+    friendsList.innerHTML = '<h3>Amigos:</h3>';
+    const friends = users[email].friends || [];
+    if (friends.length === 0) {
+        friendsList.innerHTML += '<p>No has agregado amigos aún.</p>';
+    } else {
+        friends.forEach(friendEmail => {
+            const friendElement = document.createElement('p');
+            friendElement.textContent = users[friendEmail].name || friendEmail;
+            friendsList.appendChild(friendElement);
+        });
+    }
+    groupsContainer.appendChild(friendsList);
+}
+
+// Abrir chat del grupo
+function openGroupChat(groupName) {
+    const chatContainer = document.getElementById('chat-embed-container');
+    const rocketChatIframe = document.getElementById('rocket-chat-iframe');
+    chatContainer.style.display = 'block';
+    rocketChatIframe.src = URLS.rocketChat + '/' + encodeURIComponent(groupName);
+    // Puedes configurar la URL de Rocket.Chat para apuntar al canal específico
 }
 
 // Mostrar pantalla de ¿Qué es Patience?
@@ -328,8 +386,24 @@ function showComingSoon() {
 function showNews() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('news-screen');
+        showNewsContent('csif'); // Mostrar CSIF por defecto
     } else {
         showLoginScreen();
+    }
+}
+
+// Mostrar contenido de noticias
+function showNewsContent(newsType) {
+    const csifIframe = document.getElementById('csif-iframe');
+    const sipriIframe = document.getElementById('sipri-iframe');
+
+    csifIframe.style.display = 'none';
+    sipriIframe.style.display = 'none';
+
+    if (newsType === 'csif') {
+        csifIframe.style.display = 'block';
+    } else if (newsType === 'sipri') {
+        sipriIframe.style.display = 'block';
     }
 }
 
@@ -442,7 +516,8 @@ function uploadDocuments(event) {
                 name: file.name,
                 lastOpened: null,
                 folder: null,
-                fileContent: e.target.result
+                fileContent: e.target.result,
+                fileType: file.type
             };
             users[email].documents.push(documentData);
             localStorage.setItem('users', JSON.stringify(users));
@@ -493,13 +568,16 @@ function displayDocuments() {
     userFolders.forEach(folder => {
         const folderElement = document.createElement('div');
         folderElement.classList.add('folder');
-        folderElement.textContent = folder.name;
+        const folderHeader = document.createElement('div');
+        folderHeader.classList.add('folder-header');
+        folderHeader.textContent = folder.name;
 
         const deleteButton = document.createElement('button');
         deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
         deleteButton.onclick = () => deleteFolder(folder.name);
 
-        folderElement.appendChild(deleteButton);
+        folderHeader.appendChild(deleteButton);
+        folderElement.appendChild(folderHeader);
 
         // Mostrar documentos dentro de la carpeta
         folder.documents.forEach(doc => {
@@ -525,9 +603,10 @@ function displayDocuments() {
         });
 
         const moveButton = document.createElement('button');
-        moveButton.textContent = 'Mover a carpeta';
-        moveButton.style.marginTop = '5px';
-        moveButton.onclick = () => {
+        moveButton.innerHTML = '<i class="fas fa-folder"></i>';
+        moveButton.style.marginLeft = '10px';
+        moveButton.onclick = (e) => {
+            e.stopPropagation();
             moveDocumentToFolder(email, doc.name);
         };
 
@@ -541,7 +620,19 @@ function openDocument(email, doc) {
     doc.lastOpened = new Date();
     users[email].lastDocument = doc.name;
     localStorage.setItem('users', JSON.stringify(users));
-    alert(`Abriendo documento: ${doc.name}`);
+
+    // Crear un blob y abrir en una nueva ventana
+    const byteCharacters = atob(doc.fileContent.split(',')[1]);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: doc.fileType });
+
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, '_blank');
+
     updateDocumentOverview();
 }
 

@@ -1,7 +1,7 @@
 /* Variables de colores */
 :root {
-    --primary-color: #2E8BC0; /* Azul claro */
-    --secondary-color: #6ec29b; /* Verde claro */
+    --primary-color: #6ec29b; /* Verde claro */
+    --secondary-color: #2E8BC0; /* Azul claro */
     --accent-color: #F1F1F1; /* Gris claro */
     --background-color: #FFFFFF; /* Blanco */
     --text-color: #333333; /* Gris oscuro */

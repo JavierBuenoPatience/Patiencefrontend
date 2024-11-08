@@ -1,10 +1,10 @@
 // Definimos constantes para colores y URLs
 const COLORS = {
-    primary: '#6ec29b', // Azul claro
-    secondary: '#2E8BC0', // Verde claro
-    accent: '#F1F1F1', // Gris claro
+    primary: '#6ec29b', // Verde claro
+    secondary: '#2E8BC0', // Azul claro
+    accent: '#F1F1F1',    // Gris claro
     background: '#FFFFFF', // Blanco
-    text: '#333333' // Gris oscuro
+    text: '#333333'       // Gris oscuro
 };
 
 const URLS = {
@@ -57,7 +57,6 @@ function handleRegistration(event) {
     const name = document.getElementById('reg-name').value;
     const email = document.getElementById('reg-email').value;
     const password = document.getElementById('reg-password').value;
-    const paymentConfirmed = document.getElementById('payment-confirmed').checked;
 
     if (!validateEmail(email)) {
         alert('Por favor, utiliza un correo de Gmail o Hotmail.');
@@ -66,11 +65,6 @@ function handleRegistration(event) {
 
     if (users[email]) {
         alert('Correo ya registrado. Por favor, inicia sesión.');
-        return;
-    }
-
-    if (!paymentConfirmed) {
-        alert('Por favor, completa el pago antes de registrarte.');
         return;
     }
 
@@ -285,6 +279,24 @@ function showTraining() {
     }
 }
 
+// Mostrar pantalla de Guía de IA
+function showGuideScreen() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        showScreen('guide-screen');
+    } else {
+        showLoginScreen();
+    }
+}
+
+// Mostrar pantalla de ¿Dónde te puedes preparar?
+function showDirectoryScreen() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        showScreen('directory-screen');
+    } else {
+        showLoginScreen();
+    }
+}
+
 // Mostrar pantalla de Próximamente
 function showComingSoon() {
     if (localStorage.getItem('loggedIn') === 'true') {
@@ -292,7 +304,6 @@ function showComingSoon() {
     } else {
         showLoginScreen();
     }
-}
 
 // Mostrar pantalla de noticias
 function showNews() {

@@ -1,7 +1,7 @@
 // Definimos constantes para colores y URLs
 const COLORS = {
-    primary: '#2E8BC0', // Azul claro
-    secondary: '#6ec29b', // Verde claro
+    primary: '#6ec29b', // Azul claro
+    secondary: '#2E8BC0', // Verde claro
     accent: '#F1F1F1', // Gris claro
     background: '#FFFFFF', // Blanco
     text: '#333333' // Gris oscuro

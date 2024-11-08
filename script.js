@@ -39,10 +39,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Manejo de la subida de documentos
-    document.getElementById('upload-document').addEventListener('change', uploadDocuments);
+    const uploadInput = document.getElementById('upload-document');
+    if (uploadInput) {
+        uploadInput.addEventListener('change', uploadDocuments);
+    }
 
     // Manejo de búsqueda de documentos
-    document.getElementById('document-search').addEventListener('input', filterDocuments);
+    const documentSearch = document.getElementById('document-search');
+    if (documentSearch) {
+        documentSearch.addEventListener('input', filterDocuments);
+    }
 });
 
 // Función genérica para mostrar pantallas
@@ -304,6 +310,7 @@ function showComingSoon() {
     } else {
         showLoginScreen();
     }
+}
 
 // Mostrar pantalla de noticias
 function showNews() {

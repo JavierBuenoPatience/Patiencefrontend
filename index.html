@@ -42,7 +42,8 @@
             <li><a href="#" onclick="showGroups()"><i class="fas fa-users"></i> Mis Grupos</a></li>
             <li><a href="#" onclick="showDocuments()"><i class="fas fa-folder"></i> Mis Documentos</a></li>
             <li><a href="#" onclick="showTraining()"><i class="fas fa-info-circle"></i> ¿Qué es Patience?</a></li>
-            <li><a href="#" onclick="showDirectoryScreen()"><i class="fas fa-map-marker-alt"></i> ¿Dónde Prepararse?</a></li>
+            <li><a href="#" onclick="showDirectoryScreen()"><i class="fas fa-map-marker-alt"></i> ¿Dónde Prepararse?</a>
+            </li>
             <li><a href="#" onclick="showGuideScreen()"><i class="fas fa-book"></i> Guía de IA</a></li>
             <li><a href="#" onclick="showComingSoon()"><i class="fas fa-school"></i> Mi Centro</a></li>
             <li><a href="#" onclick="showNews()"><i class="fas fa-newspaper"></i> Últimas Noticias</a></li>
@@ -215,7 +216,8 @@
         <div class="card" id="groups-screen" style="display: none;">
             <h2>Mis Grupos</h2>
             <div class="group-management">
-                <button class="join-slack-button" onclick="redirectToSlack()"><i class="fab fa-slack"></i> Unirse a Slack</button>
+                <button class="join-slack-button" onclick="redirectToSlack()"><i class="fab fa-slack"></i> Unirse a
+                    Slack</button>
             </div>
         </div>
 
@@ -253,45 +255,21 @@
         <!-- Pantalla de ¿Dónde te puedes preparar? -->
         <div class="card" id="directory-screen" style="display: none;">
             <h2>¿Dónde te puedes preparar?</h2>
-            <div class="directory-container">
-                <div class="directory-item">
-                    <h3>TecnosZubia</h3>
-                    <p><strong>Dirección:</strong> Calle García Lorca, 27-A Local 1, 18140 La Zubia, Granada</p>
-                    <p><strong>Teléfono:</strong> 958 890 387</p>
-                </div>
-                <div class="directory-item">
-                    <h3>ECOEM Sevilla</h3>
-                    <p><strong>Dirección:</strong> C/ Balbino Marrón, Edificio Viapol A, planta 3ª módulo 3, 41018
-                        Sevilla</p>
-                    <p><strong>Teléfonos:</strong> 954 65 23 21, 954 65 21 06, 655 460 324</p>
-                    <p><strong>Email:</strong> sevilla@ecoemformacion.es</p>
-                </div>
-                <div class="directory-item">
-                    <h3>ECOEM Huelva</h3>
-                    <p><strong>Dirección:</strong> C/ Vázquez López 21, entreplanta 3, 21001 Huelva</p>
-                    <p><strong>Teléfonos:</strong> 959 24 68 07, 682 060 940</p>
-                    <p><strong>Email:</strong> huelva@ecoemformacion.es</p>
-                </div>
-                <div class="directory-item">
-                    <h3>CEN Oposiciones Sevilla</h3>
-                    <p><strong>Dirección:</strong> C. Luis de Morales, 32, Edificio Forum 1ª Planta - Módulo 2, 41018
-                        Sevilla</p>
-                    <p><strong>Teléfono:</strong> 954 05 40 41</p>
-                </div>
-                <div class="directory-item">
-                    <h3>Preparador de Oposiciones de Biología y Geología</h3>
-                    <p><strong>Teléfono:</strong> 653 109 128</p>
-                    <p><strong>Email:</strong> contacto@preparadorbiologia.com</p>
-                    <p><strong>Redes sociales:</strong> Instagram (preparadorbiologia)</p>
-                </div>
-                <div class="directory-item">
-                    <h3>Cartuja Oposiciones</h3>
-                    <p><strong>Dirección:</strong> Avd. Camino de los Descubrimientos 19, Isla de La Cartuja, Sevilla,
-                        41092</p>
-                    <p><strong>Teléfonos:</strong> 954 467 464, 610 609 320</p>
-                    <p><strong>Horario de atención:</strong> Lunes a viernes: 8:30 a 21:00 h. | Sábados: 9:00 a 14:00 h.
-                        | Domingos: cerrado.</p>
-                </div>
+            <div class="filter-section">
+                <label for="city-filter">Ciudad:</label>
+                <select id="city-filter" onchange="filterAcademies()">
+                    <option value="">Todas</option>
+                    <!-- Las ciudades se cargarán dinámicamente -->
+                </select>
+
+                <label for="specialty-filter">Especialidad:</label>
+                <select id="specialty-filter" onchange="filterAcademies()">
+                    <option value="">Todas</option>
+                    <!-- Las especialidades se cargarán dinámicamente -->
+                </select>
+            </div>
+            <div class="directory-container" id="academy-container">
+                <!-- Las academias se mostrarán aquí -->
             </div>
         </div>
 
@@ -351,9 +329,11 @@
                 </div>
                 <div class="iframe-container">
                     <iframe id="csif-iframe" class="news-iframe"
-                        src="https://www.csif.es/andalucia/educacion/oposiciones" sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
+                        src="https://www.csif.es/andalucia/educacion/oposiciones"
+                        sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
                     <iframe id="sipri-iframe" class="news-iframe" style="display: none;"
-                        src="https://sipri.es/oposiciones/" sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
+                        src="https://sipri.es/oposiciones/"
+                        sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
                 </div>
             </div>
         </div>
@@ -361,7 +341,8 @@
         <!-- Pantalla de Ayuda -->
         <div class="card" id="help-screen" style="display: none;">
             <h2>Ayuda</h2>
-            <p>Si necesitas asistencia, puedes contactarnos en <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a>.</p>
+            <p>Si necesitas asistencia, puedes contactarnos en <a
+                    href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a>.</p>
         </div>
 
         <!-- Pantalla de Próximamente -->

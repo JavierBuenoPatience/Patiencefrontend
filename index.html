@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600;700&display=swap"
         rel="stylesheet">
     <!-- Iconos de FontAwesome -->
     <link rel="stylesheet"
@@ -42,8 +42,9 @@
             <li><a href="#" onclick="showGroups()"><i class="fas fa-users"></i> Mis Grupos</a></li>
             <li><a href="#" onclick="showDocuments()"><i class="fas fa-folder"></i> Mis Documentos</a></li>
             <li><a href="#" onclick="showTraining()"><i class="fas fa-info-circle"></i> ¿Qué es Patience?</a></li>
+            <li><a href="#" onclick="showDirectoryScreen()"><i class="fas fa-map-marker-alt"></i> ¿Dónde Prepararse?</a>
+            </li>
             <li><a href="#" onclick="showGuideScreen()"><i class="fas fa-book"></i> Guía de IA</a></li>
-            <li><a href="#" onclick="showDirectoryScreen()"><i class="fas fa-map-marker-alt"></i> ¿Dónde Prepararse?</a></li>
             <li><a href="#" onclick="showComingSoon()"><i class="fas fa-school"></i> Mi Centro</a></li>
             <li><a href="#" onclick="showNews()"><i class="fas fa-newspaper"></i> Últimas Noticias</a></li>
         </ul>
@@ -92,7 +93,7 @@
         <div class="card home-card" id="home-screen" style="display: none;">
             <div class="welcome-section">
                 <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
-                <p>Patience es tu plataforma integral para prepararte de manera efectiva y alcanzar el éxito en tus oposiciones.</p>
+                <p>Patience es tu plataforma integral para preparar oposiciones. Aquí encontrarás todo lo que necesitas para alcanzar tus objetivos.</p>
             </div>
             <div class="dashboard">
                 <div class="dashboard-item">
@@ -112,25 +113,25 @@
                 <!-- IA Especializada -->
                 <div class="overview" onclick="showAIScreen()">
                     <h3><i class="fas fa-robot"></i> IA Especializada</h3>
-                    <p>Interactúa con nuestra IA diseñada para apoyarte en tu especialidad.</p>
+                    <p>Interactúa con nuestra IA especializada en tu área de estudio.</p>
                 </div>
 
                 <!-- Mis Documentos -->
                 <div class="overview" onclick="showDocuments()">
                     <h3><i class="fas fa-folder"></i> Mis Documentos</h3>
-                    <p>Organiza y accede fácilmente a tus materiales de estudio.</p>
+                    <p>Gestiona y organiza tus materiales de estudio.</p>
                 </div>
 
                 <!-- Mis Grupos -->
                 <div class="overview" onclick="showGroups()">
                     <h3><i class="fas fa-users"></i> Mis Grupos</h3>
-                    <p>Conéctate y colabora con otros opositores.</p>
+                    <p>Conecta con otros opositores y comparte conocimientos.</p>
                 </div>
 
                 <!-- Últimas Noticias -->
                 <div class="overview" onclick="showNews()">
                     <h3><i class="fas fa-newspaper"></i> Últimas Noticias</h3>
-                    <p>Entérate de las novedades más recientes en el mundo de las oposiciones.</p>
+                    <p>Mantente informado sobre las novedades y convocatorias.</p>
                 </div>
             </div>
         </div>
@@ -223,26 +224,24 @@
         <div class="card" id="guide-screen" style="display: none;">
             <h2>Guía para aprovechar al máximo la IA</h2>
             <div class="guide-section">
-                <p>Descubre cómo sacar el máximo provecho de nuestra IA especializada para mejorar tu preparación:</p>
-                <ul>
-                    <li><strong>Genera exámenes aleatorios:</strong> Pídele a la IA que cree exámenes prácticos para tu especialidad.</li>
-                    <li><strong>Crea introducciones personalizadas:</strong> Solicita a la IA que te ayude a redactar introducciones para tus temas.</li>
-                    <li><strong>Obtén ejercicios prácticos:</strong> Pide a la IA ejercicios con soluciones para practicar.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Pantalla de ¿Qué es Patience? -->
-        <div class="card" id="training-screen" style="display: none;">
-            <h2>¿Qué es Patience?</h2>
-            <div class="training-section">
-                <p><strong>Patience</strong> es una plataforma integral diseñada para acompañarte en cada paso de tu preparación para las oposiciones. Ofrecemos herramientas personalizadas y una IA especializada para ayudarte a alcanzar tus metas.</p>
-                <h3>¿Cómo puede ayudarte Patience?</h3>
-                <ul>
-                    <li><strong>IA Especializada:</strong> Responde a tus dudas y te proporciona materiales adaptados a tu especialidad.</li>
-                    <li><strong>Gestión de Documentos:</strong> Organiza y accede a tus materiales de estudio en un solo lugar.</li>
-                    <li><strong>Comunidad:</strong> Conecta con otros opositores y comparte experiencias.</li>
-                </ul>
+                <div class="prompt-section">
+                    <h4>Cómo pedir a la IA que genere un examen aleatorio:</h4>
+                    <p><strong>Prompt:</strong> Genera un examen de oposición para la especialidad de <span
+                            class="prompt-hint">[tu especialidad]</span>. Incluye <span class="prompt-hint">[número de
+                            temas]</span> temas aleatorios y <span class="prompt-hint">[número de ejercicios
+                            prácticos]</span> ejercicios prácticos relacionados.</p>
+                </div>
+                <div class="prompt-section">
+                    <h4>Cómo pedir a la IA que genere una introducción desde cero:</h4>
+                    <p><strong>Prompt:</strong> Crea una introducción para el tema <span class="prompt-hint">[número o
+                            título del tema]</span> en <span class="prompt-hint">[idioma]</span>, utilizando un estilo
+                        formal y académico.</p>
+                </div>
+                <div class="prompt-section">
+                    <h4>Cómo pedir a la IA que genere ejercicios prácticos corregidos:</h4>
+                    <p><strong>Prompt:</strong> Proporciona 3 ejercicios prácticos para la especialidad de <span
+                            class="prompt-hint">[tu especialidad]</span> con sus soluciones detalladas.</p>
+                </div>
             </div>
         </div>
 
@@ -264,6 +263,21 @@
             </div>
             <div class="directory-container" id="academy-container">
                 <!-- Las academias se mostrarán aquí -->
+            </div>
+        </div>
+
+        <!-- Pantalla de ¿Qué es Patience? -->
+        <div class="card" id="training-screen" style="display: none;">
+            <h2>¿Qué es Patience?</h2>
+            <p>Patience es una plataforma diseñada para acompañarte en tu camino hacia el éxito en las oposiciones. Nuestra herramienta combina tecnología avanzada y recursos especializados para optimizar tu preparación.</p>
+            <div class="training-section">
+                <h3>¿Cómo puede ayudarte Patience?</h3>
+                <ul>
+                    <li><strong>IA Especializada:</strong> Interactúa con una inteligencia artificial entrenada en tu área de estudio para resolver dudas y ampliar conocimientos.</li>
+                    <li><strong>Gestión de Documentos:</strong> Organiza y accede fácilmente a todos tus materiales de estudio en un solo lugar.</li>
+                    <li><strong>Conexión con Otros Opositores:</strong> Únete a grupos de estudio y comparte experiencias y consejos.</li>
+                    <li><strong>Actualizaciones Constantes:</strong> Mantente informado sobre las últimas noticias y cambios en las convocatorias.</li>
+                </ul>
             </div>
         </div>
 

@@ -14,6 +14,138 @@ const URLS = {
 // Obtenemos los usuarios almacenados o inicializamos uno vacío
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
+// Datos de academias
+const academies = [
+    {
+        name: "TecnosZubia",
+        city: "Granada",
+        rating: "4.8/5",
+        phone: "958 890 387",
+        email: "info@tecnoszubia.es",
+        specialties: ["Maestros", "Profesores", "Administrativos", "Seguridad", "SAS"],
+    },
+    {
+        name: "CEAPRO",
+        city: "Sevilla",
+        rating: "4.7/5",
+        phone: "954 32 00 00",
+        email: "info@ceapro.es",
+        specialties: ["Junta de Andalucía", "Administración", "Justicia", "Educación", "SAS"],
+    },
+    {
+        name: "Academia Jesús Ayala",
+        city: "Málaga",
+        rating: "4.6/5",
+        phone: "952 29 00 00",
+        email: "info@academiajesusayala.com",
+        specialties: ["Junta de Andalucía", "Educación", "Justicia", "Seguridad"],
+    },
+    {
+        name: "Centro Andaluz de Estudios",
+        city: "Sevilla",
+        rating: "4.5/5",
+        phone: "955 11 22 33",
+        email: "info@centroandaluz.net",
+        specialties: ["Seguridad", "Bomberos", "Administración de Justicia"],
+    },
+    {
+        name: "Academia AM",
+        city: "Sevilla",
+        rating: "4.4/5",
+        phone: "954 21 43 21",
+        email: "info@academiaam.es",
+        specialties: ["Junta de Andalucía", "Estado", "Justicia", "Educación"],
+    },
+    {
+        name: "Academia Foro",
+        city: "Sevilla",
+        rating: "4.3/5",
+        phone: "954 22 33 44",
+        email: "info@academiaforo.es",
+        specialties: ["Junta de Andalucía", "Estado", "SAS"],
+    },
+    {
+        name: "Adriano Preparador",
+        city: "Sevilla",
+        rating: "4.2/5",
+        phone: "954 33 44 55",
+        email: "info@adrianopreparador.es",
+        specialties: ["Junta de Andalucía (cuerpos administrativos y técnicos)"],
+    },
+    {
+        name: "Academia Opositas",
+        city: "Córdoba",
+        rating: "4.1/5",
+        phone: "957 76 54 32",
+        email: "info@opositas.com",
+        specialties: ["Justicia", "Hacienda", "Informática", "Junta de Andalucía"],
+    },
+    {
+        name: "MasterD Sevilla",
+        city: "Sevilla",
+        rating: "4.0/5",
+        phone: "954 28 42 12",
+        email: "info@masterd.es",
+        specialties: ["Auxiliar Administrativo", "Guardia Civil", "Celador", "Auxiliar de Enfermería", "Correos"],
+    },
+    {
+        name: "Academia de Enseñanza Méndez Núñez",
+        city: "Sevilla",
+        rating: "4.0/5",
+        phone: "954 22 52 25",
+        email: "info@academiamn.com",
+        specialties: ["Junta de Andalucía", "Educación (Infantil, Primaria, Secundaria)"],
+    },
+    {
+        name: "Academia Cartuja",
+        city: "Sevilla",
+        rating: "3.9/5",
+        phone: "954 33 22 11",
+        email: "info@academiacartuja.com",
+        specialties: ["Magisterio", "Justicia", "Biblioteca", "Celador", "Correos"],
+    },
+    {
+        name: "Academia Progressus",
+        city: "Sevilla",
+        rating: "3.8/5",
+        phone: "954 44 55 66",
+        email: "info@academiaprogressus.com",
+        specialties: ["Policía Nacional", "Guardia Civil", "Penitenciarias"],
+    },
+    {
+        name: "Academia Palmapol",
+        city: "Sevilla",
+        rating: "3.7/5",
+        phone: "954 55 66 77",
+        email: "info@academiapalmapol.com",
+        specialties: ["Policía Nacional", "Guardia Civil", "Policía Local", "Bomberos"],
+    },
+    {
+        name: "Academia CARE Formación",
+        city: "Sevilla",
+        rating: "3.6/5",
+        phone: "954 66 77 88",
+        email: "info@careformacion.com",
+        specialties: ["Educación", "Sanidad", "Administración", "Justicia"],
+    },
+    {
+        name: "Academia Innova",
+        city: "Sevilla",
+        rating: "3.5/5",
+        phone: "954 77 88 99",
+        email: "info@academiainnova.com",
+        specialties: ["Estado", "Andalucía", "Justicia", "Correos"],
+    },
+    {
+        name: "Academia Claustro",
+        city: "Sevilla",
+        rating: "3.4/5",
+        phone: "954 00 11 22",
+        email: "info@academiaclaustro.com",
+        specialties: ["Educación", "Administración", "Justicia"],
+    }
+];
+
 document.addEventListener('DOMContentLoaded', () => {
     const menu = document.getElementById('menu-desplegable');
     const headerRight = document.querySelector('.header-right img');
@@ -49,6 +181,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (documentSearch) {
         documentSearch.addEventListener('input', filterDocuments);
     }
+
+    // Inicializar academia
+    initAcademyDirectory();
 });
 
 // Función genérica para mostrar pantallas
@@ -83,7 +218,8 @@ function handleRegistration(event) {
         folders: [],
         studyHours: 0,
         examDate: null,
-        lastDocument: null
+        lastDocument: null,
+        annotations: {}
     };
     localStorage.setItem('users', JSON.stringify(users));
 
@@ -298,9 +434,133 @@ function showGuideScreen() {
 function showDirectoryScreen() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('directory-screen');
+        renderAcademies();
     } else {
         showLoginScreen();
     }
+}
+
+// Inicializar el directorio de academias
+function initAcademyDirectory() {
+    populateFilters();
+    renderAcademies();
+}
+
+// Poblar los filtros de ciudad y especialidad
+function populateFilters() {
+    const cityFilter = document.getElementById('city-filter');
+    const specialtyFilter = document.getElementById('specialty-filter');
+
+    const cities = [...new Set(academies.map(a => a.city))];
+    const specialties = [...new Set(academies.flatMap(a => a.specialties))];
+
+    cities.sort().forEach(city => {
+        const option = document.createElement('option');
+        option.value = city;
+        option.textContent = city;
+        cityFilter.appendChild(option);
+    });
+
+    specialties.sort().forEach(spec => {
+        const option = document.createElement('option');
+        option.value = spec;
+        option.textContent = spec;
+        specialtyFilter.appendChild(option);
+    });
+}
+
+// Filtrar y renderizar academias
+function filterAcademies() {
+    const city = document.getElementById('city-filter').value;
+    const specialty = document.getElementById('specialty-filter').value;
+
+    let filteredAcademies = academies;
+
+    if (city) {
+        filteredAcademies = filteredAcademies.filter(a => a.city === city);
+    }
+
+    if (specialty) {
+        filteredAcademies = filteredAcademies.filter(a => a.specialties.includes(specialty));
+    }
+
+    renderAcademies(filteredAcademies);
+}
+
+// Renderizar academias
+function renderAcademies(academyList = academies) {
+    const academyContainer = document.getElementById('academy-container');
+    academyContainer.innerHTML = '';
+
+    if (academyList.length === 0) {
+        const noResults = document.createElement('p');
+        noResults.textContent = 'No se encontraron academias con los filtros seleccionados.';
+        academyContainer.appendChild(noResults);
+        return;
+    }
+
+    academyList.forEach(academy => {
+        const academyCard = document.createElement('div');
+        academyCard.classList.add('academy-card');
+
+        const header = document.createElement('div');
+        header.classList.add('academy-header');
+        const name = document.createElement('h3');
+        name.textContent = academy.name;
+        const rating = document.createElement('span');
+        rating.textContent = academy.rating;
+        header.appendChild(name);
+        header.appendChild(rating);
+
+        const info = document.createElement('div');
+        info.classList.add('academy-info');
+        info.innerHTML = `
+            <p><strong>Ciudad:</strong> ${academy.city}</p>
+            <p><strong>Teléfono:</strong> ${academy.phone}</p>
+            <p><strong>Email:</strong> ${academy.email}</p>
+            <p><strong>Especialidades:</strong> ${academy.specialties.join(', ')}</p>
+        `;
+
+        const annotationSection = document.createElement('div');
+        annotationSection.classList.add('annotation-section');
+        const annotationLabel = document.createElement('label');
+        annotationLabel.textContent = 'Anotaciones:';
+        const annotationTextarea = document.createElement('textarea');
+        annotationTextarea.rows = 3;
+        annotationTextarea.placeholder = 'Escribe tus anotaciones aquí...';
+        annotationTextarea.value = getUserAnnotation(academy.name);
+        annotationTextarea.addEventListener('input', () => {
+            saveUserAnnotation(academy.name, annotationTextarea.value);
+        });
+
+        annotationSection.appendChild(annotationLabel);
+        annotationSection.appendChild(annotationTextarea);
+
+        academyCard.appendChild(header);
+        academyCard.appendChild(info);
+        academyCard.appendChild(annotationSection);
+
+        academyContainer.appendChild(academyCard);
+    });
+}
+
+// Obtener anotaciones del usuario para una academia
+function getUserAnnotation(academyName) {
+    const email = localStorage.getItem('email');
+    if (users[email] && users[email].annotations && users[email].annotations[academyName]) {
+        return users[email].annotations[academyName];
+    }
+    return '';
+}
+
+// Guardar anotaciones del usuario para una academia
+function saveUserAnnotation(academyName, annotation) {
+    const email = localStorage.getItem('email');
+    if (!users[email].annotations) {
+        users[email].annotations = {};
+    }
+    users[email].annotations[academyName] = annotation;
+    localStorage.setItem('users', JSON.stringify(users));
 }
 
 // Mostrar pantalla de Próximamente

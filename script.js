@@ -1,10 +1,10 @@
 // Definimos constantes para colores y URLs
 const COLORS = {
-    primary: '#6ec29b', // Verde claro
-    secondary: '#2E8BC0', // Azul claro
-    accent: '#F1F1F1',    // Gris claro
+    primary: '#5D6D7E', // Azul grisáceo
+    secondary: '#1ABC9C', // Turquesa
+    accent: '#F2F4F4',    // Gris claro
     background: '#FFFFFF', // Blanco
-    text: '#333333'       // Gris oscuro
+    text: '#2C3E50'       // Gris oscuro
 };
 
 const URLS = {
@@ -364,28 +364,37 @@ function handleAISubmit(event) {
     userMessage.textContent = userInput;
     chatWindow.appendChild(userMessage);
 
-    // Simular una respuesta de la IA
+    // Simular una respuesta de la IA basada en palabras clave
     const aiMessage = document.createElement('div');
     aiMessage.classList.add('chat-message', 'ai-message');
     aiMessage.textContent = 'Procesando...';
     chatWindow.appendChild(aiMessage);
 
-    // Respuestas automáticas simuladas
-    const responses = [
-        'Claro, déjame ayudarte con eso.',
-        'Entiendo, aquí tienes la información que solicitas.',
-        'Gracias por tu pregunta, aquí está la respuesta.',
-        'Por supuesto, aquí tienes los detalles.',
-        'Déjame revisar y responderte.'
-    ];
-
     setTimeout(() => {
-        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-        aiMessage.textContent = randomResponse;
+        const response = getAIResponse(userInput);
+        aiMessage.textContent = response;
     }, 1000);
 
     document.getElementById('ai-input').value = '';
     chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+// Función para obtener respuesta simulada de la IA
+function getAIResponse(input) {
+    const keywords = {
+        'examen': 'Aquí tienes un examen de muestra para tu especialidad.',
+        'introducción': 'Esta es una introducción al tema que solicitaste.',
+        'ejercicios prácticos': 'Te proporciono algunos ejercicios prácticos con sus soluciones.',
+        'hola': '¡Hola! ¿En qué puedo ayudarte hoy?',
+        'gracias': '¡De nada! Estoy aquí para ayudarte.'
+    };
+
+    for (let keyword in keywords) {
+        if (input.toLowerCase().includes(keyword)) {
+            return keywords[keyword];
+        }
+    }
+    return 'Lo siento, no tengo información sobre eso. ¿Puedes reformular tu pregunta?';
 }
 
 // Mostrar pantalla de documentos

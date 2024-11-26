@@ -512,6 +512,79 @@ footer {
     border: none;
 }
 
+/* Estilos para el directorio de academias */
+.filter-section {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.filter-section label {
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.filter-section select {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.academy-card {
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    width: 100%;
+    box-shadow: var(--box-shadow);
+}
+
+.academy-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.academy-header h3 {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.academy-header span {
+    font-size: 18px;
+    color: var(--secondary-text-color);
+}
+
+.academy-info p {
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.annotation-section {
+    margin-top: 16px;
+}
+
+.annotation-section label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.annotation-section textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* Media Queries */
 @media (max-width: 1024px) {
     .document-card,
     .folder-card {
@@ -538,6 +611,14 @@ footer {
     .folder-card {
         flex: 1 1 calc(50% - 16px);
         max-width: calc(50% - 16px);
+    }
+
+    .filter-section {
+        flex-direction: column;
+    }
+
+    .filter-section select {
+        width: 100%;
     }
 }
 

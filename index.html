@@ -5,14 +5,14 @@
     <!-- Metadatos -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patience - Plataforma para Opositores</title>
+    <title>Patience - Revolucionando tu Preparación</title>
     <!-- Enlaces a CSS y fuentes -->
     <link rel="stylesheet" href="styles.css">
     <!-- Fuentes de Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <!-- Iconos de FontAwesome -->
     <link rel="stylesheet"
@@ -22,7 +22,9 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="header-left" onclick="handleLogoClick()">Patience</div>
+        <div class="header-left" onclick="handleLogoClick()">
+            <img src="assets/logo.png" alt="Logo Patience" class="header-logo">
+        </div>
         <div class="header-right">
             <i class="fas fa-bars" id="menu-icon" onclick="toggleMenu()"></i>
             <img src="assets/default-profile.png" alt="Icono de Perfil" id="profile-icon">
@@ -55,7 +57,8 @@
         <!-- Pantalla de Inicio de Sesión -->
         <div class="card" id="login-screen">
             <img src="assets/logo.png" alt="Logo Patience" class="logo">
-            <h2>Inicio de Sesión</h2>
+            <h2>Bienvenido a Patience</h2>
+            <p class="intro-text">La plataforma revolucionaria para opositores modernos</p>
             <form id="login-form" onsubmit="handleLogin(event)">
                 <label for="login-email">Correo Electrónico:</label>
                 <input type="email" id="login-email" name="email" required>
@@ -70,7 +73,8 @@
         <!-- Pantalla de Registro -->
         <div class="card" id="registration-screen" style="display: none;">
             <img src="assets/logo.png" alt="Logo Patience" class="logo">
-            <h2>Registro</h2>
+            <h2>Crea tu Cuenta</h2>
+            <p class="intro-text">Únete a la revolución en la preparación de oposiciones</p>
             <form id="registration-form" onsubmit="handleRegistration(event)">
                 <label for="reg-name">Nombre:</label>
                 <input type="text" id="reg-name" name="name" required>
@@ -92,9 +96,8 @@
         <!-- Pantalla de Inicio -->
         <div class="card home-card" id="home-screen" style="display: none;">
             <div class="welcome-section">
-                <h1>¡Bienvenid@, <span id="user-name-home"></span>!</h1>
-                <p>Patience es tu plataforma integral para preparar oposiciones. Aquí encontrarás todo lo que necesitas
-                    para alcanzar tus objetivos.</p>
+                <h1>¡Hola, <span id="user-name-home"></span>!</h1>
+                <p>Prepárate para tus oposiciones de manera innovadora y eficiente con Patience.</p>
             </div>
             <div class="dashboard">
                 <div class="dashboard-item">
@@ -139,7 +142,7 @@
 
         <!-- Pantalla de Perfil -->
         <div class="card" id="profile-screen" style="display: none;">
-            <h2>Perfil</h2>
+            <h2>Mi Perfil</h2>
             <form id="profile-form" onsubmit="handleProfileUpdate(event)">
                 <div class="profile-field">
                     <img id="profile-img" src="assets/default-profile.png" alt="Imagen de Perfil" class="profile-img">
@@ -178,7 +181,7 @@
                     <label for="location">Ubicación:</label>
                     <input type="text" id="location" name="location">
                 </div>
-                <button type="submit">Guardar</button>
+                <button type="submit">Guardar Cambios</button>
             </form>
         </div>
 
@@ -186,18 +189,15 @@
         <div class="card" id="ai-screen" style="display: none;">
             <h2>IA Especializada</h2>
             <div class="ai-instructions">
-                <p>¡Hola! Para acceder a nuestras herramientas de inteligencia artificial especializadas, sigue estos
-                    sencillos pasos:</p>
+                <p>Accede a nuestras herramientas de inteligencia artificial especializadas y lleva tu preparación al siguiente
+                    nivel.</p>
                 <ol>
-                    <li><strong>Haz clic en la tarjeta</strong> de tu especialidad en la lista de abajo.</li>
-                    <li>Serás redirigid@ a la página de ChatGPT de OpenAI.</li>
-                    <li><strong>Inicia sesión o crea una cuenta</strong> en OpenAI si aún no lo has hecho. Es gratuito y
-                        solo te tomará un minuto.</li>
-                    <li>Una vez dentro, podrás empezar a interactuar con la IA especializada en tu área. ¡Pregunta lo que
-                        necesites!</li>
+                    <li><strong>Selecciona tu especialidad</strong> en las tarjetas de abajo.</li>
+                    <li>Serás redirigido a la página de ChatGPT de OpenAI.</li>
+                    <li><strong>Inicia sesión o crea una cuenta</strong> en OpenAI si aún no lo has hecho. Es gratuito y rápido.
+                    </li>
+                    <li>¡Comienza a interactuar con la IA especializada en tu área!</li>
                 </ol>
-                <p>Si tienes alguna duda o necesitas ayuda, no dudes en contactarnos. ¡Estamos aquí para apoyarte en tu
-                    camino hacia el éxito!</p>
             </div>
             <div class="ai-cards-container">
                 <div class="ai-card" onclick="window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank')">
@@ -245,6 +245,7 @@
         <div class="card" id="groups-screen" style="display: none;">
             <h2>Mis Grupos</h2>
             <div class="group-management">
+                <p>Únete a nuestra comunidad y comparte experiencias con otros opositores.</p>
                 <button class="join-slack-button" onclick="redirectToSlack()"><i class="fab fa-slack"></i> Unirse a
                     Slack</button>
             </div>
@@ -254,41 +255,37 @@
         <div class="card" id="guide-screen" style="display: none;">
             <h2>Guía para Aprovechar al Máximo la IA</h2>
             <div class="guide-section">
-                <p>¡Bienvenid@ a la guía para sacarle el máximo partido a nuestras herramientas de IA! Aquí encontrarás
-                    consejos y ejemplos de cómo interactuar con la IA para mejorar tu preparación.</p>
+                <p>Descubre cómo interactuar eficazmente con nuestra IA especializada y maximiza tu aprendizaje.</p>
                 <div class="prompt-section">
                     <h4>Generar un examen aleatorio:</h4>
-                    <p><strong>Ejemplo de pregunta:</strong></p>
-                    <p>"Genera un examen de oposición para la especialidad de <span class="prompt-hint">[tu
-                            especialidad]</span>. Incluye <span class="prompt-hint">[número de temas]</span> temas
-                        aleatorios y <span class="prompt-hint">[número de ejercicios prácticos]</span> ejercicios prácticos
+                    <p><strong>Ejemplo:</strong> "Genera un examen de oposición para la especialidad de <span
+                            class="prompt-hint">Matemáticas</span> con 5 temas aleatorios y 2 ejercicios prácticos
                         relacionados."</p>
                 </div>
                 <div class="prompt-section">
                     <h4>Crear una introducción desde cero:</h4>
-                    <p><strong>Ejemplo de pregunta:</strong></p>
-                    <p>"Crea una introducción para el tema <span class="prompt-hint">[número o título del tema]</span> en
-                        <span class="prompt-hint">[idioma]</span>, utilizando un estilo formal y académico."</p>
+                    <p><strong>Ejemplo:</strong> "Crea una introducción para el tema <span class="prompt-hint">La Revolución
+                            Industrial</span> en <span class="prompt-hint">inglés</span>, utilizando un estilo formal y
+                        académico."</p>
                 </div>
                 <div class="prompt-section">
                     <h4>Obtener ejercicios prácticos corregidos:</h4>
-                    <p><strong>Ejemplo de pregunta:</strong></p>
-                    <p>"Proporciona 3 ejercicios prácticos para la especialidad de <span class="prompt-hint">[tu
-                            especialidad]</span> con sus soluciones detalladas."</p>
+                    <p><strong>Ejemplo:</strong> "Proporciona 3 ejercicios prácticos para la especialidad de <span
+                            class="prompt-hint">Biología</span> con sus soluciones detalladas."</p>
                 </div>
                 <div class="prompt-section">
                     <h4>Resolver dudas específicas:</h4>
-                    <p><strong>Ejemplo de pregunta:</strong></p>
-                    <p>"¿Puedes explicarme el concepto de <span class="prompt-hint">[tema específico]</span> y cómo se aplica
-                        en <span class="prompt-hint">[contexto]</span>?"</p>
+                    <p><strong>Ejemplo:</strong> "¿Puedes explicarme el concepto de <span class="prompt-hint">derivadas
+                            parciales</span> y cómo se aplica en <span class="prompt-hint">cálculo multivariable</span>?"</p>
                 </div>
-                <p>Recuerda que la IA está aquí para ayudarte. No dudes en hacer preguntas detalladas y personalizadas.</p>
+                <p>¡No dudes en ser creativo y explorar diferentes tipos de preguntas!</p>
             </div>
         </div>
 
         <!-- Pantalla de ¿Dónde te puedes preparar? Mejorada -->
         <div class="card" id="directory-screen" style="display: none;">
             <h2>¿Dónde te puedes preparar?</h2>
+            <p>Encuentra las mejores academias para tu preparación en tu ciudad.</p>
             <div class="filter-section">
                 <label for="city-filter">Ciudad:</label>
                 <select id="city-filter" onchange="filterAcademies()">
@@ -309,20 +306,19 @@
 
         <!-- Pantalla de ¿Qué es Patience? Mejorada -->
         <div class="card" id="training-screen" style="display: none;">
-            <h2>¿Qué es Patience?</h2>
-            <p>Patience es una plataforma diseñada para acompañarte en tu camino hacia el éxito en las oposiciones. Nuestra
-                herramienta combina tecnología avanzada y recursos especializados para optimizar tu preparación.</p>
+            <h2>Descubre Patience</h2>
+            <p>La plataforma que está revolucionando la forma de preparar oposiciones. Diseñada para ti, que buscas una
+                preparación eficiente, moderna y adaptada a tus necesidades.</p>
             <div class="training-section">
-                <h3>¿Cómo puede ayudarte Patience?</h3>
+                <h3>¿Por qué elegir Patience?</h3>
                 <ul>
-                    <li><strong>IA Especializada:</strong> Interactúa con una inteligencia artificial entrenada en tu área de
-                        estudio para resolver dudas y ampliar conocimientos.</li>
-                    <li><strong>Gestión de Documentos:</strong> Organiza y accede fácilmente a todos tus materiales de estudio
-                        en un solo lugar.</li>
-                    <li><strong>Conexión con Otros Opositores:</strong> Únete a grupos de estudio y comparte experiencias y
-                        consejos.</li>
-                    <li><strong>Actualizaciones Constantes:</strong> Mantente informado sobre las últimas noticias y cambios en
-                        las convocatorias.</li>
+                    <li><strong>Innovación Tecnológica:</strong> Utilizamos inteligencia artificial para potenciar tu aprendizaje.
+                    </li>
+                    <li><strong>Comunidad Activa:</strong> Conecta con otros opositores y comparte experiencias.</li>
+                    <li><strong>Recursos Personalizados:</strong> Accede a materiales y herramientas adaptadas a tu especialidad.
+                    </li>
+                    <li><strong>Actualizaciones Constantes:</strong> Siempre estamos mejorando y añadiendo nuevas funcionalidades.
+                    </li>
                 </ul>
             </div>
             <div class="training-image">
@@ -351,15 +347,16 @@
 
         <!-- Pantalla de Ayuda -->
         <div class="card" id="help-screen" style="display: none;">
-            <h2>Ayuda</h2>
-            <p>Si necesitas asistencia, puedes contactarnos en <a
-                    href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a>.</p>
+            <h2>¿Necesitas Ayuda?</h2>
+            <p>Estamos aquí para apoyarte en cada paso de tu preparación. Si tienes alguna duda o necesitas asistencia, no
+                dudes en contactarnos.</p>
+            <p>Escríbenos a: <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
         </div>
 
         <!-- Pantalla de Próximamente -->
         <div class="card" id="coming-soon-screen" style="display: none;">
-            <h2>Próximamente</h2>
-            <p>Estamos trabajando para traerte nuevas funcionalidades. ¡Mantente atent@!</p>
+            <h2>¡Próximamente!</h2>
+            <p>Estamos trabajando en nuevas funcionalidades sorprendentes. ¡Mantente atento a nuestras actualizaciones!</p>
         </div>
     </div>
 

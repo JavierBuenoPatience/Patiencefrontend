@@ -174,7 +174,7 @@ header {
 .card h2 {
     margin-bottom: 24px;
     color: var(--primary-color);
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
 }
 
@@ -249,13 +249,13 @@ footer {
 }
 
 .welcome-section h1 {
-    font-size: 32px;
+    font-size: 36px;
     color: var(--primary-color);
     margin-bottom: 16px;
 }
 
 .welcome-section p {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--secondary-text-color);
 }
 
@@ -285,13 +285,13 @@ footer {
 }
 
 .overview h3 {
-    font-size: 24px;
+    font-size: 28px;
     color: var(--primary-color);
     margin-bottom: 16px;
 }
 
 .overview p {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--secondary-text-color);
 }
 
@@ -321,13 +321,13 @@ footer {
 }
 
 .dashboard-item h3 {
-    font-size: 20px;
+    font-size: 22px;
     color: var(--text-color);
     margin-bottom: 12px;
 }
 
 .dashboard-item p {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--secondary-text-color);
 }
 
@@ -337,7 +337,7 @@ footer {
     color: var(--white-color);
     border: none;
     padding: 14px 20px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
     border-radius: 8px;
     cursor: pointer;
@@ -368,7 +368,7 @@ footer {
     color: var(--white-color);
     border: none;
     padding: 14px 20px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
     border-radius: 8px;
     cursor: pointer;
@@ -445,7 +445,7 @@ footer {
 
 .folder-header {
     font-weight: 700;
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 12px;
     color: var(--primary-color);
 }
@@ -486,7 +486,7 @@ footer {
     border: none;
     padding: 12px 20px;
     margin: 0 8px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     border-radius: 8px;
     cursor: pointer;
@@ -552,18 +552,26 @@ footer {
 }
 
 .academy-header h3 {
-    font-size: 24px;
+    font-size: 28px;
     color: var(--primary-color);
 }
 
 .academy-header span {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--secondary-text-color);
 }
 
 .academy-info p {
     margin-bottom: 8px;
-    font-size: 16px;
+    font-size: 18px;
+}
+
+.academy-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin: 16px 0;
+    border-radius: 8px;
 }
 
 .annotation-section {
@@ -592,7 +600,7 @@ footer {
 }
 
 .ai-instructions p {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--text-color);
     margin-bottom: 16px;
 }
@@ -603,38 +611,111 @@ footer {
 }
 
 .ai-instructions ol li {
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 8px;
 }
 
-.ai-links {
+.ai-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+}
+
+.ai-card {
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    width: calc(33% - 16px);
+    max-width: 300px;
+    cursor: pointer;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.2s;
+    text-align: center;
+}
+
+.ai-card:hover {
+    transform: translateY(-5px);
+}
+
+.ai-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.ai-card h3 {
+    padding: 16px;
+    font-size: 22px;
+    color: var(--primary-color);
+}
+
+/* Estilos para la Guía de IA */
+.guide-section {
     max-width: 800px;
     text-align: left;
 }
 
-.ai-links h3 {
+.guide-section p {
     font-size: 20px;
+    color: var(--text-color);
+    margin-bottom: 16px;
+}
+
+.prompt-section {
+    margin-bottom: 24px;
+}
+
+.prompt-section h4 {
+    font-size: 22px;
     color: var(--primary-color);
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
-.ai-links ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.ai-links ul li {
-    margin-bottom: 12px;
-}
-
-.ai-links ul li a {
+.prompt-section p {
     font-size: 18px;
-    color: var(--secondary-color);
-    text-decoration: none;
+    color: var(--text-color);
+    margin-bottom: 8px;
 }
 
-.ai-links ul li a:hover {
-    text-decoration: underline;
+.prompt-hint {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.training-section {
+    max-width: 800px;
+    text-align: left;
+}
+
+.training-section h3 {
+    font-size: 28px;
+    color: var(--primary-color);
+    margin-bottom: 16px;
+}
+
+.training-section ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.training-section ul li {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: var(--text-color);
+}
+
+.training-image {
+    margin-top: 24px;
+}
+
+.training-image img {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    border-radius: 12px;
 }
 
 /* Media Queries */
@@ -673,11 +754,16 @@ footer {
     .filter-section select {
         width: 100%;
     }
+
+    .ai-card {
+        width: calc(50% - 16px);
+    }
 }
 
 @media (max-width: 480px) {
     .document-card,
-    .folder-card {
+    .folder-card,
+    .ai-card {
         flex: 1 1 100%;
         max-width: 100%;
     }
@@ -689,5 +775,9 @@ footer {
 
     .iframe-container {
         height: 600px;
+    }
+
+    #ai-chat-window {
+        height: 300px;
     }
 }

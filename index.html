@@ -93,7 +93,8 @@
         <div class="card home-card" id="home-screen" style="display: none;">
             <div class="welcome-section">
                 <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
-                <p>Patience es tu plataforma integral para preparar oposiciones. Aquí encontrarás todo lo que necesitas para alcanzar tus objetivos.</p>
+                <p>Patience es tu plataforma integral para preparar oposiciones. Aquí encontrarás todo lo que necesitas
+                    para alcanzar tus objetivos.</p>
             </div>
             <div class="dashboard">
                 <div class="dashboard-item">
@@ -113,7 +114,7 @@
                 <!-- IA Especializada -->
                 <div class="overview" onclick="showAIScreen()">
                     <h3><i class="fas fa-robot"></i> IA Especializada</h3>
-                    <p>Interactúa con nuestra IA especializada en tu área de estudio.</p>
+                    <p>Accede a herramientas de IA diseñadas para tu especialidad.</p>
                 </div>
 
                 <!-- Mis Documentos -->
@@ -181,15 +182,37 @@
             </form>
         </div>
 
-        <!-- Pantalla de IA Especializada -->
+        <!-- Nueva Pantalla de IA Especializada -->
         <div class="card" id="ai-screen" style="display: none;">
             <h2>IA Especializada</h2>
-            <div class="ai-chat-container">
-                <div id="ai-chat-window" class="ai-chat-window"></div>
-                <form id="ai-chat-form" onsubmit="handleAISubmit(event)">
-                    <input type="text" id="ai-input" placeholder="Escribe tu pregunta aquí..." required>
-                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
-                </form>
+            <div class="ai-instructions">
+                <p>¡Hola! Para acceder a nuestras herramientas de inteligencia artificial especializadas, sigue estos
+                    sencillos pasos:</p>
+                <ol>
+                    <li><strong>Haz clic en el enlace</strong> correspondiente a tu especialidad en la lista de abajo.</li>
+                    <li>Serás redirigid@ a la página de ChatGPT de OpenAI.</li>
+                    <li><strong>Inicia sesión o crea una cuenta</strong> en OpenAI si aún no lo has hecho. Es gratuito y
+                        solo te tomará un minuto.</li>
+                    <li>Una vez dentro, podrás empezar a interactuar con la IA especializada en tu área. ¡Pregunta lo que
+                        necesites!</li>
+                </ol>
+                <p>Si tienes alguna duda o necesitas ayuda, no dudes en contactarnos. ¡Estamos aquí para apoyarte en tu
+                    camino hacia el éxito!</p>
+            </div>
+            <div class="ai-links">
+                <h3>Elige tu especialidad:</h3>
+                <ul>
+                    <li><a href="https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia" target="_blank">Patience -
+                            Biología y Geología (Secundaria)</a></li>
+                    <li><a href="https://chatgpt.com/g/g-mBJ4r4s53-patience-ingles" target="_blank">Patience - Inglés como
+                            segunda lengua (Secundaria)</a></li>
+                    <li><a href="#" onclick="alert('Enlace próximamente disponible.')">Patience - Francés como lengua
+                            extranjera (Secundaria)</a></li>
+                    <li><a href="#" onclick="alert('Enlace próximamente disponible.')">Patience - Matemáticas
+                            (Secundaria)</a></li>
+                    <li><a href="#" onclick="alert('Enlace próximamente disponible.')">Patience - Geografía e Historia
+                            (Secundaria)</a></li>
+                </ul>
             </div>
         </div>
 
@@ -234,8 +257,8 @@
                 <div class="prompt-section">
                     <h4>Cómo pedir a la IA que genere una introducción desde cero:</h4>
                     <p><strong>Prompt:</strong> Crea una introducción para el tema <span class="prompt-hint">[número o
-                            título del tema]</span> en <span class="prompt-hint">[idioma]</span>, utilizando un estilo
-                        formal y académico.</p>
+                            título del tema]</span> en <span class="prompt-hint">[idioma]</span>, utilizando un estilo formal
+                        y académico.</p>
                 </div>
                 <div class="prompt-section">
                     <h4>Cómo pedir a la IA que genere ejercicios prácticos corregidos:</h4>
@@ -269,14 +292,19 @@
         <!-- Pantalla de ¿Qué es Patience? -->
         <div class="card" id="training-screen" style="display: none;">
             <h2>¿Qué es Patience?</h2>
-            <p>Patience es una plataforma diseñada para acompañarte en tu camino hacia el éxito en las oposiciones. Nuestra herramienta combina tecnología avanzada y recursos especializados para optimizar tu preparación.</p>
+            <p>Patience es una plataforma diseñada para acompañarte en tu camino hacia el éxito en las oposiciones. Nuestra
+                herramienta combina tecnología avanzada y recursos especializados para optimizar tu preparación.</p>
             <div class="training-section">
                 <h3>¿Cómo puede ayudarte Patience?</h3>
                 <ul>
-                    <li><strong>IA Especializada:</strong> Interactúa con una inteligencia artificial entrenada en tu área de estudio para resolver dudas y ampliar conocimientos.</li>
-                    <li><strong>Gestión de Documentos:</strong> Organiza y accede fácilmente a todos tus materiales de estudio en un solo lugar.</li>
-                    <li><strong>Conexión con Otros Opositores:</strong> Únete a grupos de estudio y comparte experiencias y consejos.</li>
-                    <li><strong>Actualizaciones Constantes:</strong> Mantente informado sobre las últimas noticias y cambios en las convocatorias.</li>
+                    <li><strong>IA Especializada:</strong> Interactúa con una inteligencia artificial entrenada en tu área de
+                        estudio para resolver dudas y ampliar conocimientos.</li>
+                    <li><strong>Gestión de Documentos:</strong> Organiza y accede fácilmente a todos tus materiales de estudio
+                        en un solo lugar.</li>
+                    <li><strong>Conexión con Otros Opositores:</strong> Únete a grupos de estudio y comparte experiencias y
+                        consejos.</li>
+                    <li><strong>Actualizaciones Constantes:</strong> Mantente informado sobre las últimas noticias y cambios en
+                        las convocatorias.</li>
                 </ul>
             </div>
         </div>

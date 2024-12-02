@@ -1,10 +1,10 @@
 // Definimos constantes para colores y URLs
 const COLORS = {
-    primary: '#5D6D7E', // Azul grisáceo
+    primary: '#2C3E50', // Azul oscuro
     secondary: '#1ABC9C', // Turquesa
-    accent: '#F2F4F4',    // Gris claro
+    accent: '#ECF0F1',    // Gris claro
     background: '#FFFFFF', // Blanco
-    text: '#2C3E50'       // Gris oscuro
+    text: '#34495E'       // Gris oscuro
 };
 
 const URLS = {
@@ -14,57 +14,167 @@ const URLS = {
 // Obtenemos los usuarios almacenados o inicializamos uno vacío
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
-// Datos de academias
+// Datos de academias actualizados
 const academies = [
     {
         id: 1,
-        name: 'Academia Éxito',
-        city: 'Madrid',
-        phone: '910000001',
-        email: 'contacto@academiaexito.es',
-        specialties: ['Matemáticas', 'Física', 'Química'],
-        rating: '⭐⭐⭐⭐',
+        name: 'TecnosZubia',
+        city: 'Granada',
+        phone: '958 890 387',
+        email: 'info@tecnoszubia.es',
+        specialties: ['Maestros', 'Profesores', 'Administrativos', 'Seguridad', 'SAS'],
+        rating: '4.8/5',
         image: 'academia-1.jpg'
     },
     {
         id: 2,
-        name: 'Centro de Estudios Avanzados',
-        city: 'Barcelona',
-        phone: '930000002',
-        email: 'info@cea.com',
-        specialties: ['Lengua y Literatura', 'Historia'],
-        rating: '⭐⭐⭐⭐⭐',
+        name: 'CEAPRO',
+        city: 'Sevilla',
+        phone: '954 32 00 00',
+        email: 'info@ceapro.es',
+        specialties: ['Junta de Andalucía', 'Administración', 'Justicia', 'Educación', 'SAS'],
+        rating: '4.7/5',
         image: 'academia-2.jpg'
     },
     {
         id: 3,
-        name: 'Oposiciones Andalucía',
-        city: 'Sevilla',
-        phone: '954000003',
-        email: 'oposiciones@andalucia.es',
-        specialties: ['Biología', 'Geografía e Historia'],
-        rating: '⭐⭐⭐⭐',
+        name: 'Academia Jesús Ayala',
+        city: 'Málaga',
+        phone: '952 29 00 00',
+        email: 'info@academiajesusayala.com',
+        specialties: ['Junta de Andalucía', 'Educación', 'Justicia', 'Seguridad'],
+        rating: '4.6/5',
         image: 'academia-3.jpg'
     },
     {
         id: 4,
-        name: 'Formación Integral',
-        city: 'Valencia',
-        phone: '960000004',
-        email: 'formacion@integral.com',
-        specialties: ['Inglés', 'Francés'],
-        rating: '⭐⭐⭐',
+        name: 'Centro Andaluz de Estudios',
+        city: 'Sevilla',
+        phone: '955 11 22 33',
+        email: 'info@centroandaluz.net',
+        specialties: ['Seguridad', 'Bomberos', 'Administración de Justicia'],
+        rating: '4.5/5',
         image: 'academia-4.jpg'
     },
     {
         id: 5,
-        name: 'Prepárate Ya',
-        city: 'Bilbao',
-        phone: '944000005',
-        email: 'contacto@preparateya.es',
-        specialties: ['Matemáticas', 'Economía'],
-        rating: '⭐⭐⭐⭐⭐',
+        name: 'Academia AM',
+        city: 'Sevilla',
+        phone: '954 21 43 21',
+        email: 'info@academiaam.es',
+        specialties: ['Junta de Andalucía', 'Estado', 'Justicia', 'Educación'],
+        rating: '4.4/5',
         image: 'academia-5.jpg'
+    },
+    {
+        id: 6,
+        name: 'Academia Foro',
+        city: 'Sevilla',
+        phone: '954 22 33 44',
+        email: 'info@academiaforo.es',
+        specialties: ['Junta de Andalucía', 'Estado', 'SAS'],
+        rating: '4.3/5',
+        image: 'academia-6.jpg'
+    },
+    {
+        id: 7,
+        name: 'Adriano Preparador',
+        city: 'Sevilla',
+        phone: '954 33 44 55',
+        email: 'info@adrianopreparador.es',
+        specialties: ['Junta de Andalucía (cuerpos administrativos y técnicos)'],
+        rating: '4.2/5',
+        image: 'academia-7.jpg'
+    },
+    {
+        id: 8,
+        name: 'Academia Opositas',
+        city: 'Córdoba',
+        phone: '957 76 54 32',
+        email: 'info@opositas.com',
+        specialties: ['Justicia', 'Hacienda', 'Informática', 'Junta de Andalucía'],
+        rating: '4.1/5',
+        image: 'academia-8.jpg'
+    },
+    {
+        id: 9,
+        name: 'MasterD Sevilla',
+        city: 'Sevilla',
+        phone: '954 28 42 12',
+        email: 'info@masterd.es',
+        specialties: ['Auxiliar Administrativo', 'Guardia Civil', 'Celador', 'Auxiliar de Enfermería', 'Correos'],
+        rating: '4.0/5',
+        image: 'academia-9.jpg'
+    },
+    {
+        id: 10,
+        name: 'Academia de Enseñanza Méndez Núñez',
+        city: 'Sevilla',
+        phone: '954 22 52 25',
+        email: 'info@academiamn.com',
+        specialties: ['Junta de Andalucía', 'Educación (Infantil, Primaria, Secundaria)'],
+        rating: '4.0/5',
+        image: 'academia-10.jpg'
+    },
+    {
+        id: 11,
+        name: 'Academia Cartuja',
+        city: 'Sevilla',
+        phone: '954 33 22 11',
+        email: 'info@academiacartuja.com',
+        specialties: ['Magisterio', 'Justicia', 'Biblioteca', 'Celador', 'Correos'],
+        rating: '3.9/5',
+        image: 'academia-11.jpg'
+    },
+    {
+        id: 12,
+        name: 'Academia Progressus',
+        city: 'Sevilla',
+        phone: '954 44 55 66',
+        email: 'info@academiaprogressus.com',
+        specialties: ['Policía Nacional', 'Guardia Civil', 'Penitenciarias'],
+        rating: '3.8/5',
+        image: 'academia-12.jpg'
+    },
+    {
+        id: 13,
+        name: 'Academia Palmapol',
+        city: 'Sevilla',
+        phone: '954 55 66 77',
+        email: 'info@academiapalmapol.com',
+        specialties: ['Policía Nacional', 'Guardia Civil', 'Policía Local', 'Bomberos'],
+        rating: '3.7/5',
+        image: 'academia-13.jpg'
+    },
+    {
+        id: 14,
+        name: 'Academia CARE Formación',
+        city: 'Sevilla',
+        phone: '954 66 77 88',
+        email: 'info@careformacion.com',
+        specialties: ['Educación', 'Sanidad', 'Administración', 'Justicia'],
+        rating: '3.6/5',
+        image: 'academia-14.jpg'
+    },
+    {
+        id: 15,
+        name: 'Academia Innova',
+        city: 'Sevilla',
+        phone: '954 77 88 99',
+        email: 'info@academiainnova.com',
+        specialties: ['Estado', 'Andalucía', 'Justicia', 'Correos'],
+        rating: '3.5/5',
+        image: 'academia-15.jpg'
+    },
+    {
+        id: 16,
+        name: 'Academia Claustro',
+        city: 'Sevilla',
+        phone: '954 00 11 22',
+        email: 'info@academiaclaustro.com',
+        specialties: ['Educación', 'Administración', 'Justicia'],
+        rating: '3.4/5',
+        image: 'academia-16.jpg'
     }
 ];
 

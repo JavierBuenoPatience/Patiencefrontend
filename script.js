@@ -16,7 +16,56 @@ const users = JSON.parse(localStorage.getItem('users')) || {};
 
 // Datos de academias
 const academies = [
-    // (Los datos de las academias permanecen iguales)
+    {
+        id: 1,
+        name: 'Academia Éxito',
+        city: 'Madrid',
+        phone: '910000001',
+        email: 'contacto@academiaexito.es',
+        specialties: ['Matemáticas', 'Física', 'Química'],
+        rating: '⭐⭐⭐⭐',
+        image: 'academia-1.jpg'
+    },
+    {
+        id: 2,
+        name: 'Centro de Estudios Avanzados',
+        city: 'Barcelona',
+        phone: '930000002',
+        email: 'info@cea.com',
+        specialties: ['Lengua y Literatura', 'Historia'],
+        rating: '⭐⭐⭐⭐⭐',
+        image: 'academia-2.jpg'
+    },
+    {
+        id: 3,
+        name: 'Oposiciones Andalucía',
+        city: 'Sevilla',
+        phone: '954000003',
+        email: 'oposiciones@andalucia.es',
+        specialties: ['Biología', 'Geografía e Historia'],
+        rating: '⭐⭐⭐⭐',
+        image: 'academia-3.jpg'
+    },
+    {
+        id: 4,
+        name: 'Formación Integral',
+        city: 'Valencia',
+        phone: '960000004',
+        email: 'formacion@integral.com',
+        specialties: ['Inglés', 'Francés'],
+        rating: '⭐⭐⭐',
+        image: 'academia-4.jpg'
+    },
+    {
+        id: 5,
+        name: 'Prepárate Ya',
+        city: 'Bilbao',
+        phone: '944000005',
+        email: 'contacto@preparateya.es',
+        specialties: ['Matemáticas', 'Economía'],
+        rating: '⭐⭐⭐⭐⭐',
+        image: 'academia-5.jpg'
+    }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -340,10 +389,13 @@ function renderAcademies(academyList = academies) {
 
         const header = document.createElement('div');
         header.classList.add('academy-header');
+
         const name = document.createElement('h3');
         name.textContent = academy.name;
+
         const rating = document.createElement('span');
         rating.textContent = academy.rating;
+
         header.appendChild(name);
         header.appendChild(rating);
 
@@ -355,6 +407,11 @@ function renderAcademies(academyList = academies) {
             <p><strong>Email:</strong> ${academy.email}</p>
             <p><strong>Especialidades:</strong> ${academy.specialties.join(', ')}</p>
         `;
+
+        const image = document.createElement('img');
+        image.src = `assets/${academy.image || 'academia-default.jpg'}`;
+        image.alt = academy.name;
+        image.classList.add('academy-image');
 
         const annotationSection = document.createElement('div');
         annotationSection.classList.add('annotation-section');
@@ -372,6 +429,7 @@ function renderAcademies(academyList = academies) {
         annotationSection.appendChild(annotationTextarea);
 
         academyCard.appendChild(header);
+        academyCard.appendChild(image);
         academyCard.appendChild(info);
         academyCard.appendChild(annotationSection);
 

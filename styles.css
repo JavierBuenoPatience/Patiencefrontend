@@ -1,14 +1,14 @@
 /* Variables de colores */
 :root {
-    --primary-color: #5D6D7E; /* Azul grisáceo */
+    --primary-color: #2C3E50; /* Azul oscuro */
     --secondary-color: #1ABC9C; /* Turquesa */
-    --accent-color: #F2F4F4;    /* Gris claro */
+    --accent-color: #ECF0F1;    /* Gris claro */
     --background-color: #FFFFFF; /* Blanco */
-    --text-color: #2C3E50;      /* Gris oscuro */
+    --text-color: #34495E;      /* Gris oscuro */
     --secondary-text-color: #7F8C8D; /* Gris medio */
     --white-color: #FFFFFF;     /* Blanco */
     --border-color: #D5D8DC;    /* Gris claro */
-    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Reseteo y tipografía */
@@ -19,7 +19,7 @@
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     display: flex;
@@ -32,7 +32,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 24px;
+    padding: 16px 32px;
     background-color: var(--primary-color);
     color: var(--white-color);
     position: fixed;
@@ -42,9 +42,14 @@ header {
 }
 
 .header-left {
-    font-size: 28px;
-    font-weight: 700;
+    display: flex;
+    align-items: center;
     cursor: pointer;
+}
+
+.header-logo {
+    width: 150px;
+    height: auto;
 }
 
 .header-right {
@@ -54,14 +59,14 @@ header {
 }
 
 #menu-icon {
-    font-size: 24px;
-    margin-right: 16px;
+    font-size: 28px;
+    margin-right: 20px;
     cursor: pointer;
 }
 
 .header-right img {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
     border-radius: 50%;
     object-fit: cover;
@@ -73,19 +78,20 @@ header {
     position: absolute;
     background-color: var(--white-color);
     box-shadow: var(--box-shadow);
-    padding: 12px;
+    padding: 16px;
     z-index: 1;
     right: 0;
-    top: 60px;
+    top: 70px;
     border-radius: 8px;
 }
 
 .dropdown-content a {
     color: var(--text-color);
-    padding: 8px 0;
+    padding: 12px 0;
     text-decoration: none;
     display: block;
     border-bottom: 1px solid var(--border-color);
+    font-size: 18px;
 }
 
 .dropdown-content a:last-child {
@@ -106,10 +112,10 @@ header {
     position: fixed;
     top: 80px;
     left: 0;
-    width: 250px;
+    width: 280px;
     background-color: var(--primary-color);
     color: var(--white-color);
-    padding: 20px 10px;
+    padding: 30px 20px;
     box-shadow: var(--box-shadow);
     z-index: 999;
     display: none;
@@ -128,31 +134,31 @@ header {
 }
 
 .menu-desplegable ul li {
-    margin: 20px 0;
+    margin: 25px 0;
 }
 
 .menu-desplegable ul li a {
     color: var(--white-color);
     text-decoration: none;
-    font-size: 18px;
+    font-size: 20px;
     display: flex;
     align-items: center;
 }
 
 .menu-desplegable ul li a i {
-    margin-right: 12px;
+    margin-right: 16px;
 }
 
 .menu-desplegable ul li a:hover {
     background-color: var(--secondary-color);
-    padding: 8px;
+    padding: 12px;
     border-radius: 8px;
 }
 
 /* Contenido principal */
 .main-content {
     flex: 1;
-    padding: 100px 24px 60px 24px;
+    padding: 120px 32px 80px 32px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -162,9 +168,9 @@ header {
     width: 100%;
     max-width: 1200px;
     background-color: var(--white-color);
-    padding: 32px;
-    margin-bottom: 24px;
-    border-radius: 12px;
+    padding: 40px;
+    margin-bottom: 32px;
+    border-radius: 16px;
     box-shadow: var(--box-shadow);
     display: flex;
     flex-direction: column;
@@ -174,12 +180,21 @@ header {
 .card h2 {
     margin-bottom: 24px;
     color: var(--primary-color);
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 700;
+    text-align: center;
+}
+
+.card .intro-text {
+    font-size: 20px;
+    color: var(--secondary-text-color);
+    margin-bottom: 32px;
+    text-align: center;
 }
 
 .card form {
     width: 100%;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
 }
@@ -188,16 +203,17 @@ header {
     margin-bottom: 8px;
     font-weight: 600;
     color: var(--text-color);
+    font-size: 18px;
 }
 
 .card form input,
 .card form select {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     margin-bottom: 20px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .card form button {
@@ -205,9 +221,9 @@ header {
     background-color: var(--secondary-color);
     color: var(--white-color);
     border: none;
-    padding: 14px;
+    padding: 16px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 20px;
     border-radius: 8px;
     font-weight: 700;
     transition: background-color 0.3s;
@@ -217,18 +233,33 @@ header {
     background-color: var(--primary-color);
 }
 
+.card p {
+    font-size: 18px;
+    color: var(--text-color);
+    margin-top: 16px;
+}
+
+.card p button {
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 18px;
+}
+
 .logo {
-    max-width: 150px;
+    max-width: 200px;
     margin-bottom: 24px;
 }
 
 /* Footer */
 footer {
     text-align: center;
-    padding: 16px 24px;
+    padding: 24px 32px;
     background-color: var(--primary-color);
     color: var(--white-color);
-    font-size: 14px;
+    font-size: 16px;
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -241,21 +272,21 @@ footer {
 }
 
 .welcome-section {
-    padding: 32px;
+    padding: 40px;
     background-color: var(--white-color);
-    border-radius: 12px;
-    margin-bottom: 32px;
+    border-radius: 16px;
+    margin-bottom: 40px;
     box-shadow: var(--box-shadow);
 }
 
 .welcome-section h1 {
-    font-size: 36px;
+    font-size: 40px;
     color: var(--primary-color);
     margin-bottom: 16px;
 }
 
 .welcome-section p {
-    font-size: 20px;
+    font-size: 22px;
     color: var(--secondary-text-color);
 }
 
@@ -263,17 +294,17 @@ footer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 24px;
+    gap: 32px;
     width: 100%;
-    margin-top: 32px;
+    margin-top: 40px;
 }
 
 .overview {
     width: 100%;
-    max-width: 400px;
+    max-width: 360px;
     background-color: var(--white-color);
-    padding: 32px;
-    border-radius: 12px;
+    padding: 40px;
+    border-radius: 16px;
     box-shadow: var(--box-shadow);
     cursor: pointer;
     text-align: center;
@@ -291,43 +322,43 @@ footer {
 }
 
 .overview p {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--secondary-text-color);
 }
 
 .overview i {
-    font-size: 48px;
+    font-size: 60px;
     color: var(--secondary-color);
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 }
 
 .dashboard {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 24px;
+    gap: 32px;
     width: 100%;
-    margin-top: 32px;
+    margin-top: 40px;
 }
 
 .dashboard-item {
     width: 100%;
-    max-width: 280px;
+    max-width: 300px;
     background-color: var(--white-color);
-    padding: 24px;
-    border-radius: 12px;
+    padding: 32px;
+    border-radius: 16px;
     box-shadow: var(--box-shadow);
     text-align: center;
 }
 
 .dashboard-item h3 {
-    font-size: 22px;
+    font-size: 24px;
     color: var(--text-color);
     margin-bottom: 12px;
 }
 
 .dashboard-item p {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--secondary-text-color);
 }
 
@@ -336,13 +367,13 @@ footer {
     background-color: var(--secondary-color);
     color: var(--white-color);
     border: none;
-    padding: 14px 20px;
-    font-size: 18px;
+    padding: 16px 24px;
+    font-size: 20px;
     font-weight: 700;
     border-radius: 8px;
     cursor: pointer;
     width: 100%;
-    margin-top: 16px;
+    margin-top: 24px;
     transition: background-color 0.3s;
 }
 
@@ -359,7 +390,7 @@ footer {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
 }
 
 .upload-label,
@@ -367,8 +398,8 @@ footer {
     background-color: var(--secondary-color);
     color: var(--white-color);
     border: none;
-    padding: 14px 20px;
-    font-size: 18px;
+    padding: 16px 24px;
+    font-size: 20px;
     font-weight: 700;
     border-radius: 8px;
     cursor: pointer;
@@ -384,16 +415,16 @@ footer {
 }
 
 .search-filter {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
     width: 100%;
 }
 
 #document-search {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 #documents-container {
@@ -408,7 +439,7 @@ footer {
 .document-card,
 .folder-card {
     background-color: var(--white-color);
-    padding: 20px;
+    padding: 24px;
     border-radius: 8px;
     box-shadow: var(--box-shadow);
     cursor: pointer;
@@ -427,7 +458,7 @@ footer {
 
 .document-card i,
 .folder-card i {
-    font-size: 32px;
+    font-size: 36px;
     margin-bottom: 12px;
     color: var(--secondary-color);
 }
@@ -445,7 +476,7 @@ footer {
 
 .folder-header {
     font-weight: 700;
-    font-size: 20px;
+    font-size: 22px;
     margin-bottom: 12px;
     color: var(--primary-color);
 }
@@ -459,7 +490,7 @@ footer {
 .folder-documents .document-card {
     flex: none;
     max-width: none;
-    padding: 10px;
+    padding: 12px;
     box-shadow: none;
     border: 1px solid var(--border-color);
 }
@@ -477,16 +508,16 @@ footer {
 }
 
 .news-buttons {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
 }
 
 .news-buttons button {
     background-color: var(--secondary-color);
     color: var(--white-color);
     border: none;
-    padding: 12px 20px;
-    margin: 0 8px;
-    font-size: 18px;
+    padding: 16px 24px;
+    margin: 0 12px;
+    font-size: 20px;
     font-weight: 600;
     border-radius: 8px;
     cursor: pointer;
@@ -517,37 +548,43 @@ footer {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: 24px;
+    margin-bottom: 32px;
+    align-items: center;
 }
 
 .filter-section label {
     font-weight: 600;
     margin-right: 8px;
+    font-size: 18px;
 }
 
 .filter-section select {
     flex: 1;
-    padding: 12px;
+    padding: 14px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .academy-card {
     background-color: var(--white-color);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 24px;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
     width: 100%;
     box-shadow: var(--box-shadow);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
 }
 
 .academy-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
     margin-bottom: 16px;
 }
 
@@ -557,75 +594,81 @@ footer {
 }
 
 .academy-header span {
-    font-size: 20px;
+    font-size: 22px;
     color: var(--secondary-text-color);
+}
+
+.academy-info {
+    flex: 1;
 }
 
 .academy-info p {
     margin-bottom: 8px;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .academy-image {
     width: 100%;
     max-width: 400px;
     height: auto;
-    margin: 16px 0;
     border-radius: 8px;
+    object-fit: cover;
 }
 
 .annotation-section {
     margin-top: 16px;
+    width: 100%;
 }
 
 .annotation-section label {
     font-weight: 600;
     display: block;
     margin-bottom: 8px;
+    font-size: 18px;
 }
 
 .annotation-section textarea {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 /* Estilos para la nueva IA Especializada */
 .ai-instructions {
     max-width: 800px;
-    text-align: left;
-    margin-bottom: 24px;
+    text-align: center;
+    margin-bottom: 32px;
 }
 
 .ai-instructions p {
-    font-size: 20px;
+    font-size: 22px;
     color: var(--text-color);
-    margin-bottom: 16px;
+    margin-bottom: 24px;
 }
 
 .ai-instructions ol {
     margin-left: 20px;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
 }
 
 .ai-instructions ol li {
-    font-size: 18px;
-    margin-bottom: 8px;
+    font-size: 20px;
+    margin-bottom: 12px;
 }
 
 .ai-cards-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: 32px;
     justify-content: center;
 }
 
 .ai-card {
     background-color: var(--white-color);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 16px;
     width: calc(33% - 16px);
     max-width: 300px;
     cursor: pointer;
@@ -642,13 +685,13 @@ footer {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
 }
 
 .ai-card h3 {
     padding: 16px;
-    font-size: 22px;
+    font-size: 24px;
     color: var(--primary-color);
 }
 
@@ -659,25 +702,25 @@ footer {
 }
 
 .guide-section p {
-    font-size: 20px;
+    font-size: 22px;
     color: var(--text-color);
-    margin-bottom: 16px;
-}
-
-.prompt-section {
     margin-bottom: 24px;
 }
 
+.prompt-section {
+    margin-bottom: 32px;
+}
+
 .prompt-section h4 {
-    font-size: 22px;
+    font-size: 24px;
     color: var(--primary-color);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 .prompt-section p {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--text-color);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 .prompt-hint {
@@ -691,9 +734,9 @@ footer {
 }
 
 .training-section h3 {
-    font-size: 28px;
+    font-size: 32px;
     color: var(--primary-color);
-    margin-bottom: 16px;
+    margin-bottom: 24px;
 }
 
 .training-section ul {
@@ -702,20 +745,20 @@ footer {
 }
 
 .training-section ul li {
-    font-size: 18px;
-    margin-bottom: 12px;
+    font-size: 20px;
+    margin-bottom: 16px;
     color: var(--text-color);
 }
 
 .training-image {
-    margin-top: 24px;
+    margin-top: 32px;
 }
 
 .training-image img {
     width: 100%;
     max-width: 800px;
     height: auto;
-    border-radius: 12px;
+    border-radius: 16px;
 }
 
 /* Media Queries */
@@ -729,7 +772,7 @@ footer {
 
 @media (max-width: 768px) {
     .menu-desplegable {
-        width: 200px;
+        width: 240px;
     }
 
     .overview,
@@ -742,7 +785,8 @@ footer {
     }
 
     .document-card,
-    .folder-card {
+    .folder-card,
+    .ai-card {
         flex: 1 1 calc(50% - 16px);
         max-width: calc(50% - 16px);
     }
@@ -753,10 +797,6 @@ footer {
 
     .filter-section select {
         width: 100%;
-    }
-
-    .ai-card {
-        width: calc(50% - 16px);
     }
 }
 
@@ -769,7 +809,7 @@ footer {
     }
 
     .news-buttons button {
-        margin: 8px 0;
+        margin: 12px 0;
         width: 100%;
     }
 

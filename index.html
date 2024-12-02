@@ -25,7 +25,7 @@
         <div class="header-left" onclick="handleLogoClick()">Patience</div>
         <div class="header-right">
             <i class="fas fa-bars" id="menu-icon" onclick="toggleMenu()"></i>
-            <img src="assets/default-profile.png" alt="Profile Icon" id="profile-icon">
+            <img src="assets/default-profile.png" alt="Icono de Perfil" id="profile-icon">
             <div id="profile-dropdown" class="dropdown-content">
                 <a href="#" onclick="handleLogout()">Cerrar sesión</a>
                 <a href="#" onclick="showHelp()">Ayuda</a>
@@ -54,7 +54,7 @@
     <div class="main-content">
         <!-- Pantalla de Inicio de Sesión -->
         <div class="card" id="login-screen">
-            <img src="assets/logo.png" alt="Patience Logo" class="logo">
+            <img src="assets/logo.png" alt="Logo Patience" class="logo">
             <h2>Inicio de Sesión</h2>
             <form id="login-form" onsubmit="handleLogin(event)">
                 <label for="login-email">Correo Electrónico:</label>
@@ -69,7 +69,7 @@
 
         <!-- Pantalla de Registro -->
         <div class="card" id="registration-screen" style="display: none;">
-            <img src="assets/logo.png" alt="Patience Logo" class="logo">
+            <img src="assets/logo.png" alt="Logo Patience" class="logo">
             <h2>Registro</h2>
             <form id="registration-form" onsubmit="handleRegistration(event)">
                 <label for="reg-name">Nombre:</label>
@@ -92,7 +92,7 @@
         <!-- Pantalla de Inicio -->
         <div class="card home-card" id="home-screen" style="display: none;">
             <div class="welcome-section">
-                <h1>Bienvenid@, <span id="user-name-home"></span>!</h1>
+                <h1>¡Bienvenid@, <span id="user-name-home"></span>!</h1>
                 <p>Patience es tu plataforma integral para preparar oposiciones. Aquí encontrarás todo lo que necesitas
                     para alcanzar tus objetivos.</p>
             </div>
@@ -142,7 +142,7 @@
             <h2>Perfil</h2>
             <form id="profile-form" onsubmit="handleProfileUpdate(event)">
                 <div class="profile-field">
-                    <img id="profile-img" src="assets/default-profile.png" alt="Profile Image" class="profile-img">
+                    <img id="profile-img" src="assets/default-profile.png" alt="Imagen de Perfil" class="profile-img">
                     <input type="file" id="profile-img-upload" class="profile-img-upload" accept="image/*"
                         onchange="handleImageUpload(event)">
                 </div>
@@ -182,14 +182,14 @@
             </form>
         </div>
 
-        <!-- Nueva Pantalla de IA Especializada -->
+        <!-- Pantalla de IA Especializada Mejorada -->
         <div class="card" id="ai-screen" style="display: none;">
             <h2>IA Especializada</h2>
             <div class="ai-instructions">
                 <p>¡Hola! Para acceder a nuestras herramientas de inteligencia artificial especializadas, sigue estos
                     sencillos pasos:</p>
                 <ol>
-                    <li><strong>Haz clic en el enlace</strong> correspondiente a tu especialidad en la lista de abajo.</li>
+                    <li><strong>Haz clic en la tarjeta</strong> de tu especialidad en la lista de abajo.</li>
                     <li>Serás redirigid@ a la página de ChatGPT de OpenAI.</li>
                     <li><strong>Inicia sesión o crea una cuenta</strong> en OpenAI si aún no lo has hecho. Es gratuito y
                         solo te tomará un minuto.</li>
@@ -199,20 +199,27 @@
                 <p>Si tienes alguna duda o necesitas ayuda, no dudes en contactarnos. ¡Estamos aquí para apoyarte en tu
                     camino hacia el éxito!</p>
             </div>
-            <div class="ai-links">
-                <h3>Elige tu especialidad:</h3>
-                <ul>
-                    <li><a href="https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia" target="_blank">Patience -
-                            Biología y Geología (Secundaria)</a></li>
-                    <li><a href="https://chatgpt.com/g/g-mBJ4r4s53-patience-ingles" target="_blank">Patience - Inglés como
-                            segunda lengua (Secundaria)</a></li>
-                    <li><a href="#" onclick="alert('Enlace próximamente disponible.')">Patience - Francés como lengua
-                            extranjera (Secundaria)</a></li>
-                    <li><a href="#" onclick="alert('Enlace próximamente disponible.')">Patience - Matemáticas
-                            (Secundaria)</a></li>
-                    <li><a href="#" onclick="alert('Enlace próximamente disponible.')">Patience - Geografía e Historia
-                            (Secundaria)</a></li>
-                </ul>
+            <div class="ai-cards-container">
+                <div class="ai-card" onclick="window.open('https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia', '_blank')">
+                    <img src="assets/bio-geologia.jpg" alt="Biología y Geología">
+                    <h3>Biología y Geología</h3>
+                </div>
+                <div class="ai-card" onclick="window.open('https://chatgpt.com/g/g-mBJ4r4s53-patience-ingles', '_blank')">
+                    <img src="assets/ingles.jpg" alt="Inglés como Segunda Lengua">
+                    <h3>Inglés como Segunda Lengua</h3>
+                </div>
+                <div class="ai-card" onclick="alert('Enlace próximamente disponible.')">
+                    <img src="assets/frances.jpg" alt="Francés como Lengua Extranjera">
+                    <h3>Francés como Lengua Extranjera</h3>
+                </div>
+                <div class="ai-card" onclick="alert('Enlace próximamente disponible.')">
+                    <img src="assets/matematicas.jpg" alt="Matemáticas">
+                    <h3>Matemáticas</h3>
+                </div>
+                <div class="ai-card" onclick="alert('Enlace próximamente disponible.')">
+                    <img src="assets/geografia-historia.jpg" alt="Geografía e Historia">
+                    <h3>Geografía e Historia</h3>
+                </div>
             </div>
         </div>
 
@@ -243,32 +250,43 @@
             </div>
         </div>
 
-        <!-- Pantalla de Guía para aprovechar al máximo la IA -->
+        <!-- Pantalla de Guía para aprovechar al máximo la IA Mejorada -->
         <div class="card" id="guide-screen" style="display: none;">
-            <h2>Guía para aprovechar al máximo la IA</h2>
+            <h2>Guía para Aprovechar al Máximo la IA</h2>
             <div class="guide-section">
+                <p>¡Bienvenid@ a la guía para sacarle el máximo partido a nuestras herramientas de IA! Aquí encontrarás
+                    consejos y ejemplos de cómo interactuar con la IA para mejorar tu preparación.</p>
                 <div class="prompt-section">
-                    <h4>Cómo pedir a la IA que genere un examen aleatorio:</h4>
-                    <p><strong>Prompt:</strong> Genera un examen de oposición para la especialidad de <span
-                            class="prompt-hint">[tu especialidad]</span>. Incluye <span class="prompt-hint">[número de
-                            temas]</span> temas aleatorios y <span class="prompt-hint">[número de ejercicios
-                            prácticos]</span> ejercicios prácticos relacionados.</p>
+                    <h4>Generar un examen aleatorio:</h4>
+                    <p><strong>Ejemplo de pregunta:</strong></p>
+                    <p>"Genera un examen de oposición para la especialidad de <span class="prompt-hint">[tu
+                            especialidad]</span>. Incluye <span class="prompt-hint">[número de temas]</span> temas
+                        aleatorios y <span class="prompt-hint">[número de ejercicios prácticos]</span> ejercicios prácticos
+                        relacionados."</p>
                 </div>
                 <div class="prompt-section">
-                    <h4>Cómo pedir a la IA que genere una introducción desde cero:</h4>
-                    <p><strong>Prompt:</strong> Crea una introducción para el tema <span class="prompt-hint">[número o
-                            título del tema]</span> en <span class="prompt-hint">[idioma]</span>, utilizando un estilo formal
-                        y académico.</p>
+                    <h4>Crear una introducción desde cero:</h4>
+                    <p><strong>Ejemplo de pregunta:</strong></p>
+                    <p>"Crea una introducción para el tema <span class="prompt-hint">[número o título del tema]</span> en
+                        <span class="prompt-hint">[idioma]</span>, utilizando un estilo formal y académico."</p>
                 </div>
                 <div class="prompt-section">
-                    <h4>Cómo pedir a la IA que genere ejercicios prácticos corregidos:</h4>
-                    <p><strong>Prompt:</strong> Proporciona 3 ejercicios prácticos para la especialidad de <span
-                            class="prompt-hint">[tu especialidad]</span> con sus soluciones detalladas.</p>
+                    <h4>Obtener ejercicios prácticos corregidos:</h4>
+                    <p><strong>Ejemplo de pregunta:</strong></p>
+                    <p>"Proporciona 3 ejercicios prácticos para la especialidad de <span class="prompt-hint">[tu
+                            especialidad]</span> con sus soluciones detalladas."</p>
                 </div>
+                <div class="prompt-section">
+                    <h4>Resolver dudas específicas:</h4>
+                    <p><strong>Ejemplo de pregunta:</strong></p>
+                    <p>"¿Puedes explicarme el concepto de <span class="prompt-hint">[tema específico]</span> y cómo se aplica
+                        en <span class="prompt-hint">[contexto]</span>?"</p>
+                </div>
+                <p>Recuerda que la IA está aquí para ayudarte. No dudes en hacer preguntas detalladas y personalizadas.</p>
             </div>
         </div>
 
-        <!-- Pantalla de ¿Dónde te puedes preparar? -->
+        <!-- Pantalla de ¿Dónde te puedes preparar? Mejorada -->
         <div class="card" id="directory-screen" style="display: none;">
             <h2>¿Dónde te puedes preparar?</h2>
             <div class="filter-section">
@@ -289,7 +307,7 @@
             </div>
         </div>
 
-        <!-- Pantalla de ¿Qué es Patience? -->
+        <!-- Pantalla de ¿Qué es Patience? Mejorada -->
         <div class="card" id="training-screen" style="display: none;">
             <h2>¿Qué es Patience?</h2>
             <p>Patience es una plataforma diseñada para acompañarte en tu camino hacia el éxito en las oposiciones. Nuestra
@@ -306,6 +324,9 @@
                     <li><strong>Actualizaciones Constantes:</strong> Mantente informado sobre las últimas noticias y cambios en
                         las convocatorias.</li>
                 </ul>
+            </div>
+            <div class="training-image">
+                <img src="assets/training.jpg" alt="Imagen Representativa">
             </div>
         </div>
 
@@ -338,7 +359,7 @@
         <!-- Pantalla de Próximamente -->
         <div class="card" id="coming-soon-screen" style="display: none;">
             <h2>Próximamente</h2>
-            <p>Estamos trabajando para traerte nuevas funcionalidades. ¡Mantente atento!</p>
+            <p>Estamos trabajando para traerte nuevas funcionalidades. ¡Mantente atent@!</p>
         </div>
     </div>
 

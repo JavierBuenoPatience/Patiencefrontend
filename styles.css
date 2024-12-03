@@ -58,7 +58,7 @@ body {
 }
 
 .sidebar-logo {
-    width: 150px;
+    width: 120px;
 }
 
 .close-sidebar {
@@ -121,7 +121,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 24px;
+    padding: 10px 18px;
     box-shadow: var(--box-shadow);
     z-index: 999;
 }
@@ -141,7 +141,7 @@ header {
 }
 
 .header-logo {
-    width: 120px;
+    width: 80px;
     cursor: pointer;
 }
 

@@ -248,12 +248,51 @@ document.addEventListener('DOMContentLoaded', () => {
             notificationPanel.classList.remove('show-notifications');
         }
     });
+
+    // Cargar estado del sidebar
+    loadSidebarState();
 });
 
 // Función para alternar la visibilidad del sidebar
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
+    const isPinned = localStorage.getItem('sidebarPinned') === 'true';
+
+    if (isPinned) return;
+
     sidebar.classList.toggle('show-sidebar');
+}
+
+// Función para anclar o desanclar el sidebar
+function togglePinSidebar() {
+    const pinButton = document.getElementById('pin-sidebar');
+    const sidebar = document.getElementById('sidebar');
+    const isPinned = localStorage.getItem('sidebarPinned') === 'true';
+
+    if (isPinned) {
+        localStorage.setItem('sidebarPinned', 'false');
+        pinButton.classList.remove('pinned');
+        sidebar.classList.remove('pinned');
+    } else {
+        localStorage.setItem('sidebarPinned', 'true');
+        pinButton.classList.add('pinned');
+        sidebar.classList.add('pinned');
+    }
+}
+
+// Cargar estado del sidebar al iniciar
+function loadSidebarState() {
+    const pinButton = document.getElementById('pin-sidebar');
+    const sidebar = document.getElementById('sidebar');
+    const isPinned = localStorage.getItem('sidebarPinned') === 'true';
+
+    if (isPinned) {
+        pinButton.classList.add('pinned');
+        sidebar.classList.add('pinned');
+    } else {
+        pinButton.classList.remove('pinned');
+        sidebar.classList.remove('pinned');
+    }
 }
 
 // Función para alternar la visibilidad del panel de notificaciones
@@ -267,7 +306,11 @@ function showScreen(screenId) {
     hideAllScreens();
     document.getElementById(screenId).style.display = 'block';
     const sidebar = document.getElementById('sidebar');
-    sidebar.classList.remove('show-sidebar');
+    const isPinned = localStorage.getItem('sidebarPinned') === 'true';
+
+    if (!isPinned) {
+        sidebar.classList.remove('show-sidebar');
+    }
 }
 
 // Función para ocultar todas las pantallas
@@ -1020,10 +1063,4 @@ function addNotification(message) {
     user.notifications.push(message);
     localStorage.setItem('users', JSON.stringify(users));
     updateNotifications();
-}
-
-// Función para alternar el menú en dispositivos móviles
-function toggleMenu() {
-    const menu = document.getElementById('menu-desplegable');
-    menu.classList.toggle('show-menu');
 }

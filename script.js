@@ -179,6 +179,7 @@ const academies = [
     }
 ];
 
+
 // Datos de especialidades para IA Especializada
 const specialties = [
     {
@@ -252,6 +253,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cargar estado del sidebar
     loadSidebarState();
 });
+
+// Variables para el cronómetro
+let timerInterval;
+let elapsedTime = 0;
+let isTimerRunning = false;
 
 // Función para alternar la visibilidad del sidebar
 function toggleSidebar() {
@@ -347,7 +353,8 @@ function handleRegistration(event) {
         examDate: null,
         lastDocument: null,
         annotations: {},
-        notifications: []
+        notifications: [],
+        studySessions: []
     };
     localStorage.setItem('users', JSON.stringify(users));
 
@@ -373,6 +380,11 @@ function handleLogin(event) {
         localStorage.setItem('name', users[email].name);
         showHomeScreen();
         updateDocumentOverview();
+
+        // Mostrar onboarding si es el primer inicio de sesión
+        if (!users[email].onboardingCompleted) {
+            startOnboarding();
+        }
     } else {
         alert('Correo o contraseña incorrectos.');
     }
@@ -380,6 +392,12 @@ function handleLogin(event) {
 
 // Manejo de cierre de sesión
 function handleLogout() {
+    // Detener el cronómetro si está corriendo
+    if (isTimerRunning) {
+        pauseTimer();
+        saveStudySession();
+    }
+
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('email');
     localStorage.removeItem('name');
@@ -441,6 +459,7 @@ function showHomeScreen() {
         updateProfileIcon();
         updateDocumentOverview();
         updateDashboard();
+        loadTimerState();
     } else {
         showLoginScreen();
     }
@@ -539,7 +558,7 @@ function populateFilters() {
     const specialtyFilter = document.getElementById('specialty-filter');
 
     const cities = [...new Set(academies.map(a => a.city))];
-    const specialties = [...new Set(academies.flatMap(a => a.specialties))];
+    const specialtiesList = [...new Set(academies.flatMap(a => a.specialties))];
 
     cities.sort().forEach(city => {
         const option = document.createElement('option');
@@ -548,7 +567,7 @@ function populateFilters() {
         cityFilter.appendChild(option);
     });
 
-    specialties.sort().forEach(spec => {
+    specialtiesList.sort().forEach(spec => {
         const option = document.createElement('option');
         option.value = spec;
         option.textContent = spec;
@@ -597,7 +616,7 @@ function renderAcademies(academyList = academies) {
         name.textContent = academy.name;
 
         const rating = document.createElement('span');
-        rating.textContent = academy.rating;
+        rating.textContent = '★ ' + academy.rating;
 
         header.appendChild(name);
         header.appendChild(rating);
@@ -732,10 +751,22 @@ function updateDashboard() {
     }
 
     // Horas de estudio
-    studyHoursElement.textContent = user.studyHours ? user.studyHours + ' horas' : '--';
+    const totalStudyTime = calculateTotalStudyTime(email);
+    studyHoursElement.textContent = totalStudyTime ? totalStudyTime + ' horas' : '--';
 
     // Último documento abierto
     lastDocumentElement.textContent = user.lastDocument || '--';
+}
+
+// Función para calcular el tiempo total de estudio
+function calculateTotalStudyTime(email) {
+    const user = users[email];
+    if (user.studySessions && user.studySessions.length > 0) {
+        const totalMilliseconds = user.studySessions.reduce((acc, session) => acc + session.duration, 0);
+        const totalHours = (totalMilliseconds / (1000 * 60 * 60)).toFixed(2);
+        return totalHours;
+    }
+    return 0;
 }
 
 // Función para manejar el clic en el logo
@@ -1063,4 +1094,114 @@ function addNotification(message) {
     user.notifications.push(message);
     localStorage.setItem('users', JSON.stringify(users));
     updateNotifications();
+}
+
+// Funciones para el Onboarding
+function startOnboarding() {
+    showOverlay();
+    showOnboardingStep(1);
+}
+
+function nextOnboardingStep() {
+    const currentStep = parseInt(localStorage.getItem('onboardingStep')) || 1;
+    const nextStep = currentStep + 1;
+    showOnboardingStep(nextStep);
+}
+
+function showOnboardingStep(step) {
+    const totalSteps = 5;
+    for (let i = 1; i <= totalSteps; i++) {
+        const stepElement = document.getElementById(`onboarding-step-${i}`);
+        if (stepElement) {
+            stepElement.style.display = i === step ? 'block' : 'none';
+        }
+    }
+    localStorage.setItem('onboardingStep', step);
+}
+
+function finishOnboarding() {
+    hideOverlay();
+    const email = localStorage.getItem('email');
+    users[email].onboardingCompleted = true;
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.removeItem('onboardingStep');
+}
+
+function showOverlay() {
+    const overlay = document.getElementById('onboarding-overlay');
+    overlay.style.display = 'flex';
+}
+
+function hideOverlay() {
+    const overlay = document.getElementById('onboarding-overlay');
+    overlay.style.display = 'none';
+}
+
+// Funciones para el Cronómetro de Estudio
+function startTimer() {
+    if (isTimerRunning) return;
+
+    isTimerRunning = true;
+    const startTime = Date.now() - elapsedTime;
+    timerInterval = setInterval(() => {
+        elapsedTime = Date.now() - startTime;
+        updateTimerDisplay();
+    }, 1000);
+
+    document.getElementById('start-timer').disabled = true;
+    document.getElementById('pause-timer').disabled = false;
+    document.getElementById('reset-timer').disabled = false;
+}
+
+function pauseTimer() {
+    if (!isTimerRunning) return;
+
+    isTimerRunning = false;
+    clearInterval(timerInterval);
+    saveStudySession();
+
+    document.getElementById('start-timer').disabled = false;
+    document.getElementById('pause-timer').disabled = true;
+}
+
+function resetTimer() {
+    if (isTimerRunning) {
+        pauseTimer();
+    }
+    elapsedTime = 0;
+    updateTimerDisplay();
+
+    document.getElementById('reset-timer').disabled = true;
+}
+
+function updateTimerDisplay() {
+    const hours = Math.floor(elapsedTime / (1000 * 60 * 60)).toString().padStart(2, '0');
+    const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60).toString().padStart(2, '0');
+    const seconds = Math.floor((elapsedTime / 1000) % 60).toString().padStart(2, '0');
+    document.getElementById('timer-display').textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+function saveStudySession() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    if (!user.studySessions) {
+        user.studySessions = [];
+    }
+    user.studySessions.push({
+        duration: elapsedTime,
+        date: new Date()
+    });
+    localStorage.setItem('users', JSON.stringify(users));
+    updateDashboard();
+}
+
+function loadTimerState() {
+    // Restaurar estado del cronómetro si es necesario
+    isTimerRunning = false;
+    elapsedTime = 0;
+    updateTimerDisplay();
+
+    document.getElementById('start-timer').disabled = false;
+    document.getElementById('pause-timer').disabled = true;
+    document.getElementById('reset-timer').disabled = true;
 }

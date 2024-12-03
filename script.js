@@ -1,10 +1,11 @@
 // Definimos constantes para colores y URLs
 const COLORS = {
-    primary: '#2C3E50', // Azul oscuro
-    secondary: '#1ABC9C', // Turquesa
-    accent: '#ECF0F1',    // Gris claro
+    primary: '#1F3A93', // Azul marino más suave
+    secondary: '#22A7F0', // Azul cielo
+    accent: '#F5F7FA',    // Gris muy claro
     background: '#FFFFFF', // Blanco
-    text: '#34495E'       // Gris oscuro
+    text: '#2C3E50',       // Gris oscuro
+    secondaryText: '#7F8C8D' // Gris medio
 };
 
 const URLS = {
@@ -178,29 +179,47 @@ const academies = [
     }
 ];
 
+// Datos de especialidades para IA Especializada
+const specialties = [
+    {
+        name: 'Biología y Geología',
+        image: 'bio-geologia.jpg',
+        url: 'https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia'
+    },
+    {
+        name: 'Inglés como Segunda Lengua',
+        image: 'ingles.jpg',
+        url: 'https://chatgpt.com/g/g-mBJ4r4s53-patience-ingles'
+    },
+    {
+        name: 'Francés como Lengua Extranjera',
+        image: 'frances.jpg',
+        url: '#'
+    },
+    {
+        name: 'Matemáticas',
+        image: 'matematicas.jpg',
+        url: '#'
+    },
+    {
+        name: 'Geografía e Historia',
+        image: 'geografia-historia.jpg',
+        url: '#'
+    },
+    // Añade más especialidades si lo deseas
+];
+
 document.addEventListener('DOMContentLoaded', () => {
-    const menu = document.getElementById('menu-desplegable');
     const headerRight = document.querySelector('.header-right img');
-    const dropdown = document.getElementById('profile-dropdown');
+    const notificationIcon = document.querySelector('.notification-icon');
+    const notificationPanel = document.getElementById('notification-panel');
 
     if (localStorage.getItem('loggedIn') === 'true') {
         showHomeScreen();
-        menu.style.display = 'block';
         updateDocumentOverview();
     } else {
         showLoginScreen();
-        menu.style.display = 'none';
     }
-
-    headerRight.addEventListener('click', () => {
-        dropdown.classList.toggle('show-dropdown');
-    });
-
-    document.addEventListener('click', (event) => {
-        if (!headerRight.contains(event.target) && !dropdown.contains(event.target)) {
-            dropdown.classList.remove('show-dropdown');
-        }
-    });
 
     // Manejo de la subida de documentos
     const uploadInput = document.getElementById('upload-document');
@@ -216,12 +235,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inicializar academia
     initAcademyDirectory();
+
+    // Inicializar IA Especializada
+    initSpecialties();
+
+    // Manejo de notificaciones
+    updateNotifications();
+
+    // Manejo del clic fuera del panel de notificaciones
+    document.addEventListener('click', (event) => {
+        if (!notificationIcon.contains(event.target) && !notificationPanel.contains(event.target)) {
+            notificationPanel.classList.remove('show-notifications');
+        }
+    });
 });
+
+// Función para alternar la visibilidad del sidebar
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('show-sidebar');
+}
+
+// Función para alternar la visibilidad del panel de notificaciones
+function toggleNotifications() {
+    const notificationPanel = document.getElementById('notification-panel');
+    notificationPanel.classList.toggle('show-notifications');
+}
 
 // Función genérica para mostrar pantallas
 function showScreen(screenId) {
     hideAllScreens();
     document.getElementById(screenId).style.display = 'block';
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.remove('show-sidebar');
+}
+
+// Función para ocultar todas las pantallas
+function hideAllScreens() {
+    const screens = document.querySelectorAll('.card');
+    screens.forEach(screen => screen.style.display = 'none');
 }
 
 // Manejo de registro
@@ -251,7 +303,8 @@ function handleRegistration(event) {
         studyHours: 0,
         examDate: null,
         lastDocument: null,
-        annotations: {}
+        annotations: {},
+        notifications: []
     };
     localStorage.setItem('users', JSON.stringify(users));
 
@@ -276,7 +329,7 @@ function handleLogin(event) {
         localStorage.setItem('email', email);
         localStorage.setItem('name', users[email].name);
         showHomeScreen();
-        document.getElementById('menu-desplegable').style.display = 'block';
+        updateDocumentOverview();
     } else {
         alert('Correo o contraseña incorrectos.');
     }
@@ -287,9 +340,6 @@ function handleLogout() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('email');
     localStorage.removeItem('name');
-    const menu = document.getElementById('menu-desplegable');
-    menu.classList.remove('show');
-    menu.style.display = 'none';
     hideAllScreens();
     showLoginScreen();
 }
@@ -609,12 +659,6 @@ function showHelp() {
     }
 }
 
-// Función para ocultar todas las pantallas
-function hideAllScreens() {
-    const screens = document.querySelectorAll('.card');
-    screens.forEach(screen => screen.style.display = 'none');
-}
-
 // Función para actualizar el icono de perfil
 function updateProfileIcon() {
     const email = localStorage.getItem('email');
@@ -716,6 +760,7 @@ function uploadDocuments(event) {
             localStorage.setItem('users', JSON.stringify(users));
             displayDocuments();
             updateDocumentOverview();
+            addNotification(`Documento "${file.name}" subido exitosamente.`);
         };
 
         reader.readAsDataURL(file);
@@ -737,6 +782,7 @@ function createFolder() {
         users[email].folders.push(folderData);
         localStorage.setItem('users', JSON.stringify(users));
         displayDocuments();
+        addNotification(`Carpeta "${folderName}" creada exitosamente.`);
     }
 }
 
@@ -748,6 +794,7 @@ function deleteFolder(folderName) {
         users[email].folders.splice(folderIndex, 1);
         localStorage.setItem('users', JSON.stringify(users));
         displayDocuments();
+        addNotification(`Carpeta "${folderName}" eliminada.`);
     }
 }
 
@@ -767,7 +814,10 @@ function displayDocuments() {
 
         const deleteButton = document.createElement('button');
         deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
-        deleteButton.onclick = () => deleteFolder(folder.name);
+        deleteButton.onclick = (e) => {
+            e.stopPropagation();
+            deleteFolder(folder.name);
+        };
 
         folderHeader.appendChild(deleteButton);
         folderElement.appendChild(folderHeader);
@@ -844,6 +894,7 @@ function moveDocumentToFolder(email, documentName) {
                 folder.documents.push(document);
                 localStorage.setItem('users', JSON.stringify(users));
                 displayDocuments();
+                addNotification(`Documento "${documentName}" movido a la carpeta "${selectedFolder}".`);
             } else {
                 alert('Documento no encontrado.');
             }
@@ -873,6 +924,102 @@ function filterDocuments() {
 
         documentsContainer.appendChild(docElement);
     });
+}
+
+// Inicializar especialidades en IA Especializada
+function initSpecialties() {
+    const aiCardsContainer = document.getElementById('ai-cards-container');
+    aiCardsContainer.innerHTML = '';
+
+    specialties.forEach(specialty => {
+        const aiCard = document.createElement('div');
+        aiCard.classList.add('ai-card');
+
+        aiCard.onclick = () => {
+            if (specialty.url !== '#') {
+                window.open(specialty.url, '_blank');
+            } else {
+                alert('Enlace próximamente disponible.');
+            }
+        };
+
+        aiCard.innerHTML = `
+            <img src="assets/${specialty.image}" alt="${specialty.name}">
+            <h3>${specialty.name}</h3>
+        `;
+
+        aiCardsContainer.appendChild(aiCard);
+    });
+}
+
+// Filtrar especialidades en IA Especializada
+function filterSpecialties() {
+    const searchTerm = document.getElementById('ai-search-input').value.toLowerCase();
+    const aiCardsContainer = document.getElementById('ai-cards-container');
+    aiCardsContainer.innerHTML = '';
+
+    const filteredSpecialties = specialties.filter(specialty =>
+        specialty.name.toLowerCase().includes(searchTerm)
+    );
+
+    filteredSpecialties.forEach(specialty => {
+        const aiCard = document.createElement('div');
+        aiCard.classList.add('ai-card');
+
+        aiCard.onclick = () => {
+            if (specialty.url !== '#') {
+                window.open(specialty.url, '_blank');
+            } else {
+                alert('Enlace próximamente disponible.');
+            }
+        };
+
+        aiCard.innerHTML = `
+            <img src="assets/${specialty.image}" alt="${specialty.name}">
+            <h3>${specialty.name}</h3>
+        `;
+
+        aiCardsContainer.appendChild(aiCard);
+    });
+}
+
+// Función para actualizar notificaciones
+function updateNotifications() {
+    const notificationCount = document.getElementById('notification-count');
+    const notificationList = document.getElementById('notification-list');
+
+    // Supongamos que obtenemos las notificaciones del usuario
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    const notifications = user.notifications || [];
+
+    notificationCount.textContent = notifications.length;
+
+    notificationList.innerHTML = '';
+
+    if (notifications.length === 0) {
+        const noNotifications = document.createElement('li');
+        noNotifications.textContent = 'No tienes notificaciones nuevas.';
+        notificationList.appendChild(noNotifications);
+    } else {
+        notifications.forEach(notification => {
+            const notificationItem = document.createElement('li');
+            notificationItem.textContent = notification;
+            notificationList.appendChild(notificationItem);
+        });
+    }
+}
+
+// Función para agregar una notificación
+function addNotification(message) {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    if (!user.notifications) {
+        user.notifications = [];
+    }
+    user.notifications.push(message);
+    localStorage.setItem('users', JSON.stringify(users));
+    updateNotifications();
 }
 
 // Función para alternar el menú en dispositivos móviles

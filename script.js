@@ -8,9 +8,8 @@ const COLORS = {
     secondaryText: '#7F8C8D' // Gris medio
 };
 
-const URLS = {
-    slack: 'https://join.slack.com/t/patienceespacio/shared_invite/zt-2obzf3sds-RhLnkRpDMbjK6oTAncR5BA'
-};
+// Enlace de invitación a Discord
+const discordInviteLink = "https://discord.gg/qGB36SqR";
 
 // Obtenemos los usuarios almacenados o inicializamos uno vacío
 const users = JSON.parse(localStorage.getItem('users')) || {};
@@ -184,27 +183,22 @@ const specialties = [
     {
         name: 'Biología y Geología',
         image: 'bio-geologia.jpg',
-        url: 'https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia'
+        url: 'https://chat.openai.com/' // Enlace de ejemplo
     },
     {
         name: 'Inglés como Segunda Lengua',
         image: 'ingles.jpg',
-        url: 'https://chatgpt.com/g/g-mBJ4r4s53-patience-ingles'
-    },
-    {
-        name: 'Francés como Lengua Extranjera',
-        image: 'frances.jpg',
-        url: '#'
+        url: 'https://chat.openai.com/' // Enlace de ejemplo
     },
     {
         name: 'Matemáticas',
         image: 'matematicas.jpg',
-        url: '#'
+        url: 'https://chat.openai.com/' // Enlace de ejemplo
     },
     {
         name: 'Geografía e Historia',
         image: 'geografia-historia.jpg',
-        url: '#'
+        url: 'https://chat.openai.com/' // Enlace de ejemplo
     },
     // Añade más especialidades si lo deseas
 ];
@@ -531,9 +525,9 @@ function showGroups() {
     }
 }
 
-// Función para redirigir a Slack
-function redirectToSlack() {
-    window.open(URLS.slack, '_blank');
+// Función para redirigir a Discord
+function redirectToDiscord() {
+    window.open(discordInviteLink, '_blank');
 }
 
 // Mostrar pantalla de ¿Qué es Patience?

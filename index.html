@@ -34,8 +34,7 @@
             <li><a href="#" onclick="showGroups()"><i class="fas fa-users"></i> Mis Grupos</a></li>
             <li><a href="#" onclick="showDocuments()"><i class="fas fa-folder"></i> Mis Documentos</a></li>
             <li><a href="#" onclick="showTraining()"><i class="fas fa-info-circle"></i> ¿Qué es Patience?</a></li>
-            <li><a href="#" onclick="showDirectoryScreen()"><i class="fas fa-map-marker-alt"></i> ¿Dónde Prepararse?</a>
-            </li>
+            <li><a href="#" onclick="showDirectoryScreen()"><i class="fas fa-map-marker-alt"></i> ¿Dónde Prepararse?</a></li>
             <li><a href="#" onclick="showGuideScreen()"><i class="fas fa-book"></i> Guía de IA</a></li>
             <li><a href="#" onclick="showComingSoon()"><i class="fas fa-school"></i> Mi Centro</a></li>
             <li><a href="#" onclick="showNews()"><i class="fas fa-newspaper"></i> Últimas Noticias</a></li>
@@ -64,16 +63,6 @@
         <ul id="notification-list">
             <!-- Las notificaciones se cargarán dinámicamente -->
         </ul>
-    </div>
-
-    <!-- Overlay para Onboarding -->
-    <div id="onboarding-overlay" class="onboarding-overlay" style="display: none;">
-        <div class="onboarding-content">
-            <h2>¡Bienvenido a Patience!</h2>
-            <p>Estamos encantados de tenerte aquí. ¿Te gustaría hacer un recorrido rápido por las principales funcionalidades?</p>
-            <button onclick="startOnboarding()">Comenzar Tour</button>
-            <button onclick="skipOnboarding()">Omitir</button>
-        </div>
     </div>
 
     <!-- Contenido principal -->
@@ -117,6 +106,38 @@
             <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
         </div>
 
+        <!-- Pantalla de Onboarding -->
+        <div class="onboarding-overlay" id="onboarding-overlay" style="display: none;">
+            <div class="onboarding-content" id="onboarding-content">
+                <div class="onboarding-step" id="onboarding-step-1">
+                    <h2>¡Bienvenido a Patience!</h2>
+                    <p>Te guiaremos a través de las funcionalidades clave para que puedas aprovechar al máximo nuestra
+                        plataforma.</p>
+                    <button onclick="nextOnboardingStep()">Siguiente</button>
+                </div>
+                <div class="onboarding-step" id="onboarding-step-2" style="display: none;">
+                    <h2>Perfil Personalizado</h2>
+                    <p>Completa tu perfil para recibir recomendaciones y recursos adaptados a tus necesidades.</p>
+                    <button onclick="nextOnboardingStep()">Siguiente</button>
+                </div>
+                <div class="onboarding-step" id="onboarding-step-3" style="display: none;">
+                    <h2>IA Especializada</h2>
+                    <p>Accede a herramientas de inteligencia artificial diseñadas para tu especialidad.</p>
+                    <button onclick="nextOnboardingStep()">Siguiente</button>
+                </div>
+                <div class="onboarding-step" id="onboarding-step-4" style="display: none;">
+                    <h2>Mis Documentos</h2>
+                    <p>Organiza y gestiona todos tus materiales de estudio en un solo lugar.</p>
+                    <button onclick="nextOnboardingStep()">Siguiente</button>
+                </div>
+                <div class="onboarding-step" id="onboarding-step-5" style="display: none;">
+                    <h2>Cronómetro de Estudio</h2>
+                    <p>Registra y monitorea el tiempo que dedicas al estudio para seguir tu progreso.</p>
+                    <button onclick="finishOnboarding()">¡Empezar!</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Pantalla de Inicio -->
         <div class="card home-card" id="home-screen" style="display: none;">
             <div class="welcome-section">
@@ -136,14 +157,16 @@
                     <h3><i class="fas fa-file-alt"></i> Último documento</h3>
                     <p id="last-document">--</p>
                 </div>
-            </div>
-            <div class="study-timer">
-                <h2>Cronómetro de Estudio</h2>
-                <div class="timer-display" id="timer-display">00:00:00</div>
-                <div class="timer-buttons">
-                    <button id="start-timer-button" onclick="startStudyTimer()">Iniciar</button>
-                    <button id="pause-timer-button" onclick="pauseStudyTimer()">Pausar</button>
-                    <button id="reset-timer-button" onclick="resetStudyTimer()">Reiniciar</button>
+                <div class="dashboard-item">
+                    <h3><i class="fas fa-stopwatch"></i> Cronómetro de Estudio</h3>
+                    <div class="timer">
+                        <span id="timer-display">00:00:00</span>
+                        <div class="timer-buttons">
+                            <button id="start-timer" onclick="startTimer()">Iniciar</button>
+                            <button id="pause-timer" onclick="pauseTimer()" disabled>Pausar</button>
+                            <button id="reset-timer" onclick="resetTimer()" disabled>Reiniciar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="home-section">
@@ -226,7 +249,7 @@
             </form>
         </div>
 
-        <!-- Pantalla de IA Especializada Mejorada -->
+        <!-- Pantalla de IA Especializada -->
         <div class="card" id="ai-screen" style="display: none;">
             <h2>IA Especializada</h2>
             <div class="ai-instructions">
@@ -266,7 +289,7 @@
             </div>
         </div>
 
-        <!-- Pantalla de Mis Grupos Mejorada -->
+        <!-- Pantalla de Mis Grupos -->
         <div class="card" id="groups-screen" style="display: none;">
             <h2>Mis Grupos</h2>
             <div class="groups-instructions">
@@ -282,7 +305,7 @@
             </div>
         </div>
 
-        <!-- Pantalla de Guía para aprovechar al máximo la IA Mejorada -->
+        <!-- Pantalla de Guía para aprovechar al máximo la IA -->
         <div class="card" id="guide-screen" style="display: none;">
             <h2>Guía para Aprovechar al Máximo la IA</h2>
             <div class="guide-section">
@@ -313,7 +336,7 @@
             </div>
         </div>
 
-        <!-- Pantalla de ¿Dónde te puedes preparar? Mejorada -->
+        <!-- Pantalla de ¿Dónde te puedes preparar? -->
         <div class="card" id="directory-screen" style="display: none;">
             <h2>¿Dónde te puedes preparar?</h2>
             <p>Encuentra las mejores academias para tu preparación en tu ciudad.</p>
@@ -335,7 +358,7 @@
             </div>
         </div>
 
-        <!-- Pantalla de ¿Qué es Patience? Mejorada -->
+        <!-- Pantalla de ¿Qué es Patience? -->
         <div class="card" id="training-screen" style="display: none;">
             <h2>Descubre Patience</h2>
             <p>La plataforma que está revolucionando la forma de preparar oposiciones. Diseñada para ti, que buscas una

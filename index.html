@@ -24,6 +24,7 @@
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <img src="assets/logo.png" alt="Logo Patience" class="sidebar-logo">
+            <button class="pin-sidebar" id="pin-sidebar"><i class="fas fa-thumbtack"></i></button>
             <button class="close-sidebar" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
         </div>
         <ul>
@@ -246,13 +247,17 @@
             </div>
         </div>
 
-        <!-- Pantalla de Mis Grupos -->
+        <!-- Pantalla de Mis Grupos Mejorada -->
         <div class="card" id="groups-screen" style="display: none;">
             <h2>Mis Grupos</h2>
-            <div class="group-management">
-                <p>Únete a nuestra comunidad y comparte experiencias con otros opositores.</p>
-                <button class="join-slack-button" onclick="redirectToSlack()"><i class="fab fa-slack"></i> Unirse a
-                    Slack</button>
+            <div class="groups-instructions">
+                <p>Conecta con otros opositores y comparte experiencias en nuestros grupos especializados.</p>
+            </div>
+            <div class="groups-cards-container">
+                <div class="groups-card" onclick="redirectToSlack()">
+                    <img src="assets/Grupos.jpg" alt="Mis Grupos">
+                    <h3>Unirse a Grupos</h3>
+                </div>
             </div>
         </div>
 

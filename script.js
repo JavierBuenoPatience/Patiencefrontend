@@ -179,7 +179,6 @@ const academies = [
     }
 ];
 
-
 // Datos de especialidades para IA Especializada
 const specialties = [
     {
@@ -252,12 +251,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cargar estado del sidebar
     loadSidebarState();
+
+    // Iniciar mensajes motivacionales
+    updateMotivationalMessage();
+    setInterval(updateMotivationalMessage, 5 * 60 * 1000); // Cada 5 minutos
 });
 
 // Variables para el cronómetro
 let timerInterval;
 let elapsedTime = 0;
 let isTimerRunning = false;
+
+// Variables para mensajes motivacionales
+const motivationalMessages = [
+    "¡Ánimo! Ya estás un poco más cerca de la meta.",
+    "Lo estás haciendo genial, ¡sigue así!",
+    "Un poco más y nos tomamos un descanso, ¡ánimo!"
+];
+
+let motivationalMessageIndex = 0;
+
+// Función para actualizar el mensaje motivacional
+function updateMotivationalMessage() {
+    const messageElement = document.getElementById('motivational-message');
+    if (messageElement) {
+        messageElement.textContent = motivationalMessages[motivationalMessageIndex];
+        motivationalMessageIndex = (motivationalMessageIndex + 1) % motivationalMessages.length;
+    }
+}
 
 // Función para alternar la visibilidad del sidebar
 function toggleSidebar() {
@@ -412,7 +433,6 @@ function handleProfileUpdate(event) {
     const profile = {
         fullName: document.getElementById('full-name').value,
         phone: document.getElementById('phone').value,
-        studyTime: parseInt(document.getElementById('study-time').value) || 0,
         examDate: document.getElementById('exam-date').value,
         specialty: document.getElementById('specialty').value,
         hobbies: document.getElementById('hobbies').value,
@@ -420,7 +440,6 @@ function handleProfileUpdate(event) {
         profileImage: document.getElementById('profile-img').src
     };
     users[email].profile = profile;
-    users[email].studyHours = profile.studyTime;
     users[email].examDate = profile.examDate;
     localStorage.setItem('users', JSON.stringify(users));
     alert('Perfil actualizado con éxito');
@@ -473,7 +492,6 @@ function showProfile() {
         const profile = users[email].profile || {};
         document.getElementById('full-name').value = profile.fullName || '';
         document.getElementById('phone').value = profile.phone || '';
-        document.getElementById('study-time').value = profile.studyTime || '';
         document.getElementById('exam-date').value = profile.examDate || '';
         document.getElementById('specialty').value = profile.specialty || '';
         document.getElementById('hobbies').value = profile.hobbies || '';
@@ -753,6 +771,9 @@ function updateDashboard() {
     // Horas de estudio
     const totalStudyTime = calculateTotalStudyTime(email);
     studyHoursElement.textContent = totalStudyTime ? totalStudyTime + ' horas' : '--';
+
+    // Actualizar mensaje motivacional
+    updateMotivationalMessage();
 
     // Último documento abierto
     lastDocumentElement.textContent = user.lastDocument || '--';
@@ -1193,8 +1214,11 @@ function saveStudySession() {
     });
     localStorage.setItem('users', JSON.stringify(users));
     updateDashboard();
+    elapsedTime = 0;
+    updateTimerDisplay();
 }
 
+// Función para cargar el estado del cronómetro
 function loadTimerState() {
     // Restaurar estado del cronómetro si es necesario
     isTimerRunning = false;
@@ -1204,4 +1228,62 @@ function loadTimerState() {
     document.getElementById('start-timer').disabled = false;
     document.getElementById('pause-timer').disabled = true;
     document.getElementById('reset-timer').disabled = true;
+}
+
+// Función para mostrar la pantalla de Horas de Estudio
+function showStudyTimeScreen() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        showScreen('study-time-screen');
+        displayStudyTimeTable();
+    } else {
+        showLoginScreen();
+    }
+}
+
+// Función para mostrar la tabla de horas de estudio
+function displayStudyTimeTable() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    const studySessions = user.studySessions || [];
+
+    // Agrupar sesiones por fecha
+    const sessionsByDate = {};
+    studySessions.forEach(session => {
+        const date = new Date(session.date).toLocaleDateString();
+        if (!sessionsByDate[date]) {
+            sessionsByDate[date] = 0;
+        }
+        sessionsByDate[date] += session.duration;
+    });
+
+    // Crear tabla
+    const container = document.getElementById('study-time-table-container');
+    container.innerHTML = '';
+
+    const table = document.createElement('table');
+    table.classList.add('study-time-table');
+
+    const headerRow = document.createElement('tr');
+    const dateHeader = document.createElement('th');
+    dateHeader.textContent = 'Fecha';
+    const durationHeader = document.createElement('th');
+    durationHeader.textContent = 'Tiempo de Estudio (horas)';
+    headerRow.appendChild(dateHeader);
+    headerRow.appendChild(durationHeader);
+    table.appendChild(headerRow);
+
+    // Rellenar la tabla
+    for (const date in sessionsByDate) {
+        const row = document.createElement('tr');
+        const dateCell = document.createElement('td');
+        dateCell.textContent = date;
+        const durationCell = document.createElement('td');
+        const hours = (sessionsByDate[date] / (1000 * 60 * 60)).toFixed(2);
+        durationCell.textContent = hours;
+        row.appendChild(dateCell);
+        row.appendChild(durationCell);
+        table.appendChild(row);
+    }
+
+    container.appendChild(table);
 }

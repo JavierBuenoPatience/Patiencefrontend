@@ -486,6 +486,14 @@ footer {
     cursor: not-allowed;
 }
 
+.dashboard-item[onclick] {
+    cursor: pointer;
+}
+
+.dashboard-item[onclick]:hover {
+    background-color: var(--accent-color);
+}
+
 /* Estilos para el Mensaje Motivacional */
 #motivational-message {
     font-size: 16px;
@@ -493,9 +501,9 @@ footer {
     margin-top: 8px;
 }
 
-/* Botón de Slack */
-.join-slack-button {
-    background-color: var(--secondary-color);
+/* Botón de Discord */
+.join-discord-button {
+    background-color: #7289DA;
     color: var(--white-color);
     border: none;
     padding: 16px 24px;
@@ -508,8 +516,22 @@ footer {
     transition: background-color 0.3s;
 }
 
-.join-slack-button:hover {
-    background-color: var(--primary-color);
+.join-discord-button:hover {
+    background-color: #5A73CF;
+}
+
+.discord-section {
+    text-align: center;
+    margin-top: 20px;
+    background-color: #5865F2;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.discord-logo {
+    width: 100px;
+    margin-bottom: 15px;
 }
 
 /* Documentos */
@@ -1057,24 +1079,38 @@ footer {
     width: 100%;
     border-collapse: collapse;
     margin-top: 24px;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
 }
 
 .study-time-table th,
 .study-time-table td {
-    border: 1px solid var(--border-color);
-    padding: 12px;
+    padding: 16px;
     text-align: center;
     font-size: 16px;
 }
 
 .study-time-table th {
-    background-color: var(--accent-color);
-    color: var(--text-color);
+    background-color: var(--secondary-color);
+    color: var(--white-color);
     font-weight: 600;
 }
 
 .study-time-table tr:nth-child(even) {
     background-color: var(--accent-color);
+}
+
+.study-time-table tr:hover {
+    background-color: var(--accent-color);
+}
+
+.study-time-table td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.study-time-table tr:last-child td {
+    border-bottom: none;
 }
 
 /* Media Queries */
@@ -1124,4 +1160,3 @@ footer {
         height: 600px;
     }
 }
-

@@ -47,6 +47,10 @@ body {
     left: 0;
 }
 
+.sidebar.pinned {
+    left: 0;
+}
+
 .sidebar-header {
     display: flex;
     justify-content: space-between;
@@ -63,6 +67,16 @@ body {
     color: var(--white-color);
     font-size: 24px;
     cursor: pointer;
+    display: none;
+}
+
+.pin-sidebar {
+    background: none;
+    border: none;
+    color: var(--white-color);
+    font-size: 24px;
+    cursor: pointer;
+    margin-left: 10px;
 }
 
 .sidebar ul {
@@ -215,6 +229,10 @@ header {
     margin-left: 280px;
 }
 
+.sidebar.pinned + .main-content {
+    margin-left: 280px;
+}
+
 .card {
     background-color: var(--white-color);
     padding: 40px;
@@ -229,13 +247,13 @@ header {
 .card h2 {
     margin-bottom: 24px;
     color: var(--primary-color);
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 700;
     text-align: center;
 }
 
 .card .intro-text {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--secondary-text-color);
     margin-bottom: 32px;
     text-align: center;
@@ -252,7 +270,7 @@ header {
     margin-bottom: 8px;
     font-weight: 600;
     color: var(--text-color);
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .card form input,
@@ -300,6 +318,11 @@ header {
 .logo {
     max-width: 200px;
     margin-bottom: 24px;
+}
+
+/* Ajuste para que el contenido no quede oculto tras el header */
+.card {
+    margin-top: 20px;
 }
 
 /* Footer */
@@ -690,9 +713,10 @@ footer {
 }
 
 .ai-instructions p {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--text-color);
     margin-bottom: 24px;
+    line-height: 1.6;
 }
 
 .ai-instructions ol {
@@ -701,7 +725,7 @@ footer {
 }
 
 .ai-instructions ol li {
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 12px;
 }
 
@@ -755,6 +779,56 @@ footer {
     color: var(--primary-color);
 }
 
+/* Estilos para la sección de Mis Grupos */
+.groups-instructions {
+    max-width: 800px;
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.groups-instructions p {
+    font-size: 20px;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.groups-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+}
+
+.groups-card {
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    width: calc(25% - 16px);
+    max-width: 240px;
+    cursor: pointer;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.2s;
+    text-align: center;
+}
+
+.groups-card:hover {
+    transform: translateY(-5px);
+}
+
+.groups-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+
+.groups-card h3 {
+    padding: 12px;
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
 /* Estilos para la Guía de IA */
 .guide-section {
     max-width: 800px;
@@ -762,9 +836,10 @@ footer {
 }
 
 .guide-section p {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--text-color);
     margin-bottom: 24px;
+    line-height: 1.6;
 }
 
 .prompt-section {
@@ -772,13 +847,13 @@ footer {
 }
 
 .prompt-section h4 {
-    font-size: 20px;
+    font-size: 22px;
     color: var(--primary-color);
     margin-bottom: 12px;
 }
 
 .prompt-section p {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--text-color);
     margin-bottom: 12px;
 }
@@ -805,7 +880,7 @@ footer {
 }
 
 .training-section ul li {
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 16px;
     color: var(--text-color);
 }
@@ -847,7 +922,8 @@ footer {
 @media (max-width: 1024px) {
     .document-card,
     .folder-card,
-    .ai-card {
+    .ai-card,
+    .groups-card {
         flex: 1 1 calc(33.33% - 16px);
         max-width: calc(33.33% - 16px);
     }
@@ -856,7 +932,8 @@ footer {
 @media (max-width: 768px) {
     .document-card,
     .folder-card,
-    .ai-card {
+    .ai-card,
+    .groups-card {
         flex: 1 1 calc(50% - 16px);
         max-width: calc(50% - 16px);
     }
@@ -868,12 +945,17 @@ footer {
     .filter-section select {
         width: 100%;
     }
+
+    .close-sidebar {
+        display: block;
+    }
 }
 
 @media (max-width: 480px) {
     .document-card,
     .folder-card,
-    .ai-card {
+    .ai-card,
+    .groups-card {
         flex: 1 1 100%;
         max-width: 100%;
     }

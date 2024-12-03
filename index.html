@@ -67,350 +67,358 @@
 
     <!-- Contenido principal -->
     <div class="main-content" id="main-content">
-        <!-- Pantalla de Inicio de Sesión -->
-        <div class="card" id="login-screen">
-            <img src="assets/logo.png" alt="Logo Patience" class="logo">
-            <h2>Bienvenido a Patience</h2>
-            <p class="intro-text">La plataforma revolucionaria para opositores modernos</p>
-            <form id="login-form" onsubmit="handleLogin(event)">
-                <label for="login-email">Correo Electrónico:</label>
-                <input type="email" id="login-email" name="email" required>
-                <label for="login-password">Contraseña:</label>
-                <input type="password" id="login-password" name="password" required>
-                <button type="submit">Iniciar Sesión</button>
-            </form>
-            <p>¿No tienes una cuenta todavía? <button type="button"
-                    onclick="showRegistrationScreen()">¡Regístrate!</button></p>
-        </div>
+        <!-- Contenedor central para centrar el contenido -->
+        <div class="content-container">
+            <!-- Pantalla de Inicio de Sesión -->
+            <div class="card" id="login-screen">
+                <img src="assets/logo.png" alt="Logo Patience" class="logo">
+                <h2>Bienvenido a Patience</h2>
+                <p class="intro-text">La plataforma revolucionaria para opositores modernos</p>
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <label for="login-email">Correo Electrónico:</label>
+                    <input type="email" id="login-email" name="email" required>
+                    <label for="login-password">Contraseña:</label>
+                    <input type="password" id="login-password" name="password" required>
+                    <button type="submit">Iniciar Sesión</button>
+                </form>
+                <p>¿No tienes una cuenta todavía? <button type="button"
+                        onclick="showRegistrationScreen()">¡Regístrate!</button></p>
+            </div>
 
-        <!-- Pantalla de Registro -->
-        <div class="card" id="registration-screen" style="display: none;">
-            <img src="assets/logo.png" alt="Logo Patience" class="logo">
-            <h2>Crea tu Cuenta</h2>
-            <p class="intro-text">Únete a la revolución en la preparación de oposiciones</p>
-            <form id="registration-form" onsubmit="handleRegistration(event)">
-                <label for="reg-name">Nombre:</label>
-                <input type="text" id="reg-name" name="name" required>
+            <!-- Pantalla de Registro -->
+            <div class="card" id="registration-screen" style="display: none;">
+                <img src="assets/logo.png" alt="Logo Patience" class="logo">
+                <h2>Crea tu Cuenta</h2>
+                <p class="intro-text">Únete a la revolución en la preparación de oposiciones</p>
+                <form id="registration-form" onsubmit="handleRegistration(event)">
+                    <label for="reg-name">Nombre:</label>
+                    <input type="text" id="reg-name" name="name" required>
 
-                <label for="reg-email">Correo Electrónico:</label>
-                <input type="email" id="reg-email" name="email" required>
+                    <label for="reg-email">Correo Electrónico:</label>
+                    <input type="email" id="reg-email" name="email" required>
 
-                <label for="reg-password">Contraseña:</label>
-                <input type="password" id="reg-password" name="password" required>
+                    <label for="reg-password">Contraseña:</label>
+                    <input type="password" id="reg-password" name="password" required>
 
-                <button type="submit">Registrarse</button>
-            </form>
-            <p id="registration-message" style="display: none;">¡Gracias por registrarte! Ahora puedes iniciar sesión.</p>
-            <button id="welcome-button" class="welcome-button" style="display: none;"
-                onclick="showLoginScreen()">Iniciar Sesión</button>
-            <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
-        </div>
+                    <button type="submit">Registrarse</button>
+                </form>
+                <p id="registration-message" style="display: none;">¡Gracias por registrarte! Ahora puedes iniciar sesión.</p>
+                <button id="welcome-button" class="welcome-button" style="display: none;"
+                    onclick="showLoginScreen()">Iniciar Sesión</button>
+                <p>¿Ya tienes una cuenta? <button type="button" onclick="showLoginScreen()">Inicia sesión</button></p>
+            </div>
 
-        <!-- Pantalla de Onboarding -->
-        <div class="onboarding-overlay" id="onboarding-overlay" style="display: none;">
-            <div class="onboarding-content" id="onboarding-content">
-                <div class="onboarding-step" id="onboarding-step-1">
-                    <h2>¡Bienvenido a Patience!</h2>
-                    <p>Te guiaremos a través de las funcionalidades clave para que puedas aprovechar al máximo nuestra
-                        plataforma.</p>
-                    <button onclick="nextOnboardingStep()">Siguiente</button>
-                </div>
-                <div class="onboarding-step" id="onboarding-step-2" style="display: none;">
-                    <h2>Perfil Personalizado</h2>
-                    <p>Completa tu perfil para recibir recomendaciones y recursos adaptados a tus necesidades.</p>
-                    <button onclick="nextOnboardingStep()">Siguiente</button>
-                </div>
-                <div class="onboarding-step" id="onboarding-step-3" style="display: none;">
-                    <h2>IA Especializada</h2>
-                    <p>Accede a herramientas de inteligencia artificial diseñadas para tu especialidad.</p>
-                    <button onclick="nextOnboardingStep()">Siguiente</button>
-                </div>
-                <div class="onboarding-step" id="onboarding-step-4" style="display: none;">
-                    <h2>Mis Documentos</h2>
-                    <p>Organiza y gestiona todos tus materiales de estudio en un solo lugar.</p>
-                    <button onclick="nextOnboardingStep()">Siguiente</button>
-                </div>
-                <div class="onboarding-step" id="onboarding-step-5" style="display: none;">
-                    <h2>Cronómetro de Estudio</h2>
-                    <p>Registra y monitorea el tiempo que dedicas al estudio para seguir tu progreso.</p>
-                    <button onclick="finishOnboarding()">¡Empezar!</button>
+            <!-- Pantalla de Onboarding -->
+            <div class="onboarding-overlay" id="onboarding-overlay" style="display: none;">
+                <div class="onboarding-content" id="onboarding-content">
+                    <div class="onboarding-step" id="onboarding-step-1">
+                        <h2>¡Bienvenido a Patience!</h2>
+                        <p>Te guiaremos a través de las funcionalidades clave para que puedas aprovechar al máximo nuestra
+                            plataforma.</p>
+                        <button onclick="nextOnboardingStep()">Siguiente</button>
+                    </div>
+                    <div class="onboarding-step" id="onboarding-step-2" style="display: none;">
+                        <h2>Perfil Personalizado</h2>
+                        <p>Completa tu perfil para recibir recomendaciones y recursos adaptados a tus necesidades.</p>
+                        <button onclick="nextOnboardingStep()">Siguiente</button>
+                    </div>
+                    <div class="onboarding-step" id="onboarding-step-3" style="display: none;">
+                        <h2>IA Especializada</h2>
+                        <p>Accede a herramientas de inteligencia artificial diseñadas para tu especialidad.</p>
+                        <button onclick="nextOnboardingStep()">Siguiente</button>
+                    </div>
+                    <div class="onboarding-step" id="onboarding-step-4" style="display: none;">
+                        <h2>Mis Documentos</h2>
+                        <p>Organiza y gestiona todos tus materiales de estudio en un solo lugar.</p>
+                        <button onclick="nextOnboardingStep()">Siguiente</button>
+                    </div>
+                    <div class="onboarding-step" id="onboarding-step-5" style="display: none;">
+                        <h2>Cronómetro de Estudio</h2>
+                        <p>Registra y monitorea el tiempo que dedicas al estudio para seguir tu progreso.</p>
+                        <button onclick="finishOnboarding()">¡Empezar!</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Pantalla de Inicio -->
-        <div class="card home-card" id="home-screen" style="display: none;">
-            <div class="welcome-section">
-                <h1>¡Hola, <span id="user-name-home"></span>!</h1>
-                <p>Prepárate para tus oposiciones de manera innovadora y eficiente con Patience.</p>
-            </div>
-            <div class="dashboard">
-                <div class="dashboard-item">
-                    <h3><i class="fas fa-calendar-alt"></i> Días para el examen</h3>
-                    <p id="days-remaining">--</p>
+            <!-- Pantalla de Inicio -->
+            <div class="card home-card" id="home-screen" style="display: none;">
+                <div class="welcome-section">
+                    <h1>¡Hola, <span id="user-name-home"></span>!</h1>
+                    <p>Prepárate para tus oposiciones de manera innovadora y eficiente con Patience.</p>
                 </div>
-                <div class="dashboard-item">
-                    <h3><i class="fas fa-clock"></i> Horas de estudio</h3>
-                    <p id="study-hours">--</p>
-                </div>
-                <div class="dashboard-item">
-                    <h3><i class="fas fa-file-alt"></i> Último documento</h3>
-                    <p id="last-document">--</p>
-                </div>
-                <div class="dashboard-item">
-                    <h3><i class="fas fa-stopwatch"></i> Cronómetro de Estudio</h3>
-                    <div class="timer">
-                        <span id="timer-display">00:00:00</span>
-                        <div class="timer-buttons">
-                            <button id="start-timer" onclick="startTimer()">Iniciar</button>
-                            <button id="pause-timer" onclick="pauseTimer()" disabled>Pausar</button>
-                            <button id="reset-timer" onclick="resetTimer()" disabled>Reiniciar</button>
+                <div class="dashboard">
+                    <div class="dashboard-item">
+                        <h3><i class="fas fa-calendar-alt"></i> Días para el examen</h3>
+                        <p id="days-remaining">--</p>
+                    </div>
+                    <div class="dashboard-item" onclick="showStudyTimeScreen()" style="cursor: pointer;">
+                        <h3><i class="fas fa-clock"></i> Horas de estudio</h3>
+                        <p id="study-hours">--</p>
+                        <p id="motivational-message"></p>
+                    </div>
+                    <div class="dashboard-item">
+                        <h3><i class="fas fa-file-alt"></i> Último documento</h3>
+                        <p id="last-document">--</p>
+                    </div>
+                    <div class="dashboard-item">
+                        <h3><i class="fas fa-stopwatch"></i> Cronómetro de Estudio</h3>
+                        <div class="timer">
+                            <span id="timer-display">00:00:00</span>
+                            <div class="timer-buttons">
+                                <button id="start-timer" onclick="startTimer()">Iniciar</button>
+                                <button id="pause-timer" onclick="pauseTimer()" disabled>Pausar</button>
+                                <button id="reset-timer" onclick="resetTimer()" disabled>Reiniciar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="home-section">
-                <!-- IA Especializada -->
-                <div class="overview" onclick="showAIScreen()">
-                    <i class="fas fa-robot"></i>
-                    <h3>IA Especializada</h3>
-                    <p>Accede a herramientas de IA diseñadas para tu especialidad.</p>
-                </div>
+                <div class="home-section">
+                    <!-- IA Especializada -->
+                    <div class="overview" onclick="showAIScreen()">
+                        <i class="fas fa-robot"></i>
+                        <h3>IA Especializada</h3>
+                        <p>Accede a herramientas de IA diseñadas para tu especialidad.</p>
+                    </div>
 
-                <!-- Mis Documentos -->
-                <div class="overview" onclick="showDocuments()">
-                    <i class="fas fa-folder"></i>
-                    <h3>Mis Documentos</h3>
-                    <p>Gestiona y organiza tus materiales de estudio.</p>
-                </div>
+                    <!-- Mis Documentos -->
+                    <div class="overview" onclick="showDocuments()">
+                        <i class="fas fa-folder"></i>
+                        <h3>Mis Documentos</h3>
+                        <p>Gestiona y organiza tus materiales de estudio.</p>
+                    </div>
 
-                <!-- Mis Grupos -->
-                <div class="overview" onclick="showGroups()">
-                    <i class="fas fa-users"></i>
-                    <h3>Mis Grupos</h3>
-                    <p>Conecta con otros opositores y comparte conocimientos.</p>
-                </div>
+                    <!-- Mis Grupos -->
+                    <div class="overview" onclick="showGroups()">
+                        <i class="fas fa-users"></i>
+                        <h3>Mis Grupos</h3>
+                        <p>Conecta con otros opositores y comparte conocimientos.</p>
+                    </div>
 
-                <!-- Últimas Noticias -->
-                <div class="overview" onclick="showNews()">
-                    <i class="fas fa-newspaper"></i>
-                    <h3>Últimas Noticias</h3>
-                    <p>Mantente informado sobre las novedades y convocatorias.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pantalla de Perfil -->
-        <div class="card" id="profile-screen" style="display: none;">
-            <h2>Mi Perfil</h2>
-            <form id="profile-form" onsubmit="handleProfileUpdate(event)">
-                <div class="profile-field">
-                    <div class="profile-image-container">
-                        <img id="profile-img" src="assets/default-profile.png" alt="Imagen de Perfil" class="profile-img">
-                        <label for="profile-img-upload" class="upload-profile-label"><i
-                                class="fas fa-camera"></i></label>
-                        <input type="file" id="profile-img-upload" class="profile-img-upload" accept="image/*"
-                            onchange="handleImageUpload(event)">
+                    <!-- Últimas Noticias -->
+                    <div class="overview" onclick="showNews()">
+                        <i class="fas fa-newspaper"></i>
+                        <h3>Últimas Noticias</h3>
+                        <p>Mantente informado sobre las novedades y convocatorias.</p>
                     </div>
                 </div>
-                <div class="profile-field">
-                    <label for="full-name">Nombre Completo:</label>
-                    <input type="text" id="full-name" name="full-name" required>
-                </div>
-                <div class="profile-field">
-                    <label for="profile-email">Email:</label>
-                    <input type="email" id="profile-email" name="profile-email" required readonly>
-                </div>
-                <div class="profile-field">
-                    <label for="phone">Teléfono:</label>
-                    <input type="tel" id="phone" name="phone">
-                </div>
-                <div class="profile-field">
-                    <label for="study-time">Horas de estudio:</label>
-                    <input type="number" id="study-time" name="study-time">
-                </div>
-                <div class="profile-field">
-                    <label for="exam-date">Fecha del examen:</label>
-                    <input type="date" id="exam-date" name="exam-date">
-                </div>
-                <div class="profile-field">
-                    <label for="specialty">Especialidad:</label>
-                    <input type="text" id="specialty" name="specialty">
-                </div>
-                <div class="profile-field">
-                    <label for="hobbies">Aficiones:</label>
-                    <input type="text" id="hobbies" name="hobbies">
-                </div>
-                <div class="profile-field">
-                    <label for="location">Ubicación:</label>
-                    <input type="text" id="location" name="location">
-                </div>
-                <button type="submit">Guardar Cambios</button>
-            </form>
-        </div>
+            </div>
 
-        <!-- Pantalla de IA Especializada -->
-        <div class="card" id="ai-screen" style="display: none;">
-            <h2>IA Especializada</h2>
-            <div class="ai-instructions">
-                <p>Accede a nuestras herramientas de inteligencia artificial especializadas y lleva tu preparación al siguiente
-                    nivel.</p>
-                <ol>
-                    <li><strong>Selecciona tu especialidad</strong> en las tarjetas de abajo.</li>
-                    <li>Serás redirigido a la página de ChatGPT de OpenAI.</li>
-                    <li><strong>Inicia sesión o crea una cuenta</strong> en OpenAI si aún no lo has hecho. Es gratuito y rápido.
-                    </li>
-                    <li>¡Comienza a interactuar con la IA especializada en tu área!</li>
-                </ol>
-            </div>
-            <div class="ai-search">
-                <input type="text" id="ai-search-input" placeholder="Buscar especialidad..." oninput="filterSpecialties()">
-            </div>
-            <div class="ai-cards-container" id="ai-cards-container">
-                <!-- Las tarjetas de especialidades se cargarán dinámicamente -->
-            </div>
-        </div>
-
-        <!-- Pantalla de Mis Documentos -->
-        <div class="card" id="documents-screen" style="display: none;">
-            <h2>Mis Documentos</h2>
-            <div class="document-management">
-                <div class="document-buttons">
-                    <label for="upload-document" class="upload-label"><i class="fas fa-upload"></i> Subir Documentos</label>
-                    <input type="file" id="upload-document" multiple>
-                    <button class="create-folder-button" onclick="createFolder()"><i class="fas fa-folder-plus"></i> Crear
-                        Carpeta</button>
-                </div>
-                <div class="search-filter">
-                    <input type="text" id="document-search" placeholder="Buscar documentos..."
-                        oninput="filterDocuments()">
-                </div>
-                <div id="documents-container"></div>
-            </div>
-        </div>
-
-        <!-- Pantalla de Mis Grupos -->
-        <div class="card" id="groups-screen" style="display: none;">
-            <h2>Mis Grupos</h2>
-            <div class="groups-instructions">
-                <p>Únete a nuestra comunidad y comparte experiencias con otros opositores.</p>
-            </div>
-            <div class="groups-cards-container">
-                <div class="group-card">
-                    <img src="assets/Grupos.jpg" alt="Mis Grupos">
-                    <h3>Accede a tus Grupos</h3>
-                    <button class="join-slack-button" onclick="redirectToSlack()"><i class="fab fa-slack"></i> Unirse a
-                        Slack</button>
+            <!-- Pantalla de Horas de Estudio -->
+            <div class="card" id="study-time-screen" style="display: none;">
+                <h2>Registro de Horas de Estudio</h2>
+                <div id="study-time-table-container">
+                    <!-- La tabla de horas de estudio se cargará dinámicamente -->
                 </div>
             </div>
-        </div>
 
-        <!-- Pantalla de Guía para aprovechar al máximo la IA -->
-        <div class="card" id="guide-screen" style="display: none;">
-            <h2>Guía para Aprovechar al Máximo la IA</h2>
-            <div class="guide-section">
-                <p>Descubre cómo interactuar eficazmente con nuestra IA especializada y maximiza tu aprendizaje.</p>
-                <div class="prompt-section">
-                    <h4>Generar un examen aleatorio:</h4>
-                    <p><strong>Ejemplo:</strong> "Genera un examen de oposición para la especialidad de <span
-                            class="prompt-hint">Matemáticas</span> con 5 temas aleatorios y 2 ejercicios prácticos
-                        relacionados."</p>
-                </div>
-                <div class="prompt-section">
-                    <h4>Crear una introducción desde cero:</h4>
-                    <p><strong>Ejemplo:</strong> "Crea una introducción para el tema <span class="prompt-hint">La Revolución
-                            Industrial</span> en <span class="prompt-hint">inglés</span>, utilizando un estilo formal y
-                        académico."</p>
-                </div>
-                <div class="prompt-section">
-                    <h4>Obtener ejercicios prácticos corregidos:</h4>
-                    <p><strong>Ejemplo:</strong> "Proporciona 3 ejercicios prácticos para la especialidad de <span
-                            class="prompt-hint">Biología</span> con sus soluciones detalladas."</p>
-                </div>
-                <div class="prompt-section">
-                    <h4>Resolver dudas específicas:</h4>
-                    <p><strong>Ejemplo:</strong> "¿Puedes explicarme el concepto de <span class="prompt-hint">derivadas
-                            parciales</span> y cómo se aplica en <span class="prompt-hint">cálculo multivariable</span>?"</p>
-                </div>
-                <p>¡No dudes en ser creativo y explorar diferentes tipos de preguntas!</p>
+            <!-- Pantalla de Perfil -->
+            <div class="card" id="profile-screen" style="display: none;">
+                <h2>Mi Perfil</h2>
+                <form id="profile-form" onsubmit="handleProfileUpdate(event)">
+                    <div class="profile-field">
+                        <div class="profile-image-container">
+                            <img id="profile-img" src="assets/default-profile.png" alt="Imagen de Perfil" class="profile-img">
+                            <label for="profile-img-upload" class="upload-profile-label"><i
+                                    class="fas fa-camera"></i></label>
+                            <input type="file" id="profile-img-upload" class="profile-img-upload" accept="image/*"
+                                onchange="handleImageUpload(event)">
+                        </div>
+                    </div>
+                    <div class="profile-field">
+                        <label for="full-name">Nombre Completo:</label>
+                        <input type="text" id="full-name" name="full-name" required>
+                    </div>
+                    <div class="profile-field">
+                        <label for="profile-email">Email:</label>
+                        <input type="email" id="profile-email" name="profile-email" required readonly>
+                    </div>
+                    <div class="profile-field">
+                        <label for="phone">Teléfono:</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="profile-field">
+                        <label for="exam-date">Fecha del examen:</label>
+                        <input type="date" id="exam-date" name="exam-date">
+                    </div>
+                    <div class="profile-field">
+                        <label for="specialty">Especialidad:</label>
+                        <input type="text" id="specialty" name="specialty">
+                    </div>
+                    <div class="profile-field">
+                        <label for="hobbies">Aficiones:</label>
+                        <input type="text" id="hobbies" name="hobbies">
+                    </div>
+                    <div class="profile-field">
+                        <label for="location">Ubicación:</label>
+                        <input type="text" id="location" name="location">
+                    </div>
+                    <button type="submit">Guardar Cambios</button>
+                </form>
             </div>
-        </div>
 
-        <!-- Pantalla de ¿Dónde te puedes preparar? -->
-        <div class="card" id="directory-screen" style="display: none;">
-            <h2>¿Dónde te puedes preparar?</h2>
-            <p>Encuentra las mejores academias para tu preparación en tu ciudad.</p>
-            <div class="filter-section">
-                <label for="city-filter">Ciudad:</label>
-                <select id="city-filter" onchange="filterAcademies()">
-                    <option value="">Todas</option>
-                    <!-- Las ciudades se cargarán dinámicamente -->
-                </select>
-
-                <label for="specialty-filter">Especialidad:</label>
-                <select id="specialty-filter" onchange="filterAcademies()">
-                    <option value="">Todas</option>
-                    <!-- Las especialidades se cargarán dinámicamente -->
-                </select>
-            </div>
-            <div class="directory-container" id="academy-container">
-                <!-- Las academias se mostrarán aquí -->
-            </div>
-        </div>
-
-        <!-- Pantalla de ¿Qué es Patience? -->
-        <div class="card" id="training-screen" style="display: none;">
-            <h2>Descubre Patience</h2>
-            <p>La plataforma que está revolucionando la forma de preparar oposiciones. Diseñada para ti, que buscas una
-                preparación eficiente, moderna y adaptada a tus necesidades.</p>
-            <div class="training-section">
-                <h3>¿Por qué elegir Patience?</h3>
-                <ul>
-                    <li><strong>Innovación Tecnológica:</strong> Utilizamos inteligencia artificial para potenciar tu aprendizaje.
-                    </li>
-                    <li><strong>Comunidad Activa:</strong> Conecta con otros opositores y comparte experiencias.</li>
-                    <li><strong>Recursos Personalizados:</strong> Accede a materiales y herramientas adaptadas a tu especialidad.
-                    </li>
-                    <li><strong>Actualizaciones Constantes:</strong> Siempre estamos mejorando y añadiendo nuevas funcionalidades.
-                    </li>
-                </ul>
-            </div>
-            <div class="training-image">
-                <img src="assets/training.jpg" alt="Imagen Representativa">
-            </div>
-        </div>
-
-        <!-- Pantalla de Últimas Noticias -->
-        <div class="card" id="news-screen" style="display: none;">
-            <h2>Últimas Noticias</h2>
-            <div class="news-section">
-                <div class="news-buttons">
-                    <button onclick="showNewsContent('csif')">CSIF</button>
-                    <button onclick="showNewsContent('sipri')">SIPRI</button>
+            <!-- Pantalla de IA Especializada -->
+            <div class="card" id="ai-screen" style="display: none;">
+                <h2>IA Especializada</h2>
+                <div class="ai-instructions">
+                    <p>Accede a nuestras herramientas de inteligencia artificial especializadas y lleva tu preparación al siguiente
+                        nivel.</p>
+                    <ol>
+                        <li><strong>Selecciona tu especialidad</strong> en las tarjetas de abajo.</li>
+                        <li>Serás redirigido a la página de ChatGPT de OpenAI.</li>
+                        <li><strong>Inicia sesión o crea una cuenta</strong> en OpenAI si aún no lo has hecho. Es gratuito y rápido.
+                        </li>
+                        <li>¡Comienza a interactuar con la IA especializada en tu área!</li>
+                    </ol>
                 </div>
-                <div class="iframe-container">
-                    <iframe id="csif-iframe" class="news-iframe"
-                        src="https://www.csif.es/andalucia/educacion/oposiciones"
-                        sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
-                    <iframe id="sipri-iframe" class="news-iframe" style="display: none;"
-                        src="https://sipri.es/oposiciones/"
-                        sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
+                <div class="ai-search">
+                    <input type="text" id="ai-search-input" placeholder="Buscar especialidad..." oninput="filterSpecialties()">
+                </div>
+                <div class="ai-cards-container" id="ai-cards-container">
+                    <!-- Las tarjetas de especialidades se cargarán dinámicamente -->
                 </div>
             </div>
-        </div>
 
-        <!-- Pantalla de Ayuda -->
-        <div class="card" id="help-screen" style="display: none;">
-            <h2>¿Necesitas Ayuda?</h2>
-            <p>Estamos aquí para apoyarte en cada paso de tu preparación. Si tienes alguna duda o necesitas asistencia, no
-                dudes en contactarnos.</p>
-            <p>Escríbenos a: <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
-        </div>
+            <!-- Pantalla de Mis Documentos -->
+            <div class="card" id="documents-screen" style="display: none;">
+                <h2>Mis Documentos</h2>
+                <div class="document-management">
+                    <div class="document-buttons">
+                        <label for="upload-document" class="upload-label"><i class="fas fa-upload"></i> Subir Documentos</label>
+                        <input type="file" id="upload-document" multiple>
+                        <button class="create-folder-button" onclick="createFolder()"><i class="fas fa-folder-plus"></i> Crear
+                            Carpeta</button>
+                    </div>
+                    <div class="search-filter">
+                        <input type="text" id="document-search" placeholder="Buscar documentos..."
+                            oninput="filterDocuments()">
+                    </div>
+                    <div id="documents-container"></div>
+                </div>
+            </div>
 
-        <!-- Pantalla de Próximamente -->
-        <div class="card" id="coming-soon-screen" style="display: none;">
-            <h2>¡Próximamente!</h2>
-            <p>Estamos trabajando en nuevas funcionalidades sorprendentes. ¡Mantente atento a nuestras actualizaciones!</p>
+            <!-- Pantalla de Mis Grupos -->
+            <div class="card" id="groups-screen" style="display: none;">
+                <h2>Mis Grupos</h2>
+                <div class="groups-instructions">
+                    <p>Únete a nuestra comunidad y comparte experiencias con otros opositores.</p>
+                </div>
+                <div class="groups-cards-container">
+                    <div class="group-card">
+                        <img src="assets/Grupos.jpg" alt="Mis Grupos">
+                        <h3>Accede a tus Grupos</h3>
+                        <button class="join-slack-button" onclick="redirectToSlack()"><i class="fab fa-slack"></i> Unirse a
+                            Slack</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pantalla de Guía para aprovechar al máximo la IA -->
+            <div class="card" id="guide-screen" style="display: none;">
+                <h2>Guía para Aprovechar al Máximo la IA</h2>
+                <div class="guide-section">
+                    <p>Descubre cómo interactuar eficazmente con nuestra IA especializada y maximiza tu aprendizaje.</p>
+                    <div class="prompt-section">
+                        <h4>Generar un examen aleatorio:</h4>
+                        <p><strong>Ejemplo:</strong> "Genera un examen de oposición para la especialidad de <span
+                                class="prompt-hint">Matemáticas</span> con 5 temas aleatorios y 2 ejercicios prácticos
+                            relacionados."</p>
+                    </div>
+                    <div class="prompt-section">
+                        <h4>Crear una introducción desde cero:</h4>
+                        <p><strong>Ejemplo:</strong> "Crea una introducción para el tema <span class="prompt-hint">La Revolución
+                                Industrial</span> en <span class="prompt-hint">inglés</span>, utilizando un estilo formal y
+                            académico."</p>
+                    </div>
+                    <div class="prompt-section">
+                        <h4>Obtener ejercicios prácticos corregidos:</h4>
+                        <p><strong>Ejemplo:</strong> "Proporciona 3 ejercicios prácticos para la especialidad de <span
+                                class="prompt-hint">Biología</span> con sus soluciones detalladas."</p>
+                    </div>
+                    <div class="prompt-section">
+                        <h4>Resolver dudas específicas:</h4>
+                        <p><strong>Ejemplo:</strong> "¿Puedes explicarme el concepto de <span class="prompt-hint">derivadas
+                                parciales</span> y cómo se aplica en <span class="prompt-hint">cálculo multivariable</span>?"</p>
+                    </div>
+                    <p>¡No dudes en ser creativo y explorar diferentes tipos de preguntas!</p>
+                </div>
+            </div>
+
+            <!-- Pantalla de ¿Dónde te puedes preparar? -->
+            <div class="card" id="directory-screen" style="display: none;">
+                <h2>¿Dónde te puedes preparar?</h2>
+                <p>Encuentra las mejores academias para tu preparación en tu ciudad.</p>
+                <div class="filter-section">
+                    <label for="city-filter">Ciudad:</label>
+                    <select id="city-filter" onchange="filterAcademies()">
+                        <option value="">Todas</option>
+                        <!-- Las ciudades se cargarán dinámicamente -->
+                    </select>
+
+                    <label for="specialty-filter">Especialidad:</label>
+                    <select id="specialty-filter" onchange="filterAcademies()">
+                        <option value="">Todas</option>
+                        <!-- Las especialidades se cargarán dinámicamente -->
+                    </select>
+                </div>
+                <div class="directory-container" id="academy-container">
+                    <!-- Las academias se mostrarán aquí -->
+                </div>
+            </div>
+
+            <!-- Pantalla de ¿Qué es Patience? -->
+            <div class="card" id="training-screen" style="display: none;">
+                <h2>Descubre Patience</h2>
+                <p>La plataforma que está revolucionando la forma de preparar oposiciones. Diseñada para ti, que buscas una
+                    preparación eficiente, moderna y adaptada a tus necesidades.</p>
+                <div class="training-section">
+                    <h3>¿Por qué elegir Patience?</h3>
+                    <ul>
+                        <li><strong>Innovación Tecnológica:</strong> Utilizamos inteligencia artificial para potenciar tu aprendizaje.
+                        </li>
+                        <li><strong>Comunidad Activa:</strong> Conecta con otros opositores y comparte experiencias.</li>
+                        <li><strong>Recursos Personalizados:</strong> Accede a materiales y herramientas adaptadas a tu especialidad.
+                        </li>
+                        <li><strong>Actualizaciones Constantes:</strong> Siempre estamos mejorando y añadiendo nuevas funcionalidades.
+                        </li>
+                    </ul>
+                </div>
+                <div class="training-image">
+                    <img src="assets/training.jpg" alt="Imagen Representativa">
+                </div>
+            </div>
+
+            <!-- Pantalla de Últimas Noticias -->
+            <div class="card" id="news-screen" style="display: none;">
+                <h2>Últimas Noticias</h2>
+                <div class="news-section">
+                    <div class="news-buttons">
+                        <button onclick="showNewsContent('csif')">CSIF</button>
+                        <button onclick="showNewsContent('sipri')">SIPRI</button>
+                    </div>
+                    <div class="iframe-container">
+                        <iframe id="csif-iframe" class="news-iframe"
+                            src="https://www.csif.es/andalucia/educacion/oposiciones"
+                            sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
+                        <iframe id="sipri-iframe" class="news-iframe" style="display: none;"
+                            src="https://sipri.es/oposiciones/"
+                            sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pantalla de Ayuda -->
+            <div class="card" id="help-screen" style="display: none;">
+                <h2>¿Necesitas Ayuda?</h2>
+                <p>Estamos aquí para apoyarte en cada paso de tu preparación. Si tienes alguna duda o necesitas asistencia, no
+                    dudes en contactarnos.</p>
+                <p>Escríbenos a: <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
+            </div>
+
+            <!-- Pantalla de Próximamente -->
+            <div class="card" id="coming-soon-screen" style="display: none;">
+                <h2>¡Próximamente!</h2>
+                <p>Estamos trabajando en nuevas funcionalidades sorprendentes. ¡Mantente atento a nuestras actualizaciones!</p>
+            </div>
         </div>
     </div>
 

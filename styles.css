@@ -58,7 +58,7 @@ body {
 }
 
 .sidebar-logo {
-    width: 120px;
+    width: 150px;
 }
 
 .close-sidebar {
@@ -121,9 +121,17 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 18px;
+    padding: 12px 24px;
     box-shadow: var(--box-shadow);
     z-index: 999;
+}
+
+.main-content {
+    flex: 1;
+    margin-top: 64px;
+    padding: 24px;
+    width: 100%;
+    transition: margin-left 0.3s ease;
 }
 
 .header-left {
@@ -141,7 +149,7 @@ header {
 }
 
 .header-logo {
-    width: 80px;
+    width: 120px;
     cursor: pointer;
 }
 
@@ -220,14 +228,6 @@ header {
 }
 
 /* Contenido principal */
-.main-content {
-    flex: 1;
-    margin-top: 64px;
-    padding: 24px;
-    width: 100%;
-    transition: margin-left 0.3s ease;
-}
-
 .sidebar.show-sidebar + .main-content {
     margin-left: 280px;
 }
@@ -430,6 +430,47 @@ footer {
     color: var(--secondary-text-color);
 }
 
+/* Estilos para el Cronómetro de Estudio */
+.timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+}
+
+#timer-display {
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 16px;
+}
+
+.timer-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.timer-buttons button {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 10px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.timer-buttons button:hover {
+    background-color: var(--primary-color);
+}
+
+.timer-buttons button:disabled {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+}
+
 /* Botón de Slack */
 .join-slack-button {
     background-color: var(--secondary-color);
@@ -480,6 +521,10 @@ footer {
 .upload-label:hover,
 .create-folder-button:hover {
     background-color: var(--primary-color);
+}
+
+#upload-document {
+    display: none;
 }
 
 .search-filter {
@@ -909,6 +954,82 @@ footer {
     display: none;
 }
 
+.profile-field {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.profile-field label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.profile-field input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+}
+
+/* Estilos para el Onboarding */
+.onboarding-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(47, 53, 66, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.onboarding-content {
+    background-color: var(--white-color);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    box-shadow: var(--box-shadow);
+}
+
+.onboarding-step {
+    display: none;
+}
+
+.onboarding-step h2 {
+    font-size: 28px;
+    color: var(--primary-color);
+    margin-bottom: 24px;
+}
+
+.onboarding-step p {
+    font-size: 18px;
+    color: var(--text-color);
+    margin-bottom: 24px;
+}
+
+.onboarding-step button {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 14px 24px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.onboarding-step button:hover {
+    background-color: var(--primary-color);
+}
+
 /* Media Queries */
 @media (max-width: 1024px) {
     .document-card,
@@ -956,3 +1077,4 @@ footer {
         height: 600px;
     }
 }
+

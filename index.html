@@ -66,6 +66,16 @@
         </ul>
     </div>
 
+    <!-- Overlay para Onboarding -->
+    <div id="onboarding-overlay" class="onboarding-overlay" style="display: none;">
+        <div class="onboarding-content">
+            <h2>¡Bienvenido a Patience!</h2>
+            <p>Estamos encantados de tenerte aquí. ¿Te gustaría hacer un recorrido rápido por las principales funcionalidades?</p>
+            <button onclick="startOnboarding()">Comenzar Tour</button>
+            <button onclick="skipOnboarding()">Omitir</button>
+        </div>
+    </div>
+
     <!-- Contenido principal -->
     <div class="main-content" id="main-content">
         <!-- Pantalla de Inicio de Sesión -->
@@ -125,6 +135,15 @@
                 <div class="dashboard-item">
                     <h3><i class="fas fa-file-alt"></i> Último documento</h3>
                     <p id="last-document">--</p>
+                </div>
+            </div>
+            <div class="study-timer">
+                <h2>Cronómetro de Estudio</h2>
+                <div class="timer-display" id="timer-display">00:00:00</div>
+                <div class="timer-buttons">
+                    <button id="start-timer-button" onclick="startStudyTimer()">Iniciar</button>
+                    <button id="pause-timer-button" onclick="pauseStudyTimer()">Pausar</button>
+                    <button id="reset-timer-button" onclick="resetStudyTimer()">Reiniciar</button>
                 </div>
             </div>
             <div class="home-section">

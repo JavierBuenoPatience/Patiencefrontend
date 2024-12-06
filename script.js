@@ -207,6 +207,52 @@ const specialties = [
     }
 ];
 
+// Preguntas para el Quiz Diario (estáticas)
+const dailyQuizQuestions = [
+    {
+        question: "¿Cuál es la capital de Francia?",
+        options: ["París", "Londres", "Berlín"],
+        answer: 0
+    },
+    {
+        question: "¿Cuál es el resultado de 5x5?",
+        options: ["20", "25", "30"],
+        answer: 1
+    },
+    {
+        question: "¿La célula es la unidad...?",
+        options: ["De heredabilidad", "De estructura y función de los seres vivos", "De la fotosíntesis"],
+        answer: 1
+    },
+    {
+        question: "¿Cuál es el río más largo del mundo?",
+        options: ["Nilo", "Amazonas", "Yangtsé"],
+        answer: 1
+    },
+    {
+        question: "¿Quién escribió 'Don Quijote de la Mancha'?",
+        options: ["Miguel de Cervantes", "Federico García Lorca", "Gabriel García Márquez"],
+        answer: 0
+    }
+];
+let currentQuizIndex = -1;
+
+// Variables para mensajes motivacionales
+const motivationalMessages = [
+    "¡Ánimo! Ya estás un poco más cerca de la meta.",
+    "Lo estás haciendo genial, ¡sigue así!",
+    "Un poco más y nos tomamos un descanso, ¡ánimo!"
+];
+let motivationalMessageIndex = 0;
+
+// Variables para Racha Diaria (Daily Streak)
+let dailyStreak = 0;
+
+// Variables para el cronómetro
+let timerInterval;
+let elapsedTime = 0;
+let isTimerRunning = false;
+
 document.addEventListener('DOMContentLoaded', () => {
     const notificationIcon = document.querySelector('.notification-icon');
     const notificationPanel = document.getElementById('notification-panel');
@@ -240,58 +286,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadSidebarState();
     updateMotivationalMessage();
-    setInterval(updateMotivationalMessage, 5 * 60 * 1000);
+    setInterval(updateMotivationalMessage, 5 * 60 * 1000); // Actualizar cada 5 minutos
 
     loadDailyStreak();
     loadDailyCheckInStatus();
-    loadDailyQuiz();
     loadRecentActivity();
+    updateRecentActivitySummary();
 });
-
-// Variables para el cronómetro
-let timerInterval;
-let elapsedTime = 0;
-let isTimerRunning = false;
-
-// Variables para mensajes motivacionales
-const motivationalMessages = [
-    "¡Ánimo! Ya estás un poco más cerca de la meta.",
-    "Lo estás haciendo genial, ¡sigue así!",
-    "Un poco más y nos tomamos un descanso, ¡ánimo!"
-];
-let motivationalMessageIndex = 0;
-
-// Variables para Racha Diaria (Daily Streak)
-let dailyStreak = 0;
-
-// Preguntas para el Quiz Diario (estáticas)
-const dailyQuizQuestions = [
-    {
-        question: "¿Cuál es la capital de Francia?",
-        options: ["París", "Londres", "Berlín"],
-        answer: 0
-    },
-    {
-        question: "¿Cuál es el resultado de 5x5?",
-        options: ["20", "25", "30"],
-        answer: 1
-    },
-    {
-        question: "¿La célula es la unidad...?",
-        options: ["De heredabilidad", "De estructura y función de los seres vivos", "De la fotosíntesis"],
-        answer: 1
-    }
-];
-let currentQuizIndex = -1;
-
-// Función para actualizar el mensaje motivacional
-function updateMotivationalMessage() {
-    const messageElement = document.getElementById('motivational-message');
-    if (messageElement) {
-        messageElement.textContent = motivationalMessages[motivationalMessageIndex];
-        motivationalMessageIndex = (motivationalMessageIndex + 1) % motivationalMessages.length;
-    }
-}
 
 // Funciones relacionadas con Sidebar
 function toggleSidebar() {
@@ -387,6 +388,8 @@ function showScreen(screenId) {
 function hideAllScreens() {
     const screens = document.querySelectorAll('.card');
     screens.forEach(screen => screen.style.display = 'none');
+    // Cerrar modal si está abierto
+    closeQuizModal();
 }
 
 function handleRegistration(event) {
@@ -417,7 +420,9 @@ function handleRegistration(event) {
         lastDocument: null,
         annotations: {},
         notifications: [],
-        studySessions: []
+        studySessions: [],
+        recentActivities: [],
+        onboardingCompleted: false
     };
     localStorage.setItem('users', JSON.stringify(users));
 
@@ -513,6 +518,7 @@ function showHomeScreen() {
         updateDashboard();
         loadTimerState();
         updateDailyStreakDisplay();
+        updateRecentActivitySummary();
     } else {
         showLoginScreen();
     }
@@ -610,6 +616,15 @@ function showNews() {
 function showHelp() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('help-screen');
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showActivityScreen() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        showScreen('activity-screen');
+        displayFullActivity();
     } else {
         showLoginScreen();
     }
@@ -740,6 +755,9 @@ function saveUserAnnotation(academyName, annotation) {
     }
     users[email].annotations[academyName] = annotation;
     localStorage.setItem('users', JSON.stringify(users));
+    addNotification(`Anotación añadida para la academia "${academyName}".`);
+    addActivity(`Anotación añadida para la academia "${academyName}".`);
+    updateRecentActivitySummary();
 }
 
 // Noticias
@@ -773,7 +791,7 @@ function updateDashboard() {
     const user = users[email];
     const daysRemainingElement = document.getElementById('days-remaining');
     const studyHoursElement = document.getElementById('study-hours');
-    const lastDocumentElement = document.getElementById('last-document');
+    const dailyStreakElement = document.getElementById('daily-streak');
 
     if (user.examDate) {
         const examDate = new Date(user.examDate);
@@ -788,8 +806,9 @@ function updateDashboard() {
     const totalStudyTime = calculateTotalStudyTime(email);
     studyHoursElement.textContent = totalStudyTime ? totalStudyTime + ' horas' : '--';
 
+    dailyStreakElement.textContent = dailyStreak + " días";
     updateMotivationalMessage();
-    lastDocumentElement.textContent = user.lastDocument || '--';
+    updateRecentActivitySummary();
 }
 
 // Cálculo de horas de estudio
@@ -869,6 +888,7 @@ function uploadDocuments(event) {
             updateDocumentOverview();
             addNotification(`Documento "${file.name}" subido exitosamente.`);
             addActivity(`Documento "${file.name}" subido.`);
+            updateRecentActivitySummary();
         };
 
         reader.readAsDataURL(file);
@@ -891,6 +911,7 @@ function createFolder() {
         displayDocuments();
         addNotification(`Carpeta "${folderName}" creada exitosamente.`);
         addActivity(`Carpeta "${folderName}" creada.`);
+        updateRecentActivitySummary();
     }
 }
 
@@ -903,6 +924,7 @@ function deleteFolder(folderName) {
         displayDocuments();
         addNotification(`Carpeta "${folderName}" eliminada.`);
         addActivity(`Carpeta "${folderName}" eliminada.`);
+        updateRecentActivitySummary();
     }
 }
 
@@ -984,9 +1006,10 @@ function openDocument(email, doc) {
     window.open(blobUrl, '_blank');
 
     updateDocumentOverview();
+    addActivity(`Documento "${doc.name}" abierto.`);
+    updateRecentActivitySummary();
 }
 
-// Mover documentos a carpeta
 function moveDocumentToFolder(email, documentName) {
     const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
     if (selectedFolder) {
@@ -1000,6 +1023,7 @@ function moveDocumentToFolder(email, documentName) {
                 displayDocuments();
                 addNotification(`Documento "${documentName}" movido a la carpeta "${selectedFolder}".`);
                 addActivity(`Documento "${documentName}" movido a "${selectedFolder}".`);
+                updateRecentActivitySummary();
             } else {
                 alert('Documento no encontrado.');
             }
@@ -1165,7 +1189,9 @@ function updateTimerDisplay() {
     const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60).toString().padStart(2, '0');
     const seconds = Math.floor((elapsedTime / 1000) % 60).toString().padStart(2, '0');
     const timerDisplay = document.getElementById('timer-display');
-    timerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+    if (timerDisplay) {
+        timerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+    }
 }
 
 function saveStudySession() {
@@ -1182,15 +1208,22 @@ function saveStudySession() {
     updateDashboard();
     elapsedTime = 0;
     updateTimerDisplay();
+    addActivity("Sesión de estudio guardada.");
+    updateRecentActivitySummary();
 }
 
 function loadTimerState() {
     isTimerRunning = false;
     elapsedTime = 0;
     updateTimerDisplay();
-    document.getElementById('start-timer').disabled = false;
-    document.getElementById('pause-timer').disabled = true;
-    document.getElementById('reset-timer').disabled = true;
+    const startBtn = document.getElementById('start-timer');
+    const pauseBtn = document.getElementById('pause-timer');
+    const resetBtn = document.getElementById('reset-timer');
+    if (startBtn && pauseBtn && resetBtn) {
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        resetBtn.disabled = true;
+    }
 }
 
 // Pantalla Horas de Estudio
@@ -1260,7 +1293,10 @@ function loadDailyStreak() {
 }
 
 function updateDailyStreakDisplay() {
-    document.getElementById('daily-streak').textContent = dailyStreak + " días";
+    const dailyStreakElement = document.getElementById('daily-streak');
+    if (dailyStreakElement) {
+        dailyStreakElement.textContent = dailyStreak + " días";
+    }
 }
 
 function handleDailyCheckIn() {
@@ -1277,7 +1313,7 @@ function handleDailyCheckIn() {
         addNotification("Has hecho check-in por primera vez. ¡Racha iniciada!");
         addActivity("Check-in diario realizado");
     } else {
-        const diff = (new Date(today) - new Date(lastCheckin)) / (1000*60*60*24);
+        const diff = (new Date(today) - new Date(lastCheckin)) / (1000 * 60 * 60 * 24);
         if (diff === 0) {
             // Ya hizo check-in hoy
             document.getElementById('checkin-status').textContent = "Ya hiciste check-in hoy.";
@@ -1302,28 +1338,32 @@ function handleDailyCheckIn() {
     localStorage.setItem('users', JSON.stringify(users));
     updateDailyStreakDisplay();
     document.getElementById('checkin-status').textContent = "Check-in completado hoy!";
+    updateRecentActivitySummary();
 }
 
-function loadDailyCheckInStatus() {
-    const email = localStorage.getItem('email');
-    const user = users[email];
-    if (user.lastCheckinDate) {
-        const today = new Date().toDateString();
-        const lastCheckin = new Date(user.lastCheckinDate).toDateString();
-        if (today === lastCheckin) {
-            document.getElementById('checkin-status').textContent = "Ya hiciste check-in hoy.";
-        } else {
-            document.getElementById('checkin-status').textContent = "";
-        }
+// Quiz Diario - Modal
+function openQuizModal() {
+    const quizModal = document.getElementById('quiz-modal');
+    quizModal.style.display = 'block';
+    loadDailyQuiz();
+}
+
+function closeQuizModal() {
+    const quizModal = document.getElementById('quiz-modal');
+    quizModal.style.display = 'none';
+}
+
+window.onclick = function(event) {
+    const quizModal = document.getElementById('quiz-modal');
+    if (event.target == quizModal) {
+        quizModal.style.display = 'none';
     }
 }
 
 // Quiz Diario
-let currentQuizQuestionIndex = -1;
-
 function loadDailyQuiz() {
-    currentQuizQuestionIndex = (currentQuizQuestionIndex + 1) % dailyQuizQuestions.length;
-    const questionObj = dailyQuizQuestions[currentQuizQuestionIndex];
+    currentQuizIndex = (currentQuizIndex + 1) % dailyQuizQuestions.length;
+    const questionObj = dailyQuizQuestions[currentQuizIndex];
     const quizQuestion = document.getElementById('quiz-question');
     const quizOptions = document.getElementById('quiz-options');
     const quizResult = document.getElementById('quiz-result');
@@ -1341,34 +1381,61 @@ function loadDailyQuiz() {
 }
 
 function checkDailyQuizAnswer(selectedIndex) {
-    const questionObj = dailyQuizQuestions[currentQuizQuestionIndex];
+    const questionObj = dailyQuizQuestions[currentQuizIndex];
     const quizResult = document.getElementById('quiz-result');
     if (selectedIndex === questionObj.answer) {
         quizResult.textContent = "¡Correcto!";
         addActivity(`Quiz Diario: Respuesta correcta a "${questionObj.question}"`);
+        addNotification("Has respondido correctamente al Quiz Diario.");
     } else {
         quizResult.textContent = "Respuesta incorrecta.";
         addActivity(`Quiz Diario: Respuesta incorrecta a "${questionObj.question}"`);
+        addNotification("Has respondido incorrectamente al Quiz Diario.");
     }
+    updateRecentActivitySummary();
 }
 
-// Actividad Reciente (Feed)
+// Actividad Reciente (Feed Simplificado)
 function loadRecentActivity() {
+    // Ya no se necesita una lista completa en la Home
+    // Solo actualizamos el resumen
+}
+
+function updateRecentActivitySummary() {
     const email = localStorage.getItem('email');
     const user = users[email];
-    if (!user.recentActivities) {
-        user.recentActivities = [];
-        localStorage.setItem('users', JSON.stringify(users));
+    const recentActivitySummary = document.getElementById('recent-activity-summary');
+    if (recentActivitySummary) {
+        if (user.recentActivities && user.recentActivities.length > 0) {
+            const lastActivity = user.recentActivities[user.recentActivities.length - 1];
+            recentActivitySummary.textContent = `Última actividad: ${lastActivity}`;
+        } else {
+            recentActivitySummary.textContent = 'Última actividad: --';
+        }
     }
-    const list = document.getElementById('recent-activity-list');
-    list.innerHTML = '';
-    user.recentActivities.slice(-5).reverse().forEach(act => {
-        const li = document.createElement('li');
-        li.textContent = act;
-        list.appendChild(li);
-    });
 }
 
+// Pantalla de Actividad Completa
+function displayFullActivity() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    const fullActivityList = document.getElementById('full-activity-list');
+    if (fullActivityList) {
+        fullActivityList.innerHTML = '';
+
+        if (!user.recentActivities || user.recentActivities.length === 0) {
+            fullActivityList.textContent = 'No hay actividades registradas.';
+        } else {
+            user.recentActivities.slice().reverse().forEach(act => {
+                const li = document.createElement('li');
+                li.textContent = act;
+                fullActivityList.appendChild(li);
+            });
+        }
+    }
+}
+
+// Actividad Reciente - Agregar Actividad
 function addActivity(message) {
     const email = localStorage.getItem('email');
     const user = users[email];
@@ -1379,5 +1446,49 @@ function addActivity(message) {
     const timestamp = now.toLocaleString();
     user.recentActivities.push(`[${timestamp}] ${message}`);
     localStorage.setItem('users', JSON.stringify(users));
-    loadRecentActivity();
+    updateRecentActivitySummary();
 }
+
+// Actividad Completa - Cargar todas las actividades
+function displayFullActivity() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    const fullActivityList = document.getElementById('full-activity-list');
+    if (fullActivityList) {
+        fullActivityList.innerHTML = '';
+
+        if (!user.recentActivities || user.recentActivities.length === 0) {
+            fullActivityList.textContent = 'No hay actividades registradas.';
+        } else {
+            user.recentActivities.slice().reverse().forEach(act => {
+                const li = document.createElement('li');
+                li.textContent = act;
+                fullActivityList.appendChild(li);
+            });
+        }
+    }
+}
+
+// Footer
+// No requiere modificaciones ya que el footer es estático
+
+// Responsividad y visualización ya manejada en styles.css
+
+// Funciones de ayuda
+function updateMotivationalMessage() {
+    const messageElement = document.getElementById('motivational-message');
+    if (messageElement) {
+        messageElement.textContent = motivationalMessages[motivationalMessageIndex];
+        motivationalMessageIndex = (motivationalMessageIndex + 1) % motivationalMessages.length;
+    }
+}
+
+// Pantalla de Ayuda y Próximamente ya están manejadas con showHelp y showComingSoon
+
+// Modal para Quiz Diario ya añadido anteriormente
+
+// Eventos adicionales si es necesario
+// No hay eventos adicionales por ahora
+
+// Otras funciones necesarias (e.g., mostrar actividades, manejar estudios, etc.)
+// Ya implementadas en las secciones anteriores

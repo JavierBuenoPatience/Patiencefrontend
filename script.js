@@ -183,22 +183,27 @@ const specialties = [
     {
         name: 'Biología y Geología',
         image: 'bio-geologia.jpg',
-        url: 'https://chat.openai.com/' // Enlace de ejemplo
+        url: 'https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia'
     },
     {
         name: 'Inglés como Segunda Lengua',
         image: 'ingles.jpg',
-        url: 'https://chat.openai.com/' // Enlace de ejemplo
+        url: 'https://chatgpt.com/g/g-mBJ4r4s53-patience-ingles'
     },
     {
         name: 'Matemáticas',
         image: 'matematicas.jpg',
-        url: 'https://chat.openai.com/' // Enlace de ejemplo
+        url: 'https://chatgpt.com/g/g-67535b2f2b308191a87e2d15a89d6513-patience-matematicas' //
     },
     {
         name: 'Geografía e Historia',
         image: 'geografia-historia.jpg',
-        url: 'https://chat.openai.com/' // Enlace de ejemplo
+        url: 'https://chatgpt.com/g/g-67535eb0d2688191b60c3ee2be32f29e-patience-geografia-e-historia' //
+    },
+     {
+        name: 'Francés como Lengua Extranjera',
+        image: 'frances.jpg',
+        url: 'https://chatgpt.com/g/g-67535fd05bdc8191856a432c21df2968-patience-frances'
     },
     // Añade más especialidades si lo deseas
 ];

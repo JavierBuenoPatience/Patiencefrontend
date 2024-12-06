@@ -24,7 +24,7 @@
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <img src="assets/logo.png" alt="Logo Patience" class="sidebar-logo">
-            <button class="pin-sidebar" id="pin-sidebar" onclick="togglePinSidebar()"><i class="fas fa-thumbt"></i></button>
+            <button class="pin-sidebar" id="pin-sidebar" onclick="togglePinSidebar()"><i class="fas fa-thumbtack"></i></button>
             <button class="close-sidebar" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
         </div>
         <ul>
@@ -146,7 +146,7 @@
                     <p>Prepárate para tus oposiciones de manera innovadora y eficiente con Patience.</p>
                 </div>
 
-                <!-- Métricas principales -->
+                <!-- Métricas principales simplificadas -->
                 <div class="home-metrics">
                     <div class="metric-item">
                         <h3><i class="fas fa-calendar-alt"></i> Días para el examen</h3>
@@ -158,27 +158,12 @@
                         <p id="motivational-message"></p>
                     </div>
                     <div class="metric-item">
-                        <h3><i class="fas fa-file-alt"></i> Último documento</h3>
-                        <p id="last-document">--</p>
-                    </div>
-                    <div class="metric-item">
-                        <h3><i class="fas fa-stopwatch"></i> Cronómetro</h3>
-                        <div class="timer-small">
-                            <span id="timer-display">00:00:00</span>
-                            <div class="timer-buttons-small">
-                                <button id="start-timer" onclick="startTimer()">▶</button>
-                                <button id="pause-timer" onclick="pauseTimer()" disabled>II</button>
-                                <button id="reset-timer" onclick="resetTimer()" disabled>⟲</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="metric-item">
                         <h3><i class="fas fa-fire"></i> Racha Diaria</h3>
                         <p id="daily-streak">0 días</p>
                     </div>
                 </div>
 
-                <!-- Panel "Tu día hoy" -->
+                <!-- Panel "Tu día hoy" optimizado -->
                 <div class="today-panel">
                     <h2>Tu día hoy</h2>
                     <div class="checkin-section">
@@ -193,56 +178,39 @@
                         <p id="daily-goal-text">Estudiar al menos 2 horas hoy</p>
                     </div>
 
+                    <!-- Botón para abrir Quiz Diario en modal -->
                     <div class="daily-quiz-section">
-                        <h3>Quiz Diario</h3>
-                        <p id="quiz-question">Cargando pregunta...</p>
-                        <div id="quiz-options"></div>
-                        <p id="quiz-result"></p>
-                        <button id="next-quiz-button" onclick="loadDailyQuiz()">Siguiente pregunta</button>
+                        <button id="open-quiz-button" onclick="openQuizModal()">Realizar Quiz Diario</button>
                     </div>
                 </div>
 
-                <!-- Panel de accesos rápidos -->
+                <!-- Panel de accesos rápidos reducido -->
                 <div class="quick-links-panel">
                     <h2>Accesos Rápidos</h2>
                     <div class="quick-links-container">
-                        <button onclick="showDocuments()">Subir Documento Rápido</button>
-                        <button onclick="showGroups()">Mi último Grupo</button>
-                        <button onclick="showDirectoryScreen()">Ver Academias</button>
-                        <button onclick="showNews()">Novedades</button>
+                        <button onclick="showDocuments()"><i class="fas fa-upload"></i></button>
+                        <button onclick="showGroups()"><i class="fas fa-users"></i></button>
+                        <button onclick="showNews()"><i class="fas fa-newspaper"></i></button>
                     </div>
                 </div>
 
-                <!-- Panel de actividad reciente (Feed) -->
+                <!-- Actividad Reciente simplificada -->
                 <div class="feed-panel">
                     <h2>Actividad Reciente</h2>
-                    <ul id="recent-activity-list">
-                        <!-- Se rellenará con notificaciones o eventos recientes -->
-                    </ul>
+                    <p id="recent-activity-summary">Última actividad: --</p>
+                    <a href="#" onclick="showActivityScreen()">Ver más actividad</a>
                 </div>
+            </div>
 
-                <!-- Sección original "home-section" para no omitir nada -->
-                <div class="home-section original-home-links">
-                    <div class="overview" onclick="showAIScreen()">
-                        <i class="fas fa-robot"></i>
-                        <h3>IA Especializada</h3>
-                        <p>Accede a herramientas de IA diseñadas para tu especialidad.</p>
-                    </div>
-                    <div class="overview" onclick="showDocuments()">
-                        <i class="fas fa-folder"></i>
-                        <h3>Mis Documentos</h3>
-                        <p>Gestiona y organiza tus materiales de estudio.</p>
-                    </div>
-                    <div class="overview" onclick="showGroups()">
-                        <i class="fas fa-users"></i>
-                        <h3>Mis Grupos</h3>
-                        <p>Conecta con otros opositores y comparte conocimientos.</p>
-                    </div>
-                    <div class="overview" onclick="showNews()">
-                        <i class="fas fa-newspaper"></i>
-                        <h3>Últimas Noticias</h3>
-                        <p>Mantente informado sobre las novedades y convocatorias.</p>
-                    </div>
+            <!-- Modal para Quiz Diario -->
+            <div class="modal" id="quiz-modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-modal" onclick="closeQuizModal()">&times;</span>
+                    <h2>Quiz Diario</h2>
+                    <p id="quiz-question">Cargando pregunta...</p>
+                    <div id="quiz-options"></div>
+                    <p id="quiz-result"></p>
+                    <button id="next-quiz-button" onclick="loadDailyQuiz()">Siguiente pregunta</button>
                 </div>
             </div>
 
@@ -449,11 +417,31 @@
                 <p>Escríbenos a: <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a></p>
             </div>
 
+            <!-- Pantalla de Actividad Completa -->
+            <div class="card" id="activity-screen" style="display: none;">
+                <h2>Actividad Reciente</h2>
+                <ul id="full-activity-list">
+                    <!-- Se cargarán todas las actividades -->
+                </ul>
+            </div>
+
             <!-- Pantalla de Próximamente -->
             <div class="card" id="coming-soon-screen" style="display: none;">
                 <h2>¡Próximamente!</h2>
                 <p>Estamos trabajando en nuevas funcionalidades sorprendentes. ¡Mantente atento a nuestras actualizaciones!</p>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal para Quiz Diario -->
+    <div class="modal" id="quiz-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeQuizModal()">&times;</span>
+            <h2>Quiz Diario</h2>
+            <p id="quiz-question">Cargando pregunta...</p>
+            <div id="quiz-options"></div>
+            <p id="quiz-result"></p>
+            <button id="next-quiz-button" onclick="loadDailyQuiz()">Siguiente pregunta</button>
         </div>
     </div>
 

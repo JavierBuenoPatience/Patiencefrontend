@@ -418,120 +418,274 @@ footer {
     margin-top: 40px;
 }
 
-.dashboard-item {
-    width: 100%;
-    max-width: 260px;
+/* Métricas principales en la Home */
+.home-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.metric-item {
     background-color: var(--white-color);
     padding: 24px;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     text-align: center;
     position: relative;
-    cursor: default;
+    width: 120px;
+    flex: none;
 }
 
-.dashboard-item h3 {
-    font-size: 20px;
+.metric-item h3 {
+    font-size: 14px;
     color: var(--text-color);
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
-.dashboard-item p {
-    font-size: 18px;
+.metric-item p {
+    font-size: 16px;
     color: var(--secondary-text-color);
+    font-weight: 600;
 }
 
-.dashboard-item:hover {
-    transform: none;
-}
-
-/* Estilos para el Cronómetro de Estudio */
-.timer {
+/* Cronómetro reducido */
+.timer-small {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 16px;
 }
 
-#timer-display {
-    font-size: 32px;
+.timer-small #timer-display {
+    font-size: 18px;
     font-weight: bold;
     color: var(--primary-color);
-    margin-bottom: 16px;
+    margin-bottom: 8px;
 }
 
-.timer-buttons {
+.timer-buttons-small {
     display: flex;
-    gap: 12px;
+    gap: 4px;
 }
 
-.timer-buttons button {
+.timer-buttons-small button {
     background-color: var(--secondary-color);
     color: var(--white-color);
     border: none;
-    padding: 10px 16px;
-    font-size: 16px;
+    padding: 4px 8px;
+    font-size: 12px;
     font-weight: 600;
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.timer-buttons button:hover {
+.timer-buttons-small button:hover {
     background-color: var(--primary-color);
 }
 
-.timer-buttons button:disabled {
+.timer-buttons-small button:disabled {
     background-color: var(--border-color);
     cursor: not-allowed;
 }
 
-.dashboard-item[onclick] {
-    cursor: pointer;
+/* Panel "Tu día hoy" */
+.today-panel {
+    background-color: var(--white-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 24px;
+    margin-bottom: 40px;
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
 }
 
-.dashboard-item[onclick]:hover {
+.today-panel h2 {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-bottom: 24px;
+}
+
+.checkin-section,
+.daily-goal-section,
+.daily-quiz-section {
     background-color: var(--accent-color);
+    padding: 16px;
+    border-radius: var(--border-radius);
+    margin-bottom: 24px;
 }
 
-/* Estilos para el Mensaje Motivacional */
-#motivational-message {
+.checkin-section h3,
+.daily-goal-section h3,
+.daily-quiz-section h3 {
+    font-size: 18px;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+}
+
+.checkin-section p,
+.daily-goal-section p,
+.daily-quiz-section p {
     font-size: 16px;
-    color: var(--secondary-color);
-    margin-top: 8px;
+    color: var(--secondary-text-color);
+    margin-bottom: 12px;
 }
 
-/* Botón de Discord */
-.join-discord-button {
-    background-color: #7289DA;
+#daily-checkin-button {
+    background-color: var(--secondary-color);
     color: var(--white-color);
     border: none;
-    padding: 16px 24px;
-    font-size: 18px;
+    padding: 10px 20px;
+    font-size: 16px;
     font-weight: 700;
     border-radius: var(--border-radius);
     cursor: pointer;
-    width: 100%;
-    margin-top: 24px;
+    transition: background-color 0.3s;
+    margin-bottom: 8px;
+}
+
+#daily-checkin-button:hover {
+    background-color: var(--primary-color);
+}
+
+#checkin-status {
+    font-size: 14px;
+    color: var(--secondary-color);
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+.daily-goal-section #daily-goal-text {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.daily-quiz-section #quiz-question {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.daily-quiz-section #quiz-options button {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin-right: 8px;
+    margin-bottom: 8px;
     transition: background-color 0.3s;
 }
 
-.join-discord-button:hover {
-    background-color: #5A73CF;
+.daily-quiz-section #quiz-options button:hover {
+    background-color: var(--primary-color);
 }
 
-.discord-section {
+#quiz-result {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 12px;
+}
+
+#next-quiz-button {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background-color 0.3s;
+}
+
+#next-quiz-button:hover {
+    background-color: var(--primary-color);
+}
+
+/* Panel de accesos rápidos */
+.quick-links-panel {
+    background-color: var(--white-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 24px;
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
     text-align: center;
-    margin-top: 20px;
-    background-color: #5865F2;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
 }
 
-.discord-logo {
-    width: 100px;
-    margin-bottom: 15px;
+.quick-links-panel h2 {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-bottom: 24px;
+}
+
+.quick-links-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+}
+
+.quick-links-container button {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.quick-links-container button:hover {
+    background-color: var(--primary-color);
+}
+
+/* Feed de actividad reciente */
+.feed-panel {
+    background-color: var(--white-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 24px;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    text-align: left;
+}
+
+.feed-panel h2 {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-bottom: 24px;
+}
+
+#recent-activity-list {
+    list-style-type: none;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#recent-activity-list li {
+    font-size: 14px;
+    color: var(--secondary-text-color);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#recent-activity-list li:last-child {
+    border-bottom: none;
+}
+
+/* Original "home-section" links */
+.original-home-links {
+    margin-top: 40px;
 }
 
 /* Documentos */
@@ -556,10 +710,9 @@ footer {
     font-weight: 700;
     border-radius: var(--border-radius);
     cursor: pointer;
-    display: inline-block;
-    text-align: center;
     flex: 1;
     transition: background-color 0.3s;
+    text-align: center;
 }
 
 .upload-label:hover,
@@ -592,7 +745,6 @@ footer {
     gap: 16px;
 }
 
-/* Tarjetas de documentos y carpetas */
 .document-card,
 .folder-card {
     background-color: var(--white-color);
@@ -656,7 +808,7 @@ footer {
     transform: none;
 }
 
-/* Estilos para la sección de noticias */
+/* Noticias */
 .news-section {
     width: 100%;
     display: flex;
@@ -700,7 +852,7 @@ footer {
     border: none;
 }
 
-/* Estilos para el directorio de academias */
+/* Directorio Academias */
 .filter-section {
     width: 100%;
     display: flex;
@@ -792,7 +944,7 @@ footer {
     font-size: 16px;
 }
 
-/* Estilos para la IA Especializada */
+/* IA Especializada */
 .ai-instructions {
     max-width: 800px;
     text-align: left;
@@ -865,52 +1017,40 @@ footer {
     color: var(--primary-color);
 }
 
-/* Estilos para Mis Grupos */
-.groups-instructions {
-    max-width: 800px;
+/* Mis Grupos */
+.discord-section {
     text-align: center;
-    margin-bottom: 32px;
+    margin-top: 20px;
+    background-color: #5865F2;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
 }
 
-.groups-instructions p {
-    font-size: 20px;
-    color: var(--text-color);
-    margin-bottom: 24px;
+.discord-logo {
+    width: 100px;
+    margin-bottom: 15px;
 }
 
-.groups-cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    justify-content: center;
-}
-
-.group-card {
-    background-color: var(--white-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    width: calc(25% - 16px);
-    max-width: 240px;
-    text-align: center;
-    box-shadow: var(--box-shadow);
-    padding: 16px;
-}
-
-.group-card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-radius: var(--border-radius);
-    margin-bottom: 16px;
-}
-
-.group-card h3 {
+.join-discord-button {
+    background-color: #7289DA;
+    color: var(--white-color);
+    border: none;
+    padding: 16px 24px;
     font-size: 18px;
-    color: var(--primary-color);
-    margin-bottom: 16px;
+    font-weight: 700;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    width: 100%;
+    margin-top: 24px;
+    transition: background-color 0.3s;
 }
 
-/* Estilos para la Guía de IA */
+.join-discord-button:hover {
+    background-color: #5A73CF;
+}
+
+/* Guía de IA */
 .guide-section {
     max-width: 800px;
     text-align: left;
@@ -976,7 +1116,7 @@ footer {
     border-radius: var(--border-radius);
 }
 
-/* Estilos adicionales */
+/* Perfil */
 .profile-image-container {
     position: relative;
     display: inline-block;
@@ -1018,7 +1158,7 @@ footer {
     font-size: 16px;
 }
 
-/* Estilos para el Onboarding */
+/* Onboarding */
 .onboarding-overlay {
     position: fixed;
     top: 0;
@@ -1074,7 +1214,7 @@ footer {
     background-color: var(--primary-color);
 }
 
-/* Estilos para la pantalla de Horas de Estudio */
+/* Tabla Horas de Estudio */
 .study-time-table {
     width: 100%;
     border-collapse: collapse;
@@ -1113,7 +1253,7 @@ footer {
     border-bottom: none;
 }
 
-/* Media Queries */
+/* Responsividad */
 @media (max-width: 1024px) {
     .document-card,
     .folder-card,

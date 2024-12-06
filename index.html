@@ -24,7 +24,7 @@
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <img src="assets/logo.png" alt="Logo Patience" class="sidebar-logo">
-            <button class="pin-sidebar" id="pin-sidebar" onclick="togglePinSidebar()"><i class="fas fa-thumbtack"></i></button>
+            <button class="pin-sidebar" id="pin-sidebar" onclick="togglePinSidebar()"><i class="fas fa-thumbt"></i></button>
             <button class="close-sidebar" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
         </div>
         <ul>
@@ -81,8 +81,7 @@
                     <input type="password" id="login-password" name="password" required>
                     <button type="submit">Iniciar Sesión</button>
                 </form>
-                <p>¿No tienes una cuenta todavía? <button type="button"
-                        onclick="showRegistrationScreen()">¡Regístrate!</button></p>
+                <p>¿No tienes una cuenta todavía? <button type="button" onclick="showRegistrationScreen()">¡Regístrate!</button></p>
             </div>
 
             <!-- Pantalla de Registro -->
@@ -146,55 +145,99 @@
                     <h1>¡Hola, <span id="user-name-home"></span>!</h1>
                     <p>Prepárate para tus oposiciones de manera innovadora y eficiente con Patience.</p>
                 </div>
-                <div class="dashboard">
-                    <div class="dashboard-item">
+
+                <!-- Métricas principales -->
+                <div class="home-metrics">
+                    <div class="metric-item">
                         <h3><i class="fas fa-calendar-alt"></i> Días para el examen</h3>
                         <p id="days-remaining">--</p>
                     </div>
-                    <div class="dashboard-item" onclick="showStudyTimeScreen()" style="cursor: pointer;">
+                    <div class="metric-item" onclick="showStudyTimeScreen()" style="cursor: pointer;">
                         <h3><i class="fas fa-clock"></i> Horas de estudio</h3>
                         <p id="study-hours">--</p>
                         <p id="motivational-message"></p>
                     </div>
-                    <div class="dashboard-item">
+                    <div class="metric-item">
                         <h3><i class="fas fa-file-alt"></i> Último documento</h3>
                         <p id="last-document">--</p>
                     </div>
-                    <div class="dashboard-item">
-                        <h3><i class="fas fa-stopwatch"></i> Cronómetro de Estudio</h3>
-                        <div class="timer">
+                    <div class="metric-item">
+                        <h3><i class="fas fa-stopwatch"></i> Cronómetro</h3>
+                        <div class="timer-small">
                             <span id="timer-display">00:00:00</span>
-                            <div class="timer-buttons">
-                                <button id="start-timer" onclick="startTimer()">Iniciar</button>
-                                <button id="pause-timer" onclick="pauseTimer()" disabled>Pausar</button>
-                                <button id="reset-timer" onclick="resetTimer()" disabled>Reiniciar</button>
+                            <div class="timer-buttons-small">
+                                <button id="start-timer" onclick="startTimer()">▶</button>
+                                <button id="pause-timer" onclick="pauseTimer()" disabled>II</button>
+                                <button id="reset-timer" onclick="resetTimer()" disabled>⟲</button>
                             </div>
                         </div>
                     </div>
+                    <div class="metric-item">
+                        <h3><i class="fas fa-fire"></i> Racha Diaria</h3>
+                        <p id="daily-streak">0 días</p>
+                    </div>
                 </div>
-                <div class="home-section">
-                    <!-- IA Especializada -->
+
+                <!-- Panel "Tu día hoy" -->
+                <div class="today-panel">
+                    <h2>Tu día hoy</h2>
+                    <div class="checkin-section">
+                        <h3>Check-In Diario</h3>
+                        <p>Haz check-in para mantener tu racha de estudio.</p>
+                        <button id="daily-checkin-button" onclick="handleDailyCheckIn()">Check-In</button>
+                        <p id="checkin-status"></p>
+                    </div>
+
+                    <div class="daily-goal-section">
+                        <h3>Objetivo del día</h3>
+                        <p id="daily-goal-text">Estudiar al menos 2 horas hoy</p>
+                    </div>
+
+                    <div class="daily-quiz-section">
+                        <h3>Quiz Diario</h3>
+                        <p id="quiz-question">Cargando pregunta...</p>
+                        <div id="quiz-options"></div>
+                        <p id="quiz-result"></p>
+                        <button id="next-quiz-button" onclick="loadDailyQuiz()">Siguiente pregunta</button>
+                    </div>
+                </div>
+
+                <!-- Panel de accesos rápidos -->
+                <div class="quick-links-panel">
+                    <h2>Accesos Rápidos</h2>
+                    <div class="quick-links-container">
+                        <button onclick="showDocuments()">Subir Documento Rápido</button>
+                        <button onclick="showGroups()">Mi último Grupo</button>
+                        <button onclick="showDirectoryScreen()">Ver Academias</button>
+                        <button onclick="showNews()">Novedades</button>
+                    </div>
+                </div>
+
+                <!-- Panel de actividad reciente (Feed) -->
+                <div class="feed-panel">
+                    <h2>Actividad Reciente</h2>
+                    <ul id="recent-activity-list">
+                        <!-- Se rellenará con notificaciones o eventos recientes -->
+                    </ul>
+                </div>
+
+                <!-- Sección original "home-section" para no omitir nada -->
+                <div class="home-section original-home-links">
                     <div class="overview" onclick="showAIScreen()">
                         <i class="fas fa-robot"></i>
                         <h3>IA Especializada</h3>
                         <p>Accede a herramientas de IA diseñadas para tu especialidad.</p>
                     </div>
-
-                    <!-- Mis Documentos -->
                     <div class="overview" onclick="showDocuments()">
                         <i class="fas fa-folder"></i>
                         <h3>Mis Documentos</h3>
                         <p>Gestiona y organiza tus materiales de estudio.</p>
                     </div>
-
-                    <!-- Mis Grupos -->
                     <div class="overview" onclick="showGroups()">
                         <i class="fas fa-users"></i>
                         <h3>Mis Grupos</h3>
                         <p>Conecta con otros opositores y comparte conocimientos.</p>
                     </div>
-
-                    <!-- Últimas Noticias -->
                     <div class="overview" onclick="showNews()">
                         <i class="fas fa-newspaper"></i>
                         <h3>Últimas Noticias</h3>
@@ -265,9 +308,8 @@
                     <ol>
                         <li><strong>Selecciona tu especialidad</strong> en las tarjetas de abajo.</li>
                         <li>Serás redirigido a la página de ChatGPT de OpenAI.</li>
-                        <li><strong>Inicia sesión o crea una cuenta</strong> en OpenAI si aún no lo has hecho. Es gratuito y rápido.
-                        </li>
-                        <li>¡Comienza a interactuar con la IA especializada en tu área!</li>
+                        <li><strong>Inicia sesión o crea una cuenta</strong> en OpenAI si aún no lo has hecho.</li>
+                        <li>¡Comienza a interactuar con las herramientas para tu área!</li>
                     </ol>
                 </div>
                 <div class="ai-search">
@@ -296,14 +338,14 @@
                 </div>
             </div>
 
-            <!-- Pantalla de Mis Grupos (Integración con Discord) -->
+            <!-- Pantalla de Mis Grupos -->
             <div class="card" id="groups-screen" style="display: none;">
                 <h2>Mis Grupos</h2>
-                <p>Únete a nuestros grupos para conectar con otros opositores, compartir recursos, estudiar juntos y conectar con preparadores expertos en tu especialidad!.</p>
+                <p>Únete a nuestros grupos para conectar con otros opositores, compartir recursos, estudiar juntos y conectar con preparadores expertos en tu especialidad!</p>
                 <div class="discord-section">
                     <img src="assets/discord-logo.png" alt="Discord Logo" class="discord-logo">
                     <h3>Empieza ahora</h3>
-                    <p>¡Haz clic en el botón de abajo y saca el máximo partido a Patience!.</p>
+                    <p>¡Haz clic en el botón de abajo y saca el máximo partido a Patience!</p>
                     <button class="join-discord-button" onclick="redirectToDiscord()">¡Quiero entrar!</button>
                 </div>
             </div>
@@ -312,7 +354,7 @@
             <div class="card" id="guide-screen" style="display: none;">
                 <h2>Guía para Aprovechar al Máximo la IA</h2>
                 <div class="guide-section">
-                    <p>Descubre cómo interactuar eficazmente con nuestra IA especializada y maximiza tu aprendizaje.</p>
+                    <p>Descubre cómo interactuar eficazmente con nuestras herramientas y maximiza tu aprendizaje.</p>
                     <div class="prompt-section">
                         <h4>Generar un examen aleatorio:</h4>
                         <p><strong>Ejemplo:</strong> "Genera un examen de oposición para la especialidad de <span
@@ -369,13 +411,10 @@
                 <div class="training-section">
                     <h3>¿Por qué elegir Patience?</h3>
                     <ul>
-                        <li><strong>Innovación Tecnológica:</strong> Utilizamos inteligencia artificial para potenciar tu aprendizaje.
-                        </li>
+                        <li><strong>Innovación Tecnológica:</strong> Tecnologías y herramientas modernas para tu preparación.</li>
                         <li><strong>Comunidad Activa:</strong> Conecta con otros opositores y comparte experiencias.</li>
-                        <li><strong>Recursos Personalizados:</strong> Accede a materiales y herramientas adaptadas a tu especialidad.
-                        </li>
-                        <li><strong>Actualizaciones Constantes:</strong> Siempre estamos mejorando y añadiendo nuevas funcionalidades.
-                        </li>
+                        <li><strong>Recursos Personalizados:</strong> Accede a materiales adaptados a tu especialidad.</li>
+                        <li><strong>Actualizaciones Constantes:</strong> Siempre mejorando y añadiendo nuevas funcionalidades.</li>
                     </ul>
                 </div>
                 <div class="training-image">

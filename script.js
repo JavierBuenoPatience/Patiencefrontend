@@ -1,14 +1,13 @@
 // Definimos constantes para colores y URLs
 const COLORS = {
-    primary: '#1F3A93', // Azul marino más suave
-    secondary: '#22A7F0', // Azul cielo
-    accent: '#F5F7FA',    // Gris muy claro
-    background: '#FFFFFF', // Blanco
-    text: '#2C3E50',       // Gris oscuro
-    secondaryText: '#7F8C8D' // Gris medio
+    primary: '#1F3A93',
+    secondary: '#22A7F0',
+    accent: '#F5F7FA',
+    background: '#FFFFFF',
+    text: '#2C3E50',
+    secondaryText: '#7F8C8D'
 };
 
-// Enlace de invitación a Discord
 const discordInviteLink = "https://discord.gg/qGB36SqR";
 
 // Obtenemos los usuarios almacenados o inicializamos uno vacío
@@ -16,6 +15,7 @@ const users = JSON.parse(localStorage.getItem('users')) || {};
 
 // Datos de academias actualizados
 const academies = [
+    // ... [LISTADO DE ACADEMIAS COMPLETO, NO OMITIR]
     {
         id: 1,
         name: 'TecnosZubia',
@@ -193,23 +193,21 @@ const specialties = [
     {
         name: 'Matemáticas',
         image: 'matematicas.jpg',
-        url: 'https://chatgpt.com/g/g-67535b2f2b308191a87e2d15a89d6513-patience-matematicas' //
+        url: 'https://chatgpt.com/g/g-67535b2f2b308191a87e2d15a89d6513-patience-matematicas'
     },
     {
         name: 'Geografía e Historia',
         image: 'geografia-historia.jpg',
-        url: 'https://chatgpt.com/g/g-67535eb0d2688191b60c3ee2be32f29e-patience-geografia-e-historia' //
+        url: 'https://chatgpt.com/g/g-67535eb0d2688191b60c3ee2be32f29e-patience-geografia-e-historia'
     },
-     {
+    {
         name: 'Francés como Lengua Extranjera',
         image: 'frances.jpg',
         url: 'https://chatgpt.com/g/g-67535fd05bdc8191856a432c21df2968-patience-frances'
-    },
-    // Añade más especialidades si lo deseas
+    }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
-    const headerRight = document.querySelector('.header-right img');
     const notificationIcon = document.querySelector('.notification-icon');
     const notificationPanel = document.getElementById('notification-panel');
 
@@ -220,40 +218,34 @@ document.addEventListener('DOMContentLoaded', () => {
         showLoginScreen();
     }
 
-    // Manejo de la subida de documentos
     const uploadInput = document.getElementById('upload-document');
     if (uploadInput) {
         uploadInput.addEventListener('change', uploadDocuments);
     }
 
-    // Manejo de búsqueda de documentos
     const documentSearch = document.getElementById('document-search');
     if (documentSearch) {
         documentSearch.addEventListener('input', filterDocuments);
     }
 
-    // Inicializar academia
     initAcademyDirectory();
-
-    // Inicializar IA Especializada
     initSpecialties();
-
-    // Manejo de notificaciones
     updateNotifications();
 
-    // Manejo del clic fuera del panel de notificaciones
     document.addEventListener('click', (event) => {
         if (!notificationIcon.contains(event.target) && !notificationPanel.contains(event.target)) {
             notificationPanel.classList.remove('show-notifications');
         }
     });
 
-    // Cargar estado del sidebar
     loadSidebarState();
-
-    // Iniciar mensajes motivacionales
     updateMotivationalMessage();
-    setInterval(updateMotivationalMessage, 5 * 60 * 1000); // Cada 5 minutos
+    setInterval(updateMotivationalMessage, 5 * 60 * 1000);
+
+    loadDailyStreak();
+    loadDailyCheckInStatus();
+    loadDailyQuiz();
+    loadRecentActivity();
 });
 
 // Variables para el cronómetro
@@ -267,8 +259,30 @@ const motivationalMessages = [
     "Lo estás haciendo genial, ¡sigue así!",
     "Un poco más y nos tomamos un descanso, ¡ánimo!"
 ];
-
 let motivationalMessageIndex = 0;
+
+// Variables para Racha Diaria (Daily Streak)
+let dailyStreak = 0;
+
+// Preguntas para el Quiz Diario (estáticas)
+const dailyQuizQuestions = [
+    {
+        question: "¿Cuál es la capital de Francia?",
+        options: ["París", "Londres", "Berlín"],
+        answer: 0
+    },
+    {
+        question: "¿Cuál es el resultado de 5x5?",
+        options: ["20", "25", "30"],
+        answer: 1
+    },
+    {
+        question: "¿La célula es la unidad...?",
+        options: ["De heredabilidad", "De estructura y función de los seres vivos", "De la fotosíntesis"],
+        answer: 1
+    }
+];
+let currentQuizIndex = -1;
 
 // Función para actualizar el mensaje motivacional
 function updateMotivationalMessage() {
@@ -279,17 +293,14 @@ function updateMotivationalMessage() {
     }
 }
 
-// Función para alternar la visibilidad del sidebar
+// Funciones relacionadas con Sidebar
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const isPinned = localStorage.getItem('sidebarPinned') === 'true';
-
     if (isPinned) return;
-
     sidebar.classList.toggle('show-sidebar');
 }
 
-// Función para anclar o desanclar el sidebar
 function togglePinSidebar() {
     const pinButton = document.getElementById('pin-sidebar');
     const sidebar = document.getElementById('sidebar');
@@ -306,7 +317,6 @@ function togglePinSidebar() {
     }
 }
 
-// Cargar estado del sidebar al iniciar
 function loadSidebarState() {
     const pinButton = document.getElementById('pin-sidebar');
     const sidebar = document.getElementById('sidebar');
@@ -321,31 +331,64 @@ function loadSidebarState() {
     }
 }
 
-// Función para alternar la visibilidad del panel de notificaciones
+// Notificaciones
 function toggleNotifications() {
     const notificationPanel = document.getElementById('notification-panel');
     notificationPanel.classList.toggle('show-notifications');
 }
 
-// Función genérica para mostrar pantallas
+function updateNotifications() {
+    const notificationCount = document.getElementById('notification-count');
+    const notificationList = document.getElementById('notification-list');
+
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    const notifications = user?.notifications || [];
+
+    notificationCount.textContent = notifications.length;
+
+    notificationList.innerHTML = '';
+    if (notifications.length === 0) {
+        const noNotifications = document.createElement('li');
+        noNotifications.textContent = 'No tienes notificaciones nuevas.';
+        notificationList.appendChild(noNotifications);
+    } else {
+        notifications.forEach(notification => {
+            const notificationItem = document.createElement('li');
+            notificationItem.textContent = notification;
+            notificationList.appendChild(notificationItem);
+        });
+    }
+}
+
+function addNotification(message) {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    if (!user.notifications) {
+        user.notifications = [];
+    }
+    user.notifications.push(message);
+    localStorage.setItem('users', JSON.stringify(users));
+    updateNotifications();
+    addActivity("Notificación: " + message);
+}
+
+// Pantallas
 function showScreen(screenId) {
     hideAllScreens();
     document.getElementById(screenId).style.display = 'block';
     const sidebar = document.getElementById('sidebar');
     const isPinned = localStorage.getItem('sidebarPinned') === 'true';
-
     if (!isPinned) {
         sidebar.classList.remove('show-sidebar');
     }
 }
 
-// Función para ocultar todas las pantallas
 function hideAllScreens() {
     const screens = document.querySelectorAll('.card');
     screens.forEach(screen => screen.style.display = 'none');
 }
 
-// Manejo de registro
 function handleRegistration(event) {
     event.preventDefault();
     const name = document.getElementById('reg-name').value;
@@ -383,7 +426,6 @@ function handleRegistration(event) {
     document.getElementById('welcome-button').style.display = 'block';
 }
 
-// Manejo de inicio de sesión
 function handleLogin(event) {
     event.preventDefault();
     const email = document.getElementById('login-email').value;
@@ -401,7 +443,6 @@ function handleLogin(event) {
         showHomeScreen();
         updateDocumentOverview();
 
-        // Mostrar onboarding si es el primer inicio de sesión
         if (!users[email].onboardingCompleted) {
             startOnboarding();
         }
@@ -410,9 +451,7 @@ function handleLogin(event) {
     }
 }
 
-// Manejo de cierre de sesión
 function handleLogout() {
-    // Detener el cronómetro si está corriendo
     if (isTimerRunning) {
         pauseTimer();
         saveStudySession();
@@ -425,7 +464,6 @@ function handleLogout() {
     showLoginScreen();
 }
 
-// Manejo de actualización de perfil
 function handleProfileUpdate(event) {
     event.preventDefault();
     const email = localStorage.getItem('email');
@@ -446,28 +484,24 @@ function handleProfileUpdate(event) {
     updateDashboard();
 }
 
-// Validación de email
 function validateEmail(email) {
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     const hotmailRegex = /^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\.com$/;
     return gmailRegex.test(email) || hotmailRegex.test(email);
 }
 
-// Mostrar pantalla de inicio de sesión
 function showLoginScreen() {
     showScreen('login-screen');
     document.querySelector('header').style.display = 'none';
     document.querySelector('footer').style.display = 'none';
 }
 
-// Mostrar pantalla de registro
 function showRegistrationScreen() {
     showScreen('registration-screen');
     document.querySelector('header').style.display = 'none';
     document.querySelector('footer').style.display = 'none';
 }
 
-// Mostrar pantalla de inicio
 function showHomeScreen() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('home-screen');
@@ -478,12 +512,12 @@ function showHomeScreen() {
         updateDocumentOverview();
         updateDashboard();
         loadTimerState();
+        updateDailyStreakDisplay();
     } else {
         showLoginScreen();
     }
 }
 
-// Mostrar pantalla de perfil
 function showProfile() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('profile-screen');
@@ -496,13 +530,12 @@ function showProfile() {
         document.getElementById('hobbies').value = profile.hobbies || '';
         document.getElementById('location').value = profile.location || '';
         document.getElementById('profile-img').src = profile.profileImage || 'assets/default-profile.png';
-        document.getElementById('profile-email').value = email;
+        document.getElementById('profile-email').value = localStorage.getItem('email');
     } else {
         showLoginScreen();
     }
 }
 
-// Mostrar pantalla de IA Especializada
 function showAIScreen() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('ai-screen');
@@ -511,7 +544,6 @@ function showAIScreen() {
     }
 }
 
-// Mostrar pantalla de documentos
 function showDocuments() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('documents-screen');
@@ -521,7 +553,6 @@ function showDocuments() {
     }
 }
 
-// Mostrar pantalla de grupos
 function showGroups() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('groups-screen');
@@ -530,12 +561,10 @@ function showGroups() {
     }
 }
 
-// Función para redirigir a Discord
 function redirectToDiscord() {
     window.open(discordInviteLink, '_blank');
 }
 
-// Mostrar pantalla de ¿Qué es Patience?
 function showTraining() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('training-screen');
@@ -544,7 +573,6 @@ function showTraining() {
     }
 }
 
-// Mostrar pantalla de Guía de IA
 function showGuideScreen() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('guide-screen');
@@ -553,7 +581,6 @@ function showGuideScreen() {
     }
 }
 
-// Mostrar pantalla de ¿Dónde te puedes preparar?
 function showDirectoryScreen() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('directory-screen');
@@ -563,28 +590,52 @@ function showDirectoryScreen() {
     }
 }
 
-// Inicializar el directorio de academias
+function showComingSoon() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        showScreen('coming-soon-screen');
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showNews() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        showScreen('news-screen');
+        showNewsContent('csif');
+    } else {
+        showLoginScreen();
+    }
+}
+
+function showHelp() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        showScreen('help-screen');
+    } else {
+        showLoginScreen();
+    }
+}
+
+// Directorio de academias
 function initAcademyDirectory() {
     populateFilters();
     renderAcademies();
 }
 
-// Poblar los filtros de ciudad y especialidad
 function populateFilters() {
     const cityFilter = document.getElementById('city-filter');
     const specialtyFilter = document.getElementById('specialty-filter');
 
-    const cities = [...new Set(academies.map(a => a.city))];
-    const specialtiesList = [...new Set(academies.flatMap(a => a.specialties))];
+    const cities = [...new Set(academies.map(a => a.city))].sort();
+    const specialtiesList = [...new Set(academies.flatMap(a => a.specialties))].sort();
 
-    cities.sort().forEach(city => {
+    cities.forEach(city => {
         const option = document.createElement('option');
         option.value = city;
         option.textContent = city;
         cityFilter.appendChild(option);
     });
 
-    specialtiesList.sort().forEach(spec => {
+    specialtiesList.forEach(spec => {
         const option = document.createElement('option');
         option.value = spec;
         option.textContent = spec;
@@ -592,7 +643,6 @@ function populateFilters() {
     });
 }
 
-// Filtrar y renderizar academias
 function filterAcademies() {
     const city = document.getElementById('city-filter').value;
     const specialty = document.getElementById('specialty-filter').value;
@@ -610,7 +660,6 @@ function filterAcademies() {
     renderAcademies(filteredAcademies);
 }
 
-// Renderizar academias
 function renderAcademies(academyList = academies) {
     const academyContainer = document.getElementById('academy-container');
     academyContainer.innerHTML = '';
@@ -676,7 +725,6 @@ function renderAcademies(academyList = academies) {
     });
 }
 
-// Obtener anotaciones del usuario para una academia
 function getUserAnnotation(academyName) {
     const email = localStorage.getItem('email');
     if (users[email] && users[email].annotations && users[email].annotations[academyName]) {
@@ -685,7 +733,6 @@ function getUserAnnotation(academyName) {
     return '';
 }
 
-// Guardar anotaciones del usuario para una academia
 function saveUserAnnotation(academyName, annotation) {
     const email = localStorage.getItem('email');
     if (!users[email].annotations) {
@@ -695,26 +742,7 @@ function saveUserAnnotation(academyName, annotation) {
     localStorage.setItem('users', JSON.stringify(users));
 }
 
-// Mostrar pantalla de Próximamente
-function showComingSoon() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('coming-soon-screen');
-    } else {
-        showLoginScreen();
-    }
-}
-
-// Mostrar pantalla de noticias
-function showNews() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('news-screen');
-        showNewsContent('csif'); // Mostrar CSIF por defecto
-    } else {
-        showLoginScreen();
-    }
-}
-
-// Mostrar contenido de noticias
+// Noticias
 function showNewsContent(newsType) {
     const csifIframe = document.getElementById('csif-iframe');
     const sipriIframe = document.getElementById('sipri-iframe');
@@ -729,26 +757,17 @@ function showNewsContent(newsType) {
     }
 }
 
-// Mostrar pantalla de ayuda
-function showHelp() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('help-screen');
-    } else {
-        showLoginScreen();
-    }
-}
-
-// Función para actualizar el icono de perfil
+// Perfil e icono
 function updateProfileIcon() {
     const email = localStorage.getItem('email');
-    const profile = users[email].profile || {};
+    const profile = users[email]?.profile || {};
     const profileIcon = document.getElementById('profile-icon');
     if (profileIcon) {
         profileIcon.src = profile.profileImage || 'assets/default-profile.png';
     }
 }
 
-// Función para actualizar el dashboard
+// Dashboard
 function updateDashboard() {
     const email = localStorage.getItem('email');
     const user = users[email];
@@ -756,7 +775,6 @@ function updateDashboard() {
     const studyHoursElement = document.getElementById('study-hours');
     const lastDocumentElement = document.getElementById('last-document');
 
-    // Días restantes para el examen
     if (user.examDate) {
         const examDate = new Date(user.examDate);
         const today = new Date();
@@ -767,18 +785,14 @@ function updateDashboard() {
         daysRemainingElement.textContent = '--';
     }
 
-    // Horas de estudio
     const totalStudyTime = calculateTotalStudyTime(email);
     studyHoursElement.textContent = totalStudyTime ? totalStudyTime + ' horas' : '--';
 
-    // Actualizar mensaje motivacional
     updateMotivationalMessage();
-
-    // Último documento abierto
     lastDocumentElement.textContent = user.lastDocument || '--';
 }
 
-// Función para calcular el tiempo total de estudio
+// Cálculo de horas de estudio
 function calculateTotalStudyTime(email) {
     const user = users[email];
     if (user.studySessions && user.studySessions.length > 0) {
@@ -789,7 +803,7 @@ function calculateTotalStudyTime(email) {
     return 0;
 }
 
-// Función para manejar el clic en el logo
+// Logo clic
 function handleLogoClick() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showHomeScreen();
@@ -798,7 +812,7 @@ function handleLogoClick() {
     }
 }
 
-// Manejo de subida de imagen de perfil
+// Imagen de perfil
 function handleImageUpload(event) {
     const reader = new FileReader();
     reader.onload = function (e) {
@@ -807,7 +821,7 @@ function handleImageUpload(event) {
     reader.readAsDataURL(event.target.files[0]);
 }
 
-// Función para actualizar la vista de documentos recientes
+// Documentos
 function updateDocumentOverview() {
     const email = localStorage.getItem('email');
     const userDocuments = users[email]?.documents || [];
@@ -829,7 +843,6 @@ function updateDocumentOverview() {
     }
 }
 
-// Función para subir documentos
 function uploadDocuments(event) {
     const email = localStorage.getItem('email');
     const files = event.target.files;
@@ -855,13 +868,13 @@ function uploadDocuments(event) {
             displayDocuments();
             updateDocumentOverview();
             addNotification(`Documento "${file.name}" subido exitosamente.`);
+            addActivity(`Documento "${file.name}" subido.`);
         };
 
         reader.readAsDataURL(file);
     }
 }
 
-// Función para crear carpeta
 function createFolder() {
     const folderName = prompt('Nombre de la nueva carpeta:');
     if (folderName) {
@@ -877,10 +890,10 @@ function createFolder() {
         localStorage.setItem('users', JSON.stringify(users));
         displayDocuments();
         addNotification(`Carpeta "${folderName}" creada exitosamente.`);
+        addActivity(`Carpeta "${folderName}" creada.`);
     }
 }
 
-// Función para eliminar carpeta
 function deleteFolder(folderName) {
     const email = localStorage.getItem('email');
     const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
@@ -889,10 +902,10 @@ function deleteFolder(folderName) {
         localStorage.setItem('users', JSON.stringify(users));
         displayDocuments();
         addNotification(`Carpeta "${folderName}" eliminada.`);
+        addActivity(`Carpeta "${folderName}" eliminada.`);
     }
 }
 
-// Función para mostrar documentos
 function displayDocuments() {
     const email = localStorage.getItem('email');
     const documentsContainer = document.getElementById('documents-container');
@@ -916,7 +929,6 @@ function displayDocuments() {
         folderHeader.appendChild(deleteButton);
         folderElement.appendChild(folderHeader);
 
-        // Mostrar documentos dentro de la carpeta
         const folderDocuments = document.createElement('div');
         folderDocuments.classList.add('folder-documents');
 
@@ -955,13 +967,11 @@ function displayDocuments() {
     });
 }
 
-// Función para abrir documento
 function openDocument(email, doc) {
     doc.lastOpened = new Date();
     users[email].lastDocument = doc.name;
     localStorage.setItem('users', JSON.stringify(users));
 
-    // Crear un blob y abrir en una nueva ventana
     const byteCharacters = atob(doc.fileContent.split(',')[1]);
     const byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
@@ -976,7 +986,7 @@ function openDocument(email, doc) {
     updateDocumentOverview();
 }
 
-// Función para mover documento a carpeta
+// Mover documentos a carpeta
 function moveDocumentToFolder(email, documentName) {
     const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
     if (selectedFolder) {
@@ -989,6 +999,7 @@ function moveDocumentToFolder(email, documentName) {
                 localStorage.setItem('users', JSON.stringify(users));
                 displayDocuments();
                 addNotification(`Documento "${documentName}" movido a la carpeta "${selectedFolder}".`);
+                addActivity(`Documento "${documentName}" movido a "${selectedFolder}".`);
             } else {
                 alert('Documento no encontrado.');
             }
@@ -998,7 +1009,6 @@ function moveDocumentToFolder(email, documentName) {
     }
 }
 
-// Función para filtrar documentos
 function filterDocuments() {
     const searchTerm = document.getElementById('document-search').value.toLowerCase();
     const email = localStorage.getItem('email');
@@ -1020,7 +1030,7 @@ function filterDocuments() {
     });
 }
 
-// Inicializar especialidades en IA Especializada
+// IA Especializada
 function initSpecialties() {
     const aiCardsContainer = document.getElementById('ai-cards-container');
     aiCardsContainer.innerHTML = '';
@@ -1041,12 +1051,10 @@ function initSpecialties() {
             <img src="assets/${specialty.image}" alt="${specialty.name}">
             <h3>${specialty.name}</h3>
         `;
-
         aiCardsContainer.appendChild(aiCard);
     });
 }
 
-// Filtrar especialidades en IA Especializada
 function filterSpecialties() {
     const searchTerm = document.getElementById('ai-search-input').value.toLowerCase();
     const aiCardsContainer = document.getElementById('ai-cards-container');
@@ -1072,51 +1080,11 @@ function filterSpecialties() {
             <img src="assets/${specialty.image}" alt="${specialty.name}">
             <h3>${specialty.name}</h3>
         `;
-
         aiCardsContainer.appendChild(aiCard);
     });
 }
 
-// Función para actualizar notificaciones
-function updateNotifications() {
-    const notificationCount = document.getElementById('notification-count');
-    const notificationList = document.getElementById('notification-list');
-
-    // Supongamos que obtenemos las notificaciones del usuario
-    const email = localStorage.getItem('email');
-    const user = users[email];
-    const notifications = user.notifications || [];
-
-    notificationCount.textContent = notifications.length;
-
-    notificationList.innerHTML = '';
-
-    if (notifications.length === 0) {
-        const noNotifications = document.createElement('li');
-        noNotifications.textContent = 'No tienes notificaciones nuevas.';
-        notificationList.appendChild(noNotifications);
-    } else {
-        notifications.forEach(notification => {
-            const notificationItem = document.createElement('li');
-            notificationItem.textContent = notification;
-            notificationList.appendChild(notificationItem);
-        });
-    }
-}
-
-// Función para agregar una notificación
-function addNotification(message) {
-    const email = localStorage.getItem('email');
-    const user = users[email];
-    if (!user.notifications) {
-        user.notifications = [];
-    }
-    user.notifications.push(message);
-    localStorage.setItem('users', JSON.stringify(users));
-    updateNotifications();
-}
-
-// Funciones para el Onboarding
+// Onboarding
 function startOnboarding() {
     showOverlay();
     showOnboardingStep(1);
@@ -1157,10 +1125,9 @@ function hideOverlay() {
     overlay.style.display = 'none';
 }
 
-// Funciones para el Cronómetro de Estudio
+// Cronómetro
 function startTimer() {
     if (isTimerRunning) return;
-
     isTimerRunning = true;
     const startTime = Date.now() - elapsedTime;
     timerInterval = setInterval(() => {
@@ -1175,7 +1142,6 @@ function startTimer() {
 
 function pauseTimer() {
     if (!isTimerRunning) return;
-
     isTimerRunning = false;
     clearInterval(timerInterval);
     saveStudySession();
@@ -1198,7 +1164,8 @@ function updateTimerDisplay() {
     const hours = Math.floor(elapsedTime / (1000 * 60 * 60)).toString().padStart(2, '0');
     const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60).toString().padStart(2, '0');
     const seconds = Math.floor((elapsedTime / 1000) % 60).toString().padStart(2, '0');
-    document.getElementById('timer-display').textContent = `${hours}:${minutes}:${seconds}`;
+    const timerDisplay = document.getElementById('timer-display');
+    timerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
 }
 
 function saveStudySession() {
@@ -1217,19 +1184,16 @@ function saveStudySession() {
     updateTimerDisplay();
 }
 
-// Función para cargar el estado del cronómetro
 function loadTimerState() {
-    // Restaurar estado del cronómetro si es necesario
     isTimerRunning = false;
     elapsedTime = 0;
     updateTimerDisplay();
-
     document.getElementById('start-timer').disabled = false;
     document.getElementById('pause-timer').disabled = true;
     document.getElementById('reset-timer').disabled = true;
 }
 
-// Función para mostrar la pantalla de Horas de Estudio
+// Pantalla Horas de Estudio
 function showStudyTimeScreen() {
     if (localStorage.getItem('loggedIn') === 'true') {
         showScreen('study-time-screen');
@@ -1239,13 +1203,11 @@ function showStudyTimeScreen() {
     }
 }
 
-// Función para mostrar la tabla de horas de estudio
 function displayStudyTimeTable() {
     const email = localStorage.getItem('email');
     const user = users[email];
     const studySessions = user.studySessions || [];
 
-    // Agrupar sesiones por fecha
     const sessionsByDate = {};
     studySessions.forEach(session => {
         const date = new Date(session.date).toLocaleDateString();
@@ -1255,7 +1217,6 @@ function displayStudyTimeTable() {
         sessionsByDate[date] += session.duration;
     });
 
-    // Crear tabla
     const container = document.getElementById('study-time-table-container');
     container.innerHTML = '';
 
@@ -1271,7 +1232,6 @@ function displayStudyTimeTable() {
     headerRow.appendChild(durationHeader);
     table.appendChild(headerRow);
 
-    // Rellenar la tabla
     for (const date in sessionsByDate) {
         const row = document.createElement('tr');
         const dateCell = document.createElement('td');
@@ -1285,4 +1245,139 @@ function displayStudyTimeTable() {
     }
 
     container.appendChild(table);
+}
+
+// Racha Diaria (Daily Streak)
+function loadDailyStreak() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    if (!user.dailyStreak) {
+        user.dailyStreak = 0;
+        user.lastCheckinDate = null;
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+    dailyStreak = user.dailyStreak;
+}
+
+function updateDailyStreakDisplay() {
+    document.getElementById('daily-streak').textContent = dailyStreak + " días";
+}
+
+function handleDailyCheckIn() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    const today = new Date().toDateString();
+    const lastCheckin = user.lastCheckinDate ? new Date(user.lastCheckinDate).toDateString() : null;
+
+    if (!lastCheckin) {
+        // Primera vez
+        user.dailyStreak = 1;
+        user.lastCheckinDate = new Date();
+        dailyStreak = 1;
+        addNotification("Has hecho check-in por primera vez. ¡Racha iniciada!");
+        addActivity("Check-in diario realizado");
+    } else {
+        const diff = (new Date(today) - new Date(lastCheckin)) / (1000*60*60*24);
+        if (diff === 0) {
+            // Ya hizo check-in hoy
+            document.getElementById('checkin-status').textContent = "Ya hiciste check-in hoy.";
+            return;
+        } else if (diff === 1) {
+            // Día siguiente consecutivo
+            user.dailyStreak = user.dailyStreak + 1;
+            user.lastCheckinDate = new Date();
+            dailyStreak = user.dailyStreak;
+            addNotification(`Racha incrementada a ${dailyStreak} días.`);
+            addActivity("Check-in diario incrementa racha a " + dailyStreak);
+        } else {
+            // Se rompió la racha
+            user.dailyStreak = 1;
+            user.lastCheckinDate = new Date();
+            dailyStreak = 1;
+            addNotification("La racha se ha reiniciado. ¡No pasa nada, vuelve a empezar!");
+            addActivity("Check-in diario, racha reiniciada");
+        }
+    }
+
+    localStorage.setItem('users', JSON.stringify(users));
+    updateDailyStreakDisplay();
+    document.getElementById('checkin-status').textContent = "Check-in completado hoy!";
+}
+
+function loadDailyCheckInStatus() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    if (user.lastCheckinDate) {
+        const today = new Date().toDateString();
+        const lastCheckin = new Date(user.lastCheckinDate).toDateString();
+        if (today === lastCheckin) {
+            document.getElementById('checkin-status').textContent = "Ya hiciste check-in hoy.";
+        } else {
+            document.getElementById('checkin-status').textContent = "";
+        }
+    }
+}
+
+// Quiz Diario
+let currentQuizQuestionIndex = -1;
+
+function loadDailyQuiz() {
+    currentQuizQuestionIndex = (currentQuizQuestionIndex + 1) % dailyQuizQuestions.length;
+    const questionObj = dailyQuizQuestions[currentQuizQuestionIndex];
+    const quizQuestion = document.getElementById('quiz-question');
+    const quizOptions = document.getElementById('quiz-options');
+    const quizResult = document.getElementById('quiz-result');
+
+    quizQuestion.textContent = questionObj.question;
+    quizOptions.innerHTML = '';
+    quizResult.textContent = '';
+
+    questionObj.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.onclick = () => checkDailyQuizAnswer(idx);
+        quizOptions.appendChild(btn);
+    });
+}
+
+function checkDailyQuizAnswer(selectedIndex) {
+    const questionObj = dailyQuizQuestions[currentQuizQuestionIndex];
+    const quizResult = document.getElementById('quiz-result');
+    if (selectedIndex === questionObj.answer) {
+        quizResult.textContent = "¡Correcto!";
+        addActivity(`Quiz Diario: Respuesta correcta a "${questionObj.question}"`);
+    } else {
+        quizResult.textContent = "Respuesta incorrecta.";
+        addActivity(`Quiz Diario: Respuesta incorrecta a "${questionObj.question}"`);
+    }
+}
+
+// Actividad Reciente (Feed)
+function loadRecentActivity() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    if (!user.recentActivities) {
+        user.recentActivities = [];
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+    const list = document.getElementById('recent-activity-list');
+    list.innerHTML = '';
+    user.recentActivities.slice(-5).reverse().forEach(act => {
+        const li = document.createElement('li');
+        li.textContent = act;
+        list.appendChild(li);
+    });
+}
+
+function addActivity(message) {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    if (!user.recentActivities) {
+        user.recentActivities = [];
+    }
+    const now = new Date();
+    const timestamp = now.toLocaleString();
+    user.recentActivities.push(`[${timestamp}] ${message}`);
+    localStorage.setItem('users', JSON.stringify(users));
+    loadRecentActivity();
 }

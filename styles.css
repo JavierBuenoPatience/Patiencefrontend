@@ -1,18 +1,31 @@
 /* styles.css */
 
-/* Variables CSS para colores y estilos reutilizables */
+/* 
+  Paleta de colores adaptada a la apariencia de Patience en Webflow.
+  - primary-color: Verde principal
+  - secondary-color: Verde más oscuro / complementario
+  - accent-color: Tonalidad muy clara / pastel
+  - background-color: Blanco o fondo neutro
+  - text-color: Gris oscuro
+  - secondary-text-color: Gris medio
+  - border-color: Gris claro para bordes
+  - border-radius: Radio de borde estándar
+  - box-shadow: Sombra suave
+  - notification-bg: Fondo para overlays
+*/
+
 :root {
-    --primary-color: #1F3A93; /* Azul oscuro */
-    --secondary-color: #22A7F0; /* Azul claro */
-    --accent-color: #F5F7FA; /* Gris claro */
-    --background-color: #FFFFFF; /* Blanco */
-    --text-color: #2C3E50; /* Gris oscuro */
-    --secondary-text-color: #7F8C8D; /* Gris medio */
-    --border-color: #E0E0E0; /* Gris claro para bordes */
-    --border-radius: 8px; /* Radio de borde estándar */
+    --primary-color: #60CAAD;            /* Verde suave principal */
+    --secondary-color: #38A38C;          /* Verde un poco más oscuro que el primary */
+    --accent-color: #E9FAF5;            /* Verde muy claro / pastel */
+    --background-color: #FFFFFF;         /* Blanco */
+    --text-color: #2C3E50;               /* Gris oscuro */
+    --secondary-text-color: #7F8C8D;     /* Gris medio */
+    --border-color: #E0E0E0;            /* Gris claro para bordes */
+    --border-radius: 8px;               /* Radio de borde estándar */
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    --white-color: #FFFFFF; /* Blanco */
-    --notification-bg: rgba(0, 0, 0, 0.8); /* Fondo para overlay */
+    --white-color: #FFFFFF;             /* Blanco */
+    --notification-bg: rgba(0, 0, 0, 0.8); /* Fondo semitransparente para overlays */
 }
 
 /* Reset y estilos base */
@@ -41,13 +54,13 @@ body {
     background-color: var(--primary-color);
     color: var(--white-color);
     padding: 20px;
-    transform: translateX(-250px); /* Oculto inicialmente */
+    transform: translateX(-250px);
     transition: transform 0.3s ease-in-out;
     z-index: 1000;
 }
 
 .sidebar.show-sidebar {
-    transform: translateX(0); /* Visible */
+    transform: translateX(0);
 }
 
 .sidebar.pinned {
@@ -92,7 +105,7 @@ body {
 }
 
 .sidebar ul li a:hover {
-    color: var(--secondary-color);
+    color: var(--accent-color);
 }
 
 .sidebar ul li a i {
@@ -131,7 +144,6 @@ header.hidden {
     cursor: pointer;
 }
 
-/* Botón del menú lateral */
 #menu-icon {
     background: none;
     border: none;
@@ -200,7 +212,7 @@ header.hidden {
     padding: 15px;
     border-bottom: 1px solid var(--border-color);
     font-size: 18px;
-    color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 .notification-panel ul {
@@ -317,13 +329,20 @@ form textarea {
     border-radius: var(--border-radius);
     font-size: 16px;
     margin-bottom: 15px;
+    color: var(--text-color);
 }
 
 form button {
     align-self: flex-start;
 }
 
-/* Home Screen */
+/* Pantalla de Login y Registro */
+#login-screen .intro-text,
+#registration-screen .intro-text {
+    color: var(--secondary-color);
+}
+
+/* Pantalla Mi Progreso (Inicio) */
 .home-card {
     display: flex;
     flex-direction: column;
@@ -728,7 +747,7 @@ form button {
     color: var(--primary-color);
 }
 
-/* Pantalla de Mis Documentos */
+/* Documentos */
 .documents-screen .document-management {
     display: flex;
     flex-direction: column;
@@ -753,10 +772,6 @@ form button {
 
 .upload-label i {
     margin-right: 5px;
-}
-
-#upload-document {
-    display: none;
 }
 
 .create-folder-button {
@@ -794,6 +809,17 @@ form button {
     gap: 10px;
 }
 
+/* Modos de vista (lista / cuadrícula) */
+.documents-container.list-view {
+    flex-direction: column;
+}
+
+.documents-container.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+}
+
 .folder-card, .document-card {
     background-color: var(--accent-color);
     border: 1px solid var(--border-color);
@@ -804,6 +830,7 @@ form button {
     justify-content: space-between;
     cursor: pointer;
     transition: background-color 0.2s;
+    color: var(--text-color);
 }
 
 .folder-card:hover, .document-card:hover {
@@ -830,13 +857,24 @@ form button {
 }
 
 .document-card button:hover {
-    color: var(--secondary-color);
+    color: var(--white-color);
 }
 
-/* Pantalla de Mis Grupos */
+/* Área de drag & drop */
+#drag-drop-area {
+    border: 2px dashed var(--secondary-color);
+    border-radius: var(--border-radius);
+    color: var(--secondary-text-color);
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+/* Grupos (Discord) */
 .discord-section {
     text-align: center;
-    background-color: #5865F2;
+    background-color: #5865F2; /* color típico de Discord */
     padding: 20px;
     border-radius: var(--border-radius);
     color: var(--white-color);
@@ -865,7 +903,7 @@ form button {
     background-color: #5A73CF;
 }
 
-/* Pantalla de Guía para Aprovechar al Máximo la IA */
+/* Guía IA */
 .guide-section {
     max-width: 800px;
     margin: 0 auto;
@@ -898,7 +936,7 @@ form button {
     font-weight: 600;
 }
 
-/* Pantalla de ¿Dónde te puedes preparar? */
+/* Academias & Preparadores */
 .directory-screen .filter-section {
     display: flex;
     gap: 20px;
@@ -1000,7 +1038,7 @@ form button {
     resize: vertical;
 }
 
-/* Pantalla de ¿Qué es Patience? */
+/* Sobre Patience (training-screen) */
 .training-section {
     max-width: 800px;
     margin: 0 auto;
@@ -1036,7 +1074,7 @@ form button {
     border-radius: var(--border-radius);
 }
 
-/* Pantalla de Últimas Noticias */
+/* Noticias y Actualizaciones */
 .news-section {
     display: flex;
     flex-direction: column;
@@ -1079,7 +1117,7 @@ form button {
     border: none;
 }
 
-/* Pantalla de Ayuda */
+/* Ayuda */
 .help-screen {
     max-width: 800px;
     margin: 0 auto;
@@ -1096,7 +1134,7 @@ form button {
     color: var(--primary-color);
 }
 
-/* Pantalla de Actividad Completa */
+/* Actividad Completa */
 .activity-screen {
     max-width: 800px;
     margin: 0 auto;
@@ -1117,7 +1155,7 @@ form button {
     color: var(--text-color);
 }
 
-/* Pantalla de Próximamente */
+/* Próximamente */
 .coming-soon-screen {
     text-align: center;
 }
@@ -1197,7 +1235,7 @@ form button {
     background-color: var(--primary-color);
 }
 
-/* Modal de Quiz Diario */
+/* Modal Quiz Diario */
 #quiz-modal .modal-content {
     max-width: 600px;
 }
@@ -1225,44 +1263,34 @@ form button {
 
 /* Responsividad */
 @media (max-width: 1024px) {
-    /* Mostrar el botón del menú lateral en pantallas pequeñas */
     #menu-icon {
         display: block;
     }
-
     header {
         left: 0;
     }
-
     footer {
         left: 0;
     }
-
     .sidebar {
         width: 200px;
         transform: translateX(-200px);
     }
-
     .sidebar.show-sidebar {
         transform: translateX(0);
     }
-
     .sidebar.pinned {
         transform: translateX(0);
     }
-
     .sidebar.show-sidebar ~ .main-content {
         margin-left: 200px;
     }
-
     .sidebar:not(.show-sidebar) ~ .main-content {
         margin-left: 0;
     }
-
     .sidebar.show-sidebar ~ footer {
         left: 200px;
     }
-
     .sidebar:not(.show-sidebar) ~ footer {
         left: 0;
     }
@@ -1273,19 +1301,15 @@ form button {
         flex-direction: column;
         gap: 15px;
     }
-
     .metric-item {
         margin-right: 0;
     }
-
     .quick-links-container {
         gap: 10px;
     }
-
     .ai-card, .academy-card, .folder-card, .document-card {
         width: 100%;
     }
-
     .directory-screen .filter-section {
         flex-direction: column;
     }
@@ -1295,28 +1319,22 @@ form button {
     .ai-card, .academy-card, .folder-card, .document-card {
         width: 100%;
     }
-
     .iframe-container {
         height: 400px;
     }
-
     .sidebar {
         width: 200px;
-        transform: translateX(-200px); 
+        transform: translateX(-200px);
     }
-
     header {
         left: 0;
     }
-
     footer {
         left: 0;
     }
-
     .header-logo {
         height: 35px;
     }
-
     #menu-icon {
         font-size: 20px;
         margin-right: 15px;

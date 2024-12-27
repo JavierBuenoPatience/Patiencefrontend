@@ -1,31 +1,30 @@
 /* styles.css */
 
 /* 
-  Paleta de colores adaptada a la apariencia de Patience en Webflow.
+  Paleta de colores "verde/azulado" para asemejarse a la estética de Patience.
   - primary-color: Verde principal
   - secondary-color: Verde más oscuro / complementario
   - accent-color: Tonalidad muy clara / pastel
-  - background-color: Blanco o fondo neutro
+  - background-color: Blanco (fondo)
   - text-color: Gris oscuro
   - secondary-text-color: Gris medio
-  - border-color: Gris claro para bordes
+  - border-color: Gris claro
   - border-radius: Radio de borde estándar
   - box-shadow: Sombra suave
-  - notification-bg: Fondo para overlays
+  - notification-bg: Fondo overlay
 */
-
 :root {
-    --primary-color: #60CAAD;            /* Verde suave principal */
-    --secondary-color: #38A38C;          /* Verde un poco más oscuro que el primary */
-    --accent-color: #E9FAF5;            /* Verde muy claro / pastel */
-    --background-color: #FFFFFF;         /* Blanco */
-    --text-color: #2C3E50;               /* Gris oscuro */
-    --secondary-text-color: #7F8C8D;     /* Gris medio */
-    --border-color: #E0E0E0;            /* Gris claro para bordes */
-    --border-radius: 8px;               /* Radio de borde estándar */
-    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    --white-color: #FFFFFF;             /* Blanco */
-    --notification-bg: rgba(0, 0, 0, 0.8); /* Fondo semitransparente para overlays */
+    --primary-color: #60CAAD;        /* Verde suave principal */
+    --secondary-color: #38A38C;      /* Verde algo más oscuro */
+    --accent-color: #E9FAF5;         /* Verde pastel muy claro */
+    --background-color: #FFFFFF;     
+    --text-color: #2C3E50;           
+    --secondary-text-color: #7F8C8D; 
+    --border-color: #E0E0E0;         
+    --border-radius: 8px;            
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    --white-color: #FFFFFF;          
+    --notification-bg: rgba(0, 0, 0, 0.8);
 }
 
 /* Reset y estilos base */
@@ -332,17 +331,17 @@ form textarea {
     color: var(--text-color);
 }
 
-form button {
-    align-self: flex-start;
-}
-
-/* Pantalla de Login y Registro */
+/* Login / Registro */
 #login-screen .intro-text,
 #registration-screen .intro-text {
     color: var(--secondary-color);
 }
 
-/* Pantalla Mi Progreso (Inicio) */
+/* Secciones Principales (Mi Progreso, Estudio, etc.) se manejan con display: none
+   No requieren estilos especiales más allá de .card 
+*/
+
+/* Pantalla Mi Progreso */
 .home-card {
     display: flex;
     flex-direction: column;
@@ -874,7 +873,7 @@ form button {
 /* Grupos (Discord) */
 .discord-section {
     text-align: center;
-    background-color: #5865F2; /* color típico de Discord */
+    background-color: #5865F2; 
     padding: 20px;
     border-radius: var(--border-radius);
     color: var(--white-color);

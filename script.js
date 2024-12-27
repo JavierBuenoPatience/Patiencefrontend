@@ -257,6 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const notificationIcon = document.querySelector('.notification-icon');
     const notificationPanel = document.getElementById('notification-panel');
 
+    // Verificar si ya hay un usuario logueado
     if (localStorage.getItem('loggedIn') === 'true') {
         showHomeScreen();
         updateDocumentOverview();
@@ -264,32 +265,44 @@ document.addEventListener('DOMContentLoaded', () => {
         showLoginScreen();
     }
 
+    // Listeners para subida de documentos
     const uploadInput = document.getElementById('upload-document');
     if (uploadInput) {
         uploadInput.addEventListener('change', uploadDocuments);
     }
 
+    // Búsqueda de documentos
     const documentSearch = document.getElementById('document-search');
     if (documentSearch) {
         documentSearch.addEventListener('input', filterDocuments);
     }
 
+    // Inicializar Directorio de Academias y Especialidades
     initAcademyDirectory();
     initSpecialties();
+
+    // Inicializar notificaciones
     updateNotifications();
 
+    // Cerrar panel de notificaciones si el click es fuera de él
     document.addEventListener('click', (event) => {
         if (!notificationIcon.contains(event.target) && !notificationPanel.contains(event.target)) {
             notificationPanel.classList.remove('show-notifications');
         }
     });
 
+    // Mantener estado del sidebar
     loadSidebarState();
+
+    // Mensajes motivacionales cíclicos
     updateMotivationalMessage();
     setInterval(updateMotivationalMessage, 5 * 60 * 1000); // Actualizar cada 5 minutos
 
+    // Cargar racha diaria y estado del check-in
     loadDailyStreak();
     loadDailyCheckInStatus();
+
+    // Actividad reciente
     loadRecentActivity();
     updateRecentActivitySummary();
 });
@@ -404,7 +417,7 @@ function handleRegistration(event) {
     }
 
     if (users[email]) {
-        alert('Correo ya registrado. Por favor, inicia sesión.');
+        alert('Ese correo ya está registrado. Por favor, inicia sesión o utiliza otro correo.');
         return;
     }
 
@@ -448,15 +461,17 @@ function handleLogin(event) {
         showHomeScreen();
         updateDocumentOverview();
 
+        // Comprobar si el onboarding está completado
         if (!users[email].onboardingCompleted) {
             startOnboarding();
         }
     } else {
-        alert('Correo o contraseña incorrectos.');
+        alert('Correo o contraseña incorrectos. Revisa tus datos o regístrate si no tienes cuenta.');
     }
 }
 
 function handleLogout() {
+    // Si el cronómetro está corriendo, lo pausamos y guardamos sesión
     if (isTimerRunning) {
         pauseTimer();
         saveStudySession();
@@ -484,7 +499,7 @@ function handleProfileUpdate(event) {
     users[email].profile = profile;
     users[email].examDate = profile.examDate;
     localStorage.setItem('users', JSON.stringify(users));
-    alert('Perfil actualizado con éxito');
+    alert('Perfil actualizado con éxito.');
     updateProfileIcon();
     updateDashboard();
 }
@@ -793,6 +808,7 @@ function updateDashboard() {
     const studyHoursElement = document.getElementById('study-hours');
     const dailyStreakElement = document.getElementById('daily-streak');
 
+    // Días restantes para el examen
     if (user.examDate) {
         const examDate = new Date(user.examDate);
         const today = new Date();
@@ -803,9 +819,11 @@ function updateDashboard() {
         daysRemainingElement.textContent = '--';
     }
 
+    // Horas totales de estudio
     const totalStudyTime = calculateTotalStudyTime(email);
     studyHoursElement.textContent = totalStudyTime ? totalStudyTime + ' horas' : '--';
 
+    // Racha diaria
     dailyStreakElement.textContent = dailyStreak + " días";
     updateMotivationalMessage();
     updateRecentActivitySummary();
@@ -1042,6 +1060,7 @@ function filterDocuments() {
     const userDocuments = users[email].documents || [];
     const filteredDocuments = userDocuments.filter(doc => doc.name.toLowerCase().includes(searchTerm));
 
+    // Muestra sólo los documentos que coincidan con la búsqueda (no muestra carpetas)
     filteredDocuments.forEach(doc => {
         const docElement = document.createElement('div');
         docElement.classList.add('document-card');
@@ -1159,9 +1178,14 @@ function startTimer() {
         updateTimerDisplay();
     }, 1000);
 
-    document.getElementById('start-timer').disabled = true;
-    document.getElementById('pause-timer').disabled = false;
-    document.getElementById('reset-timer').disabled = false;
+    const startBtn = document.getElementById('start-timer');
+    const pauseBtn = document.getElementById('pause-timer');
+    const resetBtn = document.getElementById('reset-timer');
+    if (startBtn && pauseBtn && resetBtn) {
+        startBtn.disabled = true;
+        pauseBtn.disabled = false;
+        resetBtn.disabled = false;
+    }
 }
 
 function pauseTimer() {
@@ -1170,8 +1194,12 @@ function pauseTimer() {
     clearInterval(timerInterval);
     saveStudySession();
 
-    document.getElementById('start-timer').disabled = false;
-    document.getElementById('pause-timer').disabled = true;
+    const startBtn = document.getElementById('start-timer');
+    const pauseBtn = document.getElementById('pause-timer');
+    if (startBtn && pauseBtn) {
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+    }
 }
 
 function resetTimer() {
@@ -1181,7 +1209,10 @@ function resetTimer() {
     elapsedTime = 0;
     updateTimerDisplay();
 
-    document.getElementById('reset-timer').disabled = true;
+    const resetBtn = document.getElementById('reset-timer');
+    if (resetBtn) {
+        resetBtn.disabled = true;
+    }
 }
 
 function updateTimerDisplay() {
@@ -1449,32 +1480,7 @@ function addActivity(message) {
     updateRecentActivitySummary();
 }
 
-// Actividad Completa - Cargar todas las actividades
-function displayFullActivity() {
-    const email = localStorage.getItem('email');
-    const user = users[email];
-    const fullActivityList = document.getElementById('full-activity-list');
-    if (fullActivityList) {
-        fullActivityList.innerHTML = '';
-
-        if (!user.recentActivities || user.recentActivities.length === 0) {
-            fullActivityList.textContent = 'No hay actividades registradas.';
-        } else {
-            user.recentActivities.slice().reverse().forEach(act => {
-                const li = document.createElement('li');
-                li.textContent = act;
-                fullActivityList.appendChild(li);
-            });
-        }
-    }
-}
-
-// Footer
-// No requiere modificaciones ya que el footer es estático
-
-// Responsividad y visualización ya manejada en styles.css
-
-// Funciones de ayuda
+// Otras funciones de ayuda
 function updateMotivationalMessage() {
     const messageElement = document.getElementById('motivational-message');
     if (messageElement) {
@@ -1482,13 +1488,3 @@ function updateMotivationalMessage() {
         motivationalMessageIndex = (motivationalMessageIndex + 1) % motivationalMessages.length;
     }
 }
-
-// Pantalla de Ayuda y Próximamente ya están manejadas con showHelp y showComingSoon
-
-// Modal para Quiz Diario ya añadido anteriormente
-
-// Eventos adicionales si es necesario
-// No hay eventos adicionales por ahora
-
-// Otras funciones necesarias (e.g., mostrar actividades, manejar estudios, etc.)
-// Ya implementadas en las secciones anteriores

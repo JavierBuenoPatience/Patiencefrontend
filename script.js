@@ -206,7 +206,7 @@ const specialties = [
     }
 ];
 
-// Preguntas para el Quiz Diario (estáticas)
+// Preguntas para el Quiz Diario
 const dailyQuizQuestions = [
     {
         question: "¿Cuál es la capital de Francia?",
@@ -259,8 +259,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const notificationIcon = document.querySelector('.notification-icon');
     const notificationPanel = document.getElementById('notification-panel');
 
-    // Verificar si hay un usuario logueado
+    // Verificamos si está logueado
     if (localStorage.getItem('loggedIn') === 'true') {
+        // Ocultamos pantallas de login/registro
+        hideLoginAndRegistrationScreens();
         // Mostramos la sección "Mi Progreso" por defecto
         showProgressMainScreen();
     } else {
@@ -309,10 +311,14 @@ document.addEventListener('DOMContentLoaded', () => {
     updateRecentActivitySummary();
 });
 
-// ================== Funciones de Navegación Principal ===================
+// ============= Funciones para ocultar login/registro =============
+function hideLoginAndRegistrationScreens() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('registration-screen').style.display = 'none';
+}
 
+// ================== Navegación Principal ===================
 function hideAllMainSections() {
-    // Oculta las 5 secciones principales
     document.getElementById('progress-main-screen').style.display = 'none';
     document.getElementById('study-main-screen').style.display = 'none';
     document.getElementById('communities-main-screen').style.display = 'none';
@@ -323,13 +329,18 @@ function hideAllMainSections() {
 // Muestra la Sección 1: Mi Progreso
 function showProgressMainScreen() {
     hideAllMainSections();
-    document.getElementById('progress-main-screen').style.display = 'block';
 
-    // Dentro de la sección, mostramos por defecto la pantalla "progress-screen"
+    // Si está logueado, ocultamos login/registro
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideLoginAndRegistrationScreens();
+        document.querySelector('header').style.display = 'flex';
+        document.querySelector('footer').style.display = 'block';
+    }
+
+    document.getElementById('progress-main-screen').style.display = 'block';
     hideAllSubScreensOfProgress();
     document.getElementById('progress-screen').style.display = 'block';
 
-    // Actualizamos la UI (ej. recargar métricas, etc.)
     updateProfileIcon();
     updateDashboard();
     loadTimerState();
@@ -344,76 +355,86 @@ function hideAllSubScreensOfProgress() {
     document.getElementById('activity-screen').style.display = 'none';
 }
 
-// Muestra la Sección 2: Estudio
+// Sección 2: Estudio
 function showStudyMainScreen() {
     hideAllMainSections();
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideLoginAndRegistrationScreens();
+        document.querySelector('header').style.display = 'flex';
+        document.querySelector('footer').style.display = 'block';
+    }
     document.getElementById('study-main-screen').style.display = 'block';
-
-    // Por defecto, mostramos Documentos (por ejemplo)
     hideAllSubScreensOfStudy();
+    // Por defecto, mostramos Documentos
     document.getElementById('documents-screen').style.display = 'block';
 }
 
-// Oculta subpantallas de Estudio
 function hideAllSubScreensOfStudy() {
     document.getElementById('documents-screen').style.display = 'none';
     document.getElementById('ai-screen').style.display = 'none';
     document.getElementById('guide-screen').style.display = 'none';
 }
 
-// Muestra la Sección 3: Comunidades
+// Sección 3: Comunidades
 function showCommunitiesMainScreen() {
     hideAllMainSections();
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideLoginAndRegistrationScreens();
+        document.querySelector('header').style.display = 'flex';
+        document.querySelector('footer').style.display = 'block';
+    }
     document.getElementById('communities-main-screen').style.display = 'block';
-
-    // Por defecto, mostramos Grupos
     hideAllSubScreensOfCommunities();
+    // Por defecto, mostramos Grupos
     document.getElementById('groups-screen').style.display = 'block';
 }
 
-// Oculta subpantallas de Comunidades
 function hideAllSubScreensOfCommunities() {
     document.getElementById('groups-screen').style.display = 'none';
     document.getElementById('directory-screen').style.display = 'none';
 }
 
-// Muestra la Sección 4: Noticias & Ayuda
+// Sección 4: Noticias & Ayuda
 function showNewsHelpScreen() {
     hideAllMainSections();
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideLoginAndRegistrationScreens();
+        document.querySelector('header').style.display = 'flex';
+        document.querySelector('footer').style.display = 'block';
+    }
     document.getElementById('news-help-screen').style.display = 'block';
-
-    // Por defecto, mostramos Noticias
     hideAllSubScreensOfNewsHelp();
+    // Por defecto, mostramos Noticias
     document.getElementById('news-screen').style.display = 'block';
 }
 
-// Oculta subpantallas de Noticias & Ayuda
 function hideAllSubScreensOfNewsHelp() {
     document.getElementById('news-screen').style.display = 'none';
     document.getElementById('help-screen').style.display = 'none';
 }
 
-// Muestra la Sección 5: Mi Cuenta
+// Sección 5: Mi Cuenta
 function showAccountScreen() {
     hideAllMainSections();
+    if (localStorage.getItem('loggedIn') === 'true') {
+        hideLoginAndRegistrationScreens();
+        document.querySelector('header').style.display = 'flex';
+        document.querySelector('footer').style.display = 'block';
+    }
     document.getElementById('account-screen').style.display = 'block';
-
-    // Por defecto, mostramos el Perfil
     hideAllSubScreensOfAccount();
+    // Por defecto, mostramos el Perfil
     document.getElementById('profile-screen').style.display = 'block';
 }
 
-// Oculta subpantallas de Mi Cuenta
 function hideAllSubScreensOfAccount() {
     document.getElementById('profile-screen').style.display = 'none';
     document.getElementById('coming-soon-screen').style.display = 'none';
 }
 
-// ================== Funciones para mostrar subpantallas concretas ===================
-
-// Por ejemplo, si pulsamos "IA Especializada" en una parte del menú secundario:
+// ================== Subpantallas concretas (IA, Documentos, etc.) ===================
 function showAIScreen() {
-    showStudyMainScreen(); // primero mostramos la sección "Estudio"
+    showStudyMainScreen();
     hideAllSubScreensOfStudy();
     document.getElementById('ai-screen').style.display = 'block';
 }
@@ -479,7 +500,7 @@ function showActivityScreen() {
     document.getElementById('activity-screen').style.display = 'block';
 }
 
-// ================== Sidebar y notificaciones ===================
+// ================== Sidebar & Notificaciones ===================
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const isPinned = localStorage.getItem('sidebarPinned') === 'true';
@@ -609,9 +630,15 @@ function handleLogin(event) {
     }
 
     if (users[email] && users[email].password === password) {
+        // Marcamos como logueado
         localStorage.setItem('loggedIn', 'true');
         localStorage.setItem('email', email);
         localStorage.setItem('name', users[email].name);
+
+        // Ocultamos login/registro
+        hideLoginAndRegistrationScreens();
+        document.querySelector('header').style.display = 'flex';
+        document.querySelector('footer').style.display = 'block';
 
         // Mostramos la sección "Mi Progreso"
         showProgressMainScreen();
@@ -645,26 +672,24 @@ function validateEmail(email) {
 
 function showLoginScreen() {
     hideAllMainSections();
-    document.querySelector('header').style.display = 'none';
-    document.querySelector('footer').style.display = 'none';
-
-    // Ocultamos la pantalla de registro si estaba abierta
-    document.getElementById('registration-screen').style.display = 'none';
-
     // Mostramos pantalla de login
     document.getElementById('login-screen').style.display = 'block';
+    document.getElementById('registration-screen').style.display = 'none';
+
+    // Ocultamos header y footer
+    document.querySelector('header').style.display = 'none';
+    document.querySelector('footer').style.display = 'none';
 }
 
 function showRegistrationScreen() {
     hideAllMainSections();
-    document.querySelector('header').style.display = 'none';
-    document.querySelector('footer').style.display = 'none';
-
-    // Ocultamos pantalla de login
-    document.getElementById('login-screen').style.display = 'none';
-
     // Mostramos pantalla de registro
     document.getElementById('registration-screen').style.display = 'block';
+    document.getElementById('login-screen').style.display = 'none';
+
+    // Ocultamos header y footer
+    document.querySelector('header').style.display = 'none';
+    document.querySelector('footer').style.display = 'none';
 }
 
 // ================== Perfil ===================
@@ -697,7 +722,7 @@ function updateProfileIcon() {
     }
 }
 
-// ================== Manejo de Pantallas Subinternas (Actividades, etc.) ===================
+// ================== Actividad Reciente, etc. ===================
 function loadRecentActivity() {
     // Se carga la actividad para luego mostrar en el dashboard
 }
@@ -1220,7 +1245,7 @@ function showNewsContent(newsType) {
 
 // ================== Documentos ===================
 function updateDocumentOverview() {
-    // Por si hubiera un panel de "últimos documentos" en alguna parte
+    // Por si hubiera un panel de "últimos documentos"
     const email = localStorage.getItem('email');
     const userDocuments = users[email]?.documents || [];
     const documentList = document.getElementById('document-list');
@@ -1239,7 +1264,6 @@ function updateDocumentOverview() {
     }
 }
 
-// Subir documentos (input file)
 function uploadDocuments(event) {
     const email = localStorage.getItem('email');
     const files = event.target.files;
@@ -1363,7 +1387,6 @@ function displayDocuments() {
             openDocument(email, doc);
         });
 
-        // Botón para mover documento
         const moveButton = document.createElement('button');
         moveButton.innerHTML = '<i class="fas fa-folder"></i>';
         moveButton.onclick = (e) => {
@@ -1451,13 +1474,12 @@ function filterDocuments() {
     });
 }
 
-// ========== Cambio de vista (Lista / Cuadrícula) ==========
 function toggleDocumentsView() {
     documentsViewMode = (documentsViewMode === 'list') ? 'grid' : 'list';
     displayDocuments();
 }
 
-// ========== Drag & Drop ==========
+// Drag & Drop
 function handleDragOver(event) {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'copy';
@@ -1497,7 +1519,7 @@ function handleDrop(event) {
     }
 }
 
-// ========== Mensajes Motivacionales ==========
+// Mensajes Motivacionales
 function updateMotivationalMessage() {
     const messageElement = document.getElementById('motivational-message');
     if (messageElement) {
@@ -1506,7 +1528,7 @@ function updateMotivationalMessage() {
     }
 }
 
-// ========== Discord Redirect (Grupos) ==========
+// Discord (Grupos)
 function redirectToDiscord() {
     window.open(discordInviteLink, '_blank');
 }

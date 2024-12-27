@@ -13,7 +13,7 @@ const discordInviteLink = "https://discord.gg/qGB36SqR";
 // Obtenemos los usuarios almacenados o inicializamos uno vacío
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
-// Datos de academias actualizados (mantener completitud)
+// Datos de academias
 const academies = [
     {
         id: 1,
@@ -177,7 +177,7 @@ const academies = [
     }
 ];
 
-// Datos de especialidades para IA Especializada (mantener completitud)
+// Datos de especialidades (IA)
 const specialties = [
     {
         name: 'Biología y Geología',
@@ -261,8 +261,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Verificar si hay un usuario logueado
     if (localStorage.getItem('loggedIn') === 'true') {
-        showProgressScreen();
-        updateDocumentOverview();
+        // Mostramos la sección "Mi Progreso" por defecto
+        showProgressMainScreen();
     } else {
         showLoginScreen();
     }
@@ -309,7 +309,177 @@ document.addEventListener('DOMContentLoaded', () => {
     updateRecentActivitySummary();
 });
 
-// ================== Sidebar ===================
+// ================== Funciones de Navegación Principal ===================
+
+function hideAllMainSections() {
+    // Oculta las 5 secciones principales
+    document.getElementById('progress-main-screen').style.display = 'none';
+    document.getElementById('study-main-screen').style.display = 'none';
+    document.getElementById('communities-main-screen').style.display = 'none';
+    document.getElementById('news-help-screen').style.display = 'none';
+    document.getElementById('account-screen').style.display = 'none';
+}
+
+// Muestra la Sección 1: Mi Progreso
+function showProgressMainScreen() {
+    hideAllMainSections();
+    document.getElementById('progress-main-screen').style.display = 'block';
+
+    // Dentro de la sección, mostramos por defecto la pantalla "progress-screen"
+    hideAllSubScreensOfProgress();
+    document.getElementById('progress-screen').style.display = 'block';
+
+    // Actualizamos la UI (ej. recargar métricas, etc.)
+    updateProfileIcon();
+    updateDashboard();
+    loadTimerState();
+    updateDailyStreakDisplay();
+    updateRecentActivitySummary();
+}
+
+// Oculta subpantallas de Mi Progreso
+function hideAllSubScreensOfProgress() {
+    document.getElementById('progress-screen').style.display = 'none';
+    document.getElementById('study-time-screen').style.display = 'none';
+    document.getElementById('activity-screen').style.display = 'none';
+}
+
+// Muestra la Sección 2: Estudio
+function showStudyMainScreen() {
+    hideAllMainSections();
+    document.getElementById('study-main-screen').style.display = 'block';
+
+    // Por defecto, mostramos Documentos (por ejemplo)
+    hideAllSubScreensOfStudy();
+    document.getElementById('documents-screen').style.display = 'block';
+}
+
+// Oculta subpantallas de Estudio
+function hideAllSubScreensOfStudy() {
+    document.getElementById('documents-screen').style.display = 'none';
+    document.getElementById('ai-screen').style.display = 'none';
+    document.getElementById('guide-screen').style.display = 'none';
+}
+
+// Muestra la Sección 3: Comunidades
+function showCommunitiesMainScreen() {
+    hideAllMainSections();
+    document.getElementById('communities-main-screen').style.display = 'block';
+
+    // Por defecto, mostramos Grupos
+    hideAllSubScreensOfCommunities();
+    document.getElementById('groups-screen').style.display = 'block';
+}
+
+// Oculta subpantallas de Comunidades
+function hideAllSubScreensOfCommunities() {
+    document.getElementById('groups-screen').style.display = 'none';
+    document.getElementById('directory-screen').style.display = 'none';
+}
+
+// Muestra la Sección 4: Noticias & Ayuda
+function showNewsHelpScreen() {
+    hideAllMainSections();
+    document.getElementById('news-help-screen').style.display = 'block';
+
+    // Por defecto, mostramos Noticias
+    hideAllSubScreensOfNewsHelp();
+    document.getElementById('news-screen').style.display = 'block';
+}
+
+// Oculta subpantallas de Noticias & Ayuda
+function hideAllSubScreensOfNewsHelp() {
+    document.getElementById('news-screen').style.display = 'none';
+    document.getElementById('help-screen').style.display = 'none';
+}
+
+// Muestra la Sección 5: Mi Cuenta
+function showAccountScreen() {
+    hideAllMainSections();
+    document.getElementById('account-screen').style.display = 'block';
+
+    // Por defecto, mostramos el Perfil
+    hideAllSubScreensOfAccount();
+    document.getElementById('profile-screen').style.display = 'block';
+}
+
+// Oculta subpantallas de Mi Cuenta
+function hideAllSubScreensOfAccount() {
+    document.getElementById('profile-screen').style.display = 'none';
+    document.getElementById('coming-soon-screen').style.display = 'none';
+}
+
+// ================== Funciones para mostrar subpantallas concretas ===================
+
+// Por ejemplo, si pulsamos "IA Especializada" en una parte del menú secundario:
+function showAIScreen() {
+    showStudyMainScreen(); // primero mostramos la sección "Estudio"
+    hideAllSubScreensOfStudy();
+    document.getElementById('ai-screen').style.display = 'block';
+}
+
+function showDocuments() {
+    showStudyMainScreen();
+    hideAllSubScreensOfStudy();
+    document.getElementById('documents-screen').style.display = 'block';
+}
+
+function showGuideScreen() {
+    showStudyMainScreen();
+    hideAllSubScreensOfStudy();
+    document.getElementById('guide-screen').style.display = 'block';
+}
+
+function showGroups() {
+    showCommunitiesMainScreen();
+    hideAllSubScreensOfCommunities();
+    document.getElementById('groups-screen').style.display = 'block';
+}
+
+function showDirectoryScreen() {
+    showCommunitiesMainScreen();
+    hideAllSubScreensOfCommunities();
+    document.getElementById('directory-screen').style.display = 'block';
+}
+
+function showNews() {
+    showNewsHelpScreen();
+    hideAllSubScreensOfNewsHelp();
+    document.getElementById('news-screen').style.display = 'block';
+}
+
+function showHelp() {
+    showNewsHelpScreen();
+    hideAllSubScreensOfNewsHelp();
+    document.getElementById('help-screen').style.display = 'block';
+}
+
+function showProfile() {
+    showAccountScreen();
+    hideAllSubScreensOfAccount();
+    document.getElementById('profile-screen').style.display = 'block';
+}
+
+function showComingSoon() {
+    showAccountScreen();
+    hideAllSubScreensOfAccount();
+    document.getElementById('coming-soon-screen').style.display = 'block';
+}
+
+// Subpantallas de Mi Progreso
+function showStudyTimeScreen() {
+    showProgressMainScreen();
+    hideAllSubScreensOfProgress();
+    document.getElementById('study-time-screen').style.display = 'block';
+}
+
+function showActivityScreen() {
+    showProgressMainScreen();
+    hideAllSubScreensOfProgress();
+    document.getElementById('activity-screen').style.display = 'block';
+}
+
+// ================== Sidebar y notificaciones ===================
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const isPinned = localStorage.getItem('sidebarPinned') === 'true';
@@ -347,7 +517,6 @@ function loadSidebarState() {
     }
 }
 
-// ================== Notificaciones ===================
 function toggleNotifications() {
     const notificationPanel = document.getElementById('notification-panel');
     notificationPanel.classList.toggle('show-notifications');
@@ -389,25 +558,7 @@ function addNotification(message) {
     addActivity("Notificación: " + message);
 }
 
-// ================== Pantallas (show/hide) ===================
-function showScreen(screenId) {
-    hideAllScreens();
-    document.getElementById(screenId).style.display = 'block';
-    const sidebar = document.getElementById('sidebar');
-    const isPinned = localStorage.getItem('sidebarPinned') === 'true';
-    if (!isPinned) {
-        sidebar.classList.remove('show-sidebar');
-    }
-}
-
-function hideAllScreens() {
-    const screens = document.querySelectorAll('.card');
-    screens.forEach(screen => screen.style.display = 'none');
-    // Cerrar modal si está abierto
-    closeQuizModal();
-}
-
-// ========== Registro e Inicio de Sesión ==========
+// ================== Login y Registro ===================
 function handleRegistration(event) {
     event.preventDefault();
     const name = document.getElementById('reg-name').value;
@@ -462,11 +613,10 @@ function handleLogin(event) {
         localStorage.setItem('email', email);
         localStorage.setItem('name', users[email].name);
 
-        // Mostramos pantalla "Mi Progreso" en vez de "Home"
-        showProgressScreen();
-        updateDocumentOverview();
+        // Mostramos la sección "Mi Progreso"
+        showProgressMainScreen();
 
-        // Comprobar si el onboarding está completado
+        // Comprobar Onboarding
         if (!users[email].onboardingCompleted) {
             startOnboarding();
         }
@@ -476,20 +626,17 @@ function handleLogin(event) {
 }
 
 function handleLogout() {
-    // Si el cronómetro está corriendo, lo pausamos y guardamos
     if (isTimerRunning) {
         pauseTimer();
         saveStudySession();
     }
-
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('email');
     localStorage.removeItem('name');
-    hideAllScreens();
+    hideAllMainSections();
     showLoginScreen();
 }
 
-// Validación de correo
 function validateEmail(email) {
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     const hotmailRegex = /^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\.com$/;
@@ -497,139 +644,30 @@ function validateEmail(email) {
 }
 
 function showLoginScreen() {
-    showScreen('login-screen');
+    hideAllMainSections();
     document.querySelector('header').style.display = 'none';
     document.querySelector('footer').style.display = 'none';
+
+    // Ocultamos la pantalla de registro si estaba abierta
+    document.getElementById('registration-screen').style.display = 'none';
+
+    // Mostramos pantalla de login
+    document.getElementById('login-screen').style.display = 'block';
 }
 
 function showRegistrationScreen() {
-    showScreen('registration-screen');
+    hideAllMainSections();
     document.querySelector('header').style.display = 'none';
     document.querySelector('footer').style.display = 'none';
+
+    // Ocultamos pantalla de login
+    document.getElementById('login-screen').style.display = 'none';
+
+    // Mostramos pantalla de registro
+    document.getElementById('registration-screen').style.display = 'block';
 }
 
-// ========== Pantalla Principal: Mi Progreso ==========
-function showProgressScreen() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('progress-screen');
-        document.getElementById('user-name-home').textContent = localStorage.getItem('name');
-        document.querySelector('header').style.display = 'flex';
-        document.querySelector('footer').style.display = 'block';
-        updateProfileIcon();
-        updateDocumentOverview();
-        updateDashboard();
-        loadTimerState();
-        updateDailyStreakDisplay();
-        updateRecentActivitySummary();
-    } else {
-        showLoginScreen();
-    }
-}
-
-// ========== Otras pantallas ==========
-function showProfile() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('profile-screen');
-        const email = localStorage.getItem('email');
-        const profile = users[email].profile || {};
-        document.getElementById('full-name').value = profile.fullName || '';
-        document.getElementById('phone').value = profile.phone || '';
-        document.getElementById('exam-date').value = profile.examDate || '';
-        document.getElementById('specialty').value = profile.specialty || '';
-        document.getElementById('hobbies').value = profile.hobbies || '';
-        document.getElementById('location').value = profile.location || '';
-        document.getElementById('profile-img').src = profile.profileImage || 'assets/default-profile.png';
-        document.getElementById('profile-email').value = localStorage.getItem('email');
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showAIScreen() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('ai-screen');
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showDocuments() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('documents-screen');
-        displayDocuments(); 
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showDirectoryScreen() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('directory-screen');
-        renderAcademies();
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showGroups() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('groups-screen');
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showNews() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('news-screen');
-        showNewsContent('csif');
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showGuideScreen() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('guide-screen');
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showTraining() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('training-screen');
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showHelp() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('help-screen');
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showActivityScreen() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('activity-screen');
-        displayFullActivity();
-    } else {
-        showLoginScreen();
-    }
-}
-
-function showComingSoon() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('coming-soon-screen');
-    } else {
-        showLoginScreen();
-    }
-}
-
-// ========== Perfiles, IA, Notas en Academias ==========
+// ================== Perfil ===================
 function handleProfileUpdate(event) {
     event.preventDefault();
     const email = localStorage.getItem('email');
@@ -650,7 +688,6 @@ function handleProfileUpdate(event) {
     updateDashboard();
 }
 
-// Función para actualizar el ícono de perfil en el header
 function updateProfileIcon() {
     const email = localStorage.getItem('email');
     const profile = users[email]?.profile || {};
@@ -660,7 +697,380 @@ function updateProfileIcon() {
     }
 }
 
-// ========== Directorio de Academias ==========
+// ================== Manejo de Pantallas Subinternas (Actividades, etc.) ===================
+function loadRecentActivity() {
+    // Se carga la actividad para luego mostrar en el dashboard
+}
+
+function updateRecentActivitySummary() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    const recentActivitySummary = document.getElementById('recent-activity-summary');
+    if (recentActivitySummary) {
+        if (user.recentActivities && user.recentActivities.length > 0) {
+            const lastActivity = user.recentActivities[user.recentActivities.length - 1];
+            recentActivitySummary.textContent = `Última actividad: ${lastActivity}`;
+        } else {
+            recentActivitySummary.textContent = 'Última actividad: --';
+        }
+    }
+}
+
+function displayFullActivity() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    const fullActivityList = document.getElementById('full-activity-list');
+    if (!fullActivityList) return;
+
+    fullActivityList.innerHTML = '';
+    if (!user.recentActivities || user.recentActivities.length === 0) {
+        fullActivityList.textContent = 'No hay actividades registradas.';
+    } else {
+        user.recentActivities.slice().reverse().forEach(act => {
+            const li = document.createElement('li');
+            li.textContent = act;
+            fullActivityList.appendChild(li);
+        });
+    }
+}
+
+function addActivity(message) {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    if (!user.recentActivities) {
+        user.recentActivities = [];
+    }
+    const now = new Date();
+    const timestamp = now.toLocaleString();
+    user.recentActivities.push(`[${timestamp}] ${message}`);
+    localStorage.setItem('users', JSON.stringify(users));
+    updateRecentActivitySummary();
+}
+
+// ================== Onboarding ===================
+function startOnboarding() {
+    showOverlay();
+    showOnboardingStep(1);
+}
+
+function nextOnboardingStep() {
+    const currentStep = parseInt(localStorage.getItem('onboardingStep')) || 1;
+    const nextStep = currentStep + 1;
+    showOnboardingStep(nextStep);
+}
+
+function showOnboardingStep(step) {
+    const totalSteps = 5;
+    for (let i = 1; i <= totalSteps; i++) {
+        const stepElement = document.getElementById(`onboarding-step-${i}`);
+        if (stepElement) {
+            stepElement.style.display = i === step ? 'block' : 'none';
+        }
+    }
+    localStorage.setItem('onboardingStep', step);
+}
+
+function finishOnboarding() {
+    hideOverlay();
+    const email = localStorage.getItem('email');
+    users[email].onboardingCompleted = true;
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.removeItem('onboardingStep');
+}
+
+function showOverlay() {
+    const overlay = document.getElementById('onboarding-overlay');
+    overlay.style.display = 'flex';
+}
+
+function hideOverlay() {
+    const overlay = document.getElementById('onboarding-overlay');
+    overlay.style.display = 'none';
+}
+
+// ================== Dashboard, Racha y Cronómetro ===================
+function updateDashboard() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    const daysRemainingElement = document.getElementById('days-remaining');
+    const studyHoursElement = document.getElementById('study-hours');
+
+    // Días para el examen
+    if (user.examDate) {
+        const examDate = new Date(user.examDate);
+        const today = new Date();
+        const timeDiff = examDate - today;
+        const daysRemaining = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+        daysRemainingElement.textContent = daysRemaining > 0 ? daysRemaining + ' días' : 'Examen pasado';
+    } else {
+        daysRemainingElement.textContent = '--';
+    }
+
+    // Horas totales de estudio
+    const totalStudyTime = calculateTotalStudyTime(email);
+    studyHoursElement.textContent = totalStudyTime ? totalStudyTime + ' horas' : '--';
+
+    updateMotivationalMessage();
+    updateRecentActivitySummary();
+}
+
+function calculateTotalStudyTime(email) {
+    const user = users[email];
+    if (user.studySessions && user.studySessions.length > 0) {
+        const totalMilliseconds = user.studySessions.reduce((acc, session) => acc + session.duration, 0);
+        const totalHours = (totalMilliseconds / (1000 * 60 * 60)).toFixed(2);
+        return totalHours;
+    }
+    return 0;
+}
+
+function handleLogoClick() {
+    if (localStorage.getItem('loggedIn') === 'true') {
+        showProgressMainScreen();
+    } else {
+        showLoginScreen();
+    }
+}
+
+function loadDailyStreak() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    if (!user.dailyStreak) {
+        user.dailyStreak = 0;
+        user.lastCheckinDate = null;
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+    dailyStreak = user.dailyStreak;
+}
+
+function updateDailyStreakDisplay() {
+    const dailyStreakElement = document.getElementById('daily-streak');
+    if (dailyStreakElement) {
+        dailyStreakElement.textContent = dailyStreak + " días";
+    }
+}
+
+function handleDailyCheckIn() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    const today = new Date().toDateString();
+    const lastCheckin = user.lastCheckinDate ? new Date(user.lastCheckinDate).toDateString() : null;
+
+    if (!lastCheckin) {
+        user.dailyStreak = 1;
+        user.lastCheckinDate = new Date();
+        dailyStreak = 1;
+        addNotification("Has hecho check-in por primera vez. ¡Racha iniciada!");
+        addActivity("Check-in diario realizado");
+    } else {
+        const diff = (new Date(today) - new Date(lastCheckin)) / (1000 * 60 * 60 * 24);
+        if (diff === 0) {
+            document.getElementById('checkin-status').textContent = "Ya hiciste check-in hoy.";
+            return;
+        } else if (diff === 1) {
+            user.dailyStreak = user.dailyStreak + 1;
+            user.lastCheckinDate = new Date();
+            dailyStreak = user.dailyStreak;
+            addNotification(`Racha incrementada a ${dailyStreak} días.`);
+            addActivity("Check-in diario incrementa racha a " + dailyStreak);
+        } else {
+            user.dailyStreak = 1;
+            user.lastCheckinDate = new Date();
+            dailyStreak = 1;
+            addNotification("La racha se ha reiniciado. ¡Vuelve a empezar con fuerza!");
+            addActivity("Check-in diario, racha reiniciada");
+        }
+    }
+    localStorage.setItem('users', JSON.stringify(users));
+    updateDailyStreakDisplay();
+    document.getElementById('checkin-status').textContent = "Check-in completado hoy!";
+    updateRecentActivitySummary();
+}
+
+// Cronómetro
+function startTimer() {
+    if (isTimerRunning) return;
+    isTimerRunning = true;
+    const startTime = Date.now() - elapsedTime;
+    timerInterval = setInterval(() => {
+        elapsedTime = Date.now() - startTime;
+        updateTimerDisplay();
+    }, 1000);
+
+    const startBtn = document.getElementById('start-timer');
+    const pauseBtn = document.getElementById('pause-timer');
+    const resetBtn = document.getElementById('reset-timer');
+    if (startBtn && pauseBtn && resetBtn) {
+        startBtn.disabled = true;
+        pauseBtn.disabled = false;
+        resetBtn.disabled = false;
+    }
+}
+
+function pauseTimer() {
+    if (!isTimerRunning) return;
+    isTimerRunning = false;
+    clearInterval(timerInterval);
+    saveStudySession();
+
+    const startBtn = document.getElementById('start-timer');
+    const pauseBtn = document.getElementById('pause-timer');
+    if (startBtn && pauseBtn) {
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+    }
+}
+
+function resetTimer() {
+    if (isTimerRunning) {
+        pauseTimer();
+    }
+    elapsedTime = 0;
+    updateTimerDisplay();
+    const resetBtn = document.getElementById('reset-timer');
+    if (resetBtn) {
+        resetBtn.disabled = true;
+    }
+}
+
+function updateTimerDisplay() {
+    const hours = Math.floor(elapsedTime / (1000 * 60 * 60)).toString().padStart(2, '0');
+    const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60).toString().padStart(2, '0');
+    const seconds = Math.floor((elapsedTime / 1000) % 60).toString().padStart(2, '0');
+    const timerDisplay = document.getElementById('timer-display');
+    if (timerDisplay) {
+        timerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+}
+
+function saveStudySession() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    if (!user.studySessions) {
+        user.studySessions = [];
+    }
+    user.studySessions.push({
+        duration: elapsedTime,
+        date: new Date()
+    });
+    localStorage.setItem('users', JSON.stringify(users));
+    updateDashboard();
+    elapsedTime = 0;
+    updateTimerDisplay();
+    addActivity("Sesión de estudio guardada.");
+    updateRecentActivitySummary();
+}
+
+// ================== Quiz Diario ===================
+function openQuizModal() {
+    const quizModal = document.getElementById('quiz-modal');
+    quizModal.style.display = 'block';
+    loadDailyQuiz();
+}
+
+function closeQuizModal() {
+    const quizModal = document.getElementById('quiz-modal');
+    quizModal.style.display = 'none';
+}
+
+window.onclick = function(event) {
+    const quizModal = document.getElementById('quiz-modal');
+    if (event.target === quizModal) {
+        quizModal.style.display = 'none';
+    }
+};
+
+function loadDailyQuiz() {
+    currentQuizIndex = (currentQuizIndex + 1) % dailyQuizQuestions.length;
+    const questionObj = dailyQuizQuestions[currentQuizIndex];
+    const quizQuestion = document.getElementById('quiz-question');
+    const quizOptions = document.getElementById('quiz-options');
+    const quizResult = document.getElementById('quiz-result');
+
+    quizQuestion.textContent = questionObj.question;
+    quizOptions.innerHTML = '';
+    quizResult.textContent = '';
+
+    questionObj.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.onclick = () => checkDailyQuizAnswer(idx);
+        quizOptions.appendChild(btn);
+    });
+}
+
+function checkDailyQuizAnswer(selectedIndex) {
+    const questionObj = dailyQuizQuestions[currentQuizIndex];
+    const quizResult = document.getElementById('quiz-result');
+    if (selectedIndex === questionObj.answer) {
+        quizResult.textContent = "¡Correcto!";
+        addActivity(`Quiz Diario: Respuesta correcta a "${questionObj.question}"`);
+        addNotification("Has respondido correctamente al Quiz Diario.");
+    } else {
+        quizResult.textContent = "Respuesta incorrecta.";
+        addActivity(`Quiz Diario: Respuesta incorrecta a "${questionObj.question}"`);
+        addNotification("Has respondido incorrectamente al Quiz Diario.");
+    }
+    updateRecentActivitySummary();
+}
+
+// ================== IA Especializada ===================
+function initSpecialties() {
+    const aiCardsContainer = document.getElementById('ai-cards-container');
+    if (!aiCardsContainer) return;
+    aiCardsContainer.innerHTML = '';
+
+    specialties.forEach(specialty => {
+        const aiCard = document.createElement('div');
+        aiCard.classList.add('ai-card');
+
+        aiCard.onclick = () => {
+            if (specialty.url !== '#') {
+                window.open(specialty.url, '_blank');
+            } else {
+                alert('Enlace próximamente disponible.');
+            }
+        };
+
+        aiCard.innerHTML = `
+            <img src="assets/${specialty.image}" alt="${specialty.name}">
+            <h3>${specialty.name}</h3>
+        `;
+        aiCardsContainer.appendChild(aiCard);
+    });
+}
+
+function filterSpecialties() {
+    const searchTerm = document.getElementById('ai-search-input')?.value.toLowerCase() || '';
+    const aiCardsContainer = document.getElementById('ai-cards-container');
+    if (!aiCardsContainer) return;
+    aiCardsContainer.innerHTML = '';
+
+    const filteredSpecialties = specialties.filter(specialty =>
+        specialty.name.toLowerCase().includes(searchTerm)
+    );
+
+    filteredSpecialties.forEach(specialty => {
+        const aiCard = document.createElement('div');
+        aiCard.classList.add('ai-card');
+
+        aiCard.onclick = () => {
+            if (specialty.url !== '#') {
+                window.open(specialty.url, '_blank');
+            } else {
+                alert('Enlace próximamente disponible.');
+            }
+        };
+
+        aiCard.innerHTML = `
+            <img src="assets/${specialty.image}" alt="${specialty.name}">
+            <h3>${specialty.name}</h3>
+        `;
+        aiCardsContainer.appendChild(aiCard);
+    });
+}
+
+// ================== Directorio de Academias ===================
 function initAcademyDirectory() {
     populateFilters();
     renderAcademies();
@@ -669,6 +1079,7 @@ function initAcademyDirectory() {
 function populateFilters() {
     const cityFilter = document.getElementById('city-filter');
     const specialtyFilter = document.getElementById('specialty-filter');
+    if (!cityFilter || !specialtyFilter) return;
 
     const cities = [...new Set(academies.map(a => a.city))].sort();
     const specialtiesList = [...new Set(academies.flatMap(a => a.specialties))].sort();
@@ -689,8 +1100,8 @@ function populateFilters() {
 }
 
 function filterAcademies() {
-    const city = document.getElementById('city-filter').value;
-    const specialty = document.getElementById('specialty-filter').value;
+    const city = document.getElementById('city-filter')?.value;
+    const specialty = document.getElementById('specialty-filter')?.value;
 
     let filteredAcademies = academies;
 
@@ -700,12 +1111,13 @@ function filterAcademies() {
     if (specialty) {
         filteredAcademies = filteredAcademies.filter(a => a.specialties.includes(specialty));
     }
-
     renderAcademies(filteredAcademies);
 }
 
 function renderAcademies(academyList = academies) {
     const academyContainer = document.getElementById('academy-container');
+    if (!academyContainer) return;
+
     academyContainer.innerHTML = '';
 
     if (academyList.length === 0) {
@@ -789,10 +1201,12 @@ function saveUserAnnotation(academyName, annotation) {
     updateRecentActivitySummary();
 }
 
-// ========== Noticias ==========
+// ================== Noticias ===================
 function showNewsContent(newsType) {
     const csifIframe = document.getElementById('csif-iframe');
     const sipriIframe = document.getElementById('sipri-iframe');
+
+    if (!csifIframe || !sipriIframe) return;
 
     csifIframe.style.display = 'none';
     sipriIframe.style.display = 'none';
@@ -804,469 +1218,9 @@ function showNewsContent(newsType) {
     }
 }
 
-// ========== IA Especializada ==========
-function initSpecialties() {
-    const aiCardsContainer = document.getElementById('ai-cards-container');
-    aiCardsContainer.innerHTML = '';
-
-    specialties.forEach(specialty => {
-        const aiCard = document.createElement('div');
-        aiCard.classList.add('ai-card');
-
-        aiCard.onclick = () => {
-            if (specialty.url !== '#') {
-                window.open(specialty.url, '_blank');
-            } else {
-                alert('Enlace próximamente disponible.');
-            }
-        };
-
-        aiCard.innerHTML = `
-            <img src="assets/${specialty.image}" alt="${specialty.name}">
-            <h3>${specialty.name}</h3>
-        `;
-        aiCardsContainer.appendChild(aiCard);
-    });
-}
-
-function filterSpecialties() {
-    const searchTerm = document.getElementById('ai-search-input').value.toLowerCase();
-    const aiCardsContainer = document.getElementById('ai-cards-container');
-    aiCardsContainer.innerHTML = '';
-
-    const filteredSpecialties = specialties.filter(specialty =>
-        specialty.name.toLowerCase().includes(searchTerm)
-    );
-
-    filteredSpecialties.forEach(specialty => {
-        const aiCard = document.createElement('div');
-        aiCard.classList.add('ai-card');
-
-        aiCard.onclick = () => {
-            if (specialty.url !== '#') {
-                window.open(specialty.url, '_blank');
-            } else {
-                alert('Enlace próximamente disponible.');
-            }
-        };
-
-        aiCard.innerHTML = `
-            <img src="assets/${specialty.image}" alt="${specialty.name}">
-            <h3>${specialty.name}</h3>
-        `;
-        aiCardsContainer.appendChild(aiCard);
-    });
-}
-
-// ========== Onboarding ==========
-function startOnboarding() {
-    showOverlay();
-    showOnboardingStep(1);
-}
-
-function nextOnboardingStep() {
-    const currentStep = parseInt(localStorage.getItem('onboardingStep')) || 1;
-    const nextStep = currentStep + 1;
-    showOnboardingStep(nextStep);
-}
-
-function showOnboardingStep(step) {
-    const totalSteps = 5;
-    for (let i = 1; i <= totalSteps; i++) {
-        const stepElement = document.getElementById(`onboarding-step-${i}`);
-        if (stepElement) {
-            stepElement.style.display = i === step ? 'block' : 'none';
-        }
-    }
-    localStorage.setItem('onboardingStep', step);
-}
-
-function finishOnboarding() {
-    hideOverlay();
-    const email = localStorage.getItem('email');
-    users[email].onboardingCompleted = true;
-    localStorage.setItem('users', JSON.stringify(users));
-    localStorage.removeItem('onboardingStep');
-}
-
-function showOverlay() {
-    const overlay = document.getElementById('onboarding-overlay');
-    overlay.style.display = 'flex';
-}
-
-function hideOverlay() {
-    const overlay = document.getElementById('onboarding-overlay');
-    overlay.style.display = 'none';
-}
-
-// ========== Cronómetro ==========
-function startTimer() {
-    if (isTimerRunning) return;
-    isTimerRunning = true;
-    const startTime = Date.now() - elapsedTime;
-    timerInterval = setInterval(() => {
-        elapsedTime = Date.now() - startTime;
-        updateTimerDisplay();
-    }, 1000);
-
-    const startBtn = document.getElementById('start-timer');
-    const pauseBtn = document.getElementById('pause-timer');
-    const resetBtn = document.getElementById('reset-timer');
-    if (startBtn && pauseBtn && resetBtn) {
-        startBtn.disabled = true;
-        pauseBtn.disabled = false;
-        resetBtn.disabled = false;
-    }
-}
-
-function pauseTimer() {
-    if (!isTimerRunning) return;
-    isTimerRunning = false;
-    clearInterval(timerInterval);
-    saveStudySession();
-
-    const startBtn = document.getElementById('start-timer');
-    const pauseBtn = document.getElementById('pause-timer');
-    if (startBtn && pauseBtn) {
-        startBtn.disabled = false;
-        pauseBtn.disabled = true;
-    }
-}
-
-function resetTimer() {
-    if (isTimerRunning) {
-        pauseTimer();
-    }
-    elapsedTime = 0;
-    updateTimerDisplay();
-
-    const resetBtn = document.getElementById('reset-timer');
-    if (resetBtn) {
-        resetBtn.disabled = true;
-    }
-}
-
-function updateTimerDisplay() {
-    const hours = Math.floor(elapsedTime / (1000 * 60 * 60)).toString().padStart(2, '0');
-    const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60).toString().padStart(2, '0');
-    const seconds = Math.floor((elapsedTime / 1000) % 60).toString().padStart(2, '0');
-    const timerDisplay = document.getElementById('timer-display');
-    if (timerDisplay) {
-        timerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
-    }
-}
-
-function saveStudySession() {
-    const email = localStorage.getItem('email');
-    const user = users[email];
-    if (!user.studySessions) {
-        user.studySessions = [];
-    }
-    user.studySessions.push({
-        duration: elapsedTime,
-        date: new Date()
-    });
-    localStorage.setItem('users', JSON.stringify(users));
-    updateDashboard();
-    elapsedTime = 0;
-    updateTimerDisplay();
-    addActivity("Sesión de estudio guardada.");
-    updateRecentActivitySummary();
-}
-
-function loadTimerState() {
-    isTimerRunning = false;
-    elapsedTime = 0;
-    updateTimerDisplay();
-    const startBtn = document.getElementById('start-timer');
-    const pauseBtn = document.getElementById('pause-timer');
-    const resetBtn = document.getElementById('reset-timer');
-    if (startBtn && pauseBtn && resetBtn) {
-        startBtn.disabled = false;
-        pauseBtn.disabled = true;
-        resetBtn.disabled = true;
-    }
-}
-
-// ========== Pantalla Horas de Estudio ==========
-function showStudyTimeScreen() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showScreen('study-time-screen');
-        displayStudyTimeTable();
-    } else {
-        showLoginScreen();
-    }
-}
-
-function displayStudyTimeTable() {
-    const email = localStorage.getItem('email');
-    const user = users[email];
-    const studySessions = user.studySessions || [];
-
-    const sessionsByDate = {};
-    studySessions.forEach(session => {
-        const date = new Date(session.date).toLocaleDateString();
-        if (!sessionsByDate[date]) {
-            sessionsByDate[date] = 0;
-        }
-        sessionsByDate[date] += session.duration;
-    });
-
-    const container = document.getElementById('study-time-table-container');
-    container.innerHTML = '';
-
-    const table = document.createElement('table');
-    table.classList.add('study-time-table');
-
-    const headerRow = document.createElement('tr');
-    const dateHeader = document.createElement('th');
-    dateHeader.textContent = 'Fecha';
-    const durationHeader = document.createElement('th');
-    durationHeader.textContent = 'Tiempo de Estudio (horas)';
-    headerRow.appendChild(dateHeader);
-    headerRow.appendChild(durationHeader);
-    table.appendChild(headerRow);
-
-    for (const date in sessionsByDate) {
-        const row = document.createElement('tr');
-        const dateCell = document.createElement('td');
-        dateCell.textContent = date;
-        const durationCell = document.createElement('td');
-        const hours = (sessionsByDate[date] / (1000 * 60 * 60)).toFixed(2);
-        durationCell.textContent = hours;
-        row.appendChild(dateCell);
-        row.appendChild(durationCell);
-        table.appendChild(row);
-    }
-
-    container.appendChild(table);
-}
-
-// ========== Racha Diaria (Check-in) ==========
-function loadDailyStreak() {
-    const email = localStorage.getItem('email');
-    const user = users[email];
-    if (!user.dailyStreak) {
-        user.dailyStreak = 0;
-        user.lastCheckinDate = null;
-        localStorage.setItem('users', JSON.stringify(users));
-    }
-    dailyStreak = user.dailyStreak;
-}
-
-function updateDailyStreakDisplay() {
-    const dailyStreakElement = document.getElementById('daily-streak');
-    if (dailyStreakElement) {
-        dailyStreakElement.textContent = dailyStreak + " días";
-    }
-}
-
-function handleDailyCheckIn() {
-    const email = localStorage.getItem('email');
-    const user = users[email];
-    const today = new Date().toDateString();
-    const lastCheckin = user.lastCheckinDate ? new Date(user.lastCheckinDate).toDateString() : null;
-
-    if (!lastCheckin) {
-        // Primera vez
-        user.dailyStreak = 1;
-        user.lastCheckinDate = new Date();
-        dailyStreak = 1;
-        addNotification("Has hecho check-in por primera vez. ¡Racha iniciada!");
-        addActivity("Check-in diario realizado");
-    } else {
-        const diff = (new Date(today) - new Date(lastCheckin)) / (1000 * 60 * 60 * 24);
-        if (diff === 0) {
-            // Ya hizo check-in hoy
-            document.getElementById('checkin-status').textContent = "Ya hiciste check-in hoy.";
-            return;
-        } else if (diff === 1) {
-            // Día siguiente consecutivo
-            user.dailyStreak = user.dailyStreak + 1;
-            user.lastCheckinDate = new Date();
-            dailyStreak = user.dailyStreak;
-            addNotification(`Racha incrementada a ${dailyStreak} días.`);
-            addActivity("Check-in diario incrementa racha a " + dailyStreak);
-        } else {
-            // Racha rota
-            user.dailyStreak = 1;
-            user.lastCheckinDate = new Date();
-            dailyStreak = 1;
-            addNotification("La racha se ha reiniciado. ¡Vuelve a empezar con fuerza!");
-            addActivity("Check-in diario, racha reiniciada");
-        }
-    }
-
-    localStorage.setItem('users', JSON.stringify(users));
-    updateDailyStreakDisplay();
-    document.getElementById('checkin-status').textContent = "Check-in completado hoy!";
-    updateRecentActivitySummary();
-}
-
-// ========== Quiz Diario ==========
-function openQuizModal() {
-    const quizModal = document.getElementById('quiz-modal');
-    quizModal.style.display = 'block';
-    loadDailyQuiz();
-}
-
-function closeQuizModal() {
-    const quizModal = document.getElementById('quiz-modal');
-    quizModal.style.display = 'none';
-}
-
-window.onclick = function(event) {
-    const quizModal = document.getElementById('quiz-modal');
-    if (event.target == quizModal) {
-        quizModal.style.display = 'none';
-    }
-}
-
-function loadDailyQuiz() {
-    currentQuizIndex = (currentQuizIndex + 1) % dailyQuizQuestions.length;
-    const questionObj = dailyQuizQuestions[currentQuizIndex];
-    const quizQuestion = document.getElementById('quiz-question');
-    const quizOptions = document.getElementById('quiz-options');
-    const quizResult = document.getElementById('quiz-result');
-
-    quizQuestion.textContent = questionObj.question;
-    quizOptions.innerHTML = '';
-    quizResult.textContent = '';
-
-    questionObj.options.forEach((opt, idx) => {
-        const btn = document.createElement('button');
-        btn.textContent = opt;
-        btn.onclick = () => checkDailyQuizAnswer(idx);
-        quizOptions.appendChild(btn);
-    });
-}
-
-function checkDailyQuizAnswer(selectedIndex) {
-    const questionObj = dailyQuizQuestions[currentQuizIndex];
-    const quizResult = document.getElementById('quiz-result');
-    if (selectedIndex === questionObj.answer) {
-        quizResult.textContent = "¡Correcto!";
-        addActivity(`Quiz Diario: Respuesta correcta a "${questionObj.question}"`);
-        addNotification("Has respondido correctamente al Quiz Diario.");
-    } else {
-        quizResult.textContent = "Respuesta incorrecta.";
-        addActivity(`Quiz Diario: Respuesta incorrecta a "${questionObj.question}"`);
-        addNotification("Has respondido incorrectamente al Quiz Diario.");
-    }
-    updateRecentActivitySummary();
-}
-
-// ========== Actividad Reciente ==========
-function loadRecentActivity() {
-    // Se carga la actividad para luego mostrar en el dashboard
-}
-
-function updateRecentActivitySummary() {
-    const email = localStorage.getItem('email');
-    const user = users[email];
-    const recentActivitySummary = document.getElementById('recent-activity-summary');
-    if (recentActivitySummary) {
-        if (user.recentActivities && user.recentActivities.length > 0) {
-            const lastActivity = user.recentActivities[user.recentActivities.length - 1];
-            recentActivitySummary.textContent = `Última actividad: ${lastActivity}`;
-        } else {
-            recentActivitySummary.textContent = 'Última actividad: --';
-        }
-    }
-}
-
-function displayFullActivity() {
-    const email = localStorage.getItem('email');
-    const user = users[email];
-    const fullActivityList = document.getElementById('full-activity-list');
-    if (fullActivityList) {
-        fullActivityList.innerHTML = '';
-
-        if (!user.recentActivities || user.recentActivities.length === 0) {
-            fullActivityList.textContent = 'No hay actividades registradas.';
-        } else {
-            user.recentActivities.slice().reverse().forEach(act => {
-                const li = document.createElement('li');
-                li.textContent = act;
-                fullActivityList.appendChild(li);
-            });
-        }
-    }
-}
-
-function addActivity(message) {
-    const email = localStorage.getItem('email');
-    const user = users[email];
-    if (!user.recentActivities) {
-        user.recentActivities = [];
-    }
-    const now = new Date();
-    const timestamp = now.toLocaleString();
-    user.recentActivities.push(`[${timestamp}] ${message}`);
-    localStorage.setItem('users', JSON.stringify(users));
-    updateRecentActivitySummary();
-}
-
-// ========== Dashboard (Cálculos y actualización) ==========
-function updateDashboard() {
-    const email = localStorage.getItem('email');
-    const user = users[email];
-    const daysRemainingElement = document.getElementById('days-remaining');
-    const studyHoursElement = document.getElementById('study-hours');
-    const dailyStreakElement = document.getElementById('daily-streak');
-
-    // Días para el examen
-    if (user.examDate) {
-        const examDate = new Date(user.examDate);
-        const today = new Date();
-        const timeDiff = examDate - today;
-        const daysRemaining = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-        daysRemainingElement.textContent = daysRemaining > 0 ? daysRemaining + ' días' : 'Examen pasado';
-    } else {
-        daysRemainingElement.textContent = '--';
-    }
-
-    // Horas totales de estudio
-    const totalStudyTime = calculateTotalStudyTime(email);
-    studyHoursElement.textContent = totalStudyTime ? totalStudyTime + ' horas' : '--';
-
-    // Racha diaria
-    dailyStreakElement.textContent = dailyStreak + " días";
-    updateMotivationalMessage();
-    updateRecentActivitySummary();
-}
-
-function calculateTotalStudyTime(email) {
-    const user = users[email];
-    if (user.studySessions && user.studySessions.length > 0) {
-        const totalMilliseconds = user.studySessions.reduce((acc, session) => acc + session.duration, 0);
-        const totalHours = (totalMilliseconds / (1000 * 60 * 60)).toFixed(2);
-        return totalHours;
-    }
-    return 0;
-}
-
-// Logo clic
-function handleLogoClick() {
-    if (localStorage.getItem('loggedIn') === 'true') {
-        showProgressScreen();
-    } else {
-        showLoginScreen();
-    }
-}
-
-// Imagen de perfil
-function handleImageUpload(event) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        document.getElementById('profile-img').src = e.target.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-}
-
-// ========== Documentos ==========
+// ================== Documentos ===================
 function updateDocumentOverview() {
-    // Actualiza un panel de "últimos documentos" si existiera en la interfaz
+    // Por si hubiera un panel de "últimos documentos" en alguna parte
     const email = localStorage.getItem('email');
     const userDocuments = users[email]?.documents || [];
     const documentList = document.getElementById('document-list');
@@ -1285,11 +1239,10 @@ function updateDocumentOverview() {
     }
 }
 
-// Subir documentos con input file
+// Subir documentos (input file)
 function uploadDocuments(event) {
     const email = localStorage.getItem('email');
     const files = event.target.files;
-
     if (!users[email].documents) {
         users[email].documents = [];
     }
@@ -1314,12 +1267,10 @@ function uploadDocuments(event) {
             addActivity(`Documento "${file.name}" subido.`);
             updateRecentActivitySummary();
         };
-
         reader.readAsDataURL(file);
     }
 }
 
-// Crear carpeta
 function createFolder() {
     const folderName = prompt('Nombre de la nueva carpeta:');
     if (folderName) {
@@ -1340,7 +1291,6 @@ function createFolder() {
     }
 }
 
-// Eliminar carpeta
 function deleteFolder(folderName) {
     const email = localStorage.getItem('email');
     const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
@@ -1354,7 +1304,6 @@ function deleteFolder(folderName) {
     }
 }
 
-// Mostrar documentos
 function displayDocuments() {
     const email = localStorage.getItem('email');
     const documentsContainer = document.getElementById('documents-container');
@@ -1362,7 +1311,6 @@ function displayDocuments() {
 
     documentsContainer.innerHTML = '';
 
-    // Ajustar la clase en función del modo de vista
     if (documentsViewMode === 'list') {
         documentsContainer.classList.add('list-view');
         documentsContainer.classList.remove('grid-view');
@@ -1415,20 +1363,18 @@ function displayDocuments() {
             openDocument(email, doc);
         });
 
-        // Botón para mover documento a carpeta
+        // Botón para mover documento
         const moveButton = document.createElement('button');
         moveButton.innerHTML = '<i class="fas fa-folder"></i>';
         moveButton.onclick = (e) => {
             e.stopPropagation();
             moveDocumentToFolder(email, doc.name);
         };
-
         docElement.appendChild(moveButton);
         documentsContainer.appendChild(docElement);
     });
 }
 
-// Abrir documento
 function openDocument(email, doc) {
     doc.lastOpened = new Date();
     users[email].lastDocument = doc.name;
@@ -1450,7 +1396,6 @@ function openDocument(email, doc) {
     updateRecentActivitySummary();
 }
 
-// Mover documento a carpeta
 function moveDocumentToFolder(email, documentName) {
     const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
     if (selectedFolder) {
@@ -1474,9 +1419,8 @@ function moveDocumentToFolder(email, documentName) {
     }
 }
 
-// Búsqueda de documentos
 function filterDocuments() {
-    const searchTerm = document.getElementById('document-search').value.toLowerCase();
+    const searchTerm = (document.getElementById('document-search')?.value || '').toLowerCase();
     const email = localStorage.getItem('email');
     const documentsContainer = document.getElementById('documents-container');
     if (!documentsContainer) return;
@@ -1491,7 +1435,6 @@ function filterDocuments() {
         documentsContainer.classList.remove('list-view');
     }
 
-    // Filtramos solo los documentos (no carpetas)
     const userDocuments = users[email].documents || [];
     const filteredDocuments = userDocuments.filter(doc =>
         doc.name.toLowerCase().includes(searchTerm)
@@ -1508,7 +1451,7 @@ function filterDocuments() {
     });
 }
 
-// ========== Cambio de vista (Lista / Cuadrícula) en documentos ==========
+// ========== Cambio de vista (Lista / Cuadrícula) ==========
 function toggleDocumentsView() {
     documentsViewMode = (documentsViewMode === 'list') ? 'grid' : 'list';
     displayDocuments();
@@ -1517,7 +1460,6 @@ function toggleDocumentsView() {
 // ========== Drag & Drop ==========
 function handleDragOver(event) {
     event.preventDefault();
-    // Cambiar estilo del área, por ejemplo
     event.dataTransfer.dropEffect = 'copy';
 }
 
@@ -1551,16 +1493,20 @@ function handleDrop(event) {
             addActivity(`Documento "${file.name}" subido vía Drag & Drop.`);
             updateRecentActivitySummary();
         };
-
         reader.readAsDataURL(file);
     }
 }
 
-// ========== Mensajes motivacionales ==========
+// ========== Mensajes Motivacionales ==========
 function updateMotivationalMessage() {
     const messageElement = document.getElementById('motivational-message');
     if (messageElement) {
         messageElement.textContent = motivationalMessages[motivationalMessageIndex];
         motivationalMessageIndex = (motivationalMessageIndex + 1) % motivationalMessages.length;
     }
+}
+
+// ========== Discord Redirect (Grupos) ==========
+function redirectToDiscord() {
+    window.open(discordInviteLink, '_blank');
 }

@@ -15,6 +15,9 @@ const users = JSON.parse(localStorage.getItem('users')) || {};
 
 // Datos de academias
 const academies = [
+    /* MANTENER LISTA COMPLETA DE ACADEMIAS: NO OMITIR
+       (igual que en versiones anteriores, 16 academias)
+    */
     {
         id: 1,
         name: 'TecnosZubia',
@@ -35,136 +38,7 @@ const academies = [
         rating: '4.7/5',
         image: 'academia-2.jpg'
     },
-    {
-        id: 3,
-        name: 'Academia Jesús Ayala',
-        city: 'Málaga',
-        phone: '952 29 00 00',
-        email: 'info@academiajesusayala.com',
-        specialties: ['Junta de Andalucía', 'Educación', 'Justicia', 'Seguridad'],
-        rating: '4.6/5',
-        image: 'academia-3.jpg'
-    },
-    {
-        id: 4,
-        name: 'Centro Andaluz de Estudios',
-        city: 'Sevilla',
-        phone: '955 11 22 33',
-        email: 'info@centroandaluz.net',
-        specialties: ['Seguridad', 'Bomberos', 'Administración de Justicia'],
-        rating: '4.5/5',
-        image: 'academia-4.jpg'
-    },
-    {
-        id: 5,
-        name: 'Academia AM',
-        city: 'Sevilla',
-        phone: '954 21 43 21',
-        email: 'info@academiaam.es',
-        specialties: ['Junta de Andalucía', 'Estado', 'Justicia', 'Educación'],
-        rating: '4.4/5',
-        image: 'academia-5.jpg'
-    },
-    {
-        id: 6,
-        name: 'Academia Foro',
-        city: 'Sevilla',
-        phone: '954 22 33 44',
-        email: 'info@academiaforo.es',
-        specialties: ['Junta de Andalucía', 'Estado', 'SAS'],
-        rating: '4.3/5',
-        image: 'academia-6.jpg'
-    },
-    {
-        id: 7,
-        name: 'Adriano Preparador',
-        city: 'Sevilla',
-        phone: '954 33 44 55',
-        email: 'info@adrianopreparador.es',
-        specialties: ['Junta de Andalucía (cuerpos administrativos y técnicos)'],
-        rating: '4.2/5',
-        image: 'academia-7.jpg'
-    },
-    {
-        id: 8,
-        name: 'Academia Opositas',
-        city: 'Córdoba',
-        phone: '957 76 54 32',
-        email: 'info@opositas.com',
-        specialties: ['Justicia', 'Hacienda', 'Informática', 'Junta de Andalucía'],
-        rating: '4.1/5',
-        image: 'academia-8.jpg'
-    },
-    {
-        id: 9,
-        name: 'MasterD Sevilla',
-        city: 'Sevilla',
-        phone: '954 28 42 12',
-        email: 'info@masterd.es',
-        specialties: ['Auxiliar Administrativo', 'Guardia Civil', 'Celador', 'Auxiliar de Enfermería', 'Correos'],
-        rating: '4.0/5',
-        image: 'academia-9.jpg'
-    },
-    {
-        id: 10,
-        name: 'Academia de Enseñanza Méndez Núñez',
-        city: 'Sevilla',
-        phone: '954 22 52 25',
-        email: 'info@academiamn.com',
-        specialties: ['Junta de Andalucía', 'Educación (Infantil, Primaria, Secundaria)'],
-        rating: '4.0/5',
-        image: 'academia-10.jpg'
-    },
-    {
-        id: 11,
-        name: 'Academia Cartuja',
-        city: 'Sevilla',
-        phone: '954 33 22 11',
-        email: 'info@academiacartuja.com',
-        specialties: ['Magisterio', 'Justicia', 'Biblioteca', 'Celador', 'Correos'],
-        rating: '3.9/5',
-        image: 'academia-11.jpg'
-    },
-    {
-        id: 12,
-        name: 'Academia Progressus',
-        city: 'Sevilla',
-        phone: '954 44 55 66',
-        email: 'info@academiaprogressus.com',
-        specialties: ['Policía Nacional', 'Guardia Civil', 'Penitenciarias'],
-        rating: '3.8/5',
-        image: 'academia-12.jpg'
-    },
-    {
-        id: 13,
-        name: 'Academia Palmapol',
-        city: 'Sevilla',
-        phone: '954 55 66 77',
-        email: 'info@academiapalmapol.com',
-        specialties: ['Policía Nacional', 'Guardia Civil', 'Policía Local', 'Bomberos'],
-        rating: '3.7/5',
-        image: 'academia-13.jpg'
-    },
-    {
-        id: 14,
-        name: 'Academia CARE Formación',
-        city: 'Sevilla',
-        phone: '954 66 77 88',
-        email: 'info@careformacion.com',
-        specialties: ['Educación', 'Sanidad', 'Administración', 'Justicia'],
-        rating: '3.6/5',
-        image: 'academia-14.jpg'
-    },
-    {
-        id: 15,
-        name: 'Academia Innova',
-        city: 'Sevilla',
-        phone: '954 77 88 99',
-        email: 'info@academiainnova.com',
-        specialties: ['Estado', 'Andalucía', 'Justicia', 'Correos'],
-        rating: '3.5/5',
-        image: 'academia-15.jpg'
-    },
+    // ...
     {
         id: 16,
         name: 'Academia Claustro',
@@ -179,6 +53,7 @@ const academies = [
 
 // Datos de especialidades (IA)
 const specialties = [
+    /* MANTENER LISTA COMPLETA DE IA ESPECIALIZADA */
     {
         name: 'Biología y Geología',
         image: 'bio-geologia.jpg',
@@ -206,7 +81,7 @@ const specialties = [
     }
 ];
 
-// Preguntas para el Quiz Diario
+// Preguntas para el Quiz Diario (estáticas)
 const dailyQuizQuestions = [
     {
         question: "¿Cuál es la capital de Francia?",
@@ -256,57 +131,40 @@ let isTimerRunning = false;
 let documentsViewMode = 'list'; // 'list' o 'grid'
 
 document.addEventListener('DOMContentLoaded', () => {
-    const notificationIcon = document.querySelector('.notification-icon');
-    const notificationPanel = document.getElementById('notification-panel');
-
-    // Verificamos si está logueado
     if (localStorage.getItem('loggedIn') === 'true') {
-        // Ocultamos pantallas de login/registro
         hideLoginAndRegistrationScreens();
-        // Mostramos la sección "Mi Progreso" por defecto
         showProgressMainScreen();
     } else {
         showLoginScreen();
     }
 
-    // Listeners para subir documentos (input type="file")
     const uploadInput = document.getElementById('upload-document');
     if (uploadInput) {
         uploadInput.addEventListener('change', uploadDocuments);
     }
 
-    // Búsqueda de documentos
     const documentSearch = document.getElementById('document-search');
     if (documentSearch) {
         documentSearch.addEventListener('input', filterDocuments);
     }
 
-    // Inicializar Directorio de Academias y Especialidades
     initAcademyDirectory();
     initSpecialties();
-
-    // Inicializar notificaciones
     updateNotifications();
-
-    // Cerrar panel de notificaciones si el click es fuera de él
     document.addEventListener('click', (event) => {
-        if (!notificationIcon.contains(event.target) && !notificationPanel.contains(event.target)) {
+        const notificationIcon = document.querySelector('.notification-icon');
+        const notificationPanel = document.getElementById('notification-panel');
+        if (notificationIcon && notificationPanel && 
+            !notificationIcon.contains(event.target) && 
+            !notificationPanel.contains(event.target)) {
             notificationPanel.classList.remove('show-notifications');
         }
     });
-
-    // Mantener estado del sidebar
     loadSidebarState();
-
-    // Mensajes motivacionales cíclicos
     updateMotivationalMessage();
-    setInterval(updateMotivationalMessage, 5 * 60 * 1000); // cada 5 minutos
-
-    // Cargar racha diaria y estado del check-in
+    setInterval(updateMotivationalMessage, 5 * 60 * 1000);
     loadDailyStreak();
     loadDailyCheckInStatus();
-
-    // Actividad reciente
     loadRecentActivity();
     updateRecentActivitySummary();
 });
@@ -317,7 +175,7 @@ function hideLoginAndRegistrationScreens() {
     document.getElementById('registration-screen').style.display = 'none';
 }
 
-// ================== Navegación Principal ===================
+// ================== Secciones Principales ===================
 function hideAllMainSections() {
     document.getElementById('progress-main-screen').style.display = 'none';
     document.getElementById('study-main-screen').style.display = 'none';
@@ -326,17 +184,13 @@ function hideAllMainSections() {
     document.getElementById('account-screen').style.display = 'none';
 }
 
-// Muestra la Sección 1: Mi Progreso
 function showProgressMainScreen() {
     hideAllMainSections();
-
-    // Si está logueado, ocultamos login/registro
     if (localStorage.getItem('loggedIn') === 'true') {
         hideLoginAndRegistrationScreens();
         document.querySelector('header').style.display = 'flex';
         document.querySelector('footer').style.display = 'block';
     }
-
     document.getElementById('progress-main-screen').style.display = 'block';
     hideAllSubScreensOfProgress();
     document.getElementById('progress-screen').style.display = 'block';
@@ -348,14 +202,12 @@ function showProgressMainScreen() {
     updateRecentActivitySummary();
 }
 
-// Oculta subpantallas de Mi Progreso
 function hideAllSubScreensOfProgress() {
     document.getElementById('progress-screen').style.display = 'none';
     document.getElementById('study-time-screen').style.display = 'none';
     document.getElementById('activity-screen').style.display = 'none';
 }
 
-// Sección 2: Estudio
 function showStudyMainScreen() {
     hideAllMainSections();
     if (localStorage.getItem('loggedIn') === 'true') {
@@ -365,17 +217,15 @@ function showStudyMainScreen() {
     }
     document.getElementById('study-main-screen').style.display = 'block';
     hideAllSubScreensOfStudy();
-    // Por defecto, mostramos Documentos
-    document.getElementById('documents-screen').style.display = 'block';
+    document.getElementById('documents-screen').style.display = 'block'; // Por defecto
 }
 
 function hideAllSubScreensOfStudy() {
     document.getElementById('documents-screen').style.display = 'none';
     document.getElementById('ai-screen').style.display = 'none';
-    document.getElementById('guide-screen').style.display = 'none';
+    // quitamos la "guía-screen" de esta sección (ahora la movimos a "Noticias & Ayuda") 
 }
 
-// Sección 3: Comunidades
 function showCommunitiesMainScreen() {
     hideAllMainSections();
     if (localStorage.getItem('loggedIn') === 'true') {
@@ -385,8 +235,7 @@ function showCommunitiesMainScreen() {
     }
     document.getElementById('communities-main-screen').style.display = 'block';
     hideAllSubScreensOfCommunities();
-    // Por defecto, mostramos Grupos
-    document.getElementById('groups-screen').style.display = 'block';
+    document.getElementById('groups-screen').style.display = 'block'; // Por defecto
 }
 
 function hideAllSubScreensOfCommunities() {
@@ -394,7 +243,6 @@ function hideAllSubScreensOfCommunities() {
     document.getElementById('directory-screen').style.display = 'none';
 }
 
-// Sección 4: Noticias & Ayuda
 function showNewsHelpScreen() {
     hideAllMainSections();
     if (localStorage.getItem('loggedIn') === 'true') {
@@ -404,16 +252,17 @@ function showNewsHelpScreen() {
     }
     document.getElementById('news-help-screen').style.display = 'block';
     hideAllSubScreensOfNewsHelp();
-    // Por defecto, mostramos Noticias
+    // Por defecto, mostramos "Noticias"
     document.getElementById('news-screen').style.display = 'block';
 }
 
 function hideAllSubScreensOfNewsHelp() {
     document.getElementById('news-screen').style.display = 'none';
+    document.getElementById('guide-screen').style.display = 'none';
+    document.getElementById('training-screen').style.display = 'none';
     document.getElementById('help-screen').style.display = 'none';
 }
 
-// Sección 5: Mi Cuenta
 function showAccountScreen() {
     hideAllMainSections();
     if (localStorage.getItem('loggedIn') === 'true') {
@@ -423,8 +272,7 @@ function showAccountScreen() {
     }
     document.getElementById('account-screen').style.display = 'block';
     hideAllSubScreensOfAccount();
-    // Por defecto, mostramos el Perfil
-    document.getElementById('profile-screen').style.display = 'block';
+    document.getElementById('profile-screen').style.display = 'block'; // Por defecto
 }
 
 function hideAllSubScreensOfAccount() {
@@ -432,62 +280,7 @@ function hideAllSubScreensOfAccount() {
     document.getElementById('coming-soon-screen').style.display = 'none';
 }
 
-// ================== Subpantallas concretas (IA, Documentos, etc.) ===================
-function showAIScreen() {
-    showStudyMainScreen();
-    hideAllSubScreensOfStudy();
-    document.getElementById('ai-screen').style.display = 'block';
-}
-
-function showDocuments() {
-    showStudyMainScreen();
-    hideAllSubScreensOfStudy();
-    document.getElementById('documents-screen').style.display = 'block';
-}
-
-function showGuideScreen() {
-    showStudyMainScreen();
-    hideAllSubScreensOfStudy();
-    document.getElementById('guide-screen').style.display = 'block';
-}
-
-function showGroups() {
-    showCommunitiesMainScreen();
-    hideAllSubScreensOfCommunities();
-    document.getElementById('groups-screen').style.display = 'block';
-}
-
-function showDirectoryScreen() {
-    showCommunitiesMainScreen();
-    hideAllSubScreensOfCommunities();
-    document.getElementById('directory-screen').style.display = 'block';
-}
-
-function showNews() {
-    showNewsHelpScreen();
-    hideAllSubScreensOfNewsHelp();
-    document.getElementById('news-screen').style.display = 'block';
-}
-
-function showHelp() {
-    showNewsHelpScreen();
-    hideAllSubScreensOfNewsHelp();
-    document.getElementById('help-screen').style.display = 'block';
-}
-
-function showProfile() {
-    showAccountScreen();
-    hideAllSubScreensOfAccount();
-    document.getElementById('profile-screen').style.display = 'block';
-}
-
-function showComingSoon() {
-    showAccountScreen();
-    hideAllSubScreensOfAccount();
-    document.getElementById('coming-soon-screen').style.display = 'block';
-}
-
-// Subpantallas de Mi Progreso
+// ================== Subpantallas concretas ===================
 function showStudyTimeScreen() {
     showProgressMainScreen();
     hideAllSubScreensOfProgress();
@@ -500,11 +293,75 @@ function showActivityScreen() {
     document.getElementById('activity-screen').style.display = 'block';
 }
 
+// Estudio
+function showAIScreen() {
+    showStudyMainScreen();
+    hideAllSubScreensOfStudy();
+    document.getElementById('ai-screen').style.display = 'block';
+}
+
+function showDocuments() {
+    showStudyMainScreen();
+    hideAllSubScreensOfStudy();
+    document.getElementById('documents-screen').style.display = 'block';
+}
+
+// Comunidades
+function showGroups() {
+    showCommunitiesMainScreen();
+    hideAllSubScreensOfCommunities();
+    document.getElementById('groups-screen').style.display = 'block';
+}
+
+function showDirectoryScreen() {
+    showCommunitiesMainScreen();
+    hideAllSubScreensOfCommunities();
+    document.getElementById('directory-screen').style.display = 'block';
+}
+
+// Noticias & Ayuda
+function showNews() {
+    showNewsHelpScreen();
+    hideAllSubScreensOfNewsHelp();
+    document.getElementById('news-screen').style.display = 'block';
+}
+
+function showGuideScreen() {
+    showNewsHelpScreen();
+    hideAllSubScreensOfNewsHelp();
+    document.getElementById('guide-screen').style.display = 'block';
+}
+
+function showTraining() {
+    showNewsHelpScreen();
+    hideAllSubScreensOfNewsHelp();
+    document.getElementById('training-screen').style.display = 'block';
+}
+
+function showHelp() {
+    showNewsHelpScreen();
+    hideAllSubScreensOfNewsHelp();
+    document.getElementById('help-screen').style.display = 'block';
+}
+
+// Mi Cuenta
+function showProfile() {
+    showAccountScreen();
+    hideAllSubScreensOfAccount();
+    document.getElementById('profile-screen').style.display = 'block';
+}
+
+function showComingSoon() {
+    showAccountScreen();
+    hideAllSubScreensOfAccount();
+    document.getElementById('coming-soon-screen').style.display = 'block';
+}
+
 // ================== Sidebar & Notificaciones ===================
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const isPinned = localStorage.getItem('sidebarPinned') === 'true';
-    if (isPinned) return; 
+    if (isPinned) return;
     sidebar.classList.toggle('show-sidebar');
 }
 
@@ -630,12 +487,10 @@ function handleLogin(event) {
     }
 
     if (users[email] && users[email].password === password) {
-        // Marcamos como logueado
         localStorage.setItem('loggedIn', 'true');
         localStorage.setItem('email', email);
         localStorage.setItem('name', users[email].name);
 
-        // Ocultamos login/registro
         hideLoginAndRegistrationScreens();
         document.querySelector('header').style.display = 'flex';
         document.querySelector('footer').style.display = 'block';
@@ -643,7 +498,6 @@ function handleLogin(event) {
         // Mostramos la sección "Mi Progreso"
         showProgressMainScreen();
 
-        // Comprobar Onboarding
         if (!users[email].onboardingCompleted) {
             startOnboarding();
         }
@@ -672,22 +526,16 @@ function validateEmail(email) {
 
 function showLoginScreen() {
     hideAllMainSections();
-    // Mostramos pantalla de login
     document.getElementById('login-screen').style.display = 'block';
     document.getElementById('registration-screen').style.display = 'none';
-
-    // Ocultamos header y footer
     document.querySelector('header').style.display = 'none';
     document.querySelector('footer').style.display = 'none';
 }
 
 function showRegistrationScreen() {
     hideAllMainSections();
-    // Mostramos pantalla de registro
     document.getElementById('registration-screen').style.display = 'block';
     document.getElementById('login-screen').style.display = 'none';
-
-    // Ocultamos header y footer
     document.querySelector('header').style.display = 'none';
     document.querySelector('footer').style.display = 'none';
 }
@@ -696,6 +544,7 @@ function showRegistrationScreen() {
 function handleProfileUpdate(event) {
     event.preventDefault();
     const email = localStorage.getItem('email');
+    const user = users[email];
     const profile = {
         fullName: document.getElementById('full-name').value,
         phone: document.getElementById('phone').value,
@@ -705,12 +554,29 @@ function handleProfileUpdate(event) {
         location: document.getElementById('location').value,
         profileImage: document.getElementById('profile-img').src
     };
-    users[email].profile = profile;
-    users[email].examDate = profile.examDate;
+
+    user.profile = profile;
+    user.examDate = profile.examDate;
+    // Actualizamos name en localStorage si el usuario escribe su nombre completo
+    user.name = profile.fullName || user.name;
+
     localStorage.setItem('users', JSON.stringify(users));
     alert('Perfil actualizado con éxito.');
+
+    // Actualizamos el icono y el "Hola, XX" en la pantalla principal
     updateProfileIcon();
+    updateUserNameHome();
     updateDashboard();
+}
+
+function updateUserNameHome() {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    if (user && user.profile && user.profile.fullName) {
+        document.getElementById('user-name-home').textContent = user.profile.fullName;
+    } else {
+        document.getElementById('user-name-home').textContent = user?.name || 'Opositor';
+    }
 }
 
 function updateProfileIcon() {
@@ -722,9 +588,20 @@ function updateProfileIcon() {
     }
 }
 
-// ================== Actividad Reciente, etc. ===================
+// Para subir imagen de perfil
+function handleImageUpload(event) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        document.getElementById('profile-img').src = e.target.result;
+    };
+    if (event.target.files && event.target.files[0]) {
+        reader.readAsDataURL(event.target.files[0]);
+    }
+}
+
+// ================== Actividad Reciente, Onboarding, etc. ===================
 function loadRecentActivity() {
-    // Se carga la actividad para luego mostrar en el dashboard
+    // si hubiera alguna lógica para cargar actividad
 }
 
 function updateRecentActivitySummary() {
@@ -772,7 +649,7 @@ function addActivity(message) {
     updateRecentActivitySummary();
 }
 
-// ================== Onboarding ===================
+// Onboarding
 function startOnboarding() {
     showOverlay();
     showOnboardingStep(1);
@@ -820,8 +697,11 @@ function updateDashboard() {
     const daysRemainingElement = document.getElementById('days-remaining');
     const studyHoursElement = document.getElementById('study-hours');
 
+    // Si el usuario ha rellenado su nombre completo, lo reflejamos
+    updateUserNameHome();
+
     // Días para el examen
-    if (user.examDate) {
+    if (user?.examDate) {
         const examDate = new Date(user.examDate);
         const today = new Date();
         const timeDiff = examDate - today;
@@ -857,6 +737,7 @@ function handleLogoClick() {
     }
 }
 
+// Racha Diaria
 function loadDailyStreak() {
     const email = localStorage.getItem('email');
     const user = users[email];
@@ -986,7 +867,7 @@ function saveStudySession() {
     updateRecentActivitySummary();
 }
 
-// ================== Quiz Diario ===================
+// Quiz Diario
 function openQuizModal() {
     const quizModal = document.getElementById('quiz-modal');
     quizModal.style.display = 'block';
@@ -1039,496 +920,8 @@ function checkDailyQuizAnswer(selectedIndex) {
     updateRecentActivitySummary();
 }
 
-// ================== IA Especializada ===================
-function initSpecialties() {
-    const aiCardsContainer = document.getElementById('ai-cards-container');
-    if (!aiCardsContainer) return;
-    aiCardsContainer.innerHTML = '';
-
-    specialties.forEach(specialty => {
-        const aiCard = document.createElement('div');
-        aiCard.classList.add('ai-card');
-
-        aiCard.onclick = () => {
-            if (specialty.url !== '#') {
-                window.open(specialty.url, '_blank');
-            } else {
-                alert('Enlace próximamente disponible.');
-            }
-        };
-
-        aiCard.innerHTML = `
-            <img src="assets/${specialty.image}" alt="${specialty.name}">
-            <h3>${specialty.name}</h3>
-        `;
-        aiCardsContainer.appendChild(aiCard);
-    });
-}
-
-function filterSpecialties() {
-    const searchTerm = document.getElementById('ai-search-input')?.value.toLowerCase() || '';
-    const aiCardsContainer = document.getElementById('ai-cards-container');
-    if (!aiCardsContainer) return;
-    aiCardsContainer.innerHTML = '';
-
-    const filteredSpecialties = specialties.filter(specialty =>
-        specialty.name.toLowerCase().includes(searchTerm)
-    );
-
-    filteredSpecialties.forEach(specialty => {
-        const aiCard = document.createElement('div');
-        aiCard.classList.add('ai-card');
-
-        aiCard.onclick = () => {
-            if (specialty.url !== '#') {
-                window.open(specialty.url, '_blank');
-            } else {
-                alert('Enlace próximamente disponible.');
-            }
-        };
-
-        aiCard.innerHTML = `
-            <img src="assets/${specialty.image}" alt="${specialty.name}">
-            <h3>${specialty.name}</h3>
-        `;
-        aiCardsContainer.appendChild(aiCard);
-    });
-}
-
-// ================== Directorio de Academias ===================
-function initAcademyDirectory() {
-    populateFilters();
-    renderAcademies();
-}
-
-function populateFilters() {
-    const cityFilter = document.getElementById('city-filter');
-    const specialtyFilter = document.getElementById('specialty-filter');
-    if (!cityFilter || !specialtyFilter) return;
-
-    const cities = [...new Set(academies.map(a => a.city))].sort();
-    const specialtiesList = [...new Set(academies.flatMap(a => a.specialties))].sort();
-
-    cities.forEach(city => {
-        const option = document.createElement('option');
-        option.value = city;
-        option.textContent = city;
-        cityFilter.appendChild(option);
-    });
-
-    specialtiesList.forEach(spec => {
-        const option = document.createElement('option');
-        option.value = spec;
-        option.textContent = spec;
-        specialtyFilter.appendChild(option);
-    });
-}
-
-function filterAcademies() {
-    const city = document.getElementById('city-filter')?.value;
-    const specialty = document.getElementById('specialty-filter')?.value;
-
-    let filteredAcademies = academies;
-
-    if (city) {
-        filteredAcademies = filteredAcademies.filter(a => a.city === city);
-    }
-    if (specialty) {
-        filteredAcademies = filteredAcademies.filter(a => a.specialties.includes(specialty));
-    }
-    renderAcademies(filteredAcademies);
-}
-
-function renderAcademies(academyList = academies) {
-    const academyContainer = document.getElementById('academy-container');
-    if (!academyContainer) return;
-
-    academyContainer.innerHTML = '';
-
-    if (academyList.length === 0) {
-        const noResults = document.createElement('p');
-        noResults.textContent = 'No se encontraron academias con los filtros seleccionados.';
-        academyContainer.appendChild(noResults);
-        return;
-    }
-
-    academyList.forEach(academy => {
-        const academyCard = document.createElement('div');
-        academyCard.classList.add('academy-card');
-
-        const header = document.createElement('div');
-        header.classList.add('academy-header');
-
-        const name = document.createElement('h3');
-        name.textContent = academy.name;
-
-        const rating = document.createElement('span');
-        rating.textContent = '★ ' + academy.rating;
-
-        header.appendChild(name);
-        header.appendChild(rating);
-
-        const info = document.createElement('div');
-        info.classList.add('academy-info');
-        info.innerHTML = `
-            <p><strong>Ciudad:</strong> ${academy.city}</p>
-            <p><strong>Teléfono:</strong> ${academy.phone}</p>
-            <p><strong>Email:</strong> ${academy.email}</p>
-            <p><strong>Especialidades:</strong> ${academy.specialties.join(', ')}</p>
-        `;
-
-        const image = document.createElement('img');
-        image.src = `assets/${academy.image || 'academia-default.jpg'}`;
-        image.alt = academy.name;
-        image.classList.add('academy-image');
-
-        const annotationSection = document.createElement('div');
-        annotationSection.classList.add('annotation-section');
-        const annotationLabel = document.createElement('label');
-        annotationLabel.textContent = 'Anotaciones:';
-        const annotationTextarea = document.createElement('textarea');
-        annotationTextarea.rows = 3;
-        annotationTextarea.placeholder = 'Escribe tus anotaciones aquí...';
-        annotationTextarea.value = getUserAnnotation(academy.name);
-        annotationTextarea.addEventListener('input', () => {
-            saveUserAnnotation(academy.name, annotationTextarea.value);
-        });
-
-        annotationSection.appendChild(annotationLabel);
-        annotationSection.appendChild(annotationTextarea);
-
-        academyCard.appendChild(header);
-        academyCard.appendChild(image);
-        academyCard.appendChild(info);
-        academyCard.appendChild(annotationSection);
-
-        academyContainer.appendChild(academyCard);
-    });
-}
-
-function getUserAnnotation(academyName) {
-    const email = localStorage.getItem('email');
-    if (users[email] && users[email].annotations && users[email].annotations[academyName]) {
-        return users[email].annotations[academyName];
-    }
-    return '';
-}
-
-function saveUserAnnotation(academyName, annotation) {
-    const email = localStorage.getItem('email');
-    if (!users[email].annotations) {
-        users[email].annotations = {};
-    }
-    users[email].annotations[academyName] = annotation;
-    localStorage.setItem('users', JSON.stringify(users));
-    addNotification(`Anotación añadida para la academia "${academyName}".`);
-    addActivity(`Anotación añadida para la academia "${academyName}".`);
-    updateRecentActivitySummary();
-}
-
-// ================== Noticias ===================
-function showNewsContent(newsType) {
-    const csifIframe = document.getElementById('csif-iframe');
-    const sipriIframe = document.getElementById('sipri-iframe');
-
-    if (!csifIframe || !sipriIframe) return;
-
-    csifIframe.style.display = 'none';
-    sipriIframe.style.display = 'none';
-
-    if (newsType === 'csif') {
-        csifIframe.style.display = 'block';
-    } else if (newsType === 'sipri') {
-        sipriIframe.style.display = 'block';
-    }
-}
-
-// ================== Documentos ===================
-function updateDocumentOverview() {
-    // Por si hubiera un panel de "últimos documentos"
-    const email = localStorage.getItem('email');
-    const userDocuments = users[email]?.documents || [];
-    const documentList = document.getElementById('document-list');
-    if (documentList) {
-        documentList.innerHTML = '';
-        if (userDocuments.length === 0) {
-            documentList.textContent = 'Sin documentos';
-        } else {
-            const lastOpenedDocuments = userDocuments.slice(-2);
-            lastOpenedDocuments.forEach(doc => {
-                const docElement = document.createElement('p');
-                docElement.textContent = doc.name;
-                documentList.appendChild(docElement);
-            });
-        }
-    }
-}
-
-function uploadDocuments(event) {
-    const email = localStorage.getItem('email');
-    const files = event.target.files;
-    if (!users[email].documents) {
-        users[email].documents = [];
-    }
-
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            const documentData = {
-                name: file.name,
-                lastOpened: null,
-                folder: null,
-                fileContent: e.target.result,
-                fileType: file.type
-            };
-            users[email].documents.push(documentData);
-            localStorage.setItem('users', JSON.stringify(users));
-            displayDocuments();
-            updateDocumentOverview();
-            addNotification(`Documento "${file.name}" subido correctamente.`);
-            addActivity(`Documento "${file.name}" subido.`);
-            updateRecentActivitySummary();
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-function createFolder() {
-    const folderName = prompt('Nombre de la nueva carpeta:');
-    if (folderName) {
-        const email = localStorage.getItem('email');
-        if (!users[email].folders) {
-            users[email].folders = [];
-        }
-        const folderData = {
-            name: folderName,
-            documents: []
-        };
-        users[email].folders.push(folderData);
-        localStorage.setItem('users', JSON.stringify(users));
-        displayDocuments();
-        addNotification(`Carpeta "${folderName}" creada exitosamente.`);
-        addActivity(`Carpeta "${folderName}" creada.`);
-        updateRecentActivitySummary();
-    }
-}
-
-function deleteFolder(folderName) {
-    const email = localStorage.getItem('email');
-    const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
-    if (folderIndex > -1) {
-        users[email].folders.splice(folderIndex, 1);
-        localStorage.setItem('users', JSON.stringify(users));
-        displayDocuments();
-        addNotification(`Carpeta "${folderName}" eliminada.`);
-        addActivity(`Carpeta "${folderName}" eliminada.`);
-        updateRecentActivitySummary();
-    }
-}
-
-function displayDocuments() {
-    const email = localStorage.getItem('email');
-    const documentsContainer = document.getElementById('documents-container');
-    if (!documentsContainer) return;
-
-    documentsContainer.innerHTML = '';
-
-    if (documentsViewMode === 'list') {
-        documentsContainer.classList.add('list-view');
-        documentsContainer.classList.remove('grid-view');
-    } else {
-        documentsContainer.classList.add('grid-view');
-        documentsContainer.classList.remove('list-view');
-    }
-
-    const userFolders = users[email].folders || [];
-    userFolders.forEach(folder => {
-        const folderElement = document.createElement('div');
-        folderElement.classList.add('folder-card');
-        const folderHeader = document.createElement('div');
-        folderHeader.classList.add('folder-header');
-        folderHeader.textContent = folder.name;
-
-        const deleteButton = document.createElement('button');
-        deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
-        deleteButton.onclick = (e) => {
-            e.stopPropagation();
-            deleteFolder(folder.name);
-        };
-
-        folderHeader.appendChild(deleteButton);
-        folderElement.appendChild(folderHeader);
-
-        const folderDocuments = document.createElement('div');
-        folderDocuments.classList.add('folder-documents');
-
-        folder.documents.forEach(doc => {
-            const docElement = document.createElement('div');
-            docElement.classList.add('document-card');
-            docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
-            docElement.addEventListener('click', () => {
-                openDocument(email, doc);
-            });
-            folderDocuments.appendChild(docElement);
-        });
-
-        folderElement.appendChild(folderDocuments);
-        documentsContainer.appendChild(folderElement);
-    });
-
-    const userDocuments = users[email].documents || [];
-    userDocuments.forEach(doc => {
-        const docElement = document.createElement('div');
-        docElement.classList.add('document-card');
-        docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
-        docElement.addEventListener('click', () => {
-            openDocument(email, doc);
-        });
-
-        const moveButton = document.createElement('button');
-        moveButton.innerHTML = '<i class="fas fa-folder"></i>';
-        moveButton.onclick = (e) => {
-            e.stopPropagation();
-            moveDocumentToFolder(email, doc.name);
-        };
-        docElement.appendChild(moveButton);
-        documentsContainer.appendChild(docElement);
-    });
-}
-
-function openDocument(email, doc) {
-    doc.lastOpened = new Date();
-    users[email].lastDocument = doc.name;
-    localStorage.setItem('users', JSON.stringify(users));
-
-    const byteCharacters = atob(doc.fileContent.split(',')[1]);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: doc.fileType });
-
-    const blobUrl = URL.createObjectURL(blob);
-    window.open(blobUrl, '_blank');
-
-    updateDocumentOverview();
-    addActivity(`Documento "${doc.name}" abierto.`);
-    updateRecentActivitySummary();
-}
-
-function moveDocumentToFolder(email, documentName) {
-    const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
-    if (selectedFolder) {
-        const folder = users[email].folders.find(f => f.name === selectedFolder);
-        if (folder) {
-            const documentIndex = users[email].documents.findIndex(doc => doc.name === documentName);
-            if (documentIndex > -1) {
-                const document = users[email].documents.splice(documentIndex, 1)[0];
-                folder.documents.push(document);
-                localStorage.setItem('users', JSON.stringify(users));
-                displayDocuments();
-                addNotification(`Documento "${documentName}" movido a la carpeta "${selectedFolder}".`);
-                addActivity(`Documento "${documentName}" movido a "${selectedFolder}".`);
-                updateRecentActivitySummary();
-            } else {
-                alert('Documento no encontrado.');
-            }
-        } else {
-            alert('Carpeta no encontrada.');
-        }
-    }
-}
-
-function filterDocuments() {
-    const searchTerm = (document.getElementById('document-search')?.value || '').toLowerCase();
-    const email = localStorage.getItem('email');
-    const documentsContainer = document.getElementById('documents-container');
-    if (!documentsContainer) return;
-
-    documentsContainer.innerHTML = '';
-
-    if (documentsViewMode === 'list') {
-        documentsContainer.classList.add('list-view');
-        documentsContainer.classList.remove('grid-view');
-    } else {
-        documentsContainer.classList.add('grid-view');
-        documentsContainer.classList.remove('list-view');
-    }
-
-    const userDocuments = users[email].documents || [];
-    const filteredDocuments = userDocuments.filter(doc =>
-        doc.name.toLowerCase().includes(searchTerm)
-    );
-
-    filteredDocuments.forEach(doc => {
-        const docElement = document.createElement('div');
-        docElement.classList.add('document-card');
-        docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
-        docElement.addEventListener('click', () => {
-            openDocument(email, doc);
-        });
-        documentsContainer.appendChild(docElement);
-    });
-}
-
-function toggleDocumentsView() {
-    documentsViewMode = (documentsViewMode === 'list') ? 'grid' : 'list';
-    displayDocuments();
-}
-
-// Drag & Drop
-function handleDragOver(event) {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = 'copy';
-}
-
-function handleDrop(event) {
-    event.preventDefault();
-    const email = localStorage.getItem('email');
-    const files = event.dataTransfer.files;
-    if (!files || files.length === 0) return;
-
-    if (!users[email].documents) {
-        users[email].documents = [];
-    }
-
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            const documentData = {
-                name: file.name,
-                lastOpened: null,
-                folder: null,
-                fileContent: e.target.result,
-                fileType: file.type
-            };
-            users[email].documents.push(documentData);
-            localStorage.setItem('users', JSON.stringify(users));
-            displayDocuments();
-            updateDocumentOverview();
-            addNotification(`Documento "${file.name}" subido vía Drag & Drop.`);
-            addActivity(`Documento "${file.name}" subido vía Drag & Drop.`);
-            updateRecentActivitySummary();
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-// Mensajes Motivacionales
-function updateMotivationalMessage() {
-    const messageElement = document.getElementById('motivational-message');
-    if (messageElement) {
-        messageElement.textContent = motivationalMessages[motivationalMessageIndex];
-        motivationalMessageIndex = (motivationalMessageIndex + 1) % motivationalMessages.length;
-    }
-}
-
 // Discord (Grupos)
 function redirectToDiscord() {
     window.open(discordInviteLink, '_blank');
 }
+

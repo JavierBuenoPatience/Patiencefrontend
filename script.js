@@ -273,8 +273,10 @@ document.addEventListener('DOMContentLoaded', () => {
         documentSearch.addEventListener('input', filterDocuments);
     }
 
+    // Inicializar directorio academias e IA
     initAcademyDirectory();
-    initSpecialties();
+    initSpecialties(); // <-- Importante para cargar tarjetas de IA
+
     updateNotifications();
 
     document.addEventListener('click', (event) => {
@@ -711,9 +713,10 @@ function updateUserNameHome() {
 }
 
 function updateProfileIcon() {
+    const profileIcon = document.getElementById('profile-icon');
     const email = localStorage.getItem('email');
     const profile = users[email]?.profile || {};
-    const profileIcon = document.getElementById('profile-icon');
+
     if (profileIcon) {
         profileIcon.src = profile.profileImage || 'assets/default-profile.png';
     }
@@ -1053,4 +1056,463 @@ function checkDailyQuizAnswer(selectedIndex) {
 // Discord (Grupos)
 function redirectToDiscord() {
     window.open(discordInviteLink, '_blank');
+}
+
+// ================== IA Especializada ===================
+// Cargar tarjetas IA
+function initSpecialties() {
+    const aiCardsContainer = document.getElementById('ai-cards-container');
+    if (!aiCardsContainer) return;
+    aiCardsContainer.innerHTML = '';
+
+    specialties.forEach(specialty => {
+        const aiCard = document.createElement('div');
+        aiCard.classList.add('ai-card');
+
+        aiCard.onclick = () => {
+            if (specialty.url !== '#') {
+                window.open(specialty.url, '_blank');
+            } else {
+                alert('Enlace próximamente disponible.');
+            }
+        };
+
+        aiCard.innerHTML = `
+            <img src="assets/${specialty.image}" alt="${specialty.name}">
+            <h3>${specialty.name}</h3>
+        `;
+        aiCardsContainer.appendChild(aiCard);
+    });
+}
+
+// Filtro de especialidades
+function filterSpecialties() {
+    const searchTerm = document.getElementById('ai-search-input')?.value.toLowerCase() || '';
+    const aiCardsContainer = document.getElementById('ai-cards-container');
+    if (!aiCardsContainer) return;
+    aiCardsContainer.innerHTML = '';
+
+    const filteredSpecialties = specialties.filter(specialty =>
+        specialty.name.toLowerCase().includes(searchTerm)
+    );
+
+    filteredSpecialties.forEach(specialty => {
+        const aiCard = document.createElement('div');
+        aiCard.classList.add('ai-card');
+
+        aiCard.onclick = () => {
+            if (specialty.url !== '#') {
+                window.open(specialty.url, '_blank');
+            } else {
+                alert('Enlace próximamente disponible.');
+            }
+        };
+
+        aiCard.innerHTML = `
+            <img src="assets/${specialty.image}" alt="${specialty.name}">
+            <h3>${specialty.name}</h3>
+        `;
+        aiCardsContainer.appendChild(aiCard);
+    });
+}
+
+// ================== Directorio de Academias ===================
+function initAcademyDirectory() {
+    populateFilters();
+    renderAcademies();
+}
+
+function populateFilters() {
+    const cityFilter = document.getElementById('city-filter');
+    const specialtyFilter = document.getElementById('specialty-filter');
+    if (!cityFilter || !specialtyFilter) return;
+
+    const cities = [...new Set(academies.map(a => a.city))].sort();
+    const specialtiesList = [...new Set(academies.flatMap(a => a.specialties))].sort();
+
+    cities.forEach(city => {
+        const option = document.createElement('option');
+        option.value = city;
+        option.textContent = city;
+        cityFilter.appendChild(option);
+    });
+
+    specialtiesList.forEach(spec => {
+        const option = document.createElement('option');
+        option.value = spec;
+        option.textContent = spec;
+        specialtyFilter.appendChild(option);
+    });
+}
+
+function filterAcademies() {
+    const city = document.getElementById('city-filter')?.value;
+    const specialty = document.getElementById('specialty-filter')?.value;
+
+    let filteredAcademies = academies;
+
+    if (city) {
+        filteredAcademies = filteredAcademies.filter(a => a.city === city);
+    }
+    if (specialty) {
+        filteredAcademies = filteredAcademies.filter(a => a.specialties.includes(specialty));
+    }
+    renderAcademies(filteredAcademies);
+}
+
+function renderAcademies(academyList = academies) {
+    const academyContainer = document.getElementById('academy-container');
+    if (!academyContainer) return;
+
+    academyContainer.innerHTML = '';
+
+    if (academyList.length === 0) {
+        const noResults = document.createElement('p');
+        noResults.textContent = 'No se encontraron academias con los filtros seleccionados.';
+        academyContainer.appendChild(noResults);
+        return;
+    }
+
+    academyList.forEach(academy => {
+        const academyCard = document.createElement('div');
+        academyCard.classList.add('academy-card');
+
+        const header = document.createElement('div');
+        header.classList.add('academy-header');
+
+        const name = document.createElement('h3');
+        name.textContent = academy.name;
+
+        const rating = document.createElement('span');
+        rating.textContent = '★ ' + academy.rating;
+
+        header.appendChild(name);
+        header.appendChild(rating);
+
+        const image = document.createElement('img');
+        image.src = `assets/${academy.image || 'academia-default.jpg'}`;
+        image.alt = academy.name;
+        image.classList.add('academy-image');
+
+        const info = document.createElement('div');
+        info.classList.add('academy-info');
+        info.innerHTML = `
+            <p><strong>Ciudad:</strong> ${academy.city}</p>
+            <p><strong>Teléfono:</strong> ${academy.phone}</p>
+            <p><strong>Email:</strong> ${academy.email}</p>
+            <p><strong>Especialidades:</strong> ${academy.specialties.join(', ')}</p>
+        `;
+
+        const annotationSection = document.createElement('div');
+        annotationSection.classList.add('annotation-section');
+        const annotationLabel = document.createElement('label');
+        annotationLabel.textContent = 'Anotaciones:';
+        const annotationTextarea = document.createElement('textarea');
+        annotationTextarea.rows = 3;
+        annotationTextarea.placeholder = 'Escribe tus anotaciones aquí...';
+        annotationTextarea.value = getUserAnnotation(academy.name);
+        annotationTextarea.addEventListener('input', () => {
+            saveUserAnnotation(academy.name, annotationTextarea.value);
+        });
+
+        annotationSection.appendChild(annotationLabel);
+        annotationSection.appendChild(annotationTextarea);
+
+        academyCard.appendChild(header);
+        academyCard.appendChild(image);
+        academyCard.appendChild(info);
+        academyCard.appendChild(annotationSection);
+
+        academyContainer.appendChild(academyCard);
+    });
+}
+
+function getUserAnnotation(academyName) {
+    const email = localStorage.getItem('email');
+    if (users[email] && users[email].annotations && users[email].annotations[academyName]) {
+        return users[email].annotations[academyName];
+    }
+    return '';
+}
+
+function saveUserAnnotation(academyName, annotation) {
+    const email = localStorage.getItem('email');
+    if (!users[email].annotations) {
+        users[email].annotations = {};
+    }
+    users[email].annotations[academyName] = annotation;
+    localStorage.setItem('users', JSON.stringify(users));
+    addNotification(`Anotación añadida para la academia "${academyName}".`);
+    addActivity(`Anotación añadida para la academia "${academyName}".`);
+    updateRecentActivitySummary();
+}
+
+// ================== Noticias ===================
+function showNewsContent(newsType) {
+    const csifIframe = document.getElementById('csif-iframe');
+    const sipriIframe = document.getElementById('sipri-iframe');
+
+    if (!csifIframe || !sipriIframe) return;
+
+    csifIframe.style.display = 'none';
+    sipriIframe.style.display = 'none';
+
+    if (newsType === 'csif') {
+        csifIframe.style.display = 'block';
+    } else if (newsType === 'sipri') {
+        sipriIframe.style.display = 'block';
+    }
+}
+
+// ================== Documentos ===================
+function uploadDocuments(event) {
+    const email = localStorage.getItem('email');
+    const files = event.target.files;
+    if (!users[email].documents) {
+        users[email].documents = [];
+    }
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const documentData = {
+                name: file.name,
+                lastOpened: null,
+                folder: null,
+                fileContent: e.target.result,
+                fileType: file.type
+            };
+            users[email].documents.push(documentData);
+            localStorage.setItem('users', JSON.stringify(users));
+            displayDocuments();
+            addNotification(`Documento "${file.name}" subido correctamente.`);
+            addActivity(`Documento "${file.name}" subido.`);
+            updateRecentActivitySummary();
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function createFolder() {
+    const folderName = prompt('Nombre de la nueva carpeta:');
+    if (folderName) {
+        const email = localStorage.getItem('email');
+        if (!users[email].folders) {
+            users[email].folders = [];
+        }
+        const folderData = {
+            name: folderName,
+            documents: []
+        };
+        users[email].folders.push(folderData);
+        localStorage.setItem('users', JSON.stringify(users));
+        displayDocuments();
+        addNotification(`Carpeta "${folderName}" creada exitosamente.`);
+        addActivity(`Carpeta "${folderName}" creada.`);
+        updateRecentActivitySummary();
+    }
+}
+
+function deleteFolder(folderName) {
+    const email = localStorage.getItem('email');
+    const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
+    if (folderIndex > -1) {
+        users[email].folders.splice(folderIndex, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+        displayDocuments();
+        addNotification(`Carpeta "${folderName}" eliminada.`);
+        addActivity(`Carpeta "${folderName}" eliminada.`);
+        updateRecentActivitySummary();
+    }
+}
+
+function displayDocuments() {
+    const email = localStorage.getItem('email');
+    const documentsContainer = document.getElementById('documents-container');
+    if (!documentsContainer) return;
+
+    documentsContainer.innerHTML = '';
+
+    if (documentsViewMode === 'list') {
+        documentsContainer.classList.add('list-view');
+        documentsContainer.classList.remove('grid-view');
+    } else {
+        documentsContainer.classList.add('grid-view');
+        documentsContainer.classList.remove('list-view');
+    }
+
+    const userFolders = users[email].folders || [];
+    userFolders.forEach(folder => {
+        const folderElement = document.createElement('div');
+        folderElement.classList.add('folder-card');
+        const folderHeader = document.createElement('div');
+        folderHeader.classList.add('folder-header');
+        folderHeader.textContent = folder.name;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        deleteButton.onclick = (e) => {
+            e.stopPropagation();
+            deleteFolder(folder.name);
+        };
+
+        folderHeader.appendChild(deleteButton);
+        folderElement.appendChild(folderHeader);
+
+        const folderDocuments = document.createElement('div');
+        folderDocuments.classList.add('folder-documents');
+
+        folder.documents.forEach(doc => {
+            const docElement = document.createElement('div');
+            docElement.classList.add('document-card');
+            docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
+            docElement.addEventListener('click', () => {
+                openDocument(email, doc);
+            });
+            folderDocuments.appendChild(docElement);
+        });
+
+        folderElement.appendChild(folderDocuments);
+        documentsContainer.appendChild(folderElement);
+    });
+
+    const userDocuments = users[email].documents || [];
+    userDocuments.forEach(doc => {
+        const docElement = document.createElement('div');
+        docElement.classList.add('document-card');
+        docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
+        docElement.addEventListener('click', () => {
+            openDocument(email, doc);
+        });
+
+        const moveButton = document.createElement('button');
+        moveButton.innerHTML = '<i class="fas fa-folder"></i>';
+        moveButton.onclick = (e) => {
+            e.stopPropagation();
+            moveDocumentToFolder(email, doc.name);
+        };
+        docElement.appendChild(moveButton);
+        documentsContainer.appendChild(docElement);
+    });
+}
+
+function openDocument(email, doc) {
+    doc.lastOpened = new Date();
+    users[email].lastDocument = doc.name;
+    localStorage.setItem('users', JSON.stringify(users));
+
+    const byteCharacters = atob(doc.fileContent.split(',')[1]);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: doc.fileType });
+
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, '_blank');
+
+    addActivity(`Documento "${doc.name}" abierto.`);
+    updateRecentActivitySummary();
+}
+
+function moveDocumentToFolder(email, documentName) {
+    const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
+    if (selectedFolder) {
+        const folder = users[email].folders.find(f => f.name === selectedFolder);
+        if (folder) {
+            const documentIndex = users[email].documents.findIndex(doc => doc.name === documentName);
+            if (documentIndex > -1) {
+                const document = users[email].documents.splice(documentIndex, 1)[0];
+                folder.documents.push(document);
+                localStorage.setItem('users', JSON.stringify(users));
+                displayDocuments();
+                addNotification(`Documento "${documentName}" movido a la carpeta "${selectedFolder}".`);
+                addActivity(`Documento "${documentName}" movido a "${selectedFolder}".`);
+                updateRecentActivitySummary();
+            } else {
+                alert('Documento no encontrado.');
+            }
+        } else {
+            alert('Carpeta no encontrada.');
+        }
+    }
+}
+
+function filterDocuments() {
+    const searchTerm = (document.getElementById('document-search')?.value || '').toLowerCase();
+    const email = localStorage.getItem('email');
+    const documentsContainer = document.getElementById('documents-container');
+    if (!documentsContainer) return;
+
+    documentsContainer.innerHTML = '';
+
+    if (documentsViewMode === 'list') {
+        documentsContainer.classList.add('list-view');
+        documentsContainer.classList.remove('grid-view');
+    } else {
+        documentsContainer.classList.add('grid-view');
+        documentsContainer.classList.remove('list-view');
+    }
+
+    const userDocuments = users[email].documents || [];
+    const filteredDocuments = userDocuments.filter(doc =>
+        doc.name.toLowerCase().includes(searchTerm)
+    );
+
+    filteredDocuments.forEach(doc => {
+        const docElement = document.createElement('div');
+        docElement.classList.add('document-card');
+        docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
+        docElement.addEventListener('click', () => {
+            openDocument(email, doc);
+        });
+        documentsContainer.appendChild(docElement);
+    });
+}
+
+function toggleDocumentsView() {
+    documentsViewMode = (documentsViewMode === 'list') ? 'grid' : 'list';
+    displayDocuments();
+}
+
+// Drag & Drop
+function handleDragOver(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy';
+}
+
+function handleDrop(event) {
+    event.preventDefault();
+    const email = localStorage.getItem('email');
+    const files = event.dataTransfer.files;
+    if (!files || files.length === 0) return;
+
+    if (!users[email].documents) {
+        users[email].documents = [];
+    }
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const documentData = {
+                name: file.name,
+                lastOpened: null,
+                folder: null,
+                fileContent: e.target.result,
+                fileType: file.type
+            };
+            users[email].documents.push(documentData);
+            localStorage.setItem('users', JSON.stringify(users));
+            displayDocuments();
+            addActivity(`Documento "${file.name}" subido vía Drag & Drop.`);
+            addNotification(`Documento "${file.name}" subido vía Drag & Drop.`);
+            updateRecentActivitySummary();
+        };
+        reader.readAsDataURL(file);
+    }
 }

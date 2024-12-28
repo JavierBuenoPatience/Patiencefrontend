@@ -1,4 +1,4 @@
-// Definimos constantes para colores y URLs
+// Definimos constantes para colores y URLs (puedes ajustarlas si deseas)
 const COLORS = {
     primary: '#1F3A93',
     secondary: '#22A7F0',
@@ -13,11 +13,8 @@ const discordInviteLink = "https://discord.gg/qGB36SqR";
 // Obtenemos los usuarios almacenados o inicializamos uno vacío
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
-// Datos de academias
+// ====== LISTADO COMPLETO DE ACADEMIAS ======
 const academies = [
-    /* MANTENER LISTA COMPLETA DE ACADEMIAS: NO OMITIR
-       (igual que en versiones anteriores, 16 academias)
-    */
     {
         id: 1,
         name: 'TecnosZubia',
@@ -38,7 +35,136 @@ const academies = [
         rating: '4.7/5',
         image: 'academia-2.jpg'
     },
-    // ...
+    {
+        id: 3,
+        name: 'Academia Jesús Ayala',
+        city: 'Málaga',
+        phone: '952 29 00 00',
+        email: 'info@academiajesusayala.com',
+        specialties: ['Junta de Andalucía', 'Educación', 'Justicia', 'Seguridad'],
+        rating: '4.6/5',
+        image: 'academia-3.jpg'
+    },
+    {
+        id: 4,
+        name: 'Centro Andaluz de Estudios',
+        city: 'Sevilla',
+        phone: '955 11 22 33',
+        email: 'info@centroandaluz.net',
+        specialties: ['Seguridad', 'Bomberos', 'Administración de Justicia'],
+        rating: '4.5/5',
+        image: 'academia-4.jpg'
+    },
+    {
+        id: 5,
+        name: 'Academia AM',
+        city: 'Sevilla',
+        phone: '954 21 43 21',
+        email: 'info@academiaam.es',
+        specialties: ['Junta de Andalucía', 'Estado', 'Justicia', 'Educación'],
+        rating: '4.4/5',
+        image: 'academia-5.jpg'
+    },
+    {
+        id: 6,
+        name: 'Academia Foro',
+        city: 'Sevilla',
+        phone: '954 22 33 44',
+        email: 'info@academiaforo.es',
+        specialties: ['Junta de Andalucía', 'Estado', 'SAS'],
+        rating: '4.3/5',
+        image: 'academia-6.jpg'
+    },
+    {
+        id: 7,
+        name: 'Adriano Preparador',
+        city: 'Sevilla',
+        phone: '954 33 44 55',
+        email: 'info@adrianopreparador.es',
+        specialties: ['Junta de Andalucía (cuerpos administrativos y técnicos)'],
+        rating: '4.2/5',
+        image: 'academia-7.jpg'
+    },
+    {
+        id: 8,
+        name: 'Academia Opositas',
+        city: 'Córdoba',
+        phone: '957 76 54 32',
+        email: 'info@opositas.com',
+        specialties: ['Justicia', 'Hacienda', 'Informática', 'Junta de Andalucía'],
+        rating: '4.1/5',
+        image: 'academia-8.jpg'
+    },
+    {
+        id: 9,
+        name: 'MasterD Sevilla',
+        city: 'Sevilla',
+        phone: '954 28 42 12',
+        email: 'info@masterd.es',
+        specialties: ['Auxiliar Administrativo', 'Guardia Civil', 'Celador', 'Auxiliar de Enfermería', 'Correos'],
+        rating: '4.0/5',
+        image: 'academia-9.jpg'
+    },
+    {
+        id: 10,
+        name: 'Academia de Enseñanza Méndez Núñez',
+        city: 'Sevilla',
+        phone: '954 22 52 25',
+        email: 'info@academiamn.com',
+        specialties: ['Junta de Andalucía', 'Educación (Infantil, Primaria, Secundaria)'],
+        rating: '4.0/5',
+        image: 'academia-10.jpg'
+    },
+    {
+        id: 11,
+        name: 'Academia Cartuja',
+        city: 'Sevilla',
+        phone: '954 33 22 11',
+        email: 'info@academiacartuja.com',
+        specialties: ['Magisterio', 'Justicia', 'Biblioteca', 'Celador', 'Correos'],
+        rating: '3.9/5',
+        image: 'academia-11.jpg'
+    },
+    {
+        id: 12,
+        name: 'Academia Progressus',
+        city: 'Sevilla',
+        phone: '954 44 55 66',
+        email: 'info@academiaprogressus.com',
+        specialties: ['Policía Nacional', 'Guardia Civil', 'Penitenciarias'],
+        rating: '3.8/5',
+        image: 'academia-12.jpg'
+    },
+    {
+        id: 13,
+        name: 'Academia Palmapol',
+        city: 'Sevilla',
+        phone: '954 55 66 77',
+        email: 'info@academiapalmapol.com',
+        specialties: ['Policía Nacional', 'Guardia Civil', 'Policía Local', 'Bomberos'],
+        rating: '3.7/5',
+        image: 'academia-13.jpg'
+    },
+    {
+        id: 14,
+        name: 'Academia CARE Formación',
+        city: 'Sevilla',
+        phone: '954 66 77 88',
+        email: 'info@careformacion.com',
+        specialties: ['Educación', 'Sanidad', 'Administración', 'Justicia'],
+        rating: '3.6/5',
+        image: 'academia-14.jpg'
+    },
+    {
+        id: 15,
+        name: 'Academia Innova',
+        city: 'Sevilla',
+        phone: '954 77 88 99',
+        email: 'info@academiainnova.com',
+        specialties: ['Estado', 'Andalucía', 'Justicia', 'Correos'],
+        rating: '3.5/5',
+        image: 'academia-15.jpg'
+    },
     {
         id: 16,
         name: 'Academia Claustro',
@@ -53,7 +179,6 @@ const academies = [
 
 // Datos de especialidades (IA)
 const specialties = [
-    /* MANTENER LISTA COMPLETA DE IA ESPECIALIZADA */
     {
         name: 'Biología y Geología',
         image: 'bio-geologia.jpg',
@@ -81,7 +206,7 @@ const specialties = [
     }
 ];
 
-// Preguntas para el Quiz Diario (estáticas)
+// Preguntas para el Quiz Diario (completas)
 const dailyQuizQuestions = [
     {
         question: "¿Cuál es la capital de Francia?",
@@ -127,7 +252,7 @@ let timerInterval;
 let elapsedTime = 0;
 let isTimerRunning = false;
 
-// Variables para la vista de documentos (lista o cuadrícula)
+// Vista de documentos
 let documentsViewMode = 'list'; // 'list' o 'grid'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -151,6 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAcademyDirectory();
     initSpecialties();
     updateNotifications();
+
     document.addEventListener('click', (event) => {
         const notificationIcon = document.querySelector('.notification-icon');
         const notificationPanel = document.getElementById('notification-panel');
@@ -160,22 +286,24 @@ document.addEventListener('DOMContentLoaded', () => {
             notificationPanel.classList.remove('show-notifications');
         }
     });
+
     loadSidebarState();
     updateMotivationalMessage();
     setInterval(updateMotivationalMessage, 5 * 60 * 1000);
+
     loadDailyStreak();
     loadDailyCheckInStatus();
     loadRecentActivity();
     updateRecentActivitySummary();
 });
 
-// ============= Funciones para ocultar login/registro =============
+// ====== Funciones para ocultar login/registro ======
 function hideLoginAndRegistrationScreens() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('registration-screen').style.display = 'none';
 }
 
-// ================== Secciones Principales ===================
+// ================== Menú Principal (5 secciones) ===================
 function hideAllMainSections() {
     document.getElementById('progress-main-screen').style.display = 'none';
     document.getElementById('study-main-screen').style.display = 'none';
@@ -184,6 +312,7 @@ function hideAllMainSections() {
     document.getElementById('account-screen').style.display = 'none';
 }
 
+// 1) Mi Progreso
 function showProgressMainScreen() {
     hideAllMainSections();
     if (localStorage.getItem('loggedIn') === 'true') {
@@ -208,6 +337,7 @@ function hideAllSubScreensOfProgress() {
     document.getElementById('activity-screen').style.display = 'none';
 }
 
+// 2) Estudio
 function showStudyMainScreen() {
     hideAllMainSections();
     if (localStorage.getItem('loggedIn') === 'true') {
@@ -217,15 +347,15 @@ function showStudyMainScreen() {
     }
     document.getElementById('study-main-screen').style.display = 'block';
     hideAllSubScreensOfStudy();
-    document.getElementById('documents-screen').style.display = 'block'; // Por defecto
+    document.getElementById('documents-screen').style.display = 'block'; 
 }
 
 function hideAllSubScreensOfStudy() {
     document.getElementById('documents-screen').style.display = 'none';
     document.getElementById('ai-screen').style.display = 'none';
-    // quitamos la "guía-screen" de esta sección (ahora la movimos a "Noticias & Ayuda") 
 }
 
+// 3) Comunidades
 function showCommunitiesMainScreen() {
     hideAllMainSections();
     if (localStorage.getItem('loggedIn') === 'true') {
@@ -235,7 +365,7 @@ function showCommunitiesMainScreen() {
     }
     document.getElementById('communities-main-screen').style.display = 'block';
     hideAllSubScreensOfCommunities();
-    document.getElementById('groups-screen').style.display = 'block'; // Por defecto
+    document.getElementById('groups-screen').style.display = 'block';
 }
 
 function hideAllSubScreensOfCommunities() {
@@ -243,6 +373,7 @@ function hideAllSubScreensOfCommunities() {
     document.getElementById('directory-screen').style.display = 'none';
 }
 
+// 4) Noticias & Ayuda
 function showNewsHelpScreen() {
     hideAllMainSections();
     if (localStorage.getItem('loggedIn') === 'true') {
@@ -252,8 +383,7 @@ function showNewsHelpScreen() {
     }
     document.getElementById('news-help-screen').style.display = 'block';
     hideAllSubScreensOfNewsHelp();
-    // Por defecto, mostramos "Noticias"
-    document.getElementById('news-screen').style.display = 'block';
+    document.getElementById('news-screen').style.display = 'block'; 
 }
 
 function hideAllSubScreensOfNewsHelp() {
@@ -263,6 +393,7 @@ function hideAllSubScreensOfNewsHelp() {
     document.getElementById('help-screen').style.display = 'none';
 }
 
+// 5) Mi Cuenta
 function showAccountScreen() {
     hideAllMainSections();
     if (localStorage.getItem('loggedIn') === 'true') {
@@ -272,7 +403,7 @@ function showAccountScreen() {
     }
     document.getElementById('account-screen').style.display = 'block';
     hideAllSubScreensOfAccount();
-    document.getElementById('profile-screen').style.display = 'block'; // Por defecto
+    document.getElementById('profile-screen').style.display = 'block';
 }
 
 function hideAllSubScreensOfAccount() {
@@ -281,6 +412,7 @@ function hideAllSubScreensOfAccount() {
 }
 
 // ================== Subpantallas concretas ===================
+// Mi Progreso
 function showStudyTimeScreen() {
     showProgressMainScreen();
     hideAllSubScreensOfProgress();
@@ -495,7 +627,6 @@ function handleLogin(event) {
         document.querySelector('header').style.display = 'flex';
         document.querySelector('footer').style.display = 'block';
 
-        // Mostramos la sección "Mi Progreso"
         showProgressMainScreen();
 
         if (!users[email].onboardingCompleted) {
@@ -557,13 +688,12 @@ function handleProfileUpdate(event) {
 
     user.profile = profile;
     user.examDate = profile.examDate;
-    // Actualizamos name en localStorage si el usuario escribe su nombre completo
+    // Si rellena "fullName", actualizamos user.name para que se muestre en la pantalla principal
     user.name = profile.fullName || user.name;
 
     localStorage.setItem('users', JSON.stringify(users));
     alert('Perfil actualizado con éxito.');
 
-    // Actualizamos el icono y el "Hola, XX" en la pantalla principal
     updateProfileIcon();
     updateUserNameHome();
     updateDashboard();
@@ -588,7 +718,7 @@ function updateProfileIcon() {
     }
 }
 
-// Para subir imagen de perfil
+// Subir imagen de perfil
 function handleImageUpload(event) {
     const reader = new FileReader();
     reader.onload = function (e) {
@@ -599,9 +729,9 @@ function handleImageUpload(event) {
     }
 }
 
-// ================== Actividad Reciente, Onboarding, etc. ===================
+// ================== Actividad, Onboarding, etc. ===================
 function loadRecentActivity() {
-    // si hubiera alguna lógica para cargar actividad
+    // Carga de la actividad si fuera necesaria
 }
 
 function updateRecentActivitySummary() {
@@ -697,7 +827,6 @@ function updateDashboard() {
     const daysRemainingElement = document.getElementById('days-remaining');
     const studyHoursElement = document.getElementById('study-hours');
 
-    // Si el usuario ha rellenado su nombre completo, lo reflejamos
     updateUserNameHome();
 
     // Días para el examen
@@ -711,7 +840,7 @@ function updateDashboard() {
         daysRemainingElement.textContent = '--';
     }
 
-    // Horas totales de estudio
+    // Horas totales
     const totalStudyTime = calculateTotalStudyTime(email);
     studyHoursElement.textContent = totalStudyTime ? totalStudyTime + ' horas' : '--';
 
@@ -737,7 +866,7 @@ function handleLogoClick() {
     }
 }
 
-// Racha Diaria
+// Racha
 function loadDailyStreak() {
     const email = localStorage.getItem('email');
     const user = users[email];
@@ -774,7 +903,7 @@ function handleDailyCheckIn() {
             document.getElementById('checkin-status').textContent = "Ya hiciste check-in hoy.";
             return;
         } else if (diff === 1) {
-            user.dailyStreak = user.dailyStreak + 1;
+            user.dailyStreak++;
             user.lastCheckinDate = new Date();
             dailyStreak = user.dailyStreak;
             addNotification(`Racha incrementada a ${dailyStreak} días.`);
@@ -924,4 +1053,3 @@ function checkDailyQuizAnswer(selectedIndex) {
 function redirectToDiscord() {
     window.open(discordInviteLink, '_blank');
 }
-

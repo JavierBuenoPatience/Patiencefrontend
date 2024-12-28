@@ -91,6 +91,7 @@
     <!-- Contenido principal -->
     <div class="main-content" id="main-content">
         <div class="content-container">
+
             <!-- Pantalla de Login -->
             <div class="card" id="login-screen">
                 <img src="assets/logo.png" alt="Logo Patience" class="logo">
@@ -377,53 +378,6 @@
                         <!-- Tarjetas de especialidad IA (dinámico) -->
                     </div>
                 </div>
-
-                <!-- Guía de IA -->
-                <div class="card" id="guide-screen" style="display: none;">
-                    <h2>Guía para Aprovechar la IA</h2>
-                    <div class="guide-section">
-                        <p>Descubre cómo interactuar eficazmente con nuestras herramientas y maximiza tu aprendizaje.</p>
-                        <div class="prompt-section">
-                            <h4>Generar un examen aleatorio:</h4>
-                            <p>
-                                <strong>Ejemplo:</strong> 
-                                "Genera un examen de oposición para la especialidad de 
-                                <span class="prompt-hint">Matemáticas</span> 
-                                con 5 temas aleatorios y 2 ejercicios prácticos relacionados."
-                            </p>
-                        </div>
-                        <div class="prompt-section">
-                            <h4>Crear una introducción desde cero:</h4>
-                            <p>
-                                <strong>Ejemplo:</strong> 
-                                "Crea una introducción para el tema 
-                                <span class="prompt-hint">La Revolución Industrial</span> 
-                                en <span class="prompt-hint">inglés</span>, 
-                                utilizando un estilo formal y académico."
-                            </p>
-                        </div>
-                        <div class="prompt-section">
-                            <h4>Obtener ejercicios prácticos corregidos:</h4>
-                            <p>
-                                <strong>Ejemplo:</strong> 
-                                "Proporciona 3 ejercicios prácticos para la especialidad de 
-                                <span class="prompt-hint">Biología</span> 
-                                con sus soluciones detalladas."
-                            </p>
-                        </div>
-                        <div class="prompt-section">
-                            <h4>Resolver dudas específicas:</h4>
-                            <p>
-                                <strong>Ejemplo:</strong> 
-                                "¿Puedes explicarme el concepto de 
-                                <span class="prompt-hint">derivadas parciales</span> 
-                                y cómo se aplica en 
-                                <span class="prompt-hint">cálculo multivariable</span>?"
-                            </p>
-                        </div>
-                        <p>¡Sé creativo y explora diferentes tipos de preguntas!</p>
-                    </div>
-                </div>
             </div>
             <!-- ================================================================ -->
 
@@ -484,18 +438,19 @@
                             <button onclick="showNewsContent('csif')">CSIF</button>
                             <button onclick="showNewsContent('sipri')">SIPRI</button>
                         </div>
-                        <div class="iframe-container">
+                        <div class="iframe-container" style="height: 900px; width: 100%; max-width: 1200px;">
                             <iframe 
                                 id="csif-iframe" 
                                 class="news-iframe"
                                 src="https://www.csif.es/andalucia/educacion/oposiciones"
                                 sandbox="allow-same-origin allow-scripts allow-popups"
+                                style="width: 100%; height: 100%;"
                             >
                             </iframe>
                             <iframe 
                                 id="sipri-iframe" 
                                 class="news-iframe" 
-                                style="display: none;"
+                                style="display: none; width: 100%; height: 100%;"
                                 src="https://sipri.es/oposiciones/"
                                 sandbox="allow-same-origin allow-scripts allow-popups"
                             >
@@ -504,11 +459,80 @@
                     </div>
                 </div>
 
+                <!-- Pantalla de Guía IA -->
+                <div class="card" id="guide-screen" style="display: none;">
+                    <h2>Guía para Aprovechar la IA</h2>
+                    <div class="guide-section">
+                        <p>Descubre cómo interactuar eficazmente con nuestras herramientas y maximiza tu aprendizaje.</p>
+                        <div class="prompt-section">
+                            <h4>Generar un examen aleatorio:</h4>
+                            <p>
+                                <strong>Ejemplo:</strong> 
+                                "Genera un examen de oposición para la especialidad de 
+                                <span class="prompt-hint">Matemáticas</span> 
+                                con 5 temas aleatorios y 2 ejercicios prácticos relacionados."
+                            </p>
+                        </div>
+                        <div class="prompt-section">
+                            <h4>Crear una introducción desde cero:</h4>
+                            <p>
+                                <strong>Ejemplo:</strong> 
+                                "Crea una introducción para el tema 
+                                <span class="prompt-hint">La Revolución Industrial</span> 
+                                en <span class="prompt-hint">inglés</span>, 
+                                utilizando un estilo formal y académico."
+                            </p>
+                        </div>
+                        <div class="prompt-section">
+                            <h4>Obtener ejercicios prácticos corregidos:</h4>
+                            <p>
+                                <strong>Ejemplo:</strong> 
+                                "Proporciona 3 ejercicios prácticos para la especialidad de 
+                                <span class="prompt-hint">Biología</span> 
+                                con sus soluciones detalladas."
+                            </p>
+                        </div>
+                        <div class="prompt-section">
+                            <h4>Resolver dudas específicas:</h4>
+                            <p>
+                                <strong>Ejemplo:</strong> 
+                                "¿Puedes explicarme el concepto de 
+                                <span class="prompt-hint">derivadas parciales</span> 
+                                y cómo se aplica en 
+                                <span class="prompt-hint">cálculo multivariable</span>?"
+                            </p>
+                        </div>
+                        <p>¡Sé creativo y explora diferentes tipos de preguntas!</p>
+                    </div>
+                </div>
+
+                <!-- Pantalla de “Sobre Patience” (Qué es Patience) -->
+                <div class="card" id="training-screen" style="display: none;">
+                    <h2>Sobre Patience</h2>
+                    <p>La plataforma que revoluciona la forma de preparar oposiciones: moderna, eficiente y adaptada a ti.</p>
+                    <div class="training-section">
+                        <h3>¿Por qué elegir Patience?</h3>
+                        <ul>
+                            <li><strong>Innovación Tecnológica:</strong> Tecnologías y herramientas de vanguardia.</li>
+                            <li><strong>Comunidad Activa:</strong> Conecta con otros opositores y comparte experiencias.</li>
+                            <li><strong>Recursos Personalizados:</strong> Accede a materiales según tu especialidad.</li>
+                            <li><strong>Actualizaciones Constantes:</strong> Nuevas funcionalidades en cada versión.</li>
+                        </ul>
+                    </div>
+                    <div class="training-image">
+                        <img src="assets/training.jpg" alt="Imagen Representativa">
+                    </div>
+                </div>
+
                 <!-- Pantalla de Ayuda -->
                 <div class="card" id="help-screen" style="display: none;">
                     <h2>Ayuda</h2>
                     <p>¿Tienes dudas o necesitas asistencia? ¡Estamos aquí para ayudarte!</p>
                     <p>Contáctanos en <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a> o utiliza el botón flotante abajo.</p>
+                    <div class="guide-section" style="margin-top: 30px;">
+                        <button onclick="showGuideScreen()" style="margin-bottom:10px;">Guía IA</button>
+                        <button onclick="showTraining()" style="margin-bottom:10px;">Sobre Patience</button>
+                    </div>
                 </div>
             </div>
             <!-- ================================================================ -->
@@ -519,8 +543,8 @@
                 <div class="card" id="profile-screen" style="display: none;">
                     <h2>Mi Perfil</h2>
                     <form id="profile-form" onsubmit="handleProfileUpdate(event)">
-                        <div class="profile-field">
-                            <div class="profile-image-container">
+                        <div class="profile-field" style="text-align:center;">
+                            <div class="profile-image-container" style="margin: 0 auto;">
                                 <img 
                                     id="profile-img" 
                                     src="assets/default-profile.png" 

@@ -928,13 +928,14 @@ function handleDailyCheckIn() {
 
 // Cronómetro
 function startTimer() {
-    if (isTimerRunning) return;
-    isTimerRunning = true;
-    const startTime = Date.now() - elapsedTime;
-    timerInterval = setInterval(() => {
-        elapsedTime = Date.now() - startTime;
-        updateTimerDisplay();
-    }, 1000);
+    if (!isTimerRunning) {
+        isTimerRunning = true;
+        const startTime = Date.now() - elapsedTime;
+        timerInterval = setInterval(() => {
+            elapsedTime = Date.now() - startTime;
+            updateTimerDisplay();
+        }, 1000);
+    }
 
     const startBtn = document.getElementById('start-timer');
     const pauseBtn = document.getElementById('pause-timer');
@@ -1059,16 +1060,15 @@ function redirectToDiscord() {
 }
 
 // ================== IA Especializada ===================
-// Cargar tarjetas IA
 function initSpecialties() {
     const aiCardsContainer = document.getElementById('ai-cards-container');
     if (!aiCardsContainer) return;
     aiCardsContainer.innerHTML = '';
 
+    // Por defecto, mostramos TODAS las especialidades
     specialties.forEach(specialty => {
         const aiCard = document.createElement('div');
         aiCard.classList.add('ai-card');
-
         aiCard.onclick = () => {
             if (specialty.url !== '#') {
                 window.open(specialty.url, '_blank');
@@ -1085,21 +1085,41 @@ function initSpecialties() {
     });
 }
 
-// Filtro de especialidades
 function filterSpecialties() {
     const searchTerm = document.getElementById('ai-search-input')?.value.toLowerCase() || '';
     const aiCardsContainer = document.getElementById('ai-cards-container');
     if (!aiCardsContainer) return;
     aiCardsContainer.innerHTML = '';
 
-    const filteredSpecialties = specialties.filter(specialty =>
+    // Si no hay ningún término de búsqueda, mostramos TODAS las especialidades
+    if (!searchTerm) {
+        specialties.forEach(specialty => {
+            const aiCard = document.createElement('div');
+            aiCard.classList.add('ai-card');
+            aiCard.onclick = () => {
+                if (specialty.url !== '#') {
+                    window.open(specialty.url, '_blank');
+                } else {
+                    alert('Enlace próximamente disponible.');
+                }
+            };
+            aiCard.innerHTML = `
+                <img src="assets/${specialty.image}" alt="${specialty.name}">
+                <h3>${specialty.name}</h3>
+            `;
+            aiCardsContainer.appendChild(aiCard);
+        });
+        return;
+    }
+
+    // De lo contrario, filtramos
+    const filtered = specialties.filter(specialty =>
         specialty.name.toLowerCase().includes(searchTerm)
     );
 
-    filteredSpecialties.forEach(specialty => {
+    filtered.forEach(specialty => {
         const aiCard = document.createElement('div');
         aiCard.classList.add('ai-card');
-
         aiCard.onclick = () => {
             if (specialty.url !== '#') {
                 window.open(specialty.url, '_blank');
@@ -1107,7 +1127,6 @@ function filterSpecialties() {
                 alert('Enlace próximamente disponible.');
             }
         };
-
         aiCard.innerHTML = `
             <img src="assets/${specialty.image}" alt="${specialty.name}">
             <h3>${specialty.name}</h3>

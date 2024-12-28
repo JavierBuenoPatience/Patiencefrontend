@@ -835,7 +835,7 @@ form textarea {
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
-    height: 700px;
+    height: 700px; /* Ajustable, en HTML se puso height:900px inline */
 }
 
 .news-iframe {

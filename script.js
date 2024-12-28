@@ -347,7 +347,8 @@ function showStudyMainScreen() {
     }
     document.getElementById('study-main-screen').style.display = 'block';
     hideAllSubScreensOfStudy();
-    document.getElementById('documents-screen').style.display = 'block'; 
+    // Mostramos primero "documents-screen" por defecto
+    document.getElementById('documents-screen').style.display = 'block';
 }
 
 function hideAllSubScreensOfStudy() {
@@ -383,7 +384,7 @@ function showNewsHelpScreen() {
     }
     document.getElementById('news-help-screen').style.display = 'block';
     hideAllSubScreensOfNewsHelp();
-    document.getElementById('news-screen').style.display = 'block'; 
+    document.getElementById('news-screen').style.display = 'block';
 }
 
 function hideAllSubScreensOfNewsHelp() {

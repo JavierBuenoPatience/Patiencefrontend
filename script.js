@@ -496,7 +496,6 @@ function showComingSoon() {
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const isPinned = localStorage.getItem('sidebarPinned') === 'true';
-    if (isPinned) return;
     sidebar.classList.toggle('show-sidebar');
 }
 
@@ -505,14 +504,18 @@ function togglePinSidebar() {
     const sidebar = document.getElementById('sidebar');
     const isPinned = localStorage.getItem('sidebarPinned') === 'true';
 
+   // Si estaba pineado, lo despineamos
     if (isPinned) {
         localStorage.setItem('sidebarPinned', 'false');
         pinButton.classList.remove('pinned');
         sidebar.classList.remove('pinned');
     } else {
+        // Lo pineamos
         localStorage.setItem('sidebarPinned', 'true');
         pinButton.classList.add('pinned');
         sidebar.classList.add('pinned');
+        // Nos aseguramos de que se vea
+        sidebar.classList.add('show-sidebar');
     }
 }
 
@@ -524,9 +527,12 @@ function loadSidebarState() {
     if (isPinned) {
         pinButton.classList.add('pinned');
         sidebar.classList.add('pinned');
+        sidebar.classList.add('show-sidebar');
     } else {
         pinButton.classList.remove('pinned');
         sidebar.classList.remove('pinned');
+        // No forzamos el “hide” al cargar
+        // para evitar problemas en móvil, etc.
     }
 }
 

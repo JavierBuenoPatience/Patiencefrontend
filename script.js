@@ -86,7 +86,7 @@ const discordInviteLink = "https://discord.gg/qGB36SqR";
 // Obtenemos los usuarios de localStorage (por si mantenemos algo local).
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
-// ====== LISTADO COMPLETO DE ACADEMIAS ====== (Mantienes igual)
+// ====== LISTADO COMPLETO DE ACADEMIAS ======
 const academies = [
     {
         id: 1,
@@ -249,6 +249,7 @@ const academies = [
         image: 'academia-16.jpg'
     }
 ];
+
 // Datos de especialidades (IA)
 const specialties = [
     {
@@ -316,7 +317,6 @@ const motivationalMessages = [
 ];
 let motivationalMessageIndex = 0;
 
-
 // Racha
 let dailyStreak = 0;
 
@@ -375,6 +375,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // =========================================================
+// FUNCIÓN PARA OCULTAR SECCIONES PRINCIPALES
+// =========================================================
+function hideAllMainSections() {
+    // Oculta todas las secciones de la interfaz principal
+    const sections = [
+        'progress-main-screen',
+        'study-main-screen',
+        'communities-main-screen',
+        'news-help-screen',
+        'account-screen'
+    ];
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+    });
+}
+
+// =========================================================
 // MANEJO DE REGISTRO & LOGIN (con backend)
 // =========================================================
 async function handleRegistration(event) {
@@ -407,11 +425,9 @@ async function handleLogin(event) {
         const loginResp = await loginUserAPI(email, password);
         console.log("Respuesta login:", loginResp);
 
-        // Si es correcto, guardamos "loggedIn"
         localStorage.setItem('loggedIn', 'true');
         localStorage.setItem('email', email);
-        localStorage.setItem('name', loginResp.name || ""); 
-        // localStorage.setItem('token', loginResp.token);
+        localStorage.setItem('name', loginResp.name || "");
 
         hideLoginAndRegistrationScreens();
         document.querySelector('header').style.display = 'flex';
@@ -430,18 +446,23 @@ function handleLogout() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('email');
     localStorage.removeItem('name');
-    // localStorage.removeItem('token');
 
     hideAllMainSections();
     showLoginScreen();
 }
 
+// =========================================================
+// VALIDACIÓN EMAIL (OPCIONAL)
+// =========================================================
 function validateEmail(email) {
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     const hotmailRegex = /^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\.com$/;
     return gmailRegex.test(email) || hotmailRegex.test(email);
 }
 
+// =========================================================
+// MOSTRAR/OCULTAR PANTALLAS DE LOGIN/REGISTRO
+// =========================================================
 function showLoginScreen() {
     hideAllMainSections();
     document.getElementById('login-screen').style.display = 'block';
@@ -520,7 +541,9 @@ function handleImageUpload(event) {
     }
 }
 
-// Actividad
+// =========================================================
+// ACTIVIDAD
+// =========================================================
 function loadRecentActivity() {}
 function updateRecentActivitySummary() {
     const email = localStorage.getItem('email');
@@ -565,7 +588,9 @@ function addActivity(message) {
     updateRecentActivitySummary();
 }
 
-// Onboarding
+// =========================================================
+// ONBOARDING
+// =========================================================
 function startOnboarding() {
     showOverlay();
     showOnboardingStep(1);
@@ -603,7 +628,9 @@ function hideOverlay() {
     overlay.style.display = 'none';
 }
 
-// Dashboard, Racha
+// =========================================================
+// DASHBOARD, Racha
+// =========================================================
 function updateDashboard() {
     const email = localStorage.getItem('email');
     const user = users[email];
@@ -612,7 +639,6 @@ function updateDashboard() {
 
     updateUserNameHome();
 
-    // Días para el examen
     if (user?.examDate) {
         const examDate = new Date(user.examDate);
         const today = new Date();
@@ -623,7 +649,6 @@ function updateDashboard() {
         daysRemainingElement.textContent = '--';
     }
 
-    // Horas totales
     const totalStudyTime = calculateTotalStudyTime(email);
     studyHoursElement.textContent = totalStudyTime ? totalStudyTime + ' horas' : '--';
 
@@ -704,7 +729,13 @@ function handleDailyCheckIn() {
     updateRecentActivitySummary();
 }
 
-// Cronómetro
+// =========================================================
+// CRONÓMETRO
+// =========================================================
+let timerInterval;
+let elapsedTime = 0;
+let isTimerRunning = false;
+
 function startTimer() {
     if (!isTimerRunning) {
         isTimerRunning = true;
@@ -779,7 +810,9 @@ function saveStudySession() {
     updateRecentActivitySummary();
 }
 
-// Quiz Diario
+// =========================================================
+// QUIZ DIARIO
+// =========================================================
 function openQuizModal() {
     const quizModal = document.getElementById('quiz-modal');
     quizModal.style.display = 'block';
@@ -832,12 +865,16 @@ function checkDailyQuizAnswer(selectedIndex) {
     updateRecentActivitySummary();
 }
 
-// Discord (Grupos)
+// =========================================================
+// DISCORD (GRUPOS)
+// =========================================================
 function redirectToDiscord() {
     window.open(discordInviteLink, '_blank');
 }
 
-// IA Especializada
+// =========================================================
+// IA ESPECIALIZADA
+// =========================================================
 function initSpecialties() {
     const aiCardsContainer = document.getElementById('ai-cards-container');
     if (!aiCardsContainer) return;
@@ -909,7 +946,9 @@ function filterSpecialties() {
     });
 }
 
-// Directorio Academias
+// =========================================================
+// DIRECTORIO DE ACADEMIAS
+// =========================================================
 function initAcademyDirectory() {
     populateFilters();
     renderAcademies();
@@ -1040,7 +1079,9 @@ function saveUserAnnotation(academyName, annotation) {
     updateRecentActivitySummary();
 }
 
-// Noticias
+// =========================================================
+// NOTICIAS
+// =========================================================
 function showNewsContent(newsType) {
     const csifIframe = document.getElementById('csif-iframe');
     const sipriIframe = document.getElementById('sipri-iframe');
@@ -1057,7 +1098,9 @@ function showNewsContent(newsType) {
     }
 }
 
-// Documentos
+// =========================================================
+// DOCUMENTOS
+// =========================================================
 function uploadDocuments(event) {
     const email = localStorage.getItem('email');
     const files = event.target.files;
@@ -1271,7 +1314,9 @@ function toggleDocumentsView() {
     displayDocuments();
 }
 
-// Sidebar & Notificaciones
+// =========================================================
+// SIDEBAR & NOTIFICACIONES
+// =========================================================
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const isPinned = localStorage.getItem('sidebarPinned') === 'true';

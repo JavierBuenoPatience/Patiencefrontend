@@ -2,34 +2,51 @@
 <html lang="es">
 <head>
     <!-- Metadatos -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Patience - Revolucionando tu Preparación</title>
 
     <!-- Enlaces a CSS y fuentes -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
 
     <!-- Fuentes de Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap"
-        rel="stylesheet">
+        rel="stylesheet"
+    />
 
     <!-- Iconos de FontAwesome -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
 </head>
 
 <body>
     <!-- Barra Lateral de Navegación con 5 SECCIONES -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="assets/logo.png" alt="Logo Patience" class="sidebar-logo" title="Logo Patience">
-            <button class="pin-sidebar" id="pin-sidebar" onclick="togglePinSidebar()" title="Fijar barra lateral">
+            <img
+                src="assets/logo.png"
+                alt="Logo Patience"
+                class="sidebar-logo"
+                title="Logo Patience"
+            />
+            <button
+                class="pin-sidebar"
+                id="pin-sidebar"
+                onclick="togglePinSidebar()"
+                title="Fijar barra lateral"
+            >
                 <i class="fas fa-thumbt"></i>
             </button>
-            <button class="close-sidebar" onclick="toggleSidebar()" title="Cerrar barra lateral">
+            <button
+                class="close-sidebar"
+                onclick="toggleSidebar()"
+                title="Cerrar barra lateral"
+            >
                 <i class="fas fa-times"></i>
             </button>
         </div>
@@ -69,14 +86,30 @@
             <button id="menu-icon" onclick="toggleSidebar()" title="Abrir barra lateral">
                 <i class="fas fa-bars"></i>
             </button>
-            <img src="assets/logo.png" alt="Logo Patience" class="header-logo" onclick="handleLogoClick()" title="Ir al inicio">
+            <img
+                src="assets/logo.png"
+                alt="Logo Patience"
+                class="header-logo"
+                onclick="handleLogoClick()"
+                title="Ir al inicio"
+            />
         </div>
         <div class="header-right">
-            <div class="notification-icon" onclick="toggleNotifications()" title="Notificaciones">
+            <div
+                class="notification-icon"
+                onclick="toggleNotifications()"
+                title="Notificaciones"
+            >
                 <i class="fas fa-bell"></i>
                 <span id="notification-count" class="notification-count">0</span>
             </div>
-            <img src="assets/default-profile.png" alt="Icono de Perfil" id="profile-icon" onclick="showProfile()" title="Ir a tu Perfil">
+            <img
+                src="assets/default-profile.png"
+                alt="Icono de Perfil"
+                id="profile-icon"
+                onclick="showProfile()"
+                title="Ir a tu Perfil"
+            />
         </div>
     </header>
 
@@ -91,75 +124,78 @@
     <!-- Contenido principal -->
     <div class="main-content" id="main-content">
         <div class="content-container">
-
             <!-- Pantalla de Login -->
             <div class="card" id="login-screen">
-                <img src="assets/logo.png" alt="Logo Patience" class="logo">
+                <img src="assets/logo.png" alt="Logo Patience" class="logo" />
                 <h2>Bienvenido a Patience</h2>
                 <p class="intro-text">La plataforma revolucionaria para opositores modernos</p>
                 <form id="login-form" onsubmit="handleLogin(event)">
                     <label for="login-email">Correo Electrónico:</label>
-                    <input 
-                        type="email" 
-                        id="login-email" 
-                        name="email" 
-                        required 
+                    <input
+                        type="email"
+                        id="login-email"
+                        name="email"
+                        required
                         placeholder="ejemplo@gmail.com"
                         aria-label="Correo electrónico"
-                    >
+                    />
                     <label for="login-password">Contraseña:</label>
-                    <input 
-                        type="password" 
-                        id="login-password" 
-                        name="password" 
+                    <input
+                        type="password"
+                        id="login-password"
+                        name="password"
                         required
                         placeholder="********"
                         aria-label="Contraseña"
-                    >
+                    />
                     <button type="submit" aria-label="Iniciar Sesión">Iniciar Sesión</button>
                 </form>
                 <p>
                     ¿No tienes una cuenta todavía?
-                    <button type="button" onclick="showRegistrationScreen()">¡Regístrate!</button>
+                    <button type="button" onclick="showRegistrationScreen()"
+                        >¡Regístrate!</button
+                    >
                 </p>
             </div>
 
             <!-- Pantalla de Registro -->
             <div class="card" id="registration-screen" style="display: none;">
-                <img src="assets/logo.png" alt="Logo Patience" class="logo">
+                <img src="assets/logo.png" alt="Logo Patience" class="logo" />
                 <h2>Crea tu Cuenta</h2>
                 <p class="intro-text">Únete a la revolución en la preparación de oposiciones</p>
                 <form id="registration-form" onsubmit="handleRegistration(event)">
                     <label for="reg-name">Nombre:</label>
-                    <input 
-                        type="text" 
-                        id="reg-name" 
-                        name="name" 
-                        required 
+                    <input
+                        type="text"
+                        id="reg-name"
+                        name="name"
+                        required
                         placeholder="Tu nombre completo"
-                    >
+                    />
                     <label for="reg-email">Correo Electrónico:</label>
-                    <input 
-                        type="email" 
-                        id="reg-email" 
-                        name="email" 
-                        required 
+                    <input
+                        type="email"
+                        id="reg-email"
+                        name="email"
+                        required
                         placeholder="ejemplo@gmail.com"
-                    >
+                    />
                     <label for="reg-password">Contraseña:</label>
-                    <input 
-                        type="password" 
-                        id="reg-password" 
-                        name="password" 
-                        required 
+                    <input
+                        type="password"
+                        id="reg-password"
+                        name="password"
+                        required
                         placeholder="********"
-                    >
+                    />
                     <button type="submit">Registrarse</button>
                 </form>
-                <p id="registration-message" style="display: none;">¡Gracias por registrarte! Ahora puedes iniciar sesión.</p>
-                <button 
-                    id="welcome-button" 
-                    class="welcome-button" 
+                <p id="registration-message" style="display: none;">
+                    ¡Gracias por registrarte! Ahora puedes iniciar sesión.
+                </p>
+                <button
+                    id="welcome-button"
+                    class="welcome-button"
                     style="display: none;"
                     onclick="showLoginScreen()"
                 >
@@ -172,22 +208,37 @@
             </div>
 
             <!-- Onboarding (tutorial) -->
-            <div class="onboarding-overlay" id="onboarding-overlay" style="display: none;">
+            <div
+                class="onboarding-overlay"
+                id="onboarding-overlay"
+                style="display: none;"
+            >
                 <div class="onboarding-content" id="onboarding-content">
                     <div class="onboarding-step" id="onboarding-step-1">
                         <h2>¡Bienvenido a Patience!</h2>
-                        <p>Te guiaremos a través de las funcionalidades clave para aprovechar la plataforma.</p>
+                        <p>
+                            Te guiaremos a través de las funcionalidades clave para aprovechar la
+                            plataforma.
+                        </p>
                         <button onclick="nextOnboardingStep()">Siguiente</button>
-                        <button onclick="finishOnboarding()" style="margin-left: 10px;">Saltar Onboarding</button>
+                        <button onclick="finishOnboarding()" style="margin-left: 10px;">
+                            Saltar Onboarding
+                        </button>
                     </div>
                     <div class="onboarding-step" id="onboarding-step-2" style="display: none;">
                         <h2>Perfil Personalizado</h2>
-                        <p>Completa tu perfil para recibir recomendaciones y recursos adaptados a tus necesidades.</p>
+                        <p>
+                            Completa tu perfil para recibir recomendaciones y recursos adaptados a tus
+                            necesidades.
+                        </p>
                         <button onclick="nextOnboardingStep()">Siguiente</button>
                     </div>
                     <div class="onboarding-step" id="onboarding-step-3" style="display: none;">
                         <h2>IA Especializada</h2>
-                        <p>Accede a nuestras herramientas de inteligencia artificial según tu especialidad.</p>
+                        <p>
+                            Accede a nuestras herramientas de inteligencia artificial según tu
+                            especialidad.
+                        </p>
                         <button onclick="nextOnboardingStep()">Siguiente</button>
                     </div>
                     <div class="onboarding-step" id="onboarding-step-4" style="display: none;">
@@ -197,7 +248,9 @@
                     </div>
                     <div class="onboarding-step" id="onboarding-step-5" style="display: none;">
                         <h2>Mi Progreso</h2>
-                        <p>Registra y visualiza tu avance diario, horas de estudio y racha.</p>
+                        <p>
+                            Registra y visualiza tu avance diario, horas de estudio y racha.
+                        </p>
                         <button onclick="finishOnboarding()">¡Empezar!</button>
                     </div>
                 </div>
@@ -209,17 +262,21 @@
                 <div class="card home-card" id="progress-screen" style="display: none;">
                     <div class="welcome-section">
                         <h1>¡Hola, <span id="user-name-home"></span>!</h1>
-                        <p>Prepárate para tus oposiciones de forma innovadora y eficiente con Patience.</p>
+                        <p>
+                            Prepárate para tus oposiciones de forma innovadora y eficiente con
+                            Patience.
+                        </p>
                     </div>
+
                     <!-- Métricas principales (Racha, horas, días para examen) -->
                     <div class="home-metrics">
                         <div class="metric-item">
                             <h3><i class="fas fa-calendar-alt"></i> Días para el examen</h3>
                             <p id="days-remaining">--</p>
                         </div>
-                        <div 
-                            class="metric-item" 
-                            onclick="showStudyTimeScreen()" 
+                        <div
+                            class="metric-item"
+                            onclick="showStudyTimeScreen()"
                             style="cursor: pointer;"
                         >
                             <h3><i class="fas fa-clock"></i> Horas de estudio</h3>
@@ -231,13 +288,16 @@
                             <p id="daily-streak">0 días</p>
                         </div>
                     </div>
+
                     <!-- Panel: Tu día hoy (Check-in, Objetivo, Quiz) -->
                     <div class="today-panel">
                         <h2>Tu día hoy</h2>
                         <div class="checkin-section">
                             <h3>Check-In Diario</h3>
                             <p>Haz check-in para mantener tu racha.</p>
-                            <button id="daily-checkin-button" onclick="handleDailyCheckIn()">Check-In</button>
+                            <button id="daily-checkin-button" onclick="handleDailyCheckIn()">
+                                Check-In
+                            </button>
                             <p id="checkin-status"></p>
                         </div>
                         <div class="daily-goal-section">
@@ -248,6 +308,7 @@
                             <button id="open-quiz-button" onclick="openQuizModal()">Quiz Diario</button>
                         </div>
                     </div>
+
                     <!-- Accesos Rápidos -->
                     <div class="quick-links-panel">
                         <h2>Accesos Rápidos</h2>
@@ -263,6 +324,7 @@
                             </button>
                         </div>
                     </div>
+
                     <!-- Actividad Reciente -->
                     <div class="feed-panel">
                         <h2>Actividad Reciente</h2>
@@ -279,7 +341,9 @@
                         <p id="quiz-question">Cargando pregunta...</p>
                         <div id="quiz-options"></div>
                         <p id="quiz-result"></p>
-                        <button id="next-quiz-button" onclick="loadDailyQuiz()">Siguiente pregunta</button>
+                        <button id="next-quiz-button" onclick="loadDailyQuiz()">
+                            Siguiente pregunta
+                        </button>
                     </div>
                 </div>
 
@@ -303,7 +367,6 @@
 
             <!-- ======================= SECCIÓN 2: ESTUDIO ======================= -->
             <div id="study-main-screen" style="display: none;">
-
                 <!-- Submenú de opciones de estudio -->
                 <div class="card" id="study-menu-screen" style="margin-bottom: 20px;">
                     <h2>Opciones de Estudio</h2>
@@ -319,21 +382,25 @@
                     <h2>Documentos</h2>
                     <div class="document-management">
                         <div class="document-buttons">
-                            <label for="upload-document" class="upload-label" title="Subir documentos desde tu equipo">
+                            <label
+                                for="upload-document"
+                                class="upload-label"
+                                title="Subir documentos desde tu equipo"
+                            >
                                 <i class="fas fa-upload"></i> Subir
                             </label>
-                            <input 
-                                type="file" 
-                                id="upload-document" 
-                                multiple 
+                            <input
+                                type="file"
+                                id="upload-document"
+                                multiple
                                 style="display: none;"
-                            >
+                            />
                             <button class="create-folder-button" onclick="createFolder()">
                                 <i class="fas fa-folder-plus"></i> Nueva Carpeta
                             </button>
-                            <button 
-                                class="create-folder-button" 
-                                onclick="toggleDocumentsView()" 
+                            <button
+                                class="create-folder-button"
+                                onclick="toggleDocumentsView()"
                                 id="toggle-docs-view"
                                 title="Cambiar vista (Lista / Cuadrícula)"
                             >
@@ -341,22 +408,22 @@
                             </button>
                         </div>
                         <div class="search-filter">
-                            <input 
-                                type="text" 
-                                id="document-search" 
+                            <input
+                                type="text"
+                                id="document-search"
                                 placeholder="Buscar documentos..."
                                 oninput="filterDocuments()"
-                            >
+                            />
                         </div>
                         <!-- Área de drag & drop -->
-                        <div 
+                        <div
                             id="drag-drop-area"
                             ondragover="handleDragOver(event)"
                             ondrop="handleDrop(event)"
                         >
                             Arrastra aquí tus archivos para subirlos
                         </div>
-                        <div 
+                        <div
                             id="documents-container"
                             class="documents-container list-view"
                         >
@@ -369,21 +436,32 @@
                 <div class="card" id="ai-screen" style="display: none;">
                     <h2>IA Especializada</h2>
                     <div class="ai-instructions">
-                        <p>Accede a nuestras herramientas de inteligencia artificial según tu especialidad.</p>
+                        <p>
+                            Accede a nuestras herramientas de inteligencia artificial según tu
+                            especialidad.
+                        </p>
                         <ol>
-                            <li>Selecciona tu especialidad en las tarjetas de abajo.</li>
-                            <li>Serás redirigido a la página correspondiente (OpenAI ChatGPT).</li>
-                            <li>Inicia sesión o crea una cuenta en OpenAI si aún no lo has hecho.</li>
-                            <li>¡Comienza a interactuar con la IA para reforzar tu estudio!</li>
+                            <li>
+                                Selecciona tu especialidad en las tarjetas de abajo.
+                            </li>
+                            <li>
+                                Serás redirigido a la página correspondiente (OpenAI ChatGPT).
+                            </li>
+                            <li>
+                                Inicia sesión o crea una cuenta en OpenAI si aún no lo has hecho.
+                            </li>
+                            <li>
+                                ¡Comienza a interactuar con la IA para reforzar tu estudio!
+                            </li>
                         </ol>
                     </div>
                     <div class="ai-search">
-                        <input 
-                            type="text" 
-                            id="ai-search-input" 
-                            placeholder="Buscar especialidad..." 
+                        <input
+                            type="text"
+                            id="ai-search-input"
+                            placeholder="Buscar especialidad..."
                             oninput="filterSpecialties()"
-                        >
+                        />
                     </div>
                     <div class="ai-cards-container" id="ai-cards-container">
                         <!-- Tarjetas de especialidad IA (dinámico) -->
@@ -397,12 +475,20 @@
                 <!-- Pantalla de Grupos -->
                 <div class="card" id="groups-screen" style="display: none;">
                     <h2>Grupos</h2>
-                    <p>Únete para conectar con otros opositores, compartir recursos y estudiar juntos.</p>
+                    <p>
+                        Únete para conectar con otros opositores, compartir recursos y estudiar juntos.
+                    </p>
                     <div class="discord-section">
-                        <img src="assets/discord-logo.png" alt="Discord Logo" class="discord-logo">
+                        <img
+                            src="assets/discord-logo.png"
+                            alt="Discord Logo"
+                            class="discord-logo"
+                        />
                         <h3>Empieza ahora</h3>
                         <p>Haz clic en el botón y saca el máximo partido a Patience.</p>
-                        <button class="join-discord-button" onclick="redirectToDiscord()">¡Quiero entrar!</button>
+                        <button class="join-discord-button" onclick="redirectToDiscord()">
+                            ¡Quiero entrar!
+                        </button>
                     </div>
                 </div>
 
@@ -424,9 +510,9 @@
                         </select>
 
                         <!-- Botón placeholder para “ver en mapa” -->
-                        <button 
-                            onclick="alert('Integración con mapa en desarrollo')" 
-                            class="create-folder-button" 
+                        <button
+                            onclick="alert('Integración con mapa en desarrollo')"
+                            class="create-folder-button"
                             style="margin-left: auto;"
                         >
                             <i class="fas fa-map"></i> Ver en Mapa
@@ -450,18 +536,21 @@
                             <button onclick="showNewsContent('sipri')">SIPRI</button>
                         </div>
                         <!-- Iframe Container Ajustado -->
-                        <div class="iframe-container" style="height: 900px; width: 100%; max-width: 1200px;">
-                            <iframe 
-                                id="csif-iframe" 
+                        <div
+                            class="iframe-container"
+                            style="height: 900px; width: 100%; max-width: 1200px;"
+                        >
+                            <iframe
+                                id="csif-iframe"
                                 class="news-iframe"
                                 src="https://www.csif.es/andalucia/educacion/oposiciones"
                                 sandbox="allow-same-origin allow-scripts allow-popups"
                                 style="width: 100%; height: 100%;"
                             >
                             </iframe>
-                            <iframe 
-                                id="sipri-iframe" 
-                                class="news-iframe" 
+                            <iframe
+                                id="sipri-iframe"
+                                class="news-iframe"
                                 style="display: none; width: 100%; height: 100%;"
                                 src="https://sipri.es/oposiciones/"
                                 sandbox="allow-same-origin allow-scripts allow-popups"
@@ -475,43 +564,45 @@
                 <div class="card" id="guide-screen" style="display: none;">
                     <h2>Guía para Aprovechar la IA</h2>
                     <div class="guide-section">
-                        <p>Descubre cómo interactuar eficazmente con nuestras herramientas y maximiza tu aprendizaje.</p>
+                        <p>
+                            Descubre cómo interactuar eficazmente con nuestras herramientas y
+                            maximiza tu aprendizaje.
+                        </p>
                         <div class="prompt-section">
                             <h4>Generar un examen aleatorio:</h4>
                             <p>
-                                <strong>Ejemplo:</strong> 
-                                "Genera un examen de oposición para la especialidad de 
-                                <span class="prompt-hint">Matemáticas</span> 
+                                <strong>Ejemplo:</strong>
+                                "Genera un examen de oposición para la especialidad de
+                                <span class="prompt-hint">Matemáticas</span>
                                 con 5 temas aleatorios y 2 ejercicios prácticos relacionados."
                             </p>
                         </div>
                         <div class="prompt-section">
                             <h4>Crear una introducción desde cero:</h4>
                             <p>
-                                <strong>Ejemplo:</strong> 
-                                "Crea una introducción para el tema 
-                                <span class="prompt-hint">La Revolución Industrial</span> 
-                                en <span class="prompt-hint">inglés</span>, 
-                                utilizando un estilo formal y académico."
+                                <strong>Ejemplo:</strong>
+                                "Crea una introducción para el tema
+                                <span class="prompt-hint">La Revolución Industrial</span>
+                                en <span class="prompt-hint">inglés</span>, utilizando un estilo
+                                formal y académico."
                             </p>
                         </div>
                         <div class="prompt-section">
                             <h4>Obtener ejercicios prácticos corregidos:</h4>
                             <p>
-                                <strong>Ejemplo:</strong> 
-                                "Proporciona 3 ejercicios prácticos para la especialidad de 
-                                <span class="prompt-hint">Biología</span> 
-                                con sus soluciones detalladas."
+                                <strong>Ejemplo:</strong>
+                                "Proporciona 3 ejercicios prácticos para la especialidad de
+                                <span class="prompt-hint">Biología</span> con sus soluciones
+                                detalladas."
                             </p>
                         </div>
                         <div class="prompt-section">
                             <h4>Resolver dudas específicas:</h4>
                             <p>
-                                <strong>Ejemplo:</strong> 
-                                "¿Puedes explicarme el concepto de 
-                                <span class="prompt-hint">derivadas parciales</span> 
-                                y cómo se aplica en 
-                                <span class="prompt-hint">cálculo multivariable</span>?"
+                                <strong>Ejemplo:</strong>
+                                "¿Puedes explicarme el concepto de
+                                <span class="prompt-hint">derivadas parciales</span> y cómo se
+                                aplica en <span class="prompt-hint">cálculo multivariable</span>?"
                             </p>
                         </div>
                         <p>¡Sé creativo y explora diferentes tipos de preguntas!</p>
@@ -521,18 +612,33 @@
                 <!-- Pantalla de “Sobre Patience” (Qué es Patience) -->
                 <div class="card" id="training-screen" style="display: none;">
                     <h2>Sobre Patience</h2>
-                    <p>La plataforma que revoluciona la forma de preparar oposiciones: moderna, eficiente y adaptada a ti.</p>
+                    <p>
+                        La plataforma que revoluciona la forma de preparar oposiciones: moderna,
+                        eficiente y adaptada a ti.
+                    </p>
                     <div class="training-section">
                         <h3>¿Por qué elegir Patience?</h3>
                         <ul>
-                            <li><strong>Innovación Tecnológica:</strong> Tecnologías y herramientas de vanguardia.</li>
-                            <li><strong>Comunidad Activa:</strong> Conecta con otros opositores y comparte experiencias.</li>
-                            <li><strong>Recursos Personalizados:</strong> Accede a materiales según tu especialidad.</li>
-                            <li><strong>Actualizaciones Constantes:</strong> Nuevas funcionalidades en cada versión.</li>
+                            <li>
+                                <strong>Innovación Tecnológica:</strong> Tecnologías y herramientas
+                                de vanguardia.
+                            </li>
+                            <li>
+                                <strong>Comunidad Activa:</strong> Conecta con otros opositores y
+                                comparte experiencias.
+                            </li>
+                            <li>
+                                <strong>Recursos Personalizados:</strong> Accede a materiales según
+                                tu especialidad.
+                            </li>
+                            <li>
+                                <strong>Actualizaciones Constantes:</strong> Nuevas funcionalidades
+                                en cada versión.
+                            </li>
                         </ul>
                     </div>
                     <div class="training-image">
-                        <img src="assets/training.jpg" alt="Imagen Representativa">
+                        <img src="assets/training.jpg" alt="Imagen Representativa" />
                     </div>
                 </div>
 
@@ -540,10 +646,18 @@
                 <div class="card" id="help-screen" style="display: none;">
                     <h2>Ayuda</h2>
                     <p>¿Tienes dudas o necesitas asistencia? ¡Estamos aquí para ayudarte!</p>
-                    <p>Contáctanos en <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a> o utiliza el botón flotante abajo.</p>
+                    <p>
+                        Contáctanos en
+                        <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a>
+                        o utiliza el botón flotante abajo.
+                    </p>
                     <div class="guide-section" style="margin-top: 30px;">
-                        <button onclick="showGuideScreen()" style="margin-bottom:10px;">Guía IA</button>
-                        <button onclick="showTraining()" style="margin-bottom:10px;">Sobre Patience</button>
+                        <button onclick="showGuideScreen()" style="margin-bottom:10px;">
+                            Guía IA
+                        </button>
+                        <button onclick="showTraining()" style="margin-bottom:10px;">
+                            Sobre Patience
+                        </button>
                     </div>
                 </div>
             </div>
@@ -557,87 +671,87 @@
                     <form id="profile-form" onsubmit="handleProfileUpdate(event)">
                         <div class="profile-field" style="text-align:center;">
                             <div class="profile-image-container" style="margin: 0 auto;">
-                                <img 
-                                    id="profile-img" 
-                                    src="assets/default-profile.png" 
-                                    alt="Imagen de Perfil" 
+                                <img
+                                    id="profile-img"
+                                    src="assets/default-profile.png"
+                                    alt="Imagen de Perfil"
                                     class="profile-img"
+                                />
+                                <label
+                                    for="profile-img-upload"
+                                    class="upload-profile-label"
+                                    title="Subir foto de perfil"
                                 >
-                                <label for="profile-img-upload" class="upload-profile-label" title="Subir foto de perfil">
                                     <i class="fas fa-camera"></i>
                                 </label>
-                                <input 
-                                    type="file" 
-                                    id="profile-img-upload" 
-                                    class="profile-img-upload" 
+                                <input
+                                    type="file"
+                                    id="profile-img-upload"
+                                    class="profile-img-upload"
                                     accept="image/*"
                                     onchange="handleImageUpload(event)"
-                                >
+                                />
                             </div>
                         </div>
                         <div class="profile-field">
                             <label for="full-name">Nombre Completo:</label>
-                            <input 
-                                type="text" 
-                                id="full-name" 
-                                name="full-name" 
-                                required 
+                            <input
+                                type="text"
+                                id="full-name"
+                                name="full-name"
+                                required
                                 placeholder="Tu nombre completo"
-                            >
+                            />
                         </div>
                         <div class="profile-field">
                             <label for="profile-email">Email:</label>
-                            <input 
-                                type="email" 
-                                id="profile-email" 
-                                name="profile-email" 
-                                required 
+                            <input
+                                type="email"
+                                id="profile-email"
+                                name="profile-email"
+                                required
                                 readonly
-                            >
+                            />
                         </div>
                         <div class="profile-field">
                             <label for="phone">Teléfono:</label>
-                            <input 
-                                type="tel" 
-                                id="phone" 
-                                name="phone" 
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
                                 placeholder="Tu número de teléfono"
-                            >
+                            />
                         </div>
                         <div class="profile-field">
                             <label for="exam-date">Fecha del examen:</label>
-                            <input 
-                                type="date" 
-                                id="exam-date" 
-                                name="exam-date"
-                            >
+                            <input type="date" id="exam-date" name="exam-date" />
                         </div>
                         <div class="profile-field">
                             <label for="specialty">Especialidad:</label>
-                            <input 
-                                type="text" 
-                                id="specialty" 
-                                name="specialty" 
+                            <input
+                                type="text"
+                                id="specialty"
+                                name="specialty"
                                 placeholder="Ej. Matemáticas, Inglés..."
-                            >
+                            />
                         </div>
                         <div class="profile-field">
                             <label for="hobbies">Aficiones:</label>
-                            <input 
-                                type="text" 
-                                id="hobbies" 
-                                name="hobbies" 
+                            <input
+                                type="text"
+                                id="hobbies"
+                                name="hobbies"
                                 placeholder="Lo que te gusta hacer"
-                            >
+                            />
                         </div>
                         <div class="profile-field">
                             <label for="location">Ubicación:</label>
-                            <input 
-                                type="text" 
-                                id="location" 
-                                name="location" 
+                            <input
+                                type="text"
+                                id="location"
+                                name="location"
                                 placeholder="Ej. Sevilla, Madrid..."
-                            >
+                            />
                         </div>
                         <button type="submit">Guardar Cambios</button>
                     </form>
@@ -646,7 +760,10 @@
                 <!-- Pantalla Próximamente (Mi Centro) -->
                 <div class="card" id="coming-soon-screen" style="display: none;">
                     <h2>Próximamente</h2>
-                    <p>Estamos desarrollando nuevas funcionalidades sorprendentes. ¡Mantente al tanto!</p>
+                    <p>
+                        Estamos desarrollando nuevas funcionalidades sorprendentes. ¡Mantente al
+                        tanto!
+                    </p>
                 </div>
 
                 <!-- Botón (Placeholder) para Cerrar Sesión -->
@@ -661,7 +778,7 @@
     </div>
 
     <!-- Botón Flotante de Ayuda (Placeholder) -->
-    <div 
+    <div
         id="help-floating-button"
         style="
             position: fixed;
@@ -694,4 +811,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-

@@ -1,12 +1,19 @@
 /* =========================================================
-   SCRIPT.JS COMPLETO
-   ========================================================= */
+   SCRIPT.JS COMPLETO Y MODIFICADO
+   =========================================================
+   Este archivo asume que tu index.html ya contiene:
+   - Un formulario de registro con id="registration-form" y onsubmit="handleRegistration(event)"
+   - Un formulario de login con id="login-form" y onsubmit="handleLogin(event)"
+   - El resto de secciones (Mi Progreso, Estudio, Comunidades, Noticias & Ayuda, Mi Cuenta)
+     tal como nos lo pasaste.
+*/
 
 // =========================================================
 // 1. Ajusta esta URL donde corre tu backend FastAPI
+//    Asegúrate de que tu backend está corriendo en esa URL
+//    con un endpoint POST /users/ (para registrar).
 // =========================================================
 const BASE_URL = "http://127.0.0.1:8000";
-
 
 // =========================================================
 // 2. Conexión con Backend: Funciones API
@@ -44,31 +51,36 @@ async function registerUserAPI(name, email, password) {
 }
 
 /**
- * Login (simulado o ajustado a tu backend).
- * Si en tu backend tienes un endpoint /login con FastAPI,
- * cambia esta función para llamar a tu endpoint real.
+ * Login (simulado o ajustado a tu backend real).
+ * Si en tu backend tienes un endpoint /login con FastAPI, actualiza esta función:
+ * - Cambia la URL
+ * - Ajusta la forma en que tu backend recibe email/password
+ * - Maneja el token o la respuesta que devuelva el backend real
  */
 async function loginUserAPI(email, password) {
-    // EJEMPLO de cómo sería si existiera un endpoint real:
-    // const resp = await fetch(`${BASE_URL}/login`, {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ email, password })
-    // });
-    // if (!resp.ok) {
-    //   const errorData = await resp.json();
-    //   throw new Error(`Error al iniciar sesión: ${resp.status} - ${errorData.detail}`);
-    // }
-    // const data = await resp.json();
-    // return data;
+    // EJEMPLO de cómo sería si existiera un endpoint real (ajusta según tu API):
+    /*
+    const resp = await fetch(`${BASE_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+    if (!resp.ok) {
+      const errorData = await resp.json();
+      throw new Error(`Error al iniciar sesión: ${resp.status} - ${errorData.detail}`);
+    }
+    const data = await resp.json();
+    return data;
+    */
 
     // Por ahora, devolvemos un objeto simulado:
     if (!email || !password) {
         throw new Error("Correo o contraseña vacíos.");
     }
-    // Simplemente validamos algo tonto: si password === "123456"
-    // SÍ lo consideramos "éxito" (para demostración).
+    // Simplemente validamos algo: si password === "123456", es un "éxito" (demo).
+    // Si no, lanza error.
     if (password === "123456") {
+        // Retornamos un objeto simulando un "token"
         return {
             email,
             token: "fake-jwt-token"
@@ -80,7 +92,7 @@ async function loginUserAPI(email, password) {
 
 
 // =========================================================
-// 3. Tu configuración previa: colores, discord link...
+// 3. Tu configuración previa: colores, discord link, etc.
 // =========================================================
 const COLORS = {
     primary: '#1F3A93',
@@ -93,11 +105,11 @@ const COLORS = {
 
 const discordInviteLink = "https://discord.gg/qGB36SqR";
 
-// Obtenemos los usuarios almacenados en localStorage (TÚ DECIDES SI LO MANTIENES)
-// Ten en cuenta que ahora la parte de registro se hace en el backend.
+// Obtenemos los usuarios de localStorage (si aún quieres mantener la lógica local).
+// Ten en cuenta que ahora parte de la lógica de registro se hace en tu backend.
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
-// ====== LISTADO COMPLETO DE ACADEMIAS ======
+// ====== LISTADO COMPLETO DE ACADEMIAS ====== (Mantienes igual)
 const academies = [
     {
         id: 1,
@@ -290,7 +302,7 @@ const specialties = [
     }
 ];
 
-// Preguntas para el Quiz Diario (completas)
+// Preguntas para el Quiz Diario
 const dailyQuizQuestions = [
     {
         question: "¿Cuál es la capital de Francia?",
@@ -328,10 +340,10 @@ const motivationalMessages = [
 ];
 let motivationalMessageIndex = 0;
 
-// Variables para Racha Diaria (Daily Streak)
+// Variables para Racha Diaria
 let dailyStreak = 0;
 
-// Variables para el cronómetro
+// Variables para cronómetro
 let timerInterval;
 let elapsedTime = 0;
 let isTimerRunning = false;
@@ -362,10 +374,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inicializar directorio academias e IA
     initAcademyDirectory();
-    initSpecialties(); // <-- Importante para cargar tarjetas de IA
+    initSpecialties();
 
     updateNotifications();
 
+    // Para ocultar notificaciones cuando hagas click fuera
     document.addEventListener('click', (event) => {
         const notificationIcon = document.querySelector('.notification-icon');
         const notificationPanel = document.getElementById('notification-panel');
@@ -387,66 +400,69 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // =========================================================
-// 4. MANEJO DE REGISTRO & LOGIN
+// MANEJO DE REGISTRO & LOGIN (Actualizado para backend)
 // =========================================================
 
 /**
- * handleRegistration: Se llama desde el form #registration-form
- * Envía los datos a registerUserAPI para guardar en backend
+ * Se llama desde el form #registration-form: onsubmit="handleRegistration(event)"
  */
 async function handleRegistration(event) {
-    event.preventDefault();
+    event.preventDefault(); // Evita recargar y poner datos en URL
     const name = document.getElementById('reg-name').value;
     const email = document.getElementById('reg-email').value;
     const password = document.getElementById('reg-password').value;
 
     try {
-        // Llamada a la API real (FastAPI) para crear el usuario
+        // Llama a la API real (FastAPI) para crear el usuario
         const newUser = await registerUserAPI(name, email, password);
-        // Éxito
         console.log("Usuario registrado en backend:", newUser);
 
-        // Resetea el form y muestra mensaje
+        // Si todo va bien:
         document.getElementById('registration-form').reset();
         document.getElementById('registration-message').style.display = 'block';
         document.getElementById('welcome-button').style.display = 'block';
+
+        // Opcional: Podrías iniciar sesión automáticamente después de registrar
+        // handleLoginAuto(email, password); // si quieres
     } catch (error) {
         alert(error.message);
     }
 }
 
 /**
- * handleLogin: Se llama desde el form #login-form
- * Envía los datos a loginUserAPI (por ahora simulada)
+ * Se llama desde el form #login-form: onsubmit="handleLogin(event)"
  */
 async function handleLogin(event) {
-    event.preventDefault();
+    event.preventDefault(); // Evita recarga y URL
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
     try {
-        // Llamada a API de login (por ahora simulada)
+        // Llama a la API de login (por ahora simulada)
         const loginResp = await loginUserAPI(email, password);
         console.log("Respuesta login:", loginResp);
 
-        // Si es correcto
+        // Si es correcto, guardamos "loggedIn"
         localStorage.setItem('loggedIn', 'true');
         localStorage.setItem('email', email);
-        localStorage.setItem('name', ""); // Ajusta si tu backend devuelve el nombre
+        // Si tu backend devolviera un "name" real, podrías guardarlo
+        // localStorage.setItem('name', loginResp.name || "");
+        // Guardamos un token (si te devolviera uno)
+        // localStorage.setItem('token', loginResp.token);
 
+        // Ocultamos pantallas de login, mostramos main
         hideLoginAndRegistrationScreens();
         document.querySelector('header').style.display = 'flex';
         document.querySelector('footer').style.display = 'block';
         showProgressMainScreen();
-
-        // Si tu backend devolviera un token, guárdalo si quieres:
-        // localStorage.setItem('token', loginResp.token);
-
     } catch (error) {
         alert("Error al iniciar sesión: " + error.message);
     }
 }
 
+/**
+ * Cierra sesión
+ */
 function handleLogout() {
     if (isTimerRunning) {
         pauseTimer();
@@ -455,14 +471,15 @@ function handleLogout() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('email');
     localStorage.removeItem('name');
-    // si guardaste token: localStorage.removeItem('token');
+    // localStorage.removeItem('token');
 
     hideAllMainSections();
     showLoginScreen();
 }
 
+
 // =========================================================
-// 5. Validación de email (podrías adaptarlo a tu gusto)
+// VALIDACIÓN DE EMAIL
 // =========================================================
 function validateEmail(email) {
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
@@ -486,19 +503,17 @@ function showRegistrationScreen() {
     document.querySelector('footer').style.display = 'none';
 }
 
+
 // =========================================================
-// 6. Resto de tus funciones (perfil, cronómetro, etc.)
+// PERFIL, CRONÓMETRO, ETC. (Resto de funciones que ya tenías)
 // =========================================================
 
-// (AQUÍ MANTENEMOS TODAS LAS DEMÁS FUNCIONES QUE YA TENÍAS)
-
-// Ejemplo:
 function handleProfileUpdate(event) {
     event.preventDefault();
     const email = localStorage.getItem('email');
     const user = users[email];
     if (!user) {
-        alert("No se encuentra usuario local. (Podrías adaptarlo a backend)");
+        alert("No se encuentra usuario en localStorage. (En un futuro, obtendrías datos de backend.)");
         return;
     }
     const profile = {
@@ -542,7 +557,6 @@ function updateProfileIcon() {
     }
 }
 
-// Subir imagen de perfil
 function handleImageUpload(event) {
     const reader = new FileReader();
     reader.onload = function (e) {
@@ -553,8 +567,7 @@ function handleImageUpload(event) {
     }
 }
 
-// Carga y resumen de actividad, Onboarding, etc.
-// (Mantén exactamente lo que ya tenías)
+// Actividad
 function loadRecentActivity() {
     // ...
 }
@@ -639,7 +652,7 @@ function hideOverlay() {
     overlay.style.display = 'none';
 }
 
-// Dashboard, Racha, Cronómetro, etc.
+// Dashboard, Racha
 function updateDashboard() {
     const email = localStorage.getItem('email');
     const user = users[email];
@@ -685,7 +698,6 @@ function handleLogoClick() {
     }
 }
 
-// Racha
 function loadDailyStreak() {
     const email = localStorage.getItem('email');
     const user = users[email];
@@ -742,10 +754,6 @@ function handleDailyCheckIn() {
 }
 
 // Cronómetro
-let timerInterval;
-let elapsedTime = 0;
-let isTimerRunning = false;
-
 function startTimer() {
     if (!isTimerRunning) {
         isTimerRunning = true;
@@ -910,7 +918,6 @@ function filterSpecialties() {
     if (!aiCardsContainer) return;
     aiCardsContainer.innerHTML = '';
 
-    // Si no hay ningún término de búsqueda, mostramos TODAS
     if (!searchTerm) {
         specialties.forEach(specialty => {
             const aiCard = document.createElement('div');
@@ -931,7 +938,6 @@ function filterSpecialties() {
         return;
     }
 
-    // De lo contrario, filtramos
     const filtered = specialties.filter(specialty =>
         specialty.name.toLowerCase().includes(searchTerm)
     );
@@ -1316,47 +1322,7 @@ function toggleDocumentsView() {
     displayDocuments();
 }
 
-// Drag & Drop
-function handleDragOver(event) {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = 'copy';
-}
-
-function handleDrop(event) {
-    event.preventDefault();
-    const email = localStorage.getItem('email');
-    const files = event.dataTransfer.files;
-    if (!files || files.length === 0) return;
-
-    if (!users[email].documents) {
-        users[email].documents = [];
-    }
-
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            const documentData = {
-                name: file.name,
-                lastOpened: null,
-                folder: null,
-                fileContent: e.target.result,
-                fileType: file.type
-            };
-            users[email].documents.push(documentData);
-            localStorage.setItem('users', JSON.stringify(users));
-            displayDocuments();
-            addActivity(`Documento "${file.name}" subido vía Drag & Drop.`);
-            addNotification(`Documento "${file.name}" subido vía Drag & Drop.`);
-            updateRecentActivitySummary();
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-// ================== Sidebar & Notificaciones ===================
-
+// Sidebar & Notificaciones
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const isPinned = localStorage.getItem('sidebarPinned') === 'true';
@@ -1438,6 +1404,5 @@ function addNotification(message) {
 
 
 // =========================================================
-// FIN DE SCRIPT (no omitir nada)
+// FIN DEL SCRIPT
 // =========================================================
-

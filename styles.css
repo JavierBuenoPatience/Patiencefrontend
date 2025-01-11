@@ -1,13 +1,3 @@
-/* styles.css */
-
-/* 
-  Ajustes principales:
-  - Base font-size: 14px
-  - Foto de perfil: 100px
-  - Iframe de noticias: agrandado
-  - Se mantiene la paleta adaptada de Patience
-*/
-
 :root {
     --primary-color: #60CAAD; 
     --secondary-color: #38A38C; 
@@ -20,8 +10,6 @@
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --white-color: #FFFFFF;
     --notification-bg: rgba(0, 0, 0, 0.8);
-
-    /* Ajustamos la fuente base a 14px para que sea más compacto */
     --base-font-size: 14px;
 }
 
@@ -44,7 +32,6 @@ body {
     flex-direction: column;
 }
 
-/* Sidebar */
 .sidebar {
     position: fixed;
     top: 0;
@@ -58,43 +45,36 @@ body {
     transition: transform 0.3s ease-in-out;
     z-index: 1000;
 }
-
 .sidebar.show-sidebar {
     transform: translateX(0);
 }
-
 .sidebar.pinned {
     transform: translateX(0);
 }
-
 .sidebar-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
 .sidebar-logo {
     width: 110px;
     cursor: pointer;
 }
-
-.pin-sidebar, .close-sidebar {
+.pin-sidebar,
+.close-sidebar {
     background: none;
     border: none;
     color: var(--white-color);
     font-size: 18px;
     cursor: pointer;
 }
-
 .sidebar ul {
     list-style: none;
     margin-top: 40px;
 }
-
 .sidebar ul li {
     margin-bottom: 16px;
 }
-
 .sidebar ul li a {
     color: var(--white-color);
     text-decoration: none;
@@ -103,19 +83,16 @@ body {
     align-items: center;
     transition: color 0.2s;
 }
-
 .sidebar ul li a:hover {
     color: var(--accent-color);
 }
-
 .sidebar ul li a i {
     margin-right: 8px;
 }
 
-/* Header */
 header {
     width: 100%;
-    height: 50px; 
+    height: 50px;
     background-color: var(--accent-color);
     display: flex;
     align-items: center;
@@ -123,7 +100,7 @@ header {
     padding: 0 16px;
     position: fixed;
     top: 0;
-    left: 0; 
+    left: 0;
     right: 0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     z-index: 900;
@@ -134,12 +111,10 @@ header {
     display: flex;
     align-items: center;
 }
-
 .header-logo {
     height: 32px;
     cursor: pointer;
 }
-
 #menu-icon {
     background: none;
     border: none;
@@ -148,24 +123,20 @@ header {
     cursor: pointer;
     color: var(--text-color);
 }
-
 #menu-icon:hover {
     color: var(--secondary-color);
 }
-
 .header-right {
     display: flex;
     align-items: center;
     gap: 16px;
 }
-
 .notification-icon {
     position: relative;
     cursor: pointer;
     font-size: 18px;
     color: var(--text-color);
 }
-
 .notification-count {
     position: absolute;
     top: -5px;
@@ -176,7 +147,6 @@ header {
     padding: 2px 6px;
     font-size: 12px;
 }
-
 #profile-icon {
     width: 34px;
     height: 34px;
@@ -185,7 +155,6 @@ header {
     object-fit: cover;
 }
 
-/* Panel de Notificaciones */
 .notification-panel {
     position: absolute;
     top: 50px;
@@ -198,20 +167,17 @@ header {
     display: none;
     z-index: 1001;
 }
-
 .notification-panel h3 {
     padding: 12px;
     border-bottom: 1px solid var(--border-color);
     font-size: 16px;
     color: var(--secondary-color);
 }
-
 .notification-panel ul {
     list-style: none;
     max-height: 260px;
     overflow-y: auto;
 }
-
 .notification-panel ul li {
     padding: 8px 12px;
     border-bottom: 1px solid var(--border-color);
@@ -219,20 +185,16 @@ header {
     color: var(--text-color);
 }
 
-/* Contenido Principal */
 .main-content {
-    margin-top: 50px; 
-    margin-left: 0; 
+    margin-top: 50px;
+    margin-left: 0;
     padding: 16px;
     flex: 1;
     transition: margin-left 0.3s ease-in-out;
 }
-
 .sidebar.show-sidebar ~ .main-content {
-    margin-left: 220px; 
+    margin-left: 220px;
 }
-
-/* Footer */
 footer {
     background-color: var(--accent-color);
     text-align: center;
@@ -245,12 +207,10 @@ footer {
     right: 0;
     transition: left 0.3s ease-in-out;
 }
-
 .sidebar.show-sidebar ~ footer {
-    left: 220px; 
+    left: 220px;
 }
 
-/* Tarjetas (card) y diseño general */
 .card {
     background-color: var(--white-color);
     border: 1px solid var(--border-color);
@@ -259,19 +219,16 @@ footer {
     box-shadow: var(--box-shadow);
     margin-bottom: 16px;
 }
-
 .card h2 {
     font-size: 18px;
     color: var(--primary-color);
     margin-bottom: 10px;
 }
-
 .card p {
     font-size: 14px;
     color: var(--text-color);
     margin-bottom: 10px;
 }
-
 button {
     background-color: var(--secondary-color);
     color: var(--white-color);
@@ -282,28 +239,23 @@ button {
     cursor: pointer;
     transition: background-color 0.3s;
 }
-
 button:hover {
     background-color: var(--primary-color);
 }
-
 button:disabled {
     background-color: var(--border-color);
     cursor: not-allowed;
 }
 
-/* Formularios */
 form {
     display: flex;
     flex-direction: column;
 }
-
 form label {
     font-weight: 600;
     margin-bottom: 4px;
     font-size: 14px;
 }
-
 form input[type="text"],
 form input[type="email"],
 form input[type="password"],
@@ -319,29 +271,24 @@ form textarea {
     color: var(--text-color);
 }
 
-/* Pantalla Mi Progreso */
 .home-card {
     display: flex;
     flex-direction: column;
 }
-
 .welcome-section {
     text-align: center;
     margin-bottom: 20px;
 }
-
 .welcome-section h1 {
     font-size: 22px;
     margin-bottom: 8px;
     color: var(--primary-color);
 }
-
 .home-metrics {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
-
 .metric-item {
     background-color: var(--accent-color);
     border-radius: var(--border-radius);
@@ -351,38 +298,31 @@ form textarea {
     text-align: center;
     transition: background-color 0.3s;
 }
-
 .metric-item:last-child {
     margin-right: 0;
 }
-
 .metric-item h3 {
     font-size: 16px;
     margin-bottom: 6px;
     color: var(--secondary-color);
 }
-
 .metric-item p {
     font-size: 16px;
     font-weight: bold;
     color: var(--text-color);
 }
 
-/* Panel "Tu día hoy" */
 .today-panel {
     background-color: var(--accent-color);
     border-radius: var(--border-radius);
     padding: 14px;
     margin-bottom: 20px;
 }
-
 .today-panel h2 {
     font-size: 16px;
     color: var(--primary-color);
     margin-bottom: 10px;
 }
-
-/* Panel de Accesos Rápidos */
 .quick-links-panel {
     background-color: var(--accent-color);
     border-radius: var(--border-radius);
@@ -390,57 +330,40 @@ form textarea {
     margin-bottom: 20px;
     text-align: center;
 }
-
 .quick-links-panel h2 {
     font-size: 16px;
     color: var(--primary-color);
     margin-bottom: 10px;
 }
-
 .quick-links-container {
     display: flex;
     justify-content: center;
     gap: 10px;
 }
-
-.quick-links-container button {
-    background-color: var(--secondary-color);
-    color: var(--white-color);
-    padding: 12px;
-    border-radius: 50%;
-    font-size: 16px;
-}
-
-/* Panel de Actividad Reciente */
 .feed-panel {
     background-color: var(--accent-color);
     border-radius: var(--border-radius);
     padding: 14px;
     text-align: center;
 }
-
 .feed-panel h2 {
     font-size: 16px;
     color: var(--primary-color);
     margin-bottom: 10px;
 }
-
 .feed-panel p {
     font-size: 14px;
     margin-bottom: 6px;
 }
-
 .feed-panel a {
     color: var(--secondary-color);
     text-decoration: none;
     font-weight: 600;
 }
-
 .feed-panel a:hover {
     color: var(--primary-color);
 }
 
-/* Modal */
 .modal {
     position: fixed;
     top: 0;
@@ -453,7 +376,6 @@ form textarea {
     align-items: center;
     z-index: 2000;
 }
-
 .modal-content {
     background-color: var(--white-color);
     padding: 20px;
@@ -463,7 +385,6 @@ form textarea {
     position: relative;
     box-shadow: var(--box-shadow);
 }
-
 .close-modal {
     position: absolute;
     top: 10px;
@@ -473,7 +394,6 @@ form textarea {
     color: var(--secondary-text-color);
 }
 
-/* Pantalla de Horas de Estudio */
 .study-time-table {
     width: 100%;
     border-collapse: collapse;
@@ -482,45 +402,37 @@ form textarea {
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
 }
-
 .study-time-table th,
 .study-time-table td {
     padding: 10px;
     text-align: center;
     font-size: 14px;
 }
-
 .study-time-table th {
     background-color: var(--secondary-color);
     color: var(--white-color);
     font-weight: 600;
 }
-
 .study-time-table tr:nth-child(even) {
     background-color: var(--accent-color);
 }
-
 .study-time-table tr:hover {
     background-color: var(--secondary-color);
     color: var(--white-color);
 }
-
 .study-time-table td {
     border-bottom: 1px solid var(--border-color);
 }
 
-/* Documentos */
 .documents-screen .document-management {
     display: flex;
     flex-direction: column;
 }
-
 .document-buttons {
     display: flex;
     gap: 8px;
     margin-bottom: 10px;
 }
-
 .upload-label {
     background-color: var(--secondary-color);
     color: var(--white-color);
@@ -531,11 +443,9 @@ form textarea {
     font-size: 14px;
     padding: 8px 12px;
 }
-
 .upload-label i {
     margin-right: 5px;
 }
-
 .create-folder-button {
     background-color: var(--secondary-color);
     color: var(--white-color);
@@ -547,7 +457,6 @@ form textarea {
     align-items: center;
     padding: 8px 12px;
 }
-
 .search-filter input {
     width: 100%;
     padding: 8px;
@@ -556,25 +465,21 @@ form textarea {
     font-size: 14px;
     margin-bottom: 8px;
 }
-
 .documents-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-
-/* Vista lista / cuadrícula */
 .documents-container.list-view {
     flex-direction: column;
 }
-
 .documents-container.grid-view {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 10px;
 }
-
-.folder-card, .document-card {
+.folder-card,
+.document-card {
     background-color: var(--accent-color);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
@@ -586,23 +491,20 @@ form textarea {
     color: var(--text-color);
     transition: background-color 0.2s;
 }
-
-.folder-card:hover, .document-card:hover {
+.folder-card:hover,
+.document-card:hover {
     background-color: var(--secondary-color);
     color: var(--white-color);
 }
-
 .folder-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
 }
-
 .folder-documents {
     margin-top: 10px;
 }
-
 .document-card button {
     background: none;
     border: none;
@@ -610,12 +512,9 @@ form textarea {
     font-size: 14px;
     cursor: pointer;
 }
-
 .document-card button:hover {
     color: var(--white-color);
 }
-
-/* Área de drag & drop */
 #drag-drop-area {
     border: 2px dashed var(--secondary-color);
     border-radius: var(--border-radius);
@@ -626,28 +525,23 @@ form textarea {
     cursor: pointer;
 }
 
-/* IA Especializada */
 .ai-instructions {
     margin-bottom: 14px;
 }
-
 .ai-instructions p {
     font-size: 14px;
     margin-bottom: 8px;
 }
-
 .ai-instructions ol {
     list-style-type: decimal;
     padding-left: 18px;
 }
-
 .ai-cards-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
 }
-
 .ai-card {
     background-color: var(--white-color);
     border: 1px solid var(--border-color);
@@ -659,12 +553,10 @@ form textarea {
     transition: transform 0.2s, box-shadow 0.2s;
     text-align: center;
 }
-
 .ai-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
-
 .ai-card img {
     width: 100%;
     height: 120px;
@@ -672,14 +564,12 @@ form textarea {
     border-top-left-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);
 }
-
 .ai-card h3 {
     padding: 8px;
     font-size: 14px;
     color: var(--primary-color);
 }
 
-/* Comunidades: Grupos (Discord) */
 .discord-section {
     text-align: center;
     background-color: #5865F2;
@@ -687,12 +577,10 @@ form textarea {
     border-radius: var(--border-radius);
     color: var(--white-color);
 }
-
 .discord-logo {
     width: 80px;
     margin-bottom: 12px;
 }
-
 .join-discord-button {
     background-color: #7289DA;
     color: var(--white-color);
@@ -706,26 +594,22 @@ form textarea {
     margin-top: 10px;
     transition: background-color 0.3s;
 }
-
 .join-discord-button:hover {
     background-color: #5A73CF;
 }
 
-/* Directorio de Academias */
 .directory-screen .filter-section {
     display: flex;
     gap: 10px;
     margin-bottom: 12px;
     flex-wrap: wrap;
 }
-
 .directory-container {
     display: flex;
     flex-wrap: wrap;
     gap: 14px;
     justify-content: center;
 }
-
 .academy-card {
     background-color: var(--white-color);
     border: 1px solid var(--border-color);
@@ -735,12 +619,10 @@ form textarea {
     box-shadow: var(--box-shadow);
     transition: transform 0.2s, box-shadow 0.2s;
 }
-
 .academy-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
-
 .academy-header {
     display: flex;
     justify-content: space-between;
@@ -751,25 +633,20 @@ form textarea {
     border-top-left-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);
 }
-
 .academy-header h3 {
     font-size: 14px;
 }
-
 .academy-header span {
     font-size: 12px;
 }
-
 .academy-info {
     padding: 12px;
 }
-
 .academy-info p {
     font-size: 12px;
     margin-bottom: 4px;
     color: var(--text-color);
 }
-
 .academy-image {
     width: 100%;
     height: 160px;
@@ -777,19 +654,16 @@ form textarea {
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
 }
-
 .annotation-section {
     margin-top: 8px;
     padding: 0 12px 12px 12px;
 }
-
 .annotation-section label {
     font-size: 12px;
     color: var(--text-color);
     display: block;
     margin-bottom: 4px;
 }
-
 .annotation-section textarea {
     width: 100%;
     padding: 6px 8px;
@@ -799,19 +673,16 @@ form textarea {
     resize: vertical;
 }
 
-/* Noticias y Actualizaciones */
 .news-section {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 .news-buttons {
     display: flex;
     gap: 10px;
     margin-bottom: 14px;
 }
-
 .news-buttons button {
     background-color: var(--secondary-color);
     color: var(--white-color);
@@ -822,11 +693,9 @@ form textarea {
     cursor: pointer;
     transition: background-color 0.3s;
 }
-
 .news-buttons button:hover {
     background-color: var(--primary-color);
 }
-
 .iframe-container {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
@@ -835,33 +704,28 @@ form textarea {
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
-    height: 700px; /* Ajustable, en HTML se puso height:900px inline */
+    height: 700px;
 }
-
 .news-iframe {
     width: 100%;
     height: 100%;
     border: none;
 }
 
-/* Pantalla de Ayuda, Guía IA, Sobre Patience */
 .help-screen {
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
 }
 
-/* Actividad Completa */
 .activity-screen {
     max-width: 800px;
     margin: 0 auto;
 }
-
 .activity-screen ul {
     list-style-type: none;
     padding-left: 0;
 }
-
 .activity-screen ul li {
     background-color: var(--accent-color);
     border: 1px solid var(--border-color);
@@ -872,18 +736,15 @@ form textarea {
     color: var(--text-color);
 }
 
-/* Próximamente */
 .coming-soon-screen {
     text-align: center;
 }
 
-/* Perfil */
 .profile-screen form {
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
 }
-
 .profile-img {
     width: 100px;
     height: 100px;
@@ -891,7 +752,6 @@ form textarea {
     object-fit: cover;
     border: 2px solid var(--secondary-color);
 }
-
 .upload-profile-label {
     position: absolute;
     bottom: 0;
@@ -903,23 +763,18 @@ form textarea {
     cursor: pointer;
     font-size: 14px;
 }
-
 .profile-field {
     margin-bottom: 12px;
 }
-
 .profile-field label {
     font-weight: 600;
     display: block;
     margin-bottom: 4px;
     font-size: 14px;
 }
-
-/* Modal Quiz Diario */
 #quiz-modal .modal-content {
     max-width: 500px;
 }
-
 #quiz-modal .modal-content h2 {
     font-size: 16px;
     margin-bottom: 10px;
@@ -938,7 +793,6 @@ form textarea {
         left: 200px;
     }
 }
-
 @media (max-width: 768px) {
     .home-metrics {
         flex-direction: column;
@@ -947,11 +801,13 @@ form textarea {
     .quick-links-container {
         gap: 8px;
     }
-    .ai-card, .academy-card, .folder-card, .document-card {
+    .ai-card,
+    .academy-card,
+    .folder-card,
+    .document-card {
         width: 100%;
     }
 }
-
 @media (max-width: 480px) {
     .iframe-container {
         height: 500px;

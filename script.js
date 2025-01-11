@@ -1,39 +1,15 @@
-/* =========================================================
-   SCRIPT.JS COMPLETO Y MODIFICADO
-   =========================================================
-   - Este archivo conecta con tu backend en FastAPI.
-   - Asegúrate de que tu backend corre en la URL configurada.
-*/
+/* ==========================
+   SCRIPT.JS INTEGRADO
+========================== */
 
-// =========================================================
-// 1. Ajusta esta URL donde corre tu backend FastAPI
-//    Asegúrate de que tu backend está corriendo en esa URL
-//    con un endpoint POST /users/ (para registrar).
-// =========================================================
 const BASE_URL = "http://127.0.0.1:8000";
 
-// =========================================================
-// 2. Conexión con Backend: Funciones API
-// =========================================================
-
-/**
- * Llama al endpoint POST /users/ para registrar un nuevo usuario en la base de datos.
- * @param {string} name
- * @param {string} email
- * @param {string} password
- */
 async function registerUserAPI(name, email, password) {
     try {
         const resp = await fetch(`${BASE_URL}/users/`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ 
-                name, 
-                email, 
-                password 
-            })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, password })
         });
         if (!resp.ok) {
             const errorData = await resp.json();
@@ -47,31 +23,17 @@ async function registerUserAPI(name, email, password) {
     }
 }
 
-/**
- * Llama a un (posible) endpoint de login en tu backend (si existiera).
- * Aquí se simula con una validación local de password "123456"
- */
 async function loginUserAPI(email, password) {
-    // Ajusta la lógica si en tu backend implementas /login
-    // Aquí es solo un DEMO que comprueba password=123456:
     if (!email || !password) {
         throw new Error("Correo o contraseña vacíos.");
     }
     if (password === "123456") {
-        // Retornamos un objeto simulando un "token" y un "name"
-        return {
-            email,
-            name: "UsuarioDemo",
-            token: "fake-jwt-token"
-        };
+        return { email, name: "UsuarioDemo", token: "fake-jwt-token" };
     } else {
         throw new Error("Credenciales inválidas (demo).");
     }
 }
 
-// =========================================================
-// 3. Configuración previa: colores, link a Discord, etc.
-// =========================================================
 const COLORS = {
     primary: '#1F3A93',
     secondary: '#22A7F0',
@@ -83,254 +45,71 @@ const COLORS = {
 
 const discordInviteLink = "https://discord.gg/qGB36SqR";
 
-// Obtenemos los usuarios de localStorage (por si mantenemos algo local).
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
-// ====== LISTADO COMPLETO DE ACADEMIAS ======
 const academies = [
-    {
-        id: 1,
-        name: 'TecnosZubia',
-        city: 'Granada',
-        phone: '958 890 387',
-        email: 'info@tecnoszubia.es',
-        specialties: ['Maestros', 'Profesores', 'Administrativos', 'Seguridad', 'SAS'],
-        rating: '4.8/5',
-        image: 'academia-1.jpg'
-    },
-    {
-        id: 2,
-        name: 'CEAPRO',
-        city: 'Sevilla',
-        phone: '954 32 00 00',
-        email: 'info@ceapro.es',
-        specialties: ['Junta de Andalucía', 'Administración', 'Justicia', 'Educación', 'SAS'],
-        rating: '4.7/5',
-        image: 'academia-2.jpg'
-    },
-    {
-        id: 3,
-        name: 'Academia Jesús Ayala',
-        city: 'Málaga',
-        phone: '952 29 00 00',
-        email: 'info@academiajesusayala.com',
-        specialties: ['Junta de Andalucía', 'Educación', 'Justicia', 'Seguridad'],
-        rating: '4.6/5',
-        image: 'academia-3.jpg'
-    },
-    {
-        id: 4,
-        name: 'Centro Andaluz de Estudios',
-        city: 'Sevilla',
-        phone: '955 11 22 33',
-        email: 'info@centroandaluz.net',
-        specialties: ['Seguridad', 'Bomberos', 'Administración de Justicia'],
-        rating: '4.5/5',
-        image: 'academia-4.jpg'
-    },
-    {
-        id: 5,
-        name: 'Academia AM',
-        city: 'Sevilla',
-        phone: '954 21 43 21',
-        email: 'info@academiaam.es',
-        specialties: ['Junta de Andalucía', 'Estado', 'Justicia', 'Educación'],
-        rating: '4.4/5',
-        image: 'academia-5.jpg'
-    },
-    {
-        id: 6,
-        name: 'Academia Foro',
-        city: 'Sevilla',
-        phone: '954 22 33 44',
-        email: 'info@academiaforo.es',
-        specialties: ['Junta de Andalucía', 'Estado', 'SAS'],
-        rating: '4.3/5',
-        image: 'academia-6.jpg'
-    },
-    {
-        id: 7,
-        name: 'Adriano Preparador',
-        city: 'Sevilla',
-        phone: '954 33 44 55',
-        email: 'info@adrianopreparador.es',
-        specialties: ['Junta de Andalucía (cuerpos administrativos y técnicos)'],
-        rating: '4.2/5',
-        image: 'academia-7.jpg'
-    },
-    {
-        id: 8,
-        name: 'Academia Opositas',
-        city: 'Córdoba',
-        phone: '957 76 54 32',
-        email: 'info@opositas.com',
-        specialties: ['Justicia', 'Hacienda', 'Informática', 'Junta de Andalucía'],
-        rating: '4.1/5',
-        image: 'academia-8.jpg'
-    },
-    {
-        id: 9,
-        name: 'MasterD Sevilla',
-        city: 'Sevilla',
-        phone: '954 28 42 12',
-        email: 'info@masterd.es',
-        specialties: ['Auxiliar Administrativo', 'Guardia Civil', 'Celador', 'Auxiliar de Enfermería', 'Correos'],
-        rating: '4.0/5',
-        image: 'academia-9.jpg'
-    },
-    {
-        id: 10,
-        name: 'Academia de Enseñanza Méndez Núñez',
-        city: 'Sevilla',
-        phone: '954 22 52 25',
-        email: 'info@academiamn.com',
-        specialties: ['Junta de Andalucía', 'Educación (Infantil, Primaria, Secundaria)'],
-        rating: '4.0/5',
-        image: 'academia-10.jpg'
-    },
-    {
-        id: 11,
-        name: 'Academia Cartuja',
-        city: 'Sevilla',
-        phone: '954 33 22 11',
-        email: 'info@academiacartuja.com',
-        specialties: ['Magisterio', 'Justicia', 'Biblioteca', 'Celador', 'Correos'],
-        rating: '3.9/5',
-        image: 'academia-11.jpg'
-    },
-    {
-        id: 12,
-        name: 'Academia Progressus',
-        city: 'Sevilla',
-        phone: '954 44 55 66',
-        email: 'info@academiaprogressus.com',
-        specialties: ['Policía Nacional', 'Guardia Civil', 'Penitenciarias'],
-        rating: '3.8/5',
-        image: 'academia-12.jpg'
-    },
-    {
-        id: 13,
-        name: 'Academia Palmapol',
-        city: 'Sevilla',
-        phone: '954 55 66 77',
-        email: 'info@academiapalmapol.com',
-        specialties: ['Policía Nacional', 'Guardia Civil', 'Policía Local', 'Bomberos'],
-        rating: '3.7/5',
-        image: 'academia-13.jpg'
-    },
-    {
-        id: 14,
-        name: 'Academia CARE Formación',
-        city: 'Sevilla',
-        phone: '954 66 77 88',
-        email: 'info@careformacion.com',
-        specialties: ['Educación', 'Sanidad', 'Administración', 'Justicia'],
-        rating: '3.6/5',
-        image: 'academia-14.jpg'
-    },
-    {
-        id: 15,
-        name: 'Academia Innova',
-        city: 'Sevilla',
-        phone: '954 77 88 99',
-        email: 'info@academiainnova.com',
-        specialties: ['Estado', 'Andalucía', 'Justicia', 'Correos'],
-        rating: '3.5/5',
-        image: 'academia-15.jpg'
-    },
-    {
-        id: 16,
-        name: 'Academia Claustro',
-        city: 'Sevilla',
-        phone: '954 00 11 22',
-        email: 'info@academiaclaustro.com',
-        specialties: ['Educación', 'Administración', 'Justicia'],
-        rating: '3.4/5',
-        image: 'academia-16.jpg'
-    }
+    { id: 1, name: 'TecnosZubia', city: 'Granada', phone: '958 890 387', email: 'info@tecnoszubia.es',
+      specialties: ['Maestros', 'Profesores', 'Administrativos', 'Seguridad', 'SAS'], rating: '4.8/5', image: 'academia-1.jpg' },
+    { id: 2, name: 'CEAPRO', city: 'Sevilla', phone: '954 32 00 00', email: 'info@ceapro.es',
+      specialties: ['Junta de Andalucía', 'Administración', 'Justicia', 'Educación', 'SAS'], rating: '4.7/5', image: 'academia-2.jpg' },
+    { id: 3, name: 'Academia Jesús Ayala', city: 'Málaga', phone: '952 29 00 00', email: 'info@academiajesusayala.com',
+      specialties: ['Junta de Andalucía', 'Educación', 'Justicia', 'Seguridad'], rating: '4.6/5', image: 'academia-3.jpg' },
+    { id: 4, name: 'Centro Andaluz de Estudios', city: 'Sevilla', phone: '955 11 22 33', email: 'info@centroandaluz.net',
+      specialties: ['Seguridad', 'Bomberos', 'Administración de Justicia'], rating: '4.5/5', image: 'academia-4.jpg' },
+    { id: 5, name: 'Academia AM', city: 'Sevilla', phone: '954 21 43 21', email: 'info@academiaam.es',
+      specialties: ['Junta de Andalucía', 'Estado', 'Justicia', 'Educación'], rating: '4.4/5', image: 'academia-5.jpg' },
+    { id: 6, name: 'Academia Foro', city: 'Sevilla', phone: '954 22 33 44', email: 'info@academiaforo.es',
+      specialties: ['Junta de Andalucía', 'Estado', 'SAS'], rating: '4.3/5', image: 'academia-6.jpg' },
+    { id: 7, name: 'Adriano Preparador', city: 'Sevilla', phone: '954 33 44 55', email: 'info@adrianopreparador.es',
+      specialties: ['Junta de Andalucía (cuerpos administrativos y técnicos)'], rating: '4.2/5', image: 'academia-7.jpg' },
+    { id: 8, name: 'Academia Opositas', city: 'Córdoba', phone: '957 76 54 32', email: 'info@opositas.com',
+      specialties: ['Justicia', 'Hacienda', 'Informática', 'Junta de Andalucía'], rating: '4.1/5', image: 'academia-8.jpg' },
+    { id: 9, name: 'MasterD Sevilla', city: 'Sevilla', phone: '954 28 42 12', email: 'info@masterd.es',
+      specialties: ['Auxiliar Administrativo', 'Guardia Civil', 'Celador', 'Auxiliar de Enfermería', 'Correos'], rating: '4.0/5', image: 'academia-9.jpg' },
+    { id: 10, name: 'Academia de Enseñanza Méndez Núñez', city: 'Sevilla', phone: '954 22 52 25', email: 'info@academiamn.com',
+      specialties: ['Junta de Andalucía', 'Educación (Infantil, Primaria, Secundaria)'], rating: '4.0/5', image: 'academia-10.jpg' },
+    { id: 11, name: 'Academia Cartuja', city: 'Sevilla', phone: '954 33 22 11', email: 'info@academiacartuja.com',
+      specialties: ['Magisterio', 'Justicia', 'Biblioteca', 'Celador', 'Correos'], rating: '3.9/5', image: 'academia-11.jpg' },
+    { id: 12, name: 'Academia Progressus', city: 'Sevilla', phone: '954 44 55 66', email: 'info@academiaprogressus.com',
+      specialties: ['Policía Nacional', 'Guardia Civil', 'Penitenciarias'], rating: '3.8/5', image: 'academia-12.jpg' },
+    { id: 13, name: 'Academia Palmapol', city: 'Sevilla', phone: '954 55 66 77', email: 'info@academiapalmapol.com',
+      specialties: ['Policía Nacional', 'Guardia Civil', 'Policía Local', 'Bomberos'], rating: '3.7/5', image: 'academia-13.jpg' },
+    { id: 14, name: 'Academia CARE Formación', city: 'Sevilla', phone: '954 66 77 88', email: 'info@careformacion.com',
+      specialties: ['Educación', 'Sanidad', 'Administración', 'Justicia'], rating: '3.6/5', image: 'academia-14.jpg' },
+    { id: 15, name: 'Academia Innova', city: 'Sevilla', phone: '954 77 88 99', email: 'info@academiainnova.com',
+      specialties: ['Estado', 'Andalucía', 'Justicia', 'Correos'], rating: '3.5/5', image: 'academia-15.jpg' },
+    { id: 16, name: 'Academia Claustro', city: 'Sevilla', phone: '954 00 11 22', email: 'info@academiaclaustro.com',
+      specialties: ['Educación', 'Administración', 'Justicia'], rating: '3.4/5', image: 'academia-16.jpg' },
 ];
 
-// Datos de especialidades (IA)
 const specialties = [
-    {
-        name: 'Biología y Geología',
-        image: 'bio-geologia.jpg',
-        url: 'https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia'
-    },
-    {
-        name: 'Inglés como Segunda Lengua',
-        image: 'ingles.jpg',
-        url: 'https://chatgpt.com/g/g-mBJ4r4s53-patience-ingles'
-    },
-    {
-        name: 'Matemáticas',
-        image: 'matematicas.jpg',
-        url: 'https://chatgpt.com/g/g-67535b2f2b308191a87e2d15a89d6513-patience-matematicas'
-    },
-    {
-        name: 'Geografía e Historia',
-        image: 'geografia-historia.jpg',
-        url: 'https://chatgpt.com/g/g-67535eb0d2688191b60c3ee2be32f29e-patience-geografia-e-historia'
-    },
-    {
-        name: 'Francés como Lengua Extranjera',
-        image: 'frances.jpg',
-        url: 'https://chatgpt.com/g/g-67535fd05bdc8191856a432c21df2968-patience-frances'
-    }
+    { name: 'Biología y Geología', image: 'bio-geologia.jpg', url: 'https://chatgpt.com/g/g-xgl7diXqb-patience-biologia-y-geologia' },
+    { name: 'Inglés como Segunda Lengua', image: 'ingles.jpg', url: 'https://chatgpt.com/g/g-mBJ4r4s53-patience-ingles' },
+    { name: 'Matemáticas', image: 'matematicas.jpg', url: 'https://chatgpt.com/g/g-67535b2f2b308191a87e2d15a89d6513-patience-matematicas' },
+    { name: 'Geografía e Historia', image: 'geografia-historia.jpg', url: 'https://chatgpt.com/g/g-67535eb0d2688191b60c3ee2be32f29e-patience-geografia-e-historia' },
+    { name: 'Francés como Lengua Extranjera', image: 'frances.jpg', url: 'https://chatgpt.com/g/g-67535fd05bdc8191856a432c21df2968-patience-frances' }
 ];
 
-// Preguntas para el Quiz Diario
 const dailyQuizQuestions = [
-    {
-        question: "¿Cuál es la capital de Francia?",
-        options: ["París", "Londres", "Berlín"],
-        answer: 0
-    },
-    {
-        question: "¿Cuál es el resultado de 5x5?",
-        options: ["20", "25", "30"],
-        answer: 1
-    },
-    {
-        question: "¿La célula es la unidad...?",
-        options: ["De heredabilidad", "De estructura y función de los seres vivos", "De la fotosíntesis"],
-        answer: 1
-    },
-    {
-        question: "¿Cuál es el río más largo del mundo?",
-        options: ["Nilo", "Amazonas", "Yangtsé"],
-        answer: 1
-    },
-    {
-        question: "¿Quién escribió 'Don Quijote de la Mancha'?",
-        options: ["Miguel de Cervantes", "Federico García Lorca", "Gabriel García Márquez"],
-        answer: 0
-    }
+    { question: "¿Cuál es la capital de Francia?", options: ["París", "Londres", "Berlín"], answer: 0 },
+    { question: "¿Cuál es el resultado de 5x5?", options: ["20", "25", "30"], answer: 1 },
+    { question: "¿La célula es la unidad...?", options: ["De heredabilidad", "De estructura y función de los seres vivos", "De la fotosíntesis"], answer: 1 },
+    { question: "¿Cuál es el río más largo del mundo?", options: ["Nilo", "Amazonas", "Yangtsé"], answer: 1 },
+    { question: "¿Quién escribió 'Don Quijote de la Mancha'?", options: ["Miguel de Cervantes", "Federico García Lorca", "Gabriel García Márquez"], answer: 0 }
 ];
 let currentQuizIndex = -1;
-
-// Variables para mensajes motivacionales
 const motivationalMessages = [
     "¡Ánimo! Ya estás un poco más cerca de la meta.",
     "Lo estás haciendo genial, ¡sigue así!",
     "Un poco más y nos tomamos un descanso, ¡ánimo!"
 ];
 let motivationalMessageIndex = 0;
-
-// Racha
 let dailyStreak = 0;
-
-// Cronómetro
 let timerInterval;
 let elapsedTime = 0;
 let isTimerRunning = false;
+let documentsViewMode = 'list';
 
-// Documentos
-let documentsViewMode = 'list'; // 'list' o 'grid'
-
-// =========================================================
-// EVENT LISTENER PRINCIPAL (DOMContentLoaded)
-// =========================================================
 document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('loggedIn') === 'true') {
         hideLoginAndRegistrationScreens();
@@ -351,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initAcademyDirectory();
     initSpecialties();
-
     updateNotifications();
 
     document.addEventListener('click', (event) => {
@@ -374,11 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateRecentActivitySummary();
 });
 
-// =========================================================
-// FUNCIÓN PARA OCULTAR SECCIONES PRINCIPALES
-// =========================================================
+/* Oculta todas las secciones principales */
 function hideAllMainSections() {
-    // Oculta todas las secciones de la interfaz principal
     const sections = [
         'progress-main-screen',
         'study-main-screen',
@@ -392,9 +167,7 @@ function hideAllMainSections() {
     });
 }
 
-// =========================================================
-// MANEJO DE REGISTRO & LOGIN (con backend)
-// =========================================================
+/* Registro con backend */
 async function handleRegistration(event) {
     event.preventDefault();
     const name = document.getElementById('reg-name').value;
@@ -402,11 +175,7 @@ async function handleRegistration(event) {
     const password = document.getElementById('reg-password').value;
 
     try {
-        // Llama a la API real (FastAPI) para crear el usuario
         const newUser = await registerUserAPI(name, email, password);
-        console.log("Usuario registrado en backend:", newUser);
-
-        // Si todo va bien:
         document.getElementById('registration-form').reset();
         document.getElementById('registration-message').style.display = 'block';
         document.getElementById('welcome-button').style.display = 'block';
@@ -415,16 +184,14 @@ async function handleRegistration(event) {
     }
 }
 
+/* Login simulado */
 async function handleLogin(event) {
     event.preventDefault();
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
     try {
-        // Llama a la API de login (simulada)
         const loginResp = await loginUserAPI(email, password);
-        console.log("Respuesta login:", loginResp);
-
         localStorage.setItem('loggedIn', 'true');
         localStorage.setItem('email', email);
         localStorage.setItem('name', loginResp.name || "");
@@ -446,23 +213,10 @@ function handleLogout() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('email');
     localStorage.removeItem('name');
-
     hideAllMainSections();
     showLoginScreen();
 }
 
-// =========================================================
-// VALIDACIÓN EMAIL (OPCIONAL)
-// =========================================================
-function validateEmail(email) {
-    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-    const hotmailRegex = /^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\.com$/;
-    return gmailRegex.test(email) || hotmailRegex.test(email);
-}
-
-// =========================================================
-// MOSTRAR/OCULTAR PANTALLAS DE LOGIN/REGISTRO
-// =========================================================
 function showLoginScreen() {
     hideAllMainSections();
     document.getElementById('login-screen').style.display = 'block';
@@ -479,15 +233,13 @@ function showRegistrationScreen() {
     document.querySelector('footer').style.display = 'none';
 }
 
-// =========================================================
-// PERFIL, CRONÓMETRO, ETC.
-// =========================================================
+/* Perfil */
 function handleProfileUpdate(event) {
     event.preventDefault();
     const email = localStorage.getItem('email');
     const user = users[email];
     if (!user) {
-        alert("No se encuentra usuario en localStorage. (En un futuro, obtendrías datos de backend.)");
+        alert("No se encuentra usuario en localStorage.");
         return;
     }
     const profile = {
@@ -499,12 +251,11 @@ function handleProfileUpdate(event) {
         location: document.getElementById('location').value,
         profileImage: document.getElementById('profile-img').src
     };
-
     user.profile = profile;
     user.examDate = profile.examDate;
     user.name = profile.fullName || user.name;
     localStorage.setItem('users', JSON.stringify(users));
-    alert('Perfil actualizado con éxito.');
+    alert('Perfil actualizado.');
 
     updateProfileIcon();
     updateUserNameHome();
@@ -525,7 +276,6 @@ function updateProfileIcon() {
     const profileIcon = document.getElementById('profile-icon');
     const email = localStorage.getItem('email');
     const profile = users[email]?.profile || {};
-
     if (profileIcon) {
         profileIcon.src = profile.profileImage || 'assets/default-profile.png';
     }
@@ -541,9 +291,7 @@ function handleImageUpload(event) {
     }
 }
 
-// =========================================================
-// ACTIVIDAD
-// =========================================================
+/* Actividad */
 function loadRecentActivity() {}
 function updateRecentActivitySummary() {
     const email = localStorage.getItem('email');
@@ -588,9 +336,7 @@ function addActivity(message) {
     updateRecentActivitySummary();
 }
 
-// =========================================================
-// ONBOARDING
-// =========================================================
+/* Onboarding */
 function startOnboarding() {
     showOverlay();
     showOnboardingStep(1);
@@ -628,9 +374,7 @@ function hideOverlay() {
     overlay.style.display = 'none';
 }
 
-// =========================================================
-// DASHBOARD, Racha
-// =========================================================
+/* Dashboard y Racha */
 function updateDashboard() {
     const email = localStorage.getItem('email');
     const user = users[email];
@@ -648,7 +392,6 @@ function updateDashboard() {
     } else {
         daysRemainingElement.textContent = '--';
     }
-
     const totalStudyTime = calculateTotalStudyTime(email);
     studyHoursElement.textContent = totalStudyTime ? totalStudyTime + ' horas' : '--';
 
@@ -729,13 +472,7 @@ function handleDailyCheckIn() {
     updateRecentActivitySummary();
 }
 
-// =========================================================
-// CRONÓMETRO
-// =========================================================
-let timerInterval;
-let elapsedTime = 0;
-let isTimerRunning = false;
-
+/* Cronómetro */
 function startTimer() {
     if (!isTimerRunning) {
         isTimerRunning = true;
@@ -810,9 +547,7 @@ function saveStudySession() {
     updateRecentActivitySummary();
 }
 
-// =========================================================
-// QUIZ DIARIO
-// =========================================================
+/* Quiz Diario */
 function openQuizModal() {
     const quizModal = document.getElementById('quiz-modal');
     quizModal.style.display = 'block';
@@ -865,21 +600,16 @@ function checkDailyQuizAnswer(selectedIndex) {
     updateRecentActivitySummary();
 }
 
-// =========================================================
-// DISCORD (GRUPOS)
-// =========================================================
+/* Discord (Grupos) */
 function redirectToDiscord() {
     window.open(discordInviteLink, '_blank');
 }
 
-// =========================================================
-// IA ESPECIALIZADA
-// =========================================================
+/* IA Especializada */
 function initSpecialties() {
     const aiCardsContainer = document.getElementById('ai-cards-container');
     if (!aiCardsContainer) return;
     aiCardsContainer.innerHTML = '';
-
     specialties.forEach(specialty => {
         const aiCard = document.createElement('div');
         aiCard.classList.add('ai-card');
@@ -899,7 +629,7 @@ function initSpecialties() {
 }
 
 function filterSpecialties() {
-    const searchTerm = document.getElementById('ai-search-input')?.value.toLowerCase() || '';
+    const searchTerm = (document.getElementById('ai-search-input')?.value.toLowerCase() || '');
     const aiCardsContainer = document.getElementById('ai-cards-container');
     if (!aiCardsContainer) return;
     aiCardsContainer.innerHTML = '';
@@ -924,10 +654,9 @@ function filterSpecialties() {
         return;
     }
 
-    const filtered = specialties.filter(specialty =>
-        specialty.name.toLowerCase().includes(searchTerm)
+    const filtered = specialties.filter(s =>
+        s.name.toLowerCase().includes(searchTerm)
     );
-
     filtered.forEach(specialty => {
         const aiCard = document.createElement('div');
         aiCard.classList.add('ai-card');
@@ -946,9 +675,7 @@ function filterSpecialties() {
     });
 }
 
-// =========================================================
-// DIRECTORIO DE ACADEMIAS
-// =========================================================
+/* Directorio Academias */
 function initAcademyDirectory() {
     populateFilters();
     renderAcademies();
@@ -980,9 +707,7 @@ function populateFilters() {
 function filterAcademies() {
     const city = document.getElementById('city-filter')?.value;
     const specialty = document.getElementById('specialty-filter')?.value;
-
     let filteredAcademies = academies;
-
     if (city) {
         filteredAcademies = filteredAcademies.filter(a => a.city === city);
     }
@@ -995,7 +720,6 @@ function filterAcademies() {
 function renderAcademies(academyList = academies) {
     const academyContainer = document.getElementById('academy-container');
     if (!academyContainer) return;
-
     academyContainer.innerHTML = '';
 
     if (academyList.length === 0) {
@@ -1004,7 +728,6 @@ function renderAcademies(academyList = academies) {
         academyContainer.appendChild(noResults);
         return;
     }
-
     academyList.forEach(academy => {
         const academyCard = document.createElement('div');
         academyCard.classList.add('academy-card');
@@ -1079,18 +802,14 @@ function saveUserAnnotation(academyName, annotation) {
     updateRecentActivitySummary();
 }
 
-// =========================================================
-// NOTICIAS
-// =========================================================
+/* Noticias */
 function showNewsContent(newsType) {
     const csifIframe = document.getElementById('csif-iframe');
     const sipriIframe = document.getElementById('sipri-iframe');
-
     if (!csifIframe || !sipriIframe) return;
 
     csifIframe.style.display = 'none';
     sipriIframe.style.display = 'none';
-
     if (newsType === 'csif') {
         csifIframe.style.display = 'block';
     } else if (newsType === 'sipri') {
@@ -1098,20 +817,16 @@ function showNewsContent(newsType) {
     }
 }
 
-// =========================================================
-// DOCUMENTOS
-// =========================================================
+/* Documentos */
 function uploadDocuments(event) {
     const email = localStorage.getItem('email');
     const files = event.target.files;
     if (!users[email].documents) {
         users[email].documents = [];
     }
-
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const reader = new FileReader();
-
         reader.onload = function (e) {
             const documentData = {
                 name: file.name,
@@ -1168,7 +883,6 @@ function displayDocuments() {
     const email = localStorage.getItem('email');
     const documentsContainer = document.getElementById('documents-container');
     if (!documentsContainer) return;
-
     documentsContainer.innerHTML = '';
 
     if (documentsViewMode === 'list') {
@@ -1193,7 +907,6 @@ function displayDocuments() {
             e.stopPropagation();
             deleteFolder(folder.name);
         };
-
         folderHeader.appendChild(deleteButton);
         folderElement.appendChild(folderHeader);
 
@@ -1246,7 +959,6 @@ function openDocument(email, doc) {
     }
     const byteArray = new Uint8Array(byteNumbers);
     const blob = new Blob([byteArray], { type: doc.fileType });
-
     const blobUrl = URL.createObjectURL(blob);
     window.open(blobUrl, '_blank');
 
@@ -1265,7 +977,7 @@ function moveDocumentToFolder(email, documentName) {
                 folder.documents.push(document);
                 localStorage.setItem('users', JSON.stringify(users));
                 displayDocuments();
-                addNotification(`Documento "${documentName}" movido a la carpeta "${selectedFolder}".`);
+                addNotification(`Documento "${documentName}" movido a "${selectedFolder}".`);
                 addActivity(`Documento "${documentName}" movido a "${selectedFolder}".`);
                 updateRecentActivitySummary();
             } else {
@@ -1282,7 +994,6 @@ function filterDocuments() {
     const email = localStorage.getItem('email');
     const documentsContainer = document.getElementById('documents-container');
     if (!documentsContainer) return;
-
     documentsContainer.innerHTML = '';
 
     if (documentsViewMode === 'list') {
@@ -1297,7 +1008,6 @@ function filterDocuments() {
     const filteredDocuments = userDocuments.filter(doc =>
         doc.name.toLowerCase().includes(searchTerm)
     );
-
     filteredDocuments.forEach(doc => {
         const docElement = document.createElement('div');
         docElement.classList.add('document-card');
@@ -1314,12 +1024,9 @@ function toggleDocumentsView() {
     displayDocuments();
 }
 
-// =========================================================
-// SIDEBAR & NOTIFICACIONES
-// =========================================================
+/* Sidebar & Notificaciones */
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
-    const isPinned = localStorage.getItem('sidebarPinned') === 'true';
     sidebar.classList.toggle('show-sidebar');
 }
 
@@ -1327,7 +1034,6 @@ function togglePinSidebar() {
     const pinButton = document.getElementById('pin-sidebar');
     const sidebar = document.getElementById('sidebar');
     const isPinned = localStorage.getItem('sidebarPinned') === 'true';
-
     if (isPinned) {
         localStorage.setItem('sidebarPinned', 'false');
         pinButton.classList.remove('pinned');
@@ -1344,7 +1050,6 @@ function loadSidebarState() {
     const pinButton = document.getElementById('pin-sidebar');
     const sidebar = document.getElementById('sidebar');
     const isPinned = localStorage.getItem('sidebarPinned') === 'true';
-
     if (isPinned) {
         pinButton.classList.add('pinned');
         sidebar.classList.add('pinned');
@@ -1363,11 +1068,9 @@ function toggleNotifications() {
 function updateNotifications() {
     const notificationCount = document.getElementById('notification-count');
     const notificationList = document.getElementById('notification-list');
-
     const email = localStorage.getItem('email');
     const user = users[email];
     const notifications = user?.notifications || [];
-
     notificationCount.textContent = notifications.length;
 
     notificationList.innerHTML = '';
@@ -1394,7 +1097,3 @@ function addNotification(message) {
     localStorage.setItem('users', JSON.stringify(users));
     addActivity("Notificación: " + message);
 }
-
-// =========================================================
-// FIN DEL SCRIPT
-// =========================================================

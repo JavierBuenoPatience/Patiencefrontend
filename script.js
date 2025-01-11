@@ -1,11 +1,8 @@
 /* =========================================================
    SCRIPT.JS COMPLETO Y MODIFICADO
    =========================================================
-   Este archivo asume que tu index.html ya contiene:
-   - Un formulario de registro con id="registration-form" y onsubmit="handleRegistration(event)"
-   - Un formulario de login con id="login-form" y onsubmit="handleLogin(event)"
-   - El resto de secciones (Mi Progreso, Estudio, Comunidades, Noticias & Ayuda, Mi Cuenta)
-     tal como nos lo pasaste.
+   - Este archivo conecta con tu backend en FastAPI.
+   - Asegúrate de que tu backend corre en la URL configurada.
 */
 
 // =========================================================
@@ -51,38 +48,20 @@ async function registerUserAPI(name, email, password) {
 }
 
 /**
- * Login (simulado o ajustado a tu backend real).
- * Si en tu backend tienes un endpoint /login con FastAPI, actualiza esta función:
- * - Cambia la URL
- * - Ajusta la forma en que tu backend recibe email/password
- * - Maneja el token o la respuesta que devuelva el backend real
+ * Llama a un (posible) endpoint de login en tu backend (si existiera).
+ * Aquí se simula con una validación local de password "123456"
  */
 async function loginUserAPI(email, password) {
-    // EJEMPLO de cómo sería si existiera un endpoint real (ajusta según tu API):
-    /*
-    const resp = await fetch(`${BASE_URL}/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    });
-    if (!resp.ok) {
-      const errorData = await resp.json();
-      throw new Error(`Error al iniciar sesión: ${resp.status} - ${errorData.detail}`);
-    }
-    const data = await resp.json();
-    return data;
-    */
-
-    // Por ahora, devolvemos un objeto simulado:
+    // Ajusta la lógica si en tu backend implementas /login
+    // Aquí es solo un DEMO que comprueba password=123456:
     if (!email || !password) {
         throw new Error("Correo o contraseña vacíos.");
     }
-    // Simplemente validamos algo: si password === "123456", es un "éxito" (demo).
-    // Si no, lanza error.
     if (password === "123456") {
-        // Retornamos un objeto simulando un "token"
+        // Retornamos un objeto simulando un "token" y un "name"
         return {
             email,
+            name: "UsuarioDemo",
             token: "fake-jwt-token"
         };
     } else {
@@ -90,9 +69,8 @@ async function loginUserAPI(email, password) {
     }
 }
 
-
 // =========================================================
-// 3. Tu configuración previa: colores, discord link, etc.
+// 3. Configuración previa: colores, link a Discord, etc.
 // =========================================================
 const COLORS = {
     primary: '#1F3A93',
@@ -105,8 +83,7 @@ const COLORS = {
 
 const discordInviteLink = "https://discord.gg/qGB36SqR";
 
-// Obtenemos los usuarios de localStorage (si aún quieres mantener la lógica local).
-// Ten en cuenta que ahora parte de la lógica de registro se hace en tu backend.
+// Obtenemos los usuarios de localStorage (por si mantenemos algo local).
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
 // ====== LISTADO COMPLETO DE ACADEMIAS ====== (Mantienes igual)
@@ -272,7 +249,6 @@ const academies = [
         image: 'academia-16.jpg'
     }
 ];
-
 // Datos de especialidades (IA)
 const specialties = [
     {
@@ -340,15 +316,16 @@ const motivationalMessages = [
 ];
 let motivationalMessageIndex = 0;
 
-// Variables para Racha Diaria
+
+// Racha
 let dailyStreak = 0;
 
-// Variables para cronómetro
+// Cronómetro
 let timerInterval;
 let elapsedTime = 0;
 let isTimerRunning = false;
 
-// Vista de documentos
+// Documentos
 let documentsViewMode = 'list'; // 'list' o 'grid'
 
 // =========================================================
@@ -372,13 +349,11 @@ document.addEventListener('DOMContentLoaded', () => {
         documentSearch.addEventListener('input', filterDocuments);
     }
 
-    // Inicializar directorio academias e IA
     initAcademyDirectory();
     initSpecialties();
 
     updateNotifications();
 
-    // Para ocultar notificaciones cuando hagas click fuera
     document.addEventListener('click', (event) => {
         const notificationIcon = document.querySelector('.notification-icon');
         const notificationPanel = document.getElementById('notification-panel');
@@ -400,14 +375,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // =========================================================
-// MANEJO DE REGISTRO & LOGIN (Actualizado para backend)
+// MANEJO DE REGISTRO & LOGIN (con backend)
 // =========================================================
-
-/**
- * Se llama desde el form #registration-form: onsubmit="handleRegistration(event)"
- */
 async function handleRegistration(event) {
-    event.preventDefault(); // Evita recargar y poner datos en URL
+    event.preventDefault();
     const name = document.getElementById('reg-name').value;
     const email = document.getElementById('reg-email').value;
     const password = document.getElementById('reg-password').value;
@@ -421,36 +392,27 @@ async function handleRegistration(event) {
         document.getElementById('registration-form').reset();
         document.getElementById('registration-message').style.display = 'block';
         document.getElementById('welcome-button').style.display = 'block';
-
-        // Opcional: Podrías iniciar sesión automáticamente después de registrar
-        // handleLoginAuto(email, password); // si quieres
     } catch (error) {
         alert(error.message);
     }
 }
 
-/**
- * Se llama desde el form #login-form: onsubmit="handleLogin(event)"
- */
 async function handleLogin(event) {
-    event.preventDefault(); // Evita recarga y URL
+    event.preventDefault();
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
     try {
-        // Llama a la API de login (por ahora simulada)
+        // Llama a la API de login (simulada)
         const loginResp = await loginUserAPI(email, password);
         console.log("Respuesta login:", loginResp);
 
         // Si es correcto, guardamos "loggedIn"
         localStorage.setItem('loggedIn', 'true');
         localStorage.setItem('email', email);
-        // Si tu backend devolviera un "name" real, podrías guardarlo
-        // localStorage.setItem('name', loginResp.name || "");
-        // Guardamos un token (si te devolviera uno)
+        localStorage.setItem('name', loginResp.name || ""); 
         // localStorage.setItem('token', loginResp.token);
 
-        // Ocultamos pantallas de login, mostramos main
         hideLoginAndRegistrationScreens();
         document.querySelector('header').style.display = 'flex';
         document.querySelector('footer').style.display = 'block';
@@ -460,9 +422,6 @@ async function handleLogin(event) {
     }
 }
 
-/**
- * Cierra sesión
- */
 function handleLogout() {
     if (isTimerRunning) {
         pauseTimer();
@@ -477,10 +436,6 @@ function handleLogout() {
     showLoginScreen();
 }
 
-
-// =========================================================
-// VALIDACIÓN DE EMAIL
-// =========================================================
 function validateEmail(email) {
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     const hotmailRegex = /^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\.com$/;
@@ -503,11 +458,9 @@ function showRegistrationScreen() {
     document.querySelector('footer').style.display = 'none';
 }
 
-
 // =========================================================
-// PERFIL, CRONÓMETRO, ETC. (Resto de funciones que ya tenías)
+// PERFIL, CRONÓMETRO, ETC.
 // =========================================================
-
 function handleProfileUpdate(event) {
     event.preventDefault();
     const email = localStorage.getItem('email');
@@ -568,15 +521,13 @@ function handleImageUpload(event) {
 }
 
 // Actividad
-function loadRecentActivity() {
-    // ...
-}
+function loadRecentActivity() {}
 function updateRecentActivitySummary() {
     const email = localStorage.getItem('email');
     const user = users[email];
     const recentActivitySummary = document.getElementById('recent-activity-summary');
     if (recentActivitySummary) {
-        if (user.recentActivities && user.recentActivities.length > 0) {
+        if (user?.recentActivities?.length > 0) {
             const lastActivity = user.recentActivities[user.recentActivities.length - 1];
             recentActivitySummary.textContent = `Última actividad: ${lastActivity}`;
         } else {
@@ -591,7 +542,7 @@ function displayFullActivity() {
     if (!fullActivityList) return;
 
     fullActivityList.innerHTML = '';
-    if (!user.recentActivities || user.recentActivities.length === 0) {
+    if (!user?.recentActivities?.length) {
         fullActivityList.textContent = 'No hay actividades registradas.';
     } else {
         user.recentActivities.slice().reverse().forEach(act => {
@@ -682,7 +633,7 @@ function updateDashboard() {
 
 function calculateTotalStudyTime(email) {
     const user = users[email];
-    if (user.studySessions && user.studySessions.length > 0) {
+    if (user?.studySessions?.length) {
         const totalMilliseconds = user.studySessions.reduce((acc, session) => acc + session.duration, 0);
         const totalHours = (totalMilliseconds / (1000 * 60 * 60)).toFixed(2);
         return totalHours;
@@ -892,7 +843,6 @@ function initSpecialties() {
     if (!aiCardsContainer) return;
     aiCardsContainer.innerHTML = '';
 
-    // Por defecto, mostramos TODAS las especialidades
     specialties.forEach(specialty => {
         const aiCard = document.createElement('div');
         aiCard.classList.add('ai-card');
@@ -903,7 +853,6 @@ function initSpecialties() {
                 alert('Enlace próximamente disponible.');
             }
         };
-
         aiCard.innerHTML = `
             <img src="assets/${specialty.image}" alt="${specialty.name}">
             <h3>${specialty.name}</h3>
@@ -1398,10 +1347,8 @@ function addNotification(message) {
     }
     user.notifications.push(message);
     localStorage.setItem('users', JSON.stringify(users));
-    updateNotifications();
     addActivity("Notificación: " + message);
 }
-
 
 // =========================================================
 // FIN DEL SCRIPT

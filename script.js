@@ -2,7 +2,10 @@
    SCRIPT.JS INTEGRADO
 ========================== */
 
+// Asegúrate de que la URL apunte al backend desplegado en Render
 const BASE_URL = "https://patienceclean.onrender.com";
+
+console.log("Frontend cargado. BASE_URL =", BASE_URL);
 
 async function registerUserAPI(name, email, password) {
     try {
@@ -16,10 +19,11 @@ async function registerUserAPI(name, email, password) {
             throw new Error(`Error al registrar: ${resp.status} - ${errorData.detail || errorData.error}`);
         }
         const data = await resp.json();
+        console.log("Usuario registrado:", data);
         return data;
     } catch (error) {
         console.error(error);
-        throw error; 
+        throw error;
     }
 }
 
@@ -35,6 +39,7 @@ async function loginUserAPI(email, password) {
             throw new Error(`Error al iniciar sesión: ${response.status} - ${errorData.detail || errorData.error}`);
         }
         const data = await response.json();
+        console.log("Inicio de sesión exitoso:", data);
         return data;
     } catch (error) {
         console.error(error);
@@ -120,6 +125,7 @@ let isTimerRunning = false;
 let documentsViewMode = 'list';
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOMContentLoaded: iniciando aplicación");
     if (localStorage.getItem('loggedIn') === 'true') {
         hideLoginAndRegistrationScreens();
         showProgressMainScreen();
@@ -175,16 +181,7 @@ function showProgressMainScreen() {
     document.getElementById('progress-main-screen').style.display = 'block';
 }
 
-// Función para mostrar la pantalla de login
-function showLoginScreen() {
-    hideAllMainSections();
-    document.getElementById('login-screen').style.display = 'block';
-    document.getElementById('registration-screen').style.display = 'none';
-    document.querySelector('header').style.display = 'none';
-    document.querySelector('footer').style.display = 'none';
-}
-
-// Función para actualizar un mensaje motivacional (ejemplo simple)
+// Actualiza un mensaje motivacional
 function updateMotivationalMessage() {
     const messageElement = document.getElementById('motivational-message');
     if (messageElement) {
@@ -193,7 +190,7 @@ function updateMotivationalMessage() {
     }
 }
 
-// Función vacía para loadDailyCheckInStatus (puedes implementarla si la necesitas)
+// Función vacía para loadDailyCheckInStatus (puedes implementarla si es necesario)
 function loadDailyCheckInStatus() {}
 
 /* Oculta todas las secciones principales */
@@ -220,6 +217,7 @@ async function handleRegistration(event) {
 
     try {
         const newUser = await registerUserAPI(name, email, password);
+        console.log("Registro exitoso:", newUser);
         document.getElementById('registration-form').reset();
         document.getElementById('registration-message').style.display = 'block';
         document.getElementById('welcome-button').style.display = 'block';
@@ -236,6 +234,7 @@ async function handleLogin(event) {
 
     try {
         const loginResp = await loginUserAPI(email, password);
+        console.log("Login exitoso:", loginResp);
         localStorage.setItem('loggedIn', 'true');
         localStorage.setItem('email', email);
         localStorage.setItem('name', loginResp.user.name || "");
@@ -259,6 +258,22 @@ function handleLogout() {
     localStorage.removeItem('name');
     hideAllMainSections();
     showLoginScreen();
+}
+
+function showLoginScreen() {
+    hideAllMainSections();
+    document.getElementById('login-screen').style.display = 'block';
+    document.getElementById('registration-screen').style.display = 'none';
+    document.querySelector('header').style.display = 'none';
+    document.querySelector('footer').style.display = 'none';
+}
+
+function showRegistrationScreen() {
+    hideAllMainSections();
+    document.getElementById('registration-screen').style.display = 'block';
+    document.getElementById('login-screen').style.display = 'none';
+    document.querySelector('header').style.display = 'none';
+    document.querySelector('footer').style.display = 'none';
 }
 
 /* Perfil */

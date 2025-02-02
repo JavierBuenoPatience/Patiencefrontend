@@ -167,48 +167,9 @@ document.addEventListener('DOMContentLoaded', () => {
     updateRecentActivitySummary();
 });
 
-/* Funciones faltantes agregadas */
+/* Funciones de registro y login reales con backend */
 
-// Oculta las pantallas de login y registro
-function hideLoginAndRegistrationScreens() {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('registration-screen').style.display = 'none';
-}
-
-// Muestra la pantalla principal de progreso
-function showProgressMainScreen() {
-    hideAllMainSections();
-    document.getElementById('progress-main-screen').style.display = 'block';
-}
-
-// Actualiza un mensaje motivacional
-function updateMotivationalMessage() {
-    const messageElement = document.getElementById('motivational-message');
-    if (messageElement) {
-        const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
-        messageElement.textContent = randomMessage;
-    }
-}
-
-// Función vacía para loadDailyCheckInStatus (puedes implementarla si es necesario)
-function loadDailyCheckInStatus() {}
-
-/* Oculta todas las secciones principales */
-function hideAllMainSections() {
-    const sections = [
-        'progress-main-screen',
-        'study-main-screen',
-        'communities-main-screen',
-        'news-help-screen',
-        'account-screen'
-    ];
-    sections.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-    });
-}
-
-/* Registro con backend */
+// Registro: se llama desde el formulario de registro en index.html
 async function handleRegistration(event) {
     event.preventDefault();
     const name = document.getElementById('reg-name').value;
@@ -226,7 +187,7 @@ async function handleRegistration(event) {
     }
 }
 
-/* Login con backend */
+// Login: se llama desde el formulario de login en index.html
 async function handleLogin(event) {
     event.preventDefault();
     const email = document.getElementById('login-email').value;
@@ -276,7 +237,7 @@ function showRegistrationScreen() {
     document.querySelector('footer').style.display = 'none';
 }
 
-/* Perfil */
+/* Funciones de perfil */
 function handleProfileUpdate(event) {
     event.preventDefault();
     const email = localStorage.getItem('email');
@@ -334,7 +295,7 @@ function handleImageUpload(event) {
     }
 }
 
-/* Actividad */
+/* Funciones de actividad */
 function loadRecentActivity() {}
 function updateRecentActivitySummary() {
     const email = localStorage.getItem('email');
@@ -379,7 +340,7 @@ function addActivity(message) {
     updateRecentActivitySummary();
 }
 
-/* Onboarding */
+/* Funciones de Onboarding */
 function startOnboarding() {
     showOverlay();
     showOnboardingStep(1);
@@ -417,7 +378,7 @@ function hideOverlay() {
     overlay.style.display = 'none';
 }
 
-/* Dashboard y Racha */
+/* Funciones del Dashboard y Racha */
 function updateDashboard() {
     const email = localStorage.getItem('email');
     const user = users[email];
@@ -515,7 +476,7 @@ function handleDailyCheckIn() {
     updateRecentActivitySummary();
 }
 
-/* Cronómetro */
+/* Funciones del Cronómetro */
 function startTimer() {
     if (!isTimerRunning) {
         isTimerRunning = true;
@@ -590,7 +551,7 @@ function saveStudySession() {
     updateRecentActivitySummary();
 }
 
-/* Quiz Diario */
+/* Funciones del Quiz Diario */
 function openQuizModal() {
     const quizModal = document.getElementById('quiz-modal');
     quizModal.style.display = 'block';
@@ -643,12 +604,12 @@ function checkDailyQuizAnswer(selectedIndex) {
     updateRecentActivitySummary();
 }
 
-/* Discord (Grupos) */
+/* Funciones para Discord (Grupos) */
 function redirectToDiscord() {
     window.open(discordInviteLink, '_blank');
 }
 
-/* IA Especializada */
+/* Funciones para IA Especializada */
 function initSpecialties() {
     const aiCardsContainer = document.getElementById('ai-cards-container');
     if (!aiCardsContainer) return;
@@ -718,7 +679,7 @@ function filterSpecialties() {
     });
 }
 
-/* Directorio Academias */
+/* Funciones para Directorio de Academias */
 function initAcademyDirectory() {
     populateFilters();
     renderAcademies();
@@ -844,3 +805,307 @@ function saveUserAnnotation(academyName, annotation) {
     addActivity(`Anotación añadida para la academia "${academyName}".`);
     updateRecentActivitySummary();
 }
+
+/* Funciones para Noticias */
+function showNewsContent(newsType) {
+    const csifIframe = document.getElementById('csif-iframe');
+    const sipriIframe = document.getElementById('sipri-iframe');
+    if (!csifIframe || !sipriIframe) return;
+
+    csifIframe.style.display = 'none';
+    sipriIframe.style.display = 'none';
+
+    if (newsType === 'csif') {
+        csifIframe.style.display = 'block';
+    } else if (newsType === 'sipri') {
+        sipriIframe.style.display = 'block';
+    }
+}
+
+/* Funciones para Documentos */
+function uploadDocuments(event) {
+    const email = localStorage.getItem('email');
+    const files = event.target.files;
+    if (!users[email].documents) {
+        users[email].documents = [];
+    }
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const documentData = {
+                name: file.name,
+                lastOpened: null,
+                folder: null,
+                fileContent: e.target.result,
+                fileType: file.type
+            };
+            users[email].documents.push(documentData);
+            localStorage.setItem('users', JSON.stringify(users));
+            displayDocuments();
+            addNotification(`Documento "${file.name}" subido correctamente.`);
+            addActivity(`Documento "${file.name}" subido.`);
+            updateRecentActivitySummary();
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function createFolder() {
+    const folderName = prompt('Nombre de la nueva carpeta:');
+    if (folderName) {
+        const email = localStorage.getItem('email');
+        if (!users[email].folders) {
+            users[email].folders = [];
+        }
+        const folderData = {
+            name: folderName,
+            documents: []
+        };
+        users[email].folders.push(folderData);
+        localStorage.setItem('users', JSON.stringify(users));
+        displayDocuments();
+        addNotification(`Carpeta "${folderName}" creada exitosamente.`);
+        addActivity(`Carpeta "${folderName}" creada.`);
+        updateRecentActivitySummary();
+    }
+}
+
+function deleteFolder(folderName) {
+    const email = localStorage.getItem('email');
+    const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
+    if (folderIndex > -1) {
+        users[email].folders.splice(folderIndex, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+        displayDocuments();
+        addNotification(`Carpeta "${folderName}" eliminada.`);
+        addActivity(`Carpeta "${folderName}" eliminada.`);
+        updateRecentActivitySummary();
+    }
+}
+
+function displayDocuments() {
+    const email = localStorage.getItem('email');
+    const documentsContainer = document.getElementById('documents-container');
+    if (!documentsContainer) return;
+
+    documentsContainer.innerHTML = '';
+
+    if (documentsViewMode === 'list') {
+        documentsContainer.classList.add('list-view');
+        documentsContainer.classList.remove('grid-view');
+    } else {
+        documentsContainer.classList.add('grid-view');
+        documentsContainer.classList.remove('list-view');
+    }
+
+    const userFolders = users[email].folders || [];
+    userFolders.forEach(folder => {
+        const folderElement = document.createElement('div');
+        folderElement.classList.add('folder-card');
+        const folderHeader = document.createElement('div');
+        folderHeader.classList.add('folder-header');
+        folderHeader.textContent = folder.name;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        deleteButton.onclick = (e) => {
+            e.stopPropagation();
+            deleteFolder(folder.name);
+        };
+
+        folderHeader.appendChild(deleteButton);
+        folderElement.appendChild(folderHeader);
+
+        const folderDocuments = document.createElement('div');
+        folderDocuments.classList.add('folder-documents');
+
+        folder.documents.forEach(doc => {
+            const docElement = document.createElement('div');
+            docElement.classList.add('document-card');
+            docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
+            docElement.addEventListener('click', () => {
+                openDocument(email, doc);
+            });
+            folderDocuments.appendChild(docElement);
+        });
+
+        folderElement.appendChild(folderDocuments);
+        documentsContainer.appendChild(folderElement);
+    });
+
+    const userDocuments = users[email].documents || [];
+    userDocuments.forEach(doc => {
+        const docElement = document.createElement('div');
+        docElement.classList.add('document-card');
+        docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
+        docElement.addEventListener('click', () => {
+            openDocument(email, doc);
+        });
+
+        const moveButton = document.createElement('button');
+        moveButton.innerHTML = '<i class="fas fa-folder"></i>';
+        moveButton.onclick = (e) => {
+            e.stopPropagation();
+            moveDocumentToFolder(email, doc.name);
+        };
+        docElement.appendChild(moveButton);
+        documentsContainer.appendChild(docElement);
+    });
+}
+
+function openDocument(email, doc) {
+    doc.lastOpened = new Date();
+    users[email].lastDocument = doc.name;
+    localStorage.setItem('users', JSON.stringify(users));
+
+    const byteCharacters = atob(doc.fileContent.split(',')[1]);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: doc.fileType });
+
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, '_blank');
+
+    addActivity(`Documento "${doc.name}" abierto.`);
+    updateRecentActivitySummary();
+}
+
+function moveDocumentToFolder(email, documentName) {
+    const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
+    if (selectedFolder) {
+        const folder = users[email].folders.find(f => f.name === selectedFolder);
+        if (folder) {
+            const documentIndex = users[email].documents.findIndex(doc => doc.name === documentName);
+            if (documentIndex > -1) {
+                const document = users[email].documents.splice(documentIndex, 1)[0];
+                folder.documents.push(document);
+                localStorage.setItem('users', JSON.stringify(users));
+                displayDocuments();
+                addNotification(`Documento "${documentName}" movido a "${selectedFolder}".`);
+                addActivity(`Documento "${documentName}" movido a "${selectedFolder}".`);
+                updateRecentActivitySummary();
+            } else {
+                alert('Documento no encontrado.');
+            }
+        } else {
+            alert('Carpeta no encontrada.');
+        }
+    }
+}
+
+function filterDocuments() {
+    const searchTerm = (document.getElementById('document-search')?.value || '').toLowerCase();
+    const email = localStorage.getItem('email');
+    const documentsContainer = document.getElementById('documents-container');
+    if (!documentsContainer) return;
+    documentsContainer.innerHTML = '';
+
+    if (documentsViewMode === 'list') {
+        documentsContainer.classList.add('list-view');
+        documentsContainer.classList.remove('grid-view');
+    } else {
+        documentsContainer.classList.add('grid-view');
+        documentsContainer.classList.remove('list-view');
+    }
+
+    const userDocuments = users[email].documents || [];
+    const filteredDocuments = userDocuments.filter(doc =>
+        doc.name.toLowerCase().includes(searchTerm)
+    );
+    filteredDocuments.forEach(doc => {
+        const docElement = document.createElement('div');
+        docElement.classList.add('document-card');
+        docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
+        docElement.addEventListener('click', () => {
+            openDocument(email, doc);
+        });
+        documentsContainer.appendChild(docElement);
+    });
+}
+
+function toggleDocumentsView() {
+    documentsViewMode = (documentsViewMode === 'list') ? 'grid' : 'list';
+    displayDocuments();
+}
+
+/* Funciones para Sidebar y Notificaciones */
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('show-sidebar');
+}
+
+function togglePinSidebar() {
+    const pinButton = document.getElementById('pin-sidebar');
+    const sidebar = document.getElementById('sidebar');
+    const isPinned = localStorage.getItem('sidebarPinned') === 'true';
+    if (isPinned) {
+        localStorage.setItem('sidebarPinned', 'false');
+        pinButton.classList.remove('pinned');
+        sidebar.classList.remove('pinned');
+    } else {
+        localStorage.setItem('sidebarPinned', 'true');
+        pinButton.classList.add('pinned');
+        sidebar.classList.add('pinned');
+        sidebar.classList.add('show-sidebar');
+    }
+}
+
+function loadSidebarState() {
+    const pinButton = document.getElementById('pin-sidebar');
+    const sidebar = document.getElementById('sidebar');
+    const isPinned = localStorage.getItem('sidebarPinned') === 'true';
+    if (isPinned) {
+        pinButton.classList.add('pinned');
+        sidebar.classList.add('pinned');
+        sidebar.classList.add('show-sidebar');
+    } else {
+        pinButton.classList.remove('pinned');
+        sidebar.classList.remove('pinned');
+    }
+}
+
+function toggleNotifications() {
+    const notificationPanel = document.getElementById('notification-panel');
+    notificationPanel.classList.toggle('show-notifications');
+}
+
+function updateNotifications() {
+    const notificationCount = document.getElementById('notification-count');
+    const notificationList = document.getElementById('notification-list');
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    const notifications = user?.notifications || [];
+    notificationCount.textContent = notifications.length;
+
+    notificationList.innerHTML = '';
+    if (notifications.length === 0) {
+        const noNotifications = document.createElement('li');
+        noNotifications.textContent = 'No tienes notificaciones nuevas.';
+        notificationList.appendChild(noNotifications);
+    } else {
+        notifications.forEach(notification => {
+            const notificationItem = document.createElement('li');
+            notificationItem.textContent = notification;
+            notificationList.appendChild(notificationItem);
+        });
+    }
+}
+
+function addNotification(message) {
+    const email = localStorage.getItem('email');
+    const user = users[email];
+    if (!user.notifications) {
+        user.notifications = [];
+    }
+    user.notifications.push(message);
+    localStorage.setItem('users', JSON.stringify(users));
+    addActivity("Notificación: " + message);
+}
+
+/* Fin de Script */

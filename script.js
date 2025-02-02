@@ -161,6 +161,41 @@ document.addEventListener('DOMContentLoaded', () => {
     updateRecentActivitySummary();
 });
 
+/* Funciones faltantes agregadas */
+
+// Oculta las pantallas de login y registro
+function hideLoginAndRegistrationScreens() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('registration-screen').style.display = 'none';
+}
+
+// Muestra la pantalla principal de progreso
+function showProgressMainScreen() {
+    hideAllMainSections();
+    document.getElementById('progress-main-screen').style.display = 'block';
+}
+
+// Función para mostrar la pantalla de login
+function showLoginScreen() {
+    hideAllMainSections();
+    document.getElementById('login-screen').style.display = 'block';
+    document.getElementById('registration-screen').style.display = 'none';
+    document.querySelector('header').style.display = 'none';
+    document.querySelector('footer').style.display = 'none';
+}
+
+// Función para actualizar un mensaje motivacional (ejemplo simple)
+function updateMotivationalMessage() {
+    const messageElement = document.getElementById('motivational-message');
+    if (messageElement) {
+        const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+        messageElement.textContent = randomMessage;
+    }
+}
+
+// Función vacía para loadDailyCheckInStatus (puedes implementarla si la necesitas)
+function loadDailyCheckInStatus() {}
+
 /* Oculta todas las secciones principales */
 function hideAllMainSections() {
     const sections = [
@@ -224,22 +259,6 @@ function handleLogout() {
     localStorage.removeItem('name');
     hideAllMainSections();
     showLoginScreen();
-}
-
-function showLoginScreen() {
-    hideAllMainSections();
-    document.getElementById('login-screen').style.display = 'block';
-    document.getElementById('registration-screen').style.display = 'none';
-    document.querySelector('header').style.display = 'none';
-    document.querySelector('footer').style.display = 'none';
-}
-
-function showRegistrationScreen() {
-    hideAllMainSections();
-    document.getElementById('registration-screen').style.display = 'block';
-    document.getElementById('login-screen').style.display = 'none';
-    document.querySelector('header').style.display = 'none';
-    document.querySelector('footer').style.display = 'none';
 }
 
 /* Perfil */

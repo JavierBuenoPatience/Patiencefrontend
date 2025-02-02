@@ -24,14 +24,24 @@ async function registerUserAPI(name, email, password) {
 }
 
 async function loginUserAPI(email, password) {
-    if (!email || !password) {
-        throw new Error("Correo o contraseña vacíos.");
+    try {
+        const response = await fetch(`${BASE_URL}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Error al iniciar sesión: ${response.status} - ${errorData.detail || errorData.error}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
-    if (password === "123456") {
-        return { email, name: "UsuarioDemo", token: "fake-jwt-token" };
-    } else {
-        throw new Error("Credenciales inválidas (demo).");
-    }
+}
+
 }
 
 const COLORS = {

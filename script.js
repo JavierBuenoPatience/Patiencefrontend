@@ -1,5 +1,5 @@
 /* ==========================
-   SCRIPT.JS INTEGRADO
+   SCRIPT.JS INTEGRADO (COMPLETO Y ACTUALIZADO)
 ========================== */
 
 // Asegúrate de que la URL apunte al backend desplegado en Render
@@ -58,6 +58,7 @@ const COLORS = {
 
 const discordInviteLink = "https://discord.gg/qGB36SqR";
 
+// Se mantiene la información local (para el MVP) en localStorage
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
 const academies = [
@@ -201,8 +202,10 @@ async function handleLogin(event) {
         localStorage.setItem('name', loginResp.user.name || "");
 
         hideLoginAndRegistrationScreens();
+        // Al iniciar sesión, mostramos el header, footer y la barra lateral
         document.querySelector('header').style.display = 'flex';
         document.querySelector('footer').style.display = 'block';
+        document.getElementById('sidebar').style.display = 'block';
         showProgressMainScreen();
     } catch (error) {
         alert("Error al iniciar sesión: " + error.message);
@@ -227,6 +230,8 @@ function showLoginScreen() {
     document.getElementById('registration-screen').style.display = 'none';
     document.querySelector('header').style.display = 'none';
     document.querySelector('footer').style.display = 'none';
+    // Ocultamos la barra lateral para usuarios no registrados
+    document.getElementById('sidebar').style.display = 'none';
 }
 
 function showRegistrationScreen() {
@@ -235,6 +240,15 @@ function showRegistrationScreen() {
     document.getElementById('login-screen').style.display = 'none';
     document.querySelector('header').style.display = 'none';
     document.querySelector('footer').style.display = 'none';
+    document.getElementById('sidebar').style.display = 'none';
+}
+
+// Asumiremos que showProgressMainScreen es la pantalla principal para usuarios logueados
+function showProgressMainScreen() {
+    hideAllMainSections();
+    document.getElementById('progress-main-screen').style.display = 'block';
+    // Mostramos la barra lateral para usuarios registrados
+    document.getElementById('sidebar').style.display = 'block';
 }
 
 /* Funciones de perfil */

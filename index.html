@@ -18,6 +18,7 @@
 </head>
 <body>
   <!-- Barra lateral (sidebar) -->
+  <!-- Esta se muestra solo para usuarios logueados -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <img
@@ -82,7 +83,11 @@
       />
     </div>
     <div class="header-right">
-      <div class="notification-icon" onclick="toggleNotifications()" title="Notificaciones">
+      <div
+        class="notification-icon"
+        onclick="toggleNotifications()"
+        title="Notificaciones"
+      >
         <i class="fas fa-bell"></i>
         <span id="notification-count" class="notification-count">0</span>
       </div>
@@ -467,3 +472,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+

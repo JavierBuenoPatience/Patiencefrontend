@@ -2,11 +2,11 @@
    SCRIPT.JS INTEGRADO (COMPLETO Y ACTUALIZADO)
 ========================== */
 
-// Asegúrate de que la URL apunte al backend desplegado en Render
+// La URL del backend en Render
 const BASE_URL = "https://patienceclean.onrender.com";
 console.log("Frontend cargado. BASE_URL =", BASE_URL);
 
-// Funciones para comunicarse con el backend
+// Funciones para el backend
 async function registerUserAPI(name, email, password) {
   try {
     const resp = await fetch(`${BASE_URL}/users/`, {
@@ -47,7 +47,7 @@ async function loginUserAPI(email, password) {
   }
 }
 
-// Constantes de colores y otros datos
+// Constantes y datos básicos
 const COLORS = {
   primary: '#1F3A93',
   secondary: '#22A7F0',
@@ -56,13 +56,12 @@ const COLORS = {
   text: '#2C3E50',
   secondaryText: '#7F8C8D'
 };
-
 const discordInviteLink = "https://discord.gg/qGB36SqR";
 
-// Simulación de almacenamiento local para el MVP (esto se usará en localStorage para datos complementarios)
+// Se utiliza localStorage para datos complementarios (MVP)
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
-// Datos de academias y especialidades (copiar exactamente lo que usabas)
+// Datos de academias y especialidades (asegúrate de que las imágenes existen en la carpeta "assets")
 const academies = [
   { id: 1, name: 'TecnosZubia', city: 'Granada', phone: '958 890 387', email: 'info@tecnoszubia.es', specialties: ['Maestros', 'Profesores', 'Administrativos', 'Seguridad', 'SAS'], rating: '4.8/5', image: 'academia-1.jpg' },
   { id: 2, name: 'CEAPRO', city: 'Sevilla', phone: '954 32 00 00', email: 'info@ceapro.es', specialties: ['Junta de Andalucía', 'Administración', 'Justicia', 'Educación', 'SAS'], rating: '4.7/5', image: 'academia-2.jpg' },
@@ -111,7 +110,72 @@ let elapsedTime = 0;
 let isTimerRunning = false;
 let documentsViewMode = 'list';
 
-// EVENTO: DOMContentLoaded
+/* -----------------------------
+   FUNCIONES STUB Y UTILITARIAS
+------------------------------ */
+// Función para evitar el error "loadDailyCheckInStatus is not defined"
+function loadDailyCheckInStatus() {
+  // Implementa la funcionalidad de check-in si lo deseas; de momento es un stub.
+}
+
+// Funciones para manejar el arrastre y soltado de archivos
+function handleDragOver(event) {
+  event.preventDefault();
+}
+function handleDrop(event) {
+  event.preventDefault();
+  uploadDocuments(event);
+}
+
+// Funciones para mostrar pantallas específicas (si alguna funcionalidad extra no está implementada, se proveen stubs)
+function showDocuments() {
+  hideAllMainSections();
+  document.getElementById('study-main-screen').style.display = 'block';
+  document.getElementById('documents-screen').style.display = 'block';
+}
+function showGroups() {
+  hideAllMainSections();
+  document.getElementById('communities-main-screen').style.display = 'block';
+  document.getElementById('groups-screen') && (document.getElementById('groups-screen').style.display = 'block');
+}
+function showNews() {
+  hideAllMainSections();
+  document.getElementById('news-help-screen').style.display = 'block';
+  document.getElementById('news-screen') && (document.getElementById('news-screen').style.display = 'block');
+}
+function showAIScreen() {
+  hideAllMainSections();
+  document.getElementById('study-main-screen').style.display = 'block';
+  document.getElementById('ai-screen').style.display = 'block';
+}
+function showActivityScreen() {
+  hideAllMainSections();
+  document.getElementById('activity-screen').style.display = 'block';
+}
+function showProfile() {
+  hideAllMainSections();
+  document.getElementById('account-screen').style.display = 'block';
+  document.getElementById('profile-screen').style.display = 'block';
+}
+function showGuideScreen() {
+  hideAllMainSections();
+  document.getElementById('news-help-screen').style.display = 'block';
+  document.getElementById('guide-screen').style.display = 'block';
+}
+function showTraining() {
+  hideAllMainSections();
+  document.getElementById('news-help-screen').style.display = 'block';
+  document.getElementById('training-screen').style.display = 'block';
+}
+function showStudyTimeScreen() {
+  hideAllMainSections();
+  document.getElementById('study-main-screen').style.display = 'block';
+  document.getElementById('documents-screen').style.display = 'block';
+}
+
+/* -----------------------------
+   EVENTO DOMContentLoaded
+------------------------------ */
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOMContentLoaded: iniciando aplicación");
   if (localStorage.getItem('loggedIn') === 'true') {
@@ -120,21 +184,17 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     showLoginScreen();
   }
-
   const uploadInput = document.getElementById('upload-document');
   if (uploadInput) {
     uploadInput.addEventListener('change', uploadDocuments);
   }
-
   const documentSearch = document.getElementById('document-search');
   if (documentSearch) {
     documentSearch.addEventListener('input', filterDocuments);
   }
-
   initAcademyDirectory();
   initSpecialties();
   updateNotifications();
-
   document.addEventListener('click', (event) => {
     const notificationIcon = document.querySelector('.notification-icon');
     const notificationPanel = document.getElementById('notification-panel');
@@ -144,45 +204,40 @@ document.addEventListener('DOMContentLoaded', () => {
       notificationPanel.classList.remove('show-notifications');
     }
   });
-
   loadSidebarState();
   updateMotivationalMessage();
   setInterval(updateMotivationalMessage, 5 * 60 * 1000);
-
   loadDailyStreak();
   loadDailyCheckInStatus();
   loadRecentActivity();
   updateRecentActivitySummary();
 });
 
-// FUNCIONES UTILITARIAS
+/* -----------------------------
+   FUNCIONES UTILITARIAS
+------------------------------ */
 function hideLoginAndRegistrationScreens() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('registration-screen').style.display = 'none';
 }
 
 function hideAllMainSections() {
-  const sections = [
-    'progress-main-screen',
-    'study-main-screen',
-    'communities-main-screen',
-    'news-help-screen',
-    'account-screen'
-  ];
+  const sections = ['progress-main-screen', 'study-main-screen', 'communities-main-screen', 'news-help-screen', 'account-screen'];
   sections.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
 }
 
-// FUNCIONES DE PANTALLAS
+/* -----------------------------
+   FUNCIONES DE PANTALLAS
+------------------------------ */
 function showLoginScreen() {
   hideAllMainSections();
   document.getElementById('login-screen').style.display = 'block';
   document.getElementById('registration-screen').style.display = 'none';
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
-  // Ocultamos la sidebar para usuarios no registrados
   document.getElementById('sidebar').style.display = 'none';
 }
 
@@ -198,14 +253,12 @@ function showRegistrationScreen() {
 function showProgressMainScreen() {
   hideAllMainSections();
   document.getElementById('progress-main-screen').style.display = 'block';
-  // Mostrar la sidebar para usuarios logueados
   document.getElementById('sidebar').style.display = 'block';
 }
 
 function showStudyMainScreen() {
   hideAllMainSections();
   document.getElementById('study-main-screen').style.display = 'block';
-  // Por defecto mostramos la pantalla de documentos
   showDocuments();
 }
 
@@ -224,7 +277,9 @@ function showAccountScreen() {
   document.getElementById('account-screen').style.display = 'block';
 }
 
-// FUNCIONES DE REGISTRO Y LOGIN
+/* -----------------------------
+   FUNCIONES DE REGISTRO Y LOGIN
+------------------------------ */
 async function handleRegistration(event) {
   event.preventDefault();
   const name = document.getElementById('reg-name').value;
@@ -252,7 +307,6 @@ async function handleLogin(event) {
     localStorage.setItem('email', email);
     localStorage.setItem('name', loginResp.user.name || "");
     hideLoginAndRegistrationScreens();
-    // Mostrar header, footer y sidebar al iniciar sesión
     document.querySelector('header').style.display = 'flex';
     document.querySelector('footer').style.display = 'block';
     document.getElementById('sidebar').style.display = 'block';
@@ -274,15 +328,17 @@ function handleLogout() {
   showLoginScreen();
 }
 
-// FUNCIONES DE PERFIL
+/* -----------------------------
+   FUNCIONES DE PERFIL
+------------------------------ */
 function handleProfileUpdate(event) {
   event.preventDefault();
   const email = localStorage.getItem('email');
-  const user = users[email];
-  if (!user) {
+  if (!email || !users[email]) {
     alert("No se encuentra usuario en localStorage.");
     return;
   }
+  const user = users[email];
   const profile = {
     fullName: document.getElementById('full-name').value,
     phone: document.getElementById('phone').value,
@@ -304,6 +360,7 @@ function handleProfileUpdate(event) {
 
 function updateUserNameHome() {
   const email = localStorage.getItem('email');
+  if (!email || !users[email]) return;
   const user = users[email];
   if (user && user.profile && user.profile.fullName) {
     document.getElementById('user-name-home').textContent = user.profile.fullName;
@@ -315,7 +372,8 @@ function updateUserNameHome() {
 function updateProfileIcon() {
   const profileIcon = document.getElementById('profile-icon');
   const email = localStorage.getItem('email');
-  const profile = users[email]?.profile || {};
+  if (!email || !users[email]) return;
+  const profile = users[email].profile || {};
   if (profileIcon) {
     profileIcon.src = profile.profileImage || 'assets/default-profile.png';
   }
@@ -331,13 +389,16 @@ function handleImageUpload(event) {
   }
 }
 
-// FUNCIONES DE ACTIVIDAD
+/* -----------------------------
+   FUNCIONES DE ACTIVIDAD
+------------------------------ */
 function loadRecentActivity() {
-  // Puedes implementar la carga de actividad si lo deseas
+  // (Implementa la carga de actividad si lo deseas)
 }
 
 function updateRecentActivitySummary() {
   const email = localStorage.getItem('email');
+  if (!email || !users[email]) return;
   const user = users[email];
   const recentActivitySummary = document.getElementById('recent-activity-summary');
   if (recentActivitySummary) {
@@ -352,6 +413,7 @@ function updateRecentActivitySummary() {
 
 function displayFullActivity() {
   const email = localStorage.getItem('email');
+  if (!email || !users[email]) return;
   const user = users[email];
   const fullActivityList = document.getElementById('full-activity-list');
   if (!fullActivityList) return;
@@ -369,6 +431,7 @@ function displayFullActivity() {
 
 function addActivity(message) {
   const email = localStorage.getItem('email');
+  if (!email || !users[email]) return;
   const user = users[email];
   if (!user.recentActivities) {
     user.recentActivities = [];
@@ -380,7 +443,9 @@ function addActivity(message) {
   updateRecentActivitySummary();
 }
 
-// FUNCIONES DE ONBOARDING
+/* -----------------------------
+   FUNCIONES DE ONBOARDING
+------------------------------ */
 function startOnboarding() {
   showOverlay();
   showOnboardingStep(1);
@@ -406,7 +471,7 @@ function showOnboardingStep(step) {
 function finishOnboarding() {
   hideOverlay();
   const email = localStorage.getItem('email');
-  if (users[email]) {
+  if (email && users[email]) {
     users[email].onboardingCompleted = true;
     localStorage.setItem('users', JSON.stringify(users));
   }
@@ -423,9 +488,12 @@ function hideOverlay() {
   overlay.style.display = 'none';
 }
 
-// FUNCIONES DEL DASHBOARD Y RACHA
+/* -----------------------------
+   FUNCIONES DEL DASHBOARD Y RACHA
+------------------------------ */
 function updateDashboard() {
   const email = localStorage.getItem('email');
+  if (!email || !users[email]) return;
   const user = users[email];
   const daysRemainingElement = document.getElementById('days-remaining');
   const studyHoursElement = document.getElementById('study-hours');
@@ -463,7 +531,9 @@ function updateMotivationalMessage() {
   }
 }
 
-// FUNCIONES DEL LOGOTIPO
+/* -----------------------------
+   FUNCIONES DEL LOGOTIPO
+------------------------------ */
 function handleLogoClick() {
   if (localStorage.getItem('loggedIn') === 'true') {
     showProgressMainScreen();
@@ -472,14 +542,19 @@ function handleLogoClick() {
   }
 }
 
-// FUNCIONES DEL CHECK-IN DIARIO (RACHA)
+/* -----------------------------
+   FUNCIONES DEL CHECK-IN DIARIO (RACHA)
+------------------------------ */
 function loadDailyStreak() {
   const email = localStorage.getItem('email');
-  const user = users[email] || {};
-  if (!user.dailyStreak) {
+  if (!email) return;
+  if (!users[email]) {
+    users[email] = {};
+  }
+  const user = users[email];
+  if (user.dailyStreak === undefined) {
     user.dailyStreak = 0;
     user.lastCheckinDate = null;
-    users[email] = user;
     localStorage.setItem('users', JSON.stringify(users));
   }
   dailyStreak = user.dailyStreak;
@@ -494,6 +569,7 @@ function updateDailyStreakDisplay() {
 
 function handleDailyCheckIn() {
   const email = localStorage.getItem('email');
+  if (!email || !users[email]) return;
   const user = users[email];
   const today = new Date().toDateString();
   const lastCheckin = user.lastCheckinDate ? new Date(user.lastCheckinDate).toDateString() : null;
@@ -528,7 +604,9 @@ function handleDailyCheckIn() {
   updateRecentActivitySummary();
 }
 
-// FUNCIONES DEL CRONÓMETRO
+/* -----------------------------
+   FUNCIONES DEL CRONÓMETRO
+------------------------------ */
 function startTimer() {
   if (!isTimerRunning) {
     isTimerRunning = true;
@@ -585,6 +663,7 @@ function updateTimerDisplay() {
 
 function saveStudySession() {
   const email = localStorage.getItem('email');
+  if (!email || !users[email]) return;
   const user = users[email];
   if (!user.studySessions) {
     user.studySessions = [];
@@ -601,7 +680,9 @@ function saveStudySession() {
   updateRecentActivitySummary();
 }
 
-// FUNCIONES DEL QUIZ DIARIO
+/* -----------------------------
+   FUNCIONES DEL QUIZ DIARIO
+------------------------------ */
 function openQuizModal() {
   const quizModal = document.getElementById('quiz-modal');
   quizModal.style.display = 'block';
@@ -652,12 +733,16 @@ function checkDailyQuizAnswer(selectedIndex) {
   updateRecentActivitySummary();
 }
 
-// FUNCIONES PARA DISCORD (GRUPOS)
+/* -----------------------------
+   FUNCIONES PARA DISCORD
+------------------------------ */
 function redirectToDiscord() {
   window.open(discordInviteLink, '_blank');
 }
 
-// FUNCIONES PARA IA ESPECIALIZADA
+/* -----------------------------
+   FUNCIONES PARA IA ESPECIALIZADA
+------------------------------ */
 function initSpecialties() {
   const aiCardsContainer = document.getElementById('ai-cards-container');
   if (!aiCardsContainer) return;
@@ -723,7 +808,9 @@ function filterSpecialties() {
   });
 }
 
-// FUNCIONES PARA DIRECTORIO DE ACADEMIAS
+/* -----------------------------
+   FUNCIONES PARA DIRECTORIO DE ACADEMIAS
+------------------------------ */
 function initAcademyDirectory() {
   populateFilters();
   renderAcademies();
@@ -836,9 +923,12 @@ function saveUserAnnotation(academyName, annotation) {
   updateRecentActivitySummary();
 }
 
-// FUNCIONES PARA DOCUMENTOS
+/* -----------------------------
+   FUNCIONES PARA DOCUMENTOS
+------------------------------ */
 function uploadDocuments(event) {
   const email = localStorage.getItem('email');
+  if (!email || !users[email]) return;
   const files = event.target.files;
   if (!users[email].documents) {
     users[email].documents = [];
@@ -900,6 +990,7 @@ function deleteFolder(folderName) {
 
 function displayDocuments() {
   const email = localStorage.getItem('email');
+  if (!email || !users[email]) return;
   const documentsContainer = document.getElementById('documents-container');
   if (!documentsContainer) return;
   documentsContainer.innerHTML = '';
@@ -1031,7 +1122,9 @@ function toggleDocumentsView() {
   displayDocuments();
 }
 
-// FUNCIONES PARA SIDEBAR Y NOTIFICACIONES
+/* -----------------------------
+   FUNCIONES PARA SIDEBAR Y NOTIFICACIONES
+------------------------------ */
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   sidebar.classList.toggle('show-sidebar');
@@ -1104,4 +1197,6 @@ function addNotification(message) {
   addActivity("Notificación: " + message);
 }
 
-/* FIN DEL SCRIPT */
+/* -----------------------------
+   FIN DEL SCRIPT
+------------------------------ */

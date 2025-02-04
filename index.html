@@ -17,22 +17,11 @@
   />
 </head>
 <body>
-  <!-- Barra lateral (sidebar) -->
-  <!-- Esta se muestra solo para usuarios logueados -->
+  <!-- Barra lateral (sidebar) – se mostrará solo para usuarios registrados -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <img
-        src="assets/logo.png"
-        alt="Logo Patience"
-        class="sidebar-logo"
-        title="Logo Patience"
-      />
-      <button
-        class="pin-sidebar"
-        id="pin-sidebar"
-        onclick="togglePinSidebar()"
-        title="Fijar barra lateral"
-      >
+      <img src="assets/logo.png" alt="Logo Patience" class="sidebar-logo" title="Logo Patience" />
+      <button class="pin-sidebar" id="pin-sidebar" onclick="togglePinSidebar()" title="Fijar barra lateral">
         <i class="fas fa-thumbt"></i>
       </button>
       <button class="close-sidebar" onclick="toggleSidebar()" title="Cerrar barra lateral">
@@ -68,36 +57,20 @@
     </ul>
   </aside>
 
-  <!-- Header (se mostrará solo cuando el usuario esté logueado) -->
+  <!-- Header (solo para usuarios logueados) -->
   <header>
     <div class="header-left">
       <button id="menu-icon" onclick="toggleSidebar()" title="Abrir barra lateral">
         <i class="fas fa-bars"></i>
       </button>
-      <img
-        src="assets/logo.png"
-        alt="Logo Patience"
-        class="header-logo"
-        onclick="handleLogoClick()"
-        title="Ir al inicio"
-      />
+      <img src="assets/logo.png" alt="Logo Patience" class="header-logo" onclick="handleLogoClick()" title="Ir al inicio" />
     </div>
     <div class="header-right">
-      <div
-        class="notification-icon"
-        onclick="toggleNotifications()"
-        title="Notificaciones"
-      >
+      <div class="notification-icon" onclick="toggleNotifications()" title="Notificaciones">
         <i class="fas fa-bell"></i>
         <span id="notification-count" class="notification-count">0</span>
       </div>
-      <img
-        src="assets/default-profile.png"
-        alt="Icono de Perfil"
-        id="profile-icon"
-        onclick="showProfile()"
-        title="Ir a tu Perfil"
-      />
+      <img src="assets/default-profile.png" alt="Icono de Perfil" id="profile-icon" onclick="showProfile()" title="Ir a tu Perfil" />
     </div>
   </header>
 
@@ -461,6 +434,7 @@
     </div>
   </div>
 
+  <!-- Botón flotante de Ayuda -->
   <div id="help-floating-button" style="position: fixed; bottom: 20px; right: 20px; background-color: #38A38C; color: #ffffff; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 3000;" title="Haz clic para solicitar ayuda" onclick="showHelp()">
     <i class="fas fa-question"></i>
   </div>
@@ -469,7 +443,7 @@
     <p>© 2024 Patience. Todos los derechos reservados.</p>
   </footer>
 
+  <!-- Se carga el script.js que contiene todas las funciones globales -->
   <script src="script.js"></script>
 </body>
 </html>
-

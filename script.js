@@ -6,7 +6,7 @@
 const BASE_URL = "https://patienceclean.onrender.com";
 console.log("Frontend cargado. BASE_URL =", BASE_URL);
 
-// Funciones de comunicación con el backend
+/* Funciones de API (registro y login) */
 async function registerUserAPI(name, email, password) {
   try {
     const resp = await fetch(`${BASE_URL}/users/`, {
@@ -47,7 +47,7 @@ async function loginUserAPI(email, password) {
   }
 }
 
-// Constantes y datos
+/* Variables de configuración y datos estáticos */
 const COLORS = {
   primary: '#1F3A93',
   secondary: '#22A7F0',
@@ -59,10 +59,11 @@ const COLORS = {
 
 const discordInviteLink = "https://discord.gg/qGB36SqR";
 
-// Se mantiene la información de usuarios en localStorage (para MVP)
+// Los datos "users" en localStorage se usarán para simular información complementaria del usuario en el MVP.
+// Asegúrate de que, al iniciar sesión, se inicialice la entrada para ese usuario.
 let users = JSON.parse(localStorage.getItem('users')) || {};
 
-// Datos estáticos para academias y especialidades
+// Datos de academias y especialidades (estáticos)
 const academies = [
   { id: 1, name: 'TecnosZubia', city: 'Granada', phone: '958 890 387', email: 'info@tecnoszubia.es',
     specialties: ['Maestros', 'Profesores', 'Administrativos', 'Seguridad', 'SAS'], rating: '4.8/5', image: 'academia-1.jpg' },
@@ -95,7 +96,7 @@ const academies = [
   { id: 15, name: 'Academia Innova', city: 'Sevilla', phone: '954 77 88 99', email: 'info@academiainnova.com',
     specialties: ['Estado', 'Andalucía', 'Justicia', 'Correos'], rating: '3.5/5', image: 'academia-15.jpg' },
   { id: 16, name: 'Academia Claustro', city: 'Sevilla', phone: '954 00 11 22', email: 'info@academiaclaustro.com',
-    specialties: ['Educación', 'Administración', 'Justicia'], rating: '3.4/5', image: 'academia-16.jpg' }
+    specialties: ['Educación', 'Administración', 'Justicia'], rating: '3.4/5', image: 'academia-16.jpg' },
 ];
 
 const specialties = [
@@ -127,9 +128,13 @@ let elapsedTime = 0;
 let isTimerRunning = false;
 let documentsViewMode = 'list';
 
-// -------------------------
-// Funciones globales requeridas
-// -------------------------
+/* Función para ocultar las pantallas de login y registro */
+function hideLoginAndRegistrationScreens() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('registration-screen').style.display = 'none';
+}
+
+/* Función para ocultar todas las secciones principales */
 function hideAllMainSections() {
   const sections = [
     'progress-main-screen',
@@ -144,19 +149,7 @@ function hideAllMainSections() {
   });
 }
 
-function hideLoginAndRegistrationScreens() {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('registration-screen').style.display = 'none';
-}
-
-function showAccountScreen() {
-  hideAllMainSections();
-  document.getElementById('account-screen').style.display = 'block';
-}
-
-// -------------------------
-// Inicialización al cargar el DOM
-// -------------------------
+/* Al cargarse el DOM */
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOMContentLoaded: iniciando aplicación");
   if (localStorage.getItem('loggedIn') === 'true') {
@@ -166,11 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
     showLoginScreen();
   }
 
+  // Asignar eventos a inputs de subida y búsqueda de documentos
   const uploadInput = document.getElementById('upload-document');
   if (uploadInput) {
     uploadInput.addEventListener('change', uploadDocuments);
   }
-
   const documentSearch = document.getElementById('document-search');
   if (documentSearch) {
     documentSearch.addEventListener('input', filterDocuments);
@@ -195,25 +188,39 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateMotivationalMessage, 5 * 60 * 1000);
 
   loadDailyStreak();
-  loadDailyCheckInStatus(); // Función vacía (puedes implementarla en el futuro)
+  loadDailyCheckInStatus();
   loadRecentActivity();
   updateRecentActivitySummary();
 });
 
-// -------------------------
-// Funciones de registro y login con backend
-// -------------------------
+/* Al iniciar sesión, se inicializa la información local para el usuario (si no existe) */
+function initializeLocalUserData(email) {
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  if (!localUsers[email]) {
+    localUsers[email] = {
+      dailyStreak: 0,
+      lastCheckinDate: null,
+      recentActivities: [],
+      studySessions: [],
+      notifications: []
+    };
+    localStorage.setItem('users', JSON.stringify(localUsers));
+  }
+  users[email] = localUsers[email]; // Actualiza el objeto global "users"
+}
+
+/* Funciones de registro y login reales con backend */
+
+// Registro: se llama desde el formulario de registro en index.html
 async function handleRegistration(event) {
   event.preventDefault();
   const name = document.getElementById('reg-name').value;
   const email = document.getElementById('reg-email').value;
   const password = document.getElementById('reg-password').value;
+
   try {
     const newUser = await registerUserAPI(name, email, password);
     console.log("Registro exitoso:", newUser);
-    // Actualizamos el objeto 'users' en localStorage con el nuevo usuario
-    users[email] = newUser;
-    localStorage.setItem('users', JSON.stringify(users));
     document.getElementById('registration-form').reset();
     document.getElementById('registration-message').style.display = 'block';
     document.getElementById('welcome-button').style.display = 'block';
@@ -222,17 +229,23 @@ async function handleRegistration(event) {
   }
 }
 
+// Login: se llama desde el formulario de login en index.html
 async function handleLogin(event) {
   event.preventDefault();
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
+
   try {
     const loginResp = await loginUserAPI(email, password);
     console.log("Login exitoso:", loginResp);
     localStorage.setItem('loggedIn', 'true');
     localStorage.setItem('email', email);
     localStorage.setItem('name', loginResp.user.name || "");
+    // Inicializa la información local del usuario si no existe
+    initializeLocalUserData(email);
+
     hideLoginAndRegistrationScreens();
+    // Mostrar header, footer y barra lateral para usuarios logueados
     document.querySelector('header').style.display = 'flex';
     document.querySelector('footer').style.display = 'block';
     document.getElementById('sidebar').style.display = 'block';
@@ -260,6 +273,7 @@ function showLoginScreen() {
   document.getElementById('registration-screen').style.display = 'none';
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
+  // Ocultar la barra lateral para usuarios no registrados
   document.getElementById('sidebar').style.display = 'none';
 }
 
@@ -272,19 +286,20 @@ function showRegistrationScreen() {
   document.getElementById('sidebar').style.display = 'none';
 }
 
+// Pantalla principal para usuarios logueados
 function showProgressMainScreen() {
   hideAllMainSections();
   document.getElementById('progress-main-screen').style.display = 'block';
+  // Mostrar la barra lateral para usuarios registrados
   document.getElementById('sidebar').style.display = 'block';
 }
 
-// -------------------------
-// Funciones de perfil
-// -------------------------
+/* Funciones de perfil */
 function handleProfileUpdate(event) {
   event.preventDefault();
   const email = localStorage.getItem('email');
-  const user = users[email];
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
   if (!user) {
     alert("No se encuentra usuario en localStorage.");
     return;
@@ -301,7 +316,8 @@ function handleProfileUpdate(event) {
   user.profile = profile;
   user.examDate = profile.examDate;
   user.name = profile.fullName || user.name;
-  localStorage.setItem('users', JSON.stringify(users));
+  localUsers[email] = user;
+  localStorage.setItem('users', JSON.stringify(localUsers));
   alert('Perfil actualizado.');
   updateProfileIcon();
   updateUserNameHome();
@@ -310,18 +326,20 @@ function handleProfileUpdate(event) {
 
 function updateUserNameHome() {
   const email = localStorage.getItem('email');
-  const user = users[email];
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
   if (user && user.profile && user.profile.fullName) {
     document.getElementById('user-name-home').textContent = user.profile.fullName;
   } else {
-    document.getElementById('user-name-home').textContent = user?.name || 'Opositor';
+    document.getElementById('user-name-home').textContent = (user && user.name) || 'Opositor';
   }
 }
 
 function updateProfileIcon() {
   const profileIcon = document.getElementById('profile-icon');
   const email = localStorage.getItem('email');
-  const profile = users[email]?.profile || {};
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const profile = (localUsers[email] && localUsers[email].profile) || {};
   if (profileIcon) {
     profileIcon.src = profile.profileImage || 'assets/default-profile.png';
   }
@@ -329,7 +347,7 @@ function updateProfileIcon() {
 
 function handleImageUpload(event) {
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     document.getElementById('profile-img').src = e.target.result;
   };
   if (event.target.files && event.target.files[0]) {
@@ -337,19 +355,17 @@ function handleImageUpload(event) {
   }
 }
 
-// -------------------------
-// Funciones de actividad
-// -------------------------
+/* Funciones de actividad */
 function loadRecentActivity() {
-  // Función vacía por ahora; puedes implementarla en el futuro
+  // (Puedes implementar la carga de actividad si lo deseas)
 }
-
 function updateRecentActivitySummary() {
   const email = localStorage.getItem('email');
-  const user = users[email];
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
   const recentActivitySummary = document.getElementById('recent-activity-summary');
   if (recentActivitySummary) {
-    if (user?.recentActivities && user.recentActivities.length > 0) {
+    if (user && user.recentActivities && user.recentActivities.length > 0) {
       const lastActivity = user.recentActivities[user.recentActivities.length - 1];
       recentActivitySummary.textContent = `Última actividad: ${lastActivity}`;
     } else {
@@ -357,14 +373,14 @@ function updateRecentActivitySummary() {
     }
   }
 }
-
 function displayFullActivity() {
   const email = localStorage.getItem('email');
-  const user = users[email];
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
   const fullActivityList = document.getElementById('full-activity-list');
   if (!fullActivityList) return;
   fullActivityList.innerHTML = '';
-  if (!user?.recentActivities || user.recentActivities.length === 0) {
+  if (!user || !user.recentActivities || user.recentActivities.length === 0) {
     fullActivityList.textContent = 'No hay actividades registradas.';
   } else {
     user.recentActivities.slice().reverse().forEach(act => {
@@ -374,81 +390,74 @@ function displayFullActivity() {
     });
   }
 }
-
 function addActivity(message) {
   const email = localStorage.getItem('email');
-  const user = users[email] || {};
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
   if (!user.recentActivities) {
     user.recentActivities = [];
   }
   const now = new Date();
   const timestamp = now.toLocaleString();
   user.recentActivities.push(`[${timestamp}] ${message}`);
-  users[email] = user;
-  localStorage.setItem('users', JSON.stringify(users));
+  localUsers[email] = user;
+  localStorage.setItem('users', JSON.stringify(localUsers));
   updateRecentActivitySummary();
 }
 
-// -------------------------
-// Funciones de Onboarding
-// -------------------------
+/* Funciones de Onboarding */
 function startOnboarding() {
   showOverlay();
   showOnboardingStep(1);
 }
-
 function nextOnboardingStep() {
   const currentStep = parseInt(localStorage.getItem('onboardingStep')) || 1;
   const nextStep = currentStep + 1;
   showOnboardingStep(nextStep);
 }
-
 function showOnboardingStep(step) {
   const totalSteps = 5;
   for (let i = 1; i <= totalSteps; i++) {
     const stepElement = document.getElementById(`onboarding-step-${i}`);
     if (stepElement) {
-      stepElement.style.display = i === step ? 'block' : 'none';
+      stepElement.style.display = (i === step) ? 'block' : 'none';
     }
   }
   localStorage.setItem('onboardingStep', step);
 }
-
 function finishOnboarding() {
   hideOverlay();
   const email = localStorage.getItem('email');
-  if (users[email]) {
-    users[email].onboardingCompleted = true;
-    localStorage.setItem('users', JSON.stringify(users));
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  if (localUsers[email]) {
+    localUsers[email].onboardingCompleted = true;
+    localStorage.setItem('users', JSON.stringify(localUsers));
   }
   localStorage.removeItem('onboardingStep');
 }
-
 function showOverlay() {
   const overlay = document.getElementById('onboarding-overlay');
   overlay.style.display = 'flex';
 }
-
 function hideOverlay() {
   const overlay = document.getElementById('onboarding-overlay');
   overlay.style.display = 'none';
 }
 
-// -------------------------
-// Funciones del Dashboard y Racha
-// -------------------------
+/* Funciones del Dashboard y Racha */
 function updateDashboard() {
   const email = localStorage.getItem('email');
-  const user = users[email];
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
   const daysRemainingElement = document.getElementById('days-remaining');
   const studyHoursElement = document.getElementById('study-hours');
   updateUserNameHome();
-  if (user?.examDate) {
+  if (user && user.examDate) {
     const examDate = new Date(user.examDate);
     const today = new Date();
     const timeDiff = examDate - today;
     const daysRemaining = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-    daysRemainingElement.textContent = daysRemaining > 0 ? daysRemaining + ' días' : 'Examen pasado';
+    daysRemainingElement.textContent = (daysRemaining > 0) ? daysRemaining + ' días' : 'Examen pasado';
   } else {
     daysRemainingElement.textContent = '--';
   }
@@ -457,17 +466,16 @@ function updateDashboard() {
   updateMotivationalMessage();
   updateRecentActivitySummary();
 }
-
 function calculateTotalStudyTime(email) {
-  const user = users[email];
-  if (user?.studySessions && user.studySessions.length > 0) {
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
+  if (user && user.studySessions && user.studySessions.length) {
     const totalMilliseconds = user.studySessions.reduce((acc, session) => acc + session.duration, 0);
     const totalHours = (totalMilliseconds / (1000 * 60 * 60)).toFixed(2);
     return totalHours;
   }
   return 0;
 }
-
 function updateMotivationalMessage() {
   const messageElement = document.getElementById('motivational-message');
   if (messageElement) {
@@ -475,7 +483,6 @@ function updateMotivationalMessage() {
     messageElement.textContent = randomMessage;
   }
 }
-
 function handleLogoClick() {
   if (localStorage.getItem('loggedIn') === 'true') {
     showProgressMainScreen();
@@ -484,35 +491,34 @@ function handleLogoClick() {
   }
 }
 
-// -------------------------
-// Funciones para Daily Streak
-// -------------------------
+/* Función para cargar la racha diaria del usuario */
 function loadDailyStreak() {
   const email = localStorage.getItem('email');
-  if (!email) {
-    dailyStreak = 0;
-    return;
+  if (!email) return;
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  if (!localUsers[email]) {
+    // Inicializar datos por defecto para el usuario si no existen
+    localUsers[email] = {
+      dailyStreak: 0,
+      lastCheckinDate: null,
+      recentActivities: [],
+      studySessions: [],
+      notifications: []
+    };
+    localStorage.setItem('users', JSON.stringify(localUsers));
   }
-  const user = users[email] || {};
-  if (user.dailyStreak === undefined) {
-    user.dailyStreak = 0;
-    user.lastCheckinDate = null;
-    users[email] = user;
-    localStorage.setItem('users', JSON.stringify(users));
-  }
-  dailyStreak = user.dailyStreak;
+  dailyStreak = localUsers[email].dailyStreak;
 }
-
 function updateDailyStreakDisplay() {
   const dailyStreakElement = document.getElementById('daily-streak');
   if (dailyStreakElement) {
     dailyStreakElement.textContent = dailyStreak + " días";
   }
 }
-
 function handleDailyCheckIn() {
   const email = localStorage.getItem('email');
-  const user = users[email] || {};
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
   const today = new Date().toDateString();
   const lastCheckin = user.lastCheckinDate ? new Date(user.lastCheckinDate).toDateString() : null;
   if (!lastCheckin) {
@@ -540,16 +546,14 @@ function handleDailyCheckIn() {
       addActivity("Check-in diario, racha reiniciada");
     }
   }
-  users[email] = user;
-  localStorage.setItem('users', JSON.stringify(users));
+  localUsers[email] = user;
+  localStorage.setItem('users', JSON.stringify(localUsers));
   updateDailyStreakDisplay();
   document.getElementById('checkin-status').textContent = "Check-in completado hoy!";
   updateRecentActivitySummary();
 }
 
-// -------------------------
-// Funciones del Cronómetro
-// -------------------------
+/* Funciones del Cronómetro */
 function startTimer() {
   if (!isTimerRunning) {
     isTimerRunning = true;
@@ -568,7 +572,6 @@ function startTimer() {
     resetBtn.disabled = false;
   }
 }
-
 function pauseTimer() {
   if (!isTimerRunning) return;
   isTimerRunning = false;
@@ -581,7 +584,6 @@ function pauseTimer() {
     pauseBtn.disabled = true;
   }
 }
-
 function resetTimer() {
   if (isTimerRunning) {
     pauseTimer();
@@ -593,7 +595,6 @@ function resetTimer() {
     resetBtn.disabled = true;
   }
 }
-
 function updateTimerDisplay() {
   const hours = Math.floor(elapsedTime / (1000 * 60 * 60)).toString().padStart(2, '0');
   const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60).toString().padStart(2, '0');
@@ -603,10 +604,10 @@ function updateTimerDisplay() {
     timerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
   }
 }
-
 function saveStudySession() {
   const email = localStorage.getItem('email');
-  const user = users[email] || {};
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
   if (!user.studySessions) {
     user.studySessions = [];
   }
@@ -614,8 +615,8 @@ function saveStudySession() {
     duration: elapsedTime,
     date: new Date()
   });
-  users[email] = user;
-  localStorage.setItem('users', JSON.stringify(users));
+  localUsers[email] = user;
+  localStorage.setItem('users', JSON.stringify(localUsers));
   updateDashboard();
   elapsedTime = 0;
   updateTimerDisplay();
@@ -623,27 +624,22 @@ function saveStudySession() {
   updateRecentActivitySummary();
 }
 
-// -------------------------
-// Funciones del Quiz Diario
-// -------------------------
+/* Funciones del Quiz Diario */
 function openQuizModal() {
   const quizModal = document.getElementById('quiz-modal');
   quizModal.style.display = 'block';
   loadDailyQuiz();
 }
-
 function closeQuizModal() {
   const quizModal = document.getElementById('quiz-modal');
   quizModal.style.display = 'none';
 }
-
 window.onclick = function(event) {
   const quizModal = document.getElementById('quiz-modal');
   if (event.target === quizModal) {
     quizModal.style.display = 'none';
   }
 };
-
 function loadDailyQuiz() {
   currentQuizIndex = (currentQuizIndex + 1) % dailyQuizQuestions.length;
   const questionObj = dailyQuizQuestions[currentQuizIndex];
@@ -660,7 +656,6 @@ function loadDailyQuiz() {
     quizOptions.appendChild(btn);
   });
 }
-
 function checkDailyQuizAnswer(selectedIndex) {
   const questionObj = dailyQuizQuestions[currentQuizIndex];
   const quizResult = document.getElementById('quiz-result');
@@ -676,14 +671,12 @@ function checkDailyQuizAnswer(selectedIndex) {
   updateRecentActivitySummary();
 }
 
-// -------------------------
-// Funciones para Discord (Grupos)
+/* Funciones para Discord (Grupos) */
 function redirectToDiscord() {
   window.open(discordInviteLink, '_blank');
 }
 
-// -------------------------
-// Funciones para IA Especializada
+/* Funciones para IA Especializada */
 function initSpecialties() {
   const aiCardsContainer = document.getElementById('ai-cards-container');
   if (!aiCardsContainer) return;
@@ -705,7 +698,6 @@ function initSpecialties() {
     aiCardsContainer.appendChild(aiCard);
   });
 }
-
 function filterSpecialties() {
   const searchTerm = (document.getElementById('ai-search-input')?.value.toLowerCase() || '');
   const aiCardsContainer = document.getElementById('ai-cards-container');
@@ -730,7 +722,9 @@ function filterSpecialties() {
     });
     return;
   }
-  const filtered = specialties.filter(s => s.name.toLowerCase().includes(searchTerm));
+  const filtered = specialties.filter(s =>
+    s.name.toLowerCase().includes(searchTerm)
+  );
   filtered.forEach(specialty => {
     const aiCard = document.createElement('div');
     aiCard.classList.add('ai-card');
@@ -749,13 +743,11 @@ function filterSpecialties() {
   });
 }
 
-// -------------------------
-// Funciones para Directorio de Academias
+/* Funciones para Directorio de Academias */
 function initAcademyDirectory() {
   populateFilters();
   renderAcademies();
 }
-
 function populateFilters() {
   const cityFilter = document.getElementById('city-filter');
   const specialtyFilter = document.getElementById('specialty-filter');
@@ -775,7 +767,6 @@ function populateFilters() {
     specialtyFilter.appendChild(option);
   });
 }
-
 function filterAcademies() {
   const city = document.getElementById('city-filter')?.value;
   const specialty = document.getElementById('specialty-filter')?.value;
@@ -788,7 +779,6 @@ function filterAcademies() {
   }
   renderAcademies(filteredAcademies);
 }
-
 function renderAcademies(academyList = academies) {
   const academyContainer = document.getElementById('academy-container');
   if (!academyContainer) return;
@@ -842,29 +832,28 @@ function renderAcademies(academyList = academies) {
     academyContainer.appendChild(academyCard);
   });
 }
-
 function getUserAnnotation(academyName) {
   const email = localStorage.getItem('email');
-  if (users[email] && users[email].annotations && users[email].annotations[academyName]) {
-    return users[email].annotations[academyName];
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  if (localUsers[email] && localUsers[email].annotations && localUsers[email].annotations[academyName]) {
+    return localUsers[email].annotations[academyName];
   }
   return '';
 }
-
 function saveUserAnnotation(academyName, annotation) {
   const email = localStorage.getItem('email');
-  if (!users[email].annotations) {
-    users[email].annotations = {};
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  if (!localUsers[email].annotations) {
+    localUsers[email].annotations = {};
   }
-  users[email].annotations[academyName] = annotation;
-  localStorage.setItem('users', JSON.stringify(users));
+  localUsers[email].annotations[academyName] = annotation;
+  localStorage.setItem('users', JSON.stringify(localUsers));
   addNotification(`Anotación añadida para la academia "${academyName}".`);
   addActivity(`Anotación añadida para la academia "${academyName}".`);
   updateRecentActivitySummary();
 }
 
-// -------------------------
-// Funciones para Noticias
+/* Funciones para Noticias */
 function showNewsContent(newsType) {
   const csifIframe = document.getElementById('csif-iframe');
   const sipriIframe = document.getElementById('sipri-iframe');
@@ -878,19 +867,17 @@ function showNewsContent(newsType) {
   }
 }
 
-// -------------------------
-// Funciones para Documentos
+/* Funciones para Documentos */
 function uploadDocuments(event) {
   const email = localStorage.getItem('email');
-  if (!users[email]) return;
-  const files = event.target.files;
-  if (!users[email].documents) {
-    users[email].documents = [];
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  if (!localUsers[email].documents) {
+    localUsers[email].documents = [];
   }
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
+  for (let i = 0; i < event.target.files.length; i++) {
+    const file = event.target.files[i];
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       const documentData = {
         name: file.name,
         lastOpened: null,
@@ -898,8 +885,8 @@ function uploadDocuments(event) {
         fileContent: e.target.result,
         fileType: file.type
       };
-      users[email].documents.push(documentData);
-      localStorage.setItem('users', JSON.stringify(users));
+      localUsers[email].documents.push(documentData);
+      localStorage.setItem('users', JSON.stringify(localUsers));
       displayDocuments();
       addNotification(`Documento "${file.name}" subido correctamente.`);
       addActivity(`Documento "${file.name}" subido.`);
@@ -908,40 +895,39 @@ function uploadDocuments(event) {
     reader.readAsDataURL(file);
   }
 }
-
 function createFolder() {
   const folderName = prompt('Nombre de la nueva carpeta:');
   if (folderName) {
     const email = localStorage.getItem('email');
-    if (!users[email].folders) {
-      users[email].folders = [];
+    let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+    if (!localUsers[email].folders) {
+      localUsers[email].folders = [];
     }
     const folderData = {
       name: folderName,
       documents: []
     };
-    users[email].folders.push(folderData);
-    localStorage.setItem('users', JSON.stringify(users));
+    localUsers[email].folders.push(folderData);
+    localStorage.setItem('users', JSON.stringify(localUsers));
     displayDocuments();
     addNotification(`Carpeta "${folderName}" creada exitosamente.`);
     addActivity(`Carpeta "${folderName}" creada.`);
     updateRecentActivitySummary();
   }
 }
-
 function deleteFolder(folderName) {
   const email = localStorage.getItem('email');
-  const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const folderIndex = localUsers[email].folders.findIndex(folder => folder.name === folderName);
   if (folderIndex > -1) {
-    users[email].folders.splice(folderIndex, 1);
-    localStorage.setItem('users', JSON.stringify(users));
+    localUsers[email].folders.splice(folderIndex, 1);
+    localStorage.setItem('users', JSON.stringify(localUsers));
     displayDocuments();
     addNotification(`Carpeta "${folderName}" eliminada.`);
     addActivity(`Carpeta "${folderName}" eliminada.`);
     updateRecentActivitySummary();
   }
 }
-
 function displayDocuments() {
   const email = localStorage.getItem('email');
   const documentsContainer = document.getElementById('documents-container');
@@ -954,58 +940,62 @@ function displayDocuments() {
     documentsContainer.classList.add('grid-view');
     documentsContainer.classList.remove('list-view');
   }
-  const userFolders = users[email].folders || [];
-  userFolders.forEach(folder => {
-    const folderElement = document.createElement('div');
-    folderElement.classList.add('folder-card');
-    const folderHeader = document.createElement('div');
-    folderHeader.classList.add('folder-header');
-    folderHeader.textContent = folder.name;
-    const deleteButton = document.createElement('button');
-    deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
-    deleteButton.onclick = (e) => {
-      e.stopPropagation();
-      deleteFolder(folder.name);
-    };
-    folderHeader.appendChild(deleteButton);
-    folderElement.appendChild(folderHeader);
-    const folderDocuments = document.createElement('div');
-    folderDocuments.classList.add('folder-documents');
-    folder.documents.forEach(doc => {
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
+  if (user.folders) {
+    user.folders.forEach(folder => {
+      const folderElement = document.createElement('div');
+      folderElement.classList.add('folder-card');
+      const folderHeader = document.createElement('div');
+      folderHeader.classList.add('folder-header');
+      folderHeader.textContent = folder.name;
+      const deleteButton = document.createElement('button');
+      deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+      deleteButton.onclick = (e) => {
+        e.stopPropagation();
+        deleteFolder(folder.name);
+      };
+      folderHeader.appendChild(deleteButton);
+      folderElement.appendChild(folderHeader);
+      const folderDocuments = document.createElement('div');
+      folderDocuments.classList.add('folder-documents');
+      folder.documents.forEach(doc => {
+        const docElement = document.createElement('div');
+        docElement.classList.add('document-card');
+        docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
+        docElement.addEventListener('click', () => {
+          openDocument(email, doc);
+        });
+        folderDocuments.appendChild(docElement);
+      });
+      folderElement.appendChild(folderDocuments);
+      documentsContainer.appendChild(folderElement);
+    });
+  }
+  if (user.documents) {
+    user.documents.forEach(doc => {
       const docElement = document.createElement('div');
       docElement.classList.add('document-card');
       docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
       docElement.addEventListener('click', () => {
         openDocument(email, doc);
       });
-      folderDocuments.appendChild(docElement);
+      const moveButton = document.createElement('button');
+      moveButton.innerHTML = '<i class="fas fa-folder"></i>';
+      moveButton.onclick = (e) => {
+        e.stopPropagation();
+        moveDocumentToFolder(email, doc.name);
+      };
+      docElement.appendChild(moveButton);
+      documentsContainer.appendChild(docElement);
     });
-    folderElement.appendChild(folderDocuments);
-    documentsContainer.appendChild(folderElement);
-  });
-  const userDocuments = users[email].documents || [];
-  userDocuments.forEach(doc => {
-    const docElement = document.createElement('div');
-    docElement.classList.add('document-card');
-    docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
-    docElement.addEventListener('click', () => {
-      openDocument(email, doc);
-    });
-    const moveButton = document.createElement('button');
-    moveButton.innerHTML = '<i class="fas fa-folder"></i>';
-    moveButton.onclick = (e) => {
-      e.stopPropagation();
-      moveDocumentToFolder(email, doc.name);
-    };
-    docElement.appendChild(moveButton);
-    documentsContainer.appendChild(docElement);
-  });
+  }
 }
-
 function openDocument(email, doc) {
   doc.lastOpened = new Date();
-  users[email].lastDocument = doc.name;
-  localStorage.setItem('users', JSON.stringify(users));
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  localUsers[email].lastDocument = doc.name;
+  localStorage.setItem('users', JSON.stringify(localUsers));
   const byteCharacters = atob(doc.fileContent.split(',')[1]);
   const byteNumbers = new Array(byteCharacters.length);
   for (let i = 0; i < byteCharacters.length; i++) {
@@ -1018,17 +1008,18 @@ function openDocument(email, doc) {
   addActivity(`Documento "${doc.name}" abierto.`);
   updateRecentActivitySummary();
 }
-
 function moveDocumentToFolder(email, documentName) {
   const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
   if (selectedFolder) {
-    const folder = users[email].folders.find(f => f.name === selectedFolder);
+    let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+    const folder = localUsers[email].folders.find(f => f.name === selectedFolder);
     if (folder) {
-      const documentIndex = users[email].documents.findIndex(doc => doc.name === documentName);
+      const documentIndex = localUsers[email].documents.findIndex(doc => doc.name === documentName);
       if (documentIndex > -1) {
-        const document = users[email].documents.splice(documentIndex, 1)[0];
+        const document = localUsers[email].documents.splice(documentIndex, 1)[0];
         folder.documents.push(document);
-        localStorage.setItem('users', JSON.stringify(users));
+        localUsers[email] = localUsers[email];
+        localStorage.setItem('users', JSON.stringify(localUsers));
         displayDocuments();
         addNotification(`Documento "${documentName}" movido a "${selectedFolder}".`);
         addActivity(`Documento "${documentName}" movido a "${selectedFolder}".`);
@@ -1041,7 +1032,6 @@ function moveDocumentToFolder(email, documentName) {
     }
   }
 }
-
 function filterDocuments() {
   const searchTerm = (document.getElementById('document-search')?.value || '').toLowerCase();
   const email = localStorage.getItem('email');
@@ -1055,8 +1045,9 @@ function filterDocuments() {
     documentsContainer.classList.add('grid-view');
     documentsContainer.classList.remove('list-view');
   }
-  const userDocuments = users[email].documents || [];
-  const filteredDocuments = userDocuments.filter(doc =>
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
+  const filteredDocuments = user.documents.filter(doc =>
     doc.name.toLowerCase().includes(searchTerm)
   );
   filteredDocuments.forEach(doc => {
@@ -1069,20 +1060,16 @@ function filterDocuments() {
     documentsContainer.appendChild(docElement);
   });
 }
-
 function toggleDocumentsView() {
   documentsViewMode = (documentsViewMode === 'list') ? 'grid' : 'list';
   displayDocuments();
 }
 
-// -------------------------
-// Funciones para Sidebar y Notificaciones
-// -------------------------
+/* Funciones para Sidebar y Notificaciones */
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   sidebar.classList.toggle('show-sidebar');
 }
-
 function togglePinSidebar() {
   const pinButton = document.getElementById('pin-sidebar');
   const sidebar = document.getElementById('sidebar');
@@ -1098,7 +1085,6 @@ function togglePinSidebar() {
     sidebar.classList.add('show-sidebar');
   }
 }
-
 function loadSidebarState() {
   const pinButton = document.getElementById('pin-sidebar');
   const sidebar = document.getElementById('sidebar');
@@ -1112,18 +1098,17 @@ function loadSidebarState() {
     sidebar.classList.remove('pinned');
   }
 }
-
 function toggleNotifications() {
   const notificationPanel = document.getElementById('notification-panel');
   notificationPanel.classList.toggle('show-notifications');
 }
-
 function updateNotifications() {
   const notificationCount = document.getElementById('notification-count');
   const notificationList = document.getElementById('notification-list');
   const email = localStorage.getItem('email');
-  const user = users[email];
-  const notifications = user?.notifications || [];
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
+  const notifications = (user && user.notifications) || [];
   notificationCount.textContent = notifications.length;
   notificationList.innerHTML = '';
   if (notifications.length === 0) {
@@ -1138,17 +1123,17 @@ function updateNotifications() {
     });
   }
 }
-
 function addNotification(message) {
   const email = localStorage.getItem('email');
-  const user = users[email];
+  let localUsers = JSON.parse(localStorage.getItem('users')) || {};
+  const user = localUsers[email];
   if (!user.notifications) {
     user.notifications = [];
   }
   user.notifications.push(message);
-  localStorage.setItem('users', JSON.stringify(users));
+  localUsers[email] = user;
+  localStorage.setItem('users', JSON.stringify(localUsers));
   addActivity("Notificación: " + message);
 }
 
-// -------------------------
-// Fin de Script
+/* Fin de Script */

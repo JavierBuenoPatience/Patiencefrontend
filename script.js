@@ -2,11 +2,11 @@
    SCRIPT.JS INTEGRADO (COMPLETO Y ACTUALIZADO)
 ========================== */
 
-// La URL del backend en Render
+// URL del backend en Render
 const BASE_URL = "https://patienceclean.onrender.com";
 console.log("Frontend cargado. BASE_URL =", BASE_URL);
 
-// Funciones para el backend
+// Funciones para comunicarse con el backend
 async function registerUserAPI(name, email, password) {
   try {
     const resp = await fetch(`${BASE_URL}/users/`, {
@@ -61,7 +61,7 @@ const discordInviteLink = "https://discord.gg/qGB36SqR";
 // Se utiliza localStorage para datos complementarios (MVP)
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
-// Datos de academias y especialidades (asegúrate de que las imágenes existen en la carpeta "assets")
+// Datos de academias y especialidades (asegúrate de que los archivos de imagen existan en la carpeta "assets")
 const academies = [
   { id: 1, name: 'TecnosZubia', city: 'Granada', phone: '958 890 387', email: 'info@tecnoszubia.es', specialties: ['Maestros', 'Profesores', 'Administrativos', 'Seguridad', 'SAS'], rating: '4.8/5', image: 'academia-1.jpg' },
   { id: 2, name: 'CEAPRO', city: 'Sevilla', phone: '954 32 00 00', email: 'info@ceapro.es', specialties: ['Junta de Andalucía', 'Administración', 'Justicia', 'Educación', 'SAS'], rating: '4.7/5', image: 'academia-2.jpg' },
@@ -113,12 +113,12 @@ let documentsViewMode = 'list';
 /* -----------------------------
    FUNCIONES STUB Y UTILITARIAS
 ------------------------------ */
-// Función para evitar el error "loadDailyCheckInStatus is not defined"
+// Para evitar el error "loadDailyCheckInStatus is not defined"
 function loadDailyCheckInStatus() {
-  // Implementa la funcionalidad de check-in si lo deseas; de momento es un stub.
+  // Función stub (puedes implementarla en el futuro)
 }
 
-// Funciones para manejar el arrastre y soltado de archivos
+// Funciones para manejo de arrastrar y soltar archivos
 function handleDragOver(event) {
   event.preventDefault();
 }
@@ -127,7 +127,9 @@ function handleDrop(event) {
   uploadDocuments(event);
 }
 
-// Funciones para mostrar pantallas específicas (si alguna funcionalidad extra no está implementada, se proveen stubs)
+/* -----------------------------
+   FUNCIONES DE MOSTRAR PANTALLAS
+------------------------------ */
 function showDocuments() {
   hideAllMainSections();
   document.getElementById('study-main-screen').style.display = 'block';
@@ -136,12 +138,19 @@ function showDocuments() {
 function showGroups() {
   hideAllMainSections();
   document.getElementById('communities-main-screen').style.display = 'block';
-  document.getElementById('groups-screen') && (document.getElementById('groups-screen').style.display = 'block');
+  if (document.getElementById('groups-screen')) {
+    document.getElementById('groups-screen').style.display = 'block';
+  }
+  if (document.getElementById('directory-screen')) {
+    document.getElementById('directory-screen').style.display = 'block';
+  }
 }
 function showNews() {
   hideAllMainSections();
   document.getElementById('news-help-screen').style.display = 'block';
-  document.getElementById('news-screen') && (document.getElementById('news-screen').style.display = 'block');
+  if (document.getElementById('news-screen')) {
+    document.getElementById('news-screen').style.display = 'block';
+  }
 }
 function showAIScreen() {
   hideAllMainSections();
@@ -155,22 +164,30 @@ function showActivityScreen() {
 function showProfile() {
   hideAllMainSections();
   document.getElementById('account-screen').style.display = 'block';
-  document.getElementById('profile-screen').style.display = 'block';
+  if (document.getElementById('profile-screen')) {
+    document.getElementById('profile-screen').style.display = 'block';
+  }
 }
 function showGuideScreen() {
   hideAllMainSections();
   document.getElementById('news-help-screen').style.display = 'block';
-  document.getElementById('guide-screen').style.display = 'block';
+  if (document.getElementById('guide-screen')) {
+    document.getElementById('guide-screen').style.display = 'block';
+  }
 }
 function showTraining() {
   hideAllMainSections();
   document.getElementById('news-help-screen').style.display = 'block';
-  document.getElementById('training-screen').style.display = 'block';
+  if (document.getElementById('training-screen')) {
+    document.getElementById('training-screen').style.display = 'block';
+  }
 }
 function showStudyTimeScreen() {
   hideAllMainSections();
   document.getElementById('study-main-screen').style.display = 'block';
-  document.getElementById('documents-screen').style.display = 'block';
+  if (document.getElementById('documents-screen')) {
+    document.getElementById('documents-screen').style.display = 'block';
+  }
 }
 
 /* -----------------------------
@@ -230,7 +247,7 @@ function hideAllMainSections() {
 }
 
 /* -----------------------------
-   FUNCIONES DE PANTALLAS
+   FUNCIONES DE PANTALLAS (VISIBILIDAD)
 ------------------------------ */
 function showLoginScreen() {
   hideAllMainSections();
@@ -253,6 +270,10 @@ function showRegistrationScreen() {
 function showProgressMainScreen() {
   hideAllMainSections();
   document.getElementById('progress-main-screen').style.display = 'block';
+  // Aseguramos que el contenido interno del dashboard se muestre
+  if (document.getElementById('progress-screen')) {
+    document.getElementById('progress-screen').style.display = 'block';
+  }
   document.getElementById('sidebar').style.display = 'block';
 }
 
@@ -265,16 +286,28 @@ function showStudyMainScreen() {
 function showCommunitiesMainScreen() {
   hideAllMainSections();
   document.getElementById('communities-main-screen').style.display = 'block';
+  if (document.getElementById('groups-screen')) {
+    document.getElementById('groups-screen').style.display = 'block';
+  }
+  if (document.getElementById('directory-screen')) {
+    document.getElementById('directory-screen').style.display = 'block';
+  }
 }
 
 function showNewsHelpScreen() {
   hideAllMainSections();
   document.getElementById('news-help-screen').style.display = 'block';
+  if (document.getElementById('news-screen')) {
+    document.getElementById('news-screen').style.display = 'block';
+  }
 }
 
 function showAccountScreen() {
   hideAllMainSections();
   document.getElementById('account-screen').style.display = 'block';
+  if (document.getElementById('profile-screen')) {
+    document.getElementById('profile-screen').style.display = 'block';
+  }
 }
 
 /* -----------------------------
@@ -393,7 +426,7 @@ function handleImageUpload(event) {
    FUNCIONES DE ACTIVIDAD
 ------------------------------ */
 function loadRecentActivity() {
-  // (Implementa la carga de actividad si lo deseas)
+  // Stub: Implementa la carga de actividad si lo deseas
 }
 
 function updateRecentActivitySummary() {
@@ -548,16 +581,12 @@ function handleLogoClick() {
 function loadDailyStreak() {
   const email = localStorage.getItem('email');
   if (!email) return;
+  // Si el usuario no existe aún en el objeto users, lo creamos con valores por defecto.
   if (!users[email]) {
-    users[email] = {};
-  }
-  const user = users[email];
-  if (user.dailyStreak === undefined) {
-    user.dailyStreak = 0;
-    user.lastCheckinDate = null;
+    users[email] = { dailyStreak: 0, lastCheckinDate: null };
     localStorage.setItem('users', JSON.stringify(users));
   }
-  dailyStreak = user.dailyStreak;
+  dailyStreak = users[email].dailyStreak;
 }
 
 function updateDailyStreakDisplay() {

@@ -254,8 +254,8 @@ function showLoginScreen() {
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
   document.getElementById('sidebar').style.display = 'none';
-  // Ocultamos el espaciador ya que el header no se muestra
-  document.getElementById('header-spacer').style.display = 'none';
+  // Añadimos la clase para quitar el margen superior
+  document.getElementById('main-content').classList.add('no-header');
 }
 
 function showRegistrationScreen() {
@@ -265,7 +265,7 @@ function showRegistrationScreen() {
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
   document.getElementById('sidebar').style.display = 'none';
-  document.getElementById('header-spacer').style.display = 'none';
+  document.getElementById('main-content').classList.add('no-header');
 }
 
 function showProgressMainScreen() {
@@ -275,15 +275,15 @@ function showProgressMainScreen() {
     document.getElementById('progress-screen').style.display = 'block';
   }
   document.getElementById('sidebar').style.display = 'block';
-  // Mostramos el espaciador para que el contenido quede debajo del header
-  document.getElementById('header-spacer').style.display = 'block';
+  // En pantallas internas, aseguramos que el margen superior esté activo
+  document.getElementById('main-content').classList.remove('no-header');
 }
 
 function showStudyMainScreen() {
   hideAllMainSections();
   document.getElementById('study-main-screen').style.display = 'block';
   showDocuments();
-  document.getElementById('header-spacer').style.display = 'block';
+  document.getElementById('main-content').classList.remove('no-header');
 }
 
 function showCommunitiesMainScreen() {
@@ -295,7 +295,7 @@ function showCommunitiesMainScreen() {
   if (document.getElementById('directory-screen')) {
     document.getElementById('directory-screen').style.display = 'block';
   }
-  document.getElementById('header-spacer').style.display = 'block';
+  document.getElementById('main-content').classList.remove('no-header');
 }
 
 function showNewsHelpScreen() {
@@ -304,7 +304,7 @@ function showNewsHelpScreen() {
   if (document.getElementById('news-screen')) {
     document.getElementById('news-screen').style.display = 'block';
   }
-  document.getElementById('header-spacer').style.display = 'block';
+  document.getElementById('main-content').classList.remove('no-header');
 }
 
 function showAccountScreen() {
@@ -313,7 +313,7 @@ function showAccountScreen() {
   if (document.getElementById('profile-screen')) {
     document.getElementById('profile-screen').style.display = 'block';
   }
-  document.getElementById('header-spacer').style.display = 'block';
+  document.getElementById('main-content').classList.remove('no-header');
 }
 
 /* -----------------------------
@@ -349,6 +349,8 @@ async function handleLogin(event) {
     document.querySelector('header').style.display = 'flex';
     document.querySelector('footer').style.display = 'block';
     document.getElementById('sidebar').style.display = 'block';
+    // Al iniciar sesión, eliminamos la clase "no-header" para que se aplique el margen superior
+    document.getElementById('main-content').classList.remove('no-header');
     showProgressMainScreen();
   } catch (error) {
     alert("Error al iniciar sesión: " + error.message);

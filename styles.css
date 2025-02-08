@@ -39,7 +39,8 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  padding-top: 50px; /* Reserva espacio para el header fijo */
+  /* Reserva espacio para el header fijo */
+  padding-top: 50px;
 }
 
 /* MAIN CONTENT */
@@ -53,12 +54,67 @@ body {
 .content-container {
   max-width: 1200px;
   margin: 0 auto;
-  /* Usamos grid para organizar de forma uniforme el contenido interno */
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
+  /* Se mantiene el padding original */
   padding: 20px;
 }
+
+/* -----------------------------
+   NUEVAS REGLAS PARA LA INTERFAZ (inspiradas en Canva)
+------------------------------ */
+
+/* Grid para Dashboard */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.dashboard-left,
+.dashboard-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Grid para la sección de Estudio */
+.study-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.study-menu {
+  grid-column: 1 / -1;
+}
+
+/* Grid para Comunidades */
+.communities-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Grid para Noticias & Ayuda */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.news-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Contenedor para la sección de Mi Cuenta (centrado) */
+.account-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* -----------------------------
+   Resto de estilos existentes (sin cambios)
+------------------------------ */
 
 /* AUTENTICACIÓN (Login/Registro) */
 .auth-container {

@@ -42,13 +42,12 @@ body {
 }
 
 /* Espaciador para el header fijo */
-#header-spacer {
-  display: none; /* Se mostrará vía JS cuando el header esté visible */
-  height: 50px; /* Igual a la altura del header */
-}
+/* (Ya no es necesario si aplicamos margin-top al main-content) */
 
 /* MAIN CONTENT */
 .main-content {
+  /* Se añade margin-top: 50px para que el contenido comience justo debajo del header fijo */
+  margin-top: 50px;
   padding: 16px;
   flex: 1;
   transition: margin-left 0.3s ease-in-out;
@@ -67,7 +66,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 50px);
   background-color: var(--background-color);
   padding: 20px;
 }
@@ -145,6 +144,7 @@ body {
   transform: translateX(-220px);
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
+  overflow-y: auto;
 }
 
 .sidebar.show-sidebar {
@@ -309,21 +309,6 @@ header {
   color: var(--text-color);
 }
 
-/* MAIN CONTENT */
-.main-content {
-  padding: 16px;
-  flex: 1;
-  transition: margin-left 0.3s ease-in-out;
-}
-
-.sidebar.show-sidebar ~ .main-content {
-  margin-left: 220px;
-}
-
-.sidebar.show-sidebar ~ footer {
-  left: 220px;
-}
-
 /* FOOTER */
 footer {
   background-color: var(--accent-color);
@@ -364,6 +349,7 @@ footer {
   margin-bottom: 10px;
 }
 
+/* BOTONES Y FORMULARIOS */
 button {
   background-color: var(--secondary-color);
   color: var(--white-color);
@@ -927,15 +913,11 @@ form textarea {
 }
 
 /* HELP Y ACTIVITY */
-.help-screen {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-}
-
+.help-screen,
 .activity-screen {
   max-width: 800px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .activity-screen ul {

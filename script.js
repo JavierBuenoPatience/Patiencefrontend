@@ -2,11 +2,11 @@
    SCRIPT.JS INTEGRADO (COMPLETO Y ACTUALIZADO)
 ========================== */
 
-// URL del backend en Render
+// La URL del backend en Render
 const BASE_URL = "https://patienceclean.onrender.com";
 console.log("Frontend cargado. BASE_URL =", BASE_URL);
 
-// Funciones para comunicarse con el backend
+// Funciones para el backend
 async function registerUserAPI(name, email, password) {
   try {
     const resp = await fetch(`${BASE_URL}/users/`, {
@@ -47,6 +47,38 @@ async function loginUserAPI(email, password) {
   }
 }
 
+// Funciones para perfil (GET y PUT)
+async function fetchUserProfile(email) {
+  try {
+    const resp = await fetch(`${BASE_URL}/profile?email=${encodeURIComponent(email)}`);
+    if (!resp.ok) {
+      throw new Error('Error al obtener el perfil');
+    }
+    return await resp.json();
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+async function updateUserProfile(profileData) {
+  try {
+    const resp = await fetch(`${BASE_URL}/profile`, {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profileData)
+    });
+    if (!resp.ok) {
+      const errorData = await resp.json();
+      throw new Error(`Error al actualizar el perfil: ${resp.status} - ${errorData.detail || errorData.error}`);
+    }
+    return await resp.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 // Constantes y datos básicos
 const COLORS = {
   primary: '#1F3A93',
@@ -58,10 +90,9 @@ const COLORS = {
 };
 const discordInviteLink = "https://discord.gg/qGB36SqR";
 
-// Se utiliza localStorage para datos complementarios (MVP)
+// Se utiliza localStorage para almacenar datos del MVP
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
-// Datos de academias y especialidades (asegúrate de que los archivos de imagen existan en la carpeta "assets")
 const academies = [
   { id: 1, name: 'TecnosZubia', city: 'Granada', phone: '958 890 387', email: 'info@tecnoszubia.es', specialties: ['Maestros', 'Profesores', 'Administrativos', 'Seguridad', 'SAS'], rating: '4.8/5', image: 'academia-1.jpg' },
   { id: 2, name: 'CEAPRO', city: 'Sevilla', phone: '954 32 00 00', email: 'info@ceapro.es', specialties: ['Junta de Andalucía', 'Administración', 'Justicia', 'Educación', 'SAS'], rating: '4.7/5', image: 'academia-2.jpg' },
@@ -110,129 +141,25 @@ let elapsedTime = 0;
 let isTimerRunning = false;
 let documentsViewMode = 'list';
 
-/* -----------------------------
+/* ==============================
    FUNCIONES STUB Y UTILITARIAS
------------------------------- */
-// Para evitar el error "loadDailyCheckInStatus is not defined"
+============================== */
 function loadDailyCheckInStatus() {
-  // Función stub (puedes implementarla en el futuro)
+  // Stub: si se desea, se puede implementar una funcionalidad adicional
 }
 
-// Funciones para manejo de arrastrar y soltar archivos
 function handleDragOver(event) {
   event.preventDefault();
 }
+
 function handleDrop(event) {
   event.preventDefault();
   uploadDocuments(event);
 }
 
-/* -----------------------------
-   FUNCIONES DE MOSTRAR PANTALLAS
------------------------------- */
-function showDocuments() {
-  hideAllMainSections();
-  document.getElementById('study-main-screen').style.display = 'block';
-  document.getElementById('documents-screen').style.display = 'block';
-}
-function showGroups() {
-  hideAllMainSections();
-  document.getElementById('communities-main-screen').style.display = 'block';
-  if (document.getElementById('groups-screen')) {
-    document.getElementById('groups-screen').style.display = 'block';
-  }
-  if (document.getElementById('directory-screen')) {
-    document.getElementById('directory-screen').style.display = 'block';
-  }
-}
-function showNews() {
-  hideAllMainSections();
-  document.getElementById('news-help-screen').style.display = 'block';
-  if (document.getElementById('news-screen')) {
-    document.getElementById('news-screen').style.display = 'block';
-  }
-}
-function showAIScreen() {
-  hideAllMainSections();
-  document.getElementById('study-main-screen').style.display = 'block';
-  document.getElementById('ai-screen').style.display = 'block';
-}
-function showActivityScreen() {
-  hideAllMainSections();
-  document.getElementById('activity-screen').style.display = 'block';
-}
-function showProfile() {
-  hideAllMainSections();
-  document.getElementById('account-screen').style.display = 'block';
-  if (document.getElementById('profile-screen')) {
-    document.getElementById('profile-screen').style.display = 'block';
-  }
-}
-function showGuideScreen() {
-  hideAllMainSections();
-  document.getElementById('news-help-screen').style.display = 'block';
-  if (document.getElementById('guide-screen')) {
-    document.getElementById('guide-screen').style.display = 'block';
-  }
-}
-function showTraining() {
-  hideAllMainSections();
-  document.getElementById('news-help-screen').style.display = 'block';
-  if (document.getElementById('training-screen')) {
-    document.getElementById('training-screen').style.display = 'block';
-  }
-}
-function showStudyTimeScreen() {
-  hideAllMainSections();
-  document.getElementById('study-main-screen').style.display = 'block';
-  if (document.getElementById('documents-screen')) {
-    document.getElementById('documents-screen').style.display = 'block';
-  }
-}
-
-/* -----------------------------
-   EVENTO DOMContentLoaded
------------------------------- */
-document.addEventListener('DOMContentLoaded', () => {
-  console.log("DOMContentLoaded: iniciando aplicación");
-  if (localStorage.getItem('loggedIn') === 'true') {
-    hideLoginAndRegistrationScreens();
-    showProgressMainScreen();
-  } else {
-    showLoginScreen();
-  }
-  const uploadInput = document.getElementById('upload-document');
-  if (uploadInput) {
-    uploadInput.addEventListener('change', uploadDocuments);
-  }
-  const documentSearch = document.getElementById('document-search');
-  if (documentSearch) {
-    documentSearch.addEventListener('input', filterDocuments);
-  }
-  initAcademyDirectory();
-  initSpecialties();
-  updateNotifications();
-  document.addEventListener('click', (event) => {
-    const notificationIcon = document.querySelector('.notification-icon');
-    const notificationPanel = document.getElementById('notification-panel');
-    if (notificationIcon && notificationPanel &&
-        !notificationIcon.contains(event.target) &&
-        !notificationPanel.contains(event.target)) {
-      notificationPanel.classList.remove('show-notifications');
-    }
-  });
-  loadSidebarState();
-  updateMotivationalMessage();
-  setInterval(updateMotivationalMessage, 5 * 60 * 1000);
-  loadDailyStreak();
-  loadDailyCheckInStatus();
-  loadRecentActivity();
-  updateRecentActivitySummary();
-});
-
-/* -----------------------------
-   FUNCIONES UTILITARIAS
------------------------------- */
+/* ==============================
+   FUNCIONES PARA MOSTRAR PANTALLAS
+============================== */
 function hideLoginAndRegistrationScreens() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('registration-screen').style.display = 'none';
@@ -246,9 +173,6 @@ function hideAllMainSections() {
   });
 }
 
-/* -----------------------------
-   FUNCIONES DE PANTALLAS (VISIBILIDAD)
------------------------------- */
 function showLoginScreen() {
   hideAllMainSections();
   document.getElementById('login-screen').style.display = 'block';
@@ -270,10 +194,6 @@ function showRegistrationScreen() {
 function showProgressMainScreen() {
   hideAllMainSections();
   document.getElementById('progress-main-screen').style.display = 'block';
-  // Aseguramos que el contenido interno del dashboard se muestre
-  if (document.getElementById('progress-screen')) {
-    document.getElementById('progress-screen').style.display = 'block';
-  }
   document.getElementById('sidebar').style.display = 'block';
 }
 
@@ -286,33 +206,21 @@ function showStudyMainScreen() {
 function showCommunitiesMainScreen() {
   hideAllMainSections();
   document.getElementById('communities-main-screen').style.display = 'block';
-  if (document.getElementById('groups-screen')) {
-    document.getElementById('groups-screen').style.display = 'block';
-  }
-  if (document.getElementById('directory-screen')) {
-    document.getElementById('directory-screen').style.display = 'block';
-  }
 }
 
 function showNewsHelpScreen() {
   hideAllMainSections();
   document.getElementById('news-help-screen').style.display = 'block';
-  if (document.getElementById('news-screen')) {
-    document.getElementById('news-screen').style.display = 'block';
-  }
 }
 
 function showAccountScreen() {
   hideAllMainSections();
   document.getElementById('account-screen').style.display = 'block';
-  if (document.getElementById('profile-screen')) {
-    document.getElementById('profile-screen').style.display = 'block';
-  }
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES DE REGISTRO Y LOGIN
------------------------------- */
+============================== */
 async function handleRegistration(event) {
   event.preventDefault();
   const name = document.getElementById('reg-name').value;
@@ -339,6 +247,14 @@ async function handleLogin(event) {
     localStorage.setItem('loggedIn', 'true');
     localStorage.setItem('email', email);
     localStorage.setItem('name', loginResp.user.name || "");
+    
+    // Obtener el perfil completo desde el backend y actualizar localStorage
+    const userProfile = await fetchUserProfile(email);
+    if (userProfile) {
+      users[email] = userProfile;
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+    
     hideLoginAndRegistrationScreens();
     document.querySelector('header').style.display = 'flex';
     document.querySelector('footer').style.display = 'block';
@@ -361,34 +277,36 @@ function handleLogout() {
   showLoginScreen();
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES DE PERFIL
------------------------------- */
-function handleProfileUpdate(event) {
+============================== */
+async function handleProfileUpdate(event) {
   event.preventDefault();
   const email = localStorage.getItem('email');
   if (!email || !users[email]) {
     alert("No se encuentra usuario en localStorage.");
     return;
   }
-  const user = users[email];
   const profile = {
-    fullName: document.getElementById('full-name').value,
+    name: document.getElementById('full-name').value,
     phone: document.getElementById('phone').value,
-    examDate: document.getElementById('exam-date').value,
+    exam_date: document.getElementById('exam-date').value,
     specialty: document.getElementById('specialty').value,
     hobbies: document.getElementById('hobbies').value,
     location: document.getElementById('location').value,
-    profileImage: document.getElementById('profile-img').src
+    profile_image: document.getElementById('profile-img').src
   };
-  user.profile = profile;
-  user.examDate = profile.examDate;
-  user.name = profile.fullName || user.name;
-  localStorage.setItem('users', JSON.stringify(users));
-  alert('Perfil actualizado.');
-  updateProfileIcon();
-  updateUserNameHome();
-  updateDashboard();
+  try {
+    const updatedUser = await updateUserProfile({ email, ...profile });
+    users[email] = updatedUser;
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('Perfil actualizado.');
+    updateProfileIcon();
+    updateUserNameHome();
+    updateDashboard();
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
 function updateUserNameHome() {
@@ -408,7 +326,7 @@ function updateProfileIcon() {
   if (!email || !users[email]) return;
   const profile = users[email].profile || {};
   if (profileIcon) {
-    profileIcon.src = profile.profileImage || 'assets/default-profile.png';
+    profileIcon.src = profile.profile_image || 'assets/default-profile.png';
   }
 }
 
@@ -422,11 +340,11 @@ function handleImageUpload(event) {
   }
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES DE ACTIVIDAD
------------------------------- */
+============================== */
 function loadRecentActivity() {
-  // Stub: Implementa la carga de actividad si lo deseas
+  // Implementa si es necesario
 }
 
 function updateRecentActivitySummary() {
@@ -476,9 +394,9 @@ function addActivity(message) {
   updateRecentActivitySummary();
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES DE ONBOARDING
------------------------------- */
+============================== */
 function startOnboarding() {
   showOverlay();
   showOnboardingStep(1);
@@ -521,9 +439,9 @@ function hideOverlay() {
   overlay.style.display = 'none';
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES DEL DASHBOARD Y RACHA
------------------------------- */
+============================== */
 function updateDashboard() {
   const email = localStorage.getItem('email');
   if (!email || !users[email]) return;
@@ -564,9 +482,9 @@ function updateMotivationalMessage() {
   }
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES DEL LOGOTIPO
------------------------------- */
+============================== */
 function handleLogoClick() {
   if (localStorage.getItem('loggedIn') === 'true') {
     showProgressMainScreen();
@@ -575,18 +493,22 @@ function handleLogoClick() {
   }
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES DEL CHECK-IN DIARIO (RACHA)
------------------------------- */
+============================== */
 function loadDailyStreak() {
   const email = localStorage.getItem('email');
   if (!email) return;
-  // Si el usuario no existe aún en el objeto users, lo creamos con valores por defecto.
   if (!users[email]) {
-    users[email] = { dailyStreak: 0, lastCheckinDate: null };
+    users[email] = {};
+  }
+  const user = users[email];
+  if (user.dailyStreak === undefined) {
+    user.dailyStreak = 0;
+    user.lastCheckinDate = null;
     localStorage.setItem('users', JSON.stringify(users));
   }
-  dailyStreak = users[email].dailyStreak;
+  dailyStreak = user.dailyStreak;
 }
 
 function updateDailyStreakDisplay() {
@@ -633,9 +555,9 @@ function handleDailyCheckIn() {
   updateRecentActivitySummary();
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES DEL CRONÓMETRO
------------------------------- */
+============================== */
 function startTimer() {
   if (!isTimerRunning) {
     isTimerRunning = true;
@@ -709,9 +631,9 @@ function saveStudySession() {
   updateRecentActivitySummary();
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES DEL QUIZ DIARIO
------------------------------- */
+============================== */
 function openQuizModal() {
   const quizModal = document.getElementById('quiz-modal');
   quizModal.style.display = 'block';
@@ -762,16 +684,16 @@ function checkDailyQuizAnswer(selectedIndex) {
   updateRecentActivitySummary();
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES PARA DISCORD
------------------------------- */
+============================== */
 function redirectToDiscord() {
   window.open(discordInviteLink, '_blank');
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES PARA IA ESPECIALIZADA
------------------------------- */
+============================== */
 function initSpecialties() {
   const aiCardsContainer = document.getElementById('ai-cards-container');
   if (!aiCardsContainer) return;
@@ -818,7 +740,7 @@ function filterSpecialties() {
     });
     return;
   }
-  const filtered = specialties.filter(s => s.name.toLowerCase().includes(searchTerm));
+  const filtered = specialties.filter(specialty => specialty.name.toLowerCase().includes(searchTerm));
   filtered.forEach(specialty => {
     const aiCard = document.createElement('div');
     aiCard.classList.add('ai-card');
@@ -837,9 +759,9 @@ function filterSpecialties() {
   });
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES PARA DIRECTORIO DE ACADEMIAS
------------------------------- */
+============================== */
 function initAcademyDirectory() {
   populateFilters();
   renderAcademies();
@@ -952,9 +874,9 @@ function saveUserAnnotation(academyName, annotation) {
   updateRecentActivitySummary();
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES PARA DOCUMENTOS
------------------------------- */
+============================== */
 function uploadDocuments(event) {
   const email = localStorage.getItem('email');
   if (!email || !users[email]) return;
@@ -1151,9 +1073,9 @@ function toggleDocumentsView() {
   displayDocuments();
 }
 
-/* -----------------------------
+/* ==============================
    FUNCIONES PARA SIDEBAR Y NOTIFICACIONES
------------------------------- */
+============================== */
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   sidebar.classList.toggle('show-sidebar');
@@ -1226,6 +1148,6 @@ function addNotification(message) {
   addActivity("Notificación: " + message);
 }
 
-/* -----------------------------
+/* ==============================
    FIN DEL SCRIPT
------------------------------- */
+============================== */

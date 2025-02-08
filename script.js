@@ -6,7 +6,7 @@
 const BASE_URL = "https://patienceclean.onrender.com";
 console.log("Frontend cargado. BASE_URL =", BASE_URL);
 
-// Funciones para comunicarse con el backend
+/* Funciones para comunicarse con el backend */
 async function registerUserAPI(name, email, password) {
   try {
     const resp = await fetch(`${BASE_URL}/users/`, {
@@ -47,7 +47,7 @@ async function loginUserAPI(email, password) {
   }
 }
 
-// Constantes y datos básicos
+/* Constantes y datos básicos */
 const COLORS = {
   primary: '#1F3A93',
   secondary: '#22A7F0',
@@ -61,7 +61,7 @@ const discordInviteLink = "https://discord.gg/qGB36SqR";
 // Se utiliza localStorage para datos complementarios (MVP)
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
-// Datos de academias y especialidades (asegúrate de que los archivos de imagen existan en la carpeta "assets")
+/* Datos de academias, especialidades y quiz (usa los mismos datos que en tu versión actual) */
 const academies = [
   { id: 1, name: 'TecnosZubia', city: 'Granada', phone: '958 890 387', email: 'info@tecnoszubia.es', specialties: ['Maestros', 'Profesores', 'Administrativos', 'Seguridad', 'SAS'], rating: '4.8/5', image: 'academia-1.jpg' },
   { id: 2, name: 'CEAPRO', city: 'Sevilla', phone: '954 32 00 00', email: 'info@ceapro.es', specialties: ['Junta de Andalucía', 'Administración', 'Justicia', 'Educación', 'SAS'], rating: '4.7/5', image: 'academia-2.jpg' },
@@ -113,12 +113,10 @@ let documentsViewMode = 'list';
 /* -----------------------------
    FUNCIONES STUB Y UTILITARIAS
 ------------------------------ */
-// Para evitar el error "loadDailyCheckInStatus is not defined"
 function loadDailyCheckInStatus() {
-  // Función stub (puedes implementarla en el futuro)
+  // Stub: Puedes implementar esta función en el futuro si deseas
 }
 
-// Funciones para manejo de arrastrar y soltar archivos
 function handleDragOver(event) {
   event.preventDefault();
 }
@@ -256,6 +254,8 @@ function showLoginScreen() {
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
   document.getElementById('sidebar').style.display = 'none';
+  // Ocultamos el espaciador ya que el header no se muestra
+  document.getElementById('header-spacer').style.display = 'none';
 }
 
 function showRegistrationScreen() {
@@ -265,22 +265,25 @@ function showRegistrationScreen() {
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
   document.getElementById('sidebar').style.display = 'none';
+  document.getElementById('header-spacer').style.display = 'none';
 }
 
 function showProgressMainScreen() {
   hideAllMainSections();
   document.getElementById('progress-main-screen').style.display = 'block';
-  // Aseguramos que el contenido interno del dashboard se muestre
   if (document.getElementById('progress-screen')) {
     document.getElementById('progress-screen').style.display = 'block';
   }
   document.getElementById('sidebar').style.display = 'block';
+  // Mostramos el espaciador para que el contenido quede debajo del header
+  document.getElementById('header-spacer').style.display = 'block';
 }
 
 function showStudyMainScreen() {
   hideAllMainSections();
   document.getElementById('study-main-screen').style.display = 'block';
   showDocuments();
+  document.getElementById('header-spacer').style.display = 'block';
 }
 
 function showCommunitiesMainScreen() {
@@ -292,6 +295,7 @@ function showCommunitiesMainScreen() {
   if (document.getElementById('directory-screen')) {
     document.getElementById('directory-screen').style.display = 'block';
   }
+  document.getElementById('header-spacer').style.display = 'block';
 }
 
 function showNewsHelpScreen() {
@@ -300,6 +304,7 @@ function showNewsHelpScreen() {
   if (document.getElementById('news-screen')) {
     document.getElementById('news-screen').style.display = 'block';
   }
+  document.getElementById('header-spacer').style.display = 'block';
 }
 
 function showAccountScreen() {
@@ -308,6 +313,7 @@ function showAccountScreen() {
   if (document.getElementById('profile-screen')) {
     document.getElementById('profile-screen').style.display = 'block';
   }
+  document.getElementById('header-spacer').style.display = 'block';
 }
 
 /* -----------------------------
@@ -581,8 +587,8 @@ function handleLogoClick() {
 function loadDailyStreak() {
   const email = localStorage.getItem('email');
   if (!email) return;
-  // Si el usuario no existe aún en el objeto users, lo creamos con valores por defecto.
   if (!users[email]) {
+    // Si el usuario aún no existe en el objeto, lo creamos
     users[email] = { dailyStreak: 0, lastCheckinDate: null };
     localStorage.setItem('users', JSON.stringify(users));
   }

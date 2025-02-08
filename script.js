@@ -61,7 +61,7 @@ const discordInviteLink = "https://discord.gg/qGB36SqR";
 // Se utiliza localStorage para datos complementarios (MVP)
 const users = JSON.parse(localStorage.getItem('users')) || {};
 
-/* Datos de academias, especialidades y quiz (usa los mismos datos que en tu versión actual) */
+/* Datos de academias, especialidades y quiz */
 const academies = [
   { id: 1, name: 'TecnosZubia', city: 'Granada', phone: '958 890 387', email: 'info@tecnoszubia.es', specialties: ['Maestros', 'Profesores', 'Administrativos', 'Seguridad', 'SAS'], rating: '4.8/5', image: 'academia-1.jpg' },
   { id: 2, name: 'CEAPRO', city: 'Sevilla', phone: '954 32 00 00', email: 'info@ceapro.es', specialties: ['Junta de Andalucía', 'Administración', 'Justicia', 'Educación', 'SAS'], rating: '4.7/5', image: 'academia-2.jpg' },
@@ -254,8 +254,6 @@ function showLoginScreen() {
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
   document.getElementById('sidebar').style.display = 'none';
-  // Añadimos la clase para quitar el margen superior
-  document.getElementById('main-content').classList.add('no-header');
 }
 
 function showRegistrationScreen() {
@@ -265,7 +263,6 @@ function showRegistrationScreen() {
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
   document.getElementById('sidebar').style.display = 'none';
-  document.getElementById('main-content').classList.add('no-header');
 }
 
 function showProgressMainScreen() {
@@ -275,15 +272,12 @@ function showProgressMainScreen() {
     document.getElementById('progress-screen').style.display = 'block';
   }
   document.getElementById('sidebar').style.display = 'block';
-  // En pantallas internas, aseguramos que el margen superior esté activo
-  document.getElementById('main-content').classList.remove('no-header');
 }
 
 function showStudyMainScreen() {
   hideAllMainSections();
   document.getElementById('study-main-screen').style.display = 'block';
   showDocuments();
-  document.getElementById('main-content').classList.remove('no-header');
 }
 
 function showCommunitiesMainScreen() {
@@ -295,7 +289,6 @@ function showCommunitiesMainScreen() {
   if (document.getElementById('directory-screen')) {
     document.getElementById('directory-screen').style.display = 'block';
   }
-  document.getElementById('main-content').classList.remove('no-header');
 }
 
 function showNewsHelpScreen() {
@@ -304,7 +297,6 @@ function showNewsHelpScreen() {
   if (document.getElementById('news-screen')) {
     document.getElementById('news-screen').style.display = 'block';
   }
-  document.getElementById('main-content').classList.remove('no-header');
 }
 
 function showAccountScreen() {
@@ -313,7 +305,6 @@ function showAccountScreen() {
   if (document.getElementById('profile-screen')) {
     document.getElementById('profile-screen').style.display = 'block';
   }
-  document.getElementById('main-content').classList.remove('no-header');
 }
 
 /* -----------------------------
@@ -349,8 +340,6 @@ async function handleLogin(event) {
     document.querySelector('header').style.display = 'flex';
     document.querySelector('footer').style.display = 'block';
     document.getElementById('sidebar').style.display = 'block';
-    // Al iniciar sesión, eliminamos la clase "no-header" para que se aplique el margen superior
-    document.getElementById('main-content').classList.remove('no-header');
     showProgressMainScreen();
   } catch (error) {
     alert("Error al iniciar sesión: " + error.message);

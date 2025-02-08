@@ -13,6 +13,7 @@
   --base-font-size: 14px;
 }
 
+/* Global Reset */
 * {
   margin: 0;
   padding: 0;
@@ -32,6 +33,93 @@ body {
   flex-direction: column;
 }
 
+/* ---------- ESTILOS PARA PÁGINAS DE AUTENTICACIÓN ---------- */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  padding: 20px;
+}
+
+.auth-card {
+  background-color: var(--white-color);
+  padding: 30px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.auth-card .logo {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+.auth-card h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.auth-card form label {
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.auth-card form input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 14px;
+}
+
+.auth-card form button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: var(--border-radius);
+  background-color: var(--secondary-color);
+  color: var(--white-color);
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.auth-card form button:hover {
+  background-color: var(--primary-color);
+}
+
+.auth-card button {
+  background-color: var(--secondary-color);
+  color: var(--white-color);
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.auth-card button:hover {
+  background-color: var(--primary-color);
+}
+
+/* ---------- SIDEBAR ---------- */
 .sidebar {
   position: fixed;
   top: 0;
@@ -90,6 +178,7 @@ body {
   margin-right: 8px;
 }
 
+/* ---------- HEADER ---------- */
 header {
   width: 100%;
   height: 50px;
@@ -155,6 +244,7 @@ header {
   object-fit: cover;
 }
 
+/* ---------- PANEL DE NOTIFICACIONES ---------- */
 .notification-panel {
   position: absolute;
   top: 50px;
@@ -185,6 +275,7 @@ header {
   color: var(--text-color);
 }
 
+/* ---------- MAIN CONTENT ---------- */
 .main-content {
   margin-top: 50px;
   margin-left: 0;
@@ -199,6 +290,7 @@ header {
   left: 220px;
 }
 
+/* ---------- FOOTER ---------- */
 footer {
   background-color: var(--accent-color);
   text-align: center;
@@ -215,6 +307,7 @@ footer {
   left: 220px;
 }
 
+/* ---------- CARTAS Y COMPONENTES ---------- */
 .card {
   background-color: var(--white-color);
   border: 1px solid var(--border-color);
@@ -250,7 +343,6 @@ button:disabled {
   background-color: var(--border-color);
   cursor: not-allowed;
 }
-
 form {
   display: flex;
   flex-direction: column;
@@ -275,6 +367,7 @@ form textarea {
   color: var(--text-color);
 }
 
+/* ---------- ESTILOS PARA LA PÁGINA DE INICIO (Dashboard) ---------- */
 .home-card {
   display: flex;
   flex-direction: column;
@@ -316,6 +409,7 @@ form textarea {
   color: var(--text-color);
 }
 
+/* ---------- PANEL "TU DÍA HOY" ---------- */
 .today-panel {
   background-color: var(--accent-color);
   border-radius: var(--border-radius);
@@ -327,6 +421,8 @@ form textarea {
   color: var(--primary-color);
   margin-bottom: 10px;
 }
+
+/* ---------- ACCESOS RÁPIDOS Y FEED ---------- */
 .quick-links-panel {
   background-color: var(--accent-color);
   border-radius: var(--border-radius);
@@ -368,6 +464,7 @@ form textarea {
   color: var(--primary-color);
 }
 
+/* ---------- MODAL ---------- */
 .modal {
   position: fixed;
   top: 0;
@@ -398,6 +495,7 @@ form textarea {
   color: var(--secondary-text-color);
 }
 
+/* ---------- TABLA DE HORAS DE ESTUDIO ---------- */
 .study-time-table {
   width: 100%;
   border-collapse: collapse;
@@ -428,6 +526,7 @@ form textarea {
   border-bottom: 1px solid var(--border-color);
 }
 
+/* ---------- DOCUMENTOS ---------- */
 .documents-screen .document-management {
   display: flex;
   flex-direction: column;
@@ -529,6 +628,7 @@ form textarea {
   cursor: pointer;
 }
 
+/* ---------- IA ---------- */
 .ai-instructions {
   margin-bottom: 14px;
 }
@@ -574,6 +674,7 @@ form textarea {
   color: var(--primary-color);
 }
 
+/* ---------- DISCORD ---------- */
 .discord-section {
   text-align: center;
   background-color: #5865F2;
@@ -602,6 +703,7 @@ form textarea {
   background-color: #5A73CF;
 }
 
+/* ---------- DIRECTORIO ---------- */
 .directory-screen .filter-section {
   display: flex;
   gap: 10px;
@@ -677,6 +779,7 @@ form textarea {
   resize: vertical;
 }
 
+/* ---------- NEWS ---------- */
 .news-section {
   display: flex;
   flex-direction: column;
@@ -716,12 +819,12 @@ form textarea {
   border: none;
 }
 
+/* ---------- HELP Y ACTIVITY ---------- */
 .help-screen {
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
 }
-
 .activity-screen {
   max-width: 800px;
   margin: 0 auto;
@@ -739,11 +842,11 @@ form textarea {
   font-size: 13px;
   color: var(--text-color);
 }
-
 .coming-soon-screen {
   text-align: center;
 }
 
+/* ---------- PERFIL ---------- */
 .profile-screen form {
   width: 100%;
   max-width: 400px;
@@ -776,6 +879,8 @@ form textarea {
   margin-bottom: 4px;
   font-size: 14px;
 }
+
+/* ---------- MODAL ---------- */
 #quiz-modal .modal-content {
   max-width: 500px;
 }
@@ -784,7 +889,7 @@ form textarea {
   margin-bottom: 10px;
 }
 
-/* Responsividad */
+/* ---------- RESPONSIVIDAD ---------- */
 @media (max-width: 1024px) {
   .sidebar {
     width: 200px;
@@ -836,4 +941,22 @@ form textarea {
   .home-metrics {
     gap: 8px;
   }
+}
+
+/* ---------- BOTÓN DE AYUDA FLOTANTE ---------- */
+.help-floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary-color);
+  color: var(--white-color);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3000;
 }

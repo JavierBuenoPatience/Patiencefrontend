@@ -1,3 +1,10 @@
+/* Reset global para html, body y main */
+html, body, main {
+  margin: 0;
+  padding: 0;
+}
+
+/* Variables de color y tipografía */
 :root {
   --primary-color: #60CAAD; 
   --secondary-color: #38A38C; 
@@ -13,7 +20,7 @@
   --base-font-size: 14px;
 }
 
-/* Reset global */
+/* Reset y configuración base */
 * {
   margin: 0;
   padding: 0;
@@ -28,9 +35,9 @@ html {
 body {
   background-color: var(--background-color);
   color: var(--text-color);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   overflow-x: hidden;
 }
 
@@ -47,7 +54,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 50px); /* altura de header */
+  min-height: calc(100vh - 50px); /* Altura del header */
   background-color: var(--background-color);
   padding: 20px;
 }
@@ -189,7 +196,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 16px; /* Solo padding horizontal */
   position: fixed;
   top: 0;
   left: 0;
@@ -197,6 +204,7 @@ header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 900;
   transition: left 0.3s ease-in-out;
+  line-height: 50px; /* Asegura que la altura no se expanda */
 }
 
 .header-left {
@@ -289,13 +297,15 @@ header {
 }
 
 /* MAIN CONTENT */
+/* Usamos margin-top en lugar de padding-top para que el fondo no se note en el espacio vacío */
 .main-content {
+  margin-top: 50px; /* Igual a la altura del header */
   padding: 16px;
-  padding-top: 50px; /* Igual a la altura del header fijo */
   flex: 1;
   transition: margin-left 0.3s ease-in-out;
 }
 
+/* Ajuste cuando el sidebar está visible */
 .sidebar.show-sidebar ~ .main-content {
   margin-left: 220px;
 }

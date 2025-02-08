@@ -81,7 +81,8 @@
   </div>
 
   <!-- Contenido principal -->
-  <main class="main-content" id="main-content">
+  <!-- Se añade la clase "auth-page" para las páginas de autenticación. Cuando el usuario inicia sesión, se deberá eliminar esta clase desde JS -->
+  <main class="main-content auth-page" id="main-content">
     <div class="content-container">
       <!-- Contenedor de autenticación (Login / Registro) -->
       <div class="auth-container">
@@ -409,5 +410,6 @@
   </footer>
 
   <script src="script.js"></script>
+  <!-- (En el script.js se debe programar que al iniciar sesión se remueva la clase "auth-page" del main-content para que el margen-top de 50px se aplique solo en las pantallas internas) -->
 </body>
 </html>

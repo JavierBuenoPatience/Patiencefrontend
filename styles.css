@@ -32,8 +32,9 @@ html {
   font-size: var(--base-font-size);
 }
 
-/* BODY: Se ha eliminado el padding-top para evitar acumulaciones; 
-   en su lugar, se aplicará margin-top en .main-content cuando el usuario esté logueado */
+/* BODY: Se ha eliminado el padding-top para evitar la doble compensación.
+   Así, el header fijo (50px de alto) no crea un espacio extra, y en las pantallas internas
+   se aplicará el margin-top a través de la clase “internal”. */
 body {
   background-color: var(--background-color);
   color: var(--text-color);
@@ -44,7 +45,7 @@ body {
   /* padding-top: 50px;  <-- Eliminado */
 }
 
-/* MAIN CONTENT: configuración por defecto para pantallas sin header (login/registro) */
+/* MAIN CONTENT: Por defecto (pantallas de login/registro) sin margen superior */
 .main-content {
   padding: 16px;
   flex: 1;
@@ -53,8 +54,11 @@ body {
   min-height: 100vh;
 }
 
-/* Cuando el usuario ha iniciado sesión (pantallas internas), se agrega la clase "internal" al body.
-   Esto aplica margin-top para que el contenido comience justo debajo del header fijo de 50px. */
+/* Cuando el usuario ha iniciado sesión (pantallas internas),
+   se añade la clase “internal” al body para aplicar un margin-top igual a la altura del header fijo.
+   De esta forma, el contenedor se ajusta a:
+      min-height: calc(100vh - 50px) y margin-top: 50px
+   logrando que el área total sea 100vh sin espacio extra. */
 body.internal .main-content {
   margin-top: 50px;
   min-height: calc(100vh - 50px);

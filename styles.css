@@ -32,8 +32,8 @@ html {
   font-size: var(--base-font-size);
 }
 
-/* BODY: Se ha eliminado el padding-top para evitar la doble compensación.
-   El header fijo (50px) se solapa y el margen superior se aplicará únicamente en las pantallas internas. */
+/* BODY: Se elimina el padding-top para evitar doble compensación.
+   El header fijo se solapa, y en pantallas internas se compensará con margin-top en .main-content. */
 body {
   background-color: var(--background-color);
   color: var(--text-color);
@@ -44,28 +44,24 @@ body {
   /* padding-top: 50px;  <-- Eliminado */
 }
 
-/* MAIN CONTENT: Por defecto (pantallas de login/registro) sin margen superior */
+/* MAIN CONTENT: Para pantallas de login/registro (sin header visible) se usa sin margen superior.
+   En pantallas internas, se agrega la clase "internal" al body para aplicar margin-top: 50px.
+   Se eliminan height, min-height y overflow para que el contenedor se ajuste al contenido. */
 .main-content {
   padding: 16px;
   flex: 1;
   transition: margin-left 0.3s ease-in-out;
   margin-top: 0;
-  /* Se remueve min-height para evitar forzar un alto excesivo */
 }
 
-/* Cuando el usuario ha iniciado sesión (pantallas internas),
-   se añade la clase “internal” al body para aplicar un margin-top igual a la altura del header fijo.
-   Se usa height en lugar de min-height para que el contenedor tenga un alto exacto (100vh – 50px),
-   y se añade overflow-y: auto para permitir scroll en caso de contenido extenso. */
 body.internal .main-content {
   margin-top: 50px;
-  height: calc(100vh - 50px);
-  overflow-y: auto;
+  /* Se elimina cualquier altura fija para que el contenido se ajuste naturalmente */
 }
 
-/* CONTENEDOR PRINCIPAL: ahora ocupa todo el ancho */
+/* CONTENEDOR PRINCIPAL: ocupa todo el ancho */
 .content-container {
-  width: 100%;       /* Ocupa todo el ancho disponible */
+  width: 100%;
   margin: 0 auto;
   padding: 20px;
 }
@@ -379,9 +375,22 @@ footer {
   transition: left 0.3s ease-in-out;
 }
 
-.sidebar.show-sidebar ~ footer {
-  left: 220px;
+/* (Opcional) Si deseas que en dispositivos pequeños el sidebar se superponga en lugar de empujar el contenido,
+   puedes comentar o eliminar la regla de margin-left en .main-content derivada del sidebar. */
+/*
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 200px;
+    transform: translateX(-200px);
+  }
+  .sidebar.show-sidebar ~ .main-content {
+    margin-left: 200px;
+  }
+  .sidebar.show-sidebar ~ footer {
+    left: 200px;
+  }
 }
+*/
 
 /* CARTAS Y COMPONENTES */
 .card {
@@ -1049,12 +1058,14 @@ form textarea {
     width: 200px;
     transform: translateX(-200px);
   }
+  /* Se comenta la regla que empuja el main-content hacia la derecha para evitar que quede con poco ancho:
   .sidebar.show-sidebar ~ .main-content {
     margin-left: 200px;
   }
   .sidebar.show-sidebar ~ footer {
     left: 200px;
   }
+  */
 }
 
 @media (max-width: 768px) {
@@ -1085,12 +1096,14 @@ form textarea {
     width: 180px;
     transform: translateX(-180px);
   }
+  /* Se comenta también la regla de margin-left para main-content:
   .sidebar.show-sidebar ~ .main-content {
     margin-left: 180px;
   }
   .sidebar.show-sidebar ~ footer {
     left: 180px;
   }
+  */
   .header-logo {
     height: 28px;
   }

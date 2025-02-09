@@ -40,10 +40,10 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  padding-top: 50px;
+  padding-top: 50px; /* Para que el contenido no quede oculto detrás del header fijo */
 }
 
-/* MAIN CONTENT: se asegura que ocupe el alto restante */
+/* MAIN CONTENT: ocupa el alto restante */
 .main-content {
   padding: 16px;
   flex: 1;
@@ -67,15 +67,18 @@ body {
 }
 
 /* -----------------------------
-   NUEVAS REGLAS PARA LA INTERFAZ (inspiradas en Canva)
+   NUEVAS REGLAS PARA UNA MEJOR ADAPTACIÓN
 ------------------------------ */
 
-/* Grid para Dashboard */
+/* Uso de grid responsivo para las secciones internas */
+
+/* Dashboard Grid: se adapta automáticamente para que los cuadros no queden estrechos */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
+
 .dashboard-left,
 .dashboard-right {
   display: flex;
@@ -83,36 +86,28 @@ body {
   gap: 20px;
 }
 
-/* Grid para la sección de Estudio */
+/* Study Grid */
 .study-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
-.study-menu {
-  grid-column: 1 / -1;
-}
 
-/* Grid para Comunidades */
+/* Communities Grid */
 .communities-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
-/* Grid para Noticias & Ayuda */
+/* News Grid */
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-.news-column {
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
-/* Contenedor para la sección de Mi Cuenta (centrado) */
+/* Contenedor para Mi Cuenta */
 .account-container {
   display: flex;
   flex-direction: column;
@@ -121,7 +116,7 @@ body {
 }
 
 /* -----------------------------
-   Resto de estilos existentes (sin cambios)
+   RESTO DE ESTILOS EXISTENTES
 ------------------------------ */
 
 /* AUTENTICACIÓN (Login/Registro) */
@@ -1079,7 +1074,7 @@ form textarea {
   .document-card {
     width: 100%;
   }
-  /* Reducimos los gaps en los grids para aprovechar mejor el ancho */
+  /* Reducimos los gaps en las cuadrículas para aprovechar mejor el espacio */
   .dashboard-grid, .study-grid, .communities-grid, .news-grid {
     gap: 10px;
   }

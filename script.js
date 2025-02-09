@@ -152,15 +152,18 @@ function showNews() {
 }
 function showAIScreen() {
   hideAllMainSections();
+  document.body.classList.add('internal');
   document.getElementById('study-main-screen').style.display = 'block';
   document.getElementById('ai-screen').style.display = 'block';
 }
 function showActivityScreen() {
   hideAllMainSections();
+  document.body.classList.add('internal');
   document.getElementById('activity-screen').style.display = 'block';
 }
 function showProfile() {
   hideAllMainSections();
+  document.body.classList.add('internal');
   document.getElementById('account-screen').style.display = 'block';
   if (document.getElementById('profile-screen')) {
     document.getElementById('profile-screen').style.display = 'block';
@@ -168,6 +171,7 @@ function showProfile() {
 }
 function showGuideScreen() {
   hideAllMainSections();
+  document.body.classList.add('internal');
   document.getElementById('news-help-screen').style.display = 'block';
   if (document.getElementById('guide-screen')) {
     document.getElementById('guide-screen').style.display = 'block';
@@ -175,6 +179,7 @@ function showGuideScreen() {
 }
 function showTraining() {
   hideAllMainSections();
+  document.body.classList.add('internal');
   document.getElementById('news-help-screen').style.display = 'block';
   if (document.getElementById('training-screen')) {
     document.getElementById('training-screen').style.display = 'block';
@@ -182,6 +187,7 @@ function showTraining() {
 }
 function showStudyTimeScreen() {
   hideAllMainSections();
+  document.body.classList.add('internal');
   document.getElementById('study-main-screen').style.display = 'block';
   if (document.getElementById('documents-screen')) {
     document.getElementById('documents-screen').style.display = 'block';
@@ -254,6 +260,7 @@ function showLoginScreen() {
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
   document.getElementById('sidebar').style.display = 'none';
+  document.body.classList.remove('internal');
 }
 
 function showRegistrationScreen() {
@@ -263,10 +270,12 @@ function showRegistrationScreen() {
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
   document.getElementById('sidebar').style.display = 'none';
+  document.body.classList.remove('internal');
 }
 
 function showProgressMainScreen() {
   hideAllMainSections();
+  document.body.classList.add('internal');
   document.getElementById('progress-main-screen').style.display = 'block';
   if (document.getElementById('progress-screen')) {
     document.getElementById('progress-screen').style.display = 'block';
@@ -276,12 +285,14 @@ function showProgressMainScreen() {
 
 function showStudyMainScreen() {
   hideAllMainSections();
+  document.body.classList.add('internal');
   document.getElementById('study-main-screen').style.display = 'block';
   showDocuments();
 }
 
 function showCommunitiesMainScreen() {
   hideAllMainSections();
+  document.body.classList.add('internal');
   document.getElementById('communities-main-screen').style.display = 'block';
   if (document.getElementById('groups-screen')) {
     document.getElementById('groups-screen').style.display = 'block';
@@ -293,6 +304,7 @@ function showCommunitiesMainScreen() {
 
 function showNewsHelpScreen() {
   hideAllMainSections();
+  document.body.classList.add('internal');
   document.getElementById('news-help-screen').style.display = 'block';
   if (document.getElementById('news-screen')) {
     document.getElementById('news-screen').style.display = 'block';
@@ -301,6 +313,7 @@ function showNewsHelpScreen() {
 
 function showAccountScreen() {
   hideAllMainSections();
+  document.body.classList.add('internal');
   document.getElementById('account-screen').style.display = 'block';
   if (document.getElementById('profile-screen')) {
     document.getElementById('profile-screen').style.display = 'block';

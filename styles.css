@@ -61,7 +61,7 @@ body {
       min-height: calc(100vh - 50px) y margin-top: 50px
    logrando que el área total sea 100vh sin espacio extra. */
 body.internal .main-content {
-  margin-top: 50px;
+  margin-top: 0px;
   min-height: calc(100vh - 50px);
 }
 

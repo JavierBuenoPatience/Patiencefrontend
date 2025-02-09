@@ -136,19 +136,16 @@ function showDocuments() {
 function showGroups() {
   hideAllMainSections();
   document.getElementById('communities-main-screen').style.display = 'block';
-  if (document.getElementById('groups-screen')) {
-    document.getElementById('groups-screen').style.display = 'block';
-  }
-  if (document.getElementById('directory-screen')) {
-    document.getElementById('directory-screen').style.display = 'block';
-  }
+  // Forzamos mostrar el contenido de grupos
+  const groupsScreen = document.getElementById('groups-screen');
+  if (groupsScreen) groupsScreen.style.display = 'block';
 }
 function showNews() {
   hideAllMainSections();
   document.getElementById('news-help-screen').style.display = 'block';
-  if (document.getElementById('news-screen')) {
-    document.getElementById('news-screen').style.display = 'block';
-  }
+  // Forzamos mostrar el contenido de noticias
+  const newsScreen = document.getElementById('news-screen');
+  if (newsScreen) newsScreen.style.display = 'block';
 }
 function showAIScreen() {
   hideAllMainSections();
@@ -262,7 +259,7 @@ function showLoginScreen() {
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
   document.getElementById('sidebar').style.display = 'none';
-  // Mostrar el contenedor de autenticación completo y centrarlo
+  // Mostrar el contenedor de autenticación completo centrado
   const authContainer = document.querySelector('.auth-container');
   if (authContainer) authContainer.style.display = 'flex';
   document.body.classList.remove('internal');
@@ -291,15 +288,13 @@ function showProgressMainScreen() {
     document.getElementById('progress-screen').style.display = 'block';
   }
   document.getElementById('sidebar').style.display = 'block';
-  // Evaluar la columna derecha del dashboard
+  // Para el dashboard, se muestra la columna derecha si el contenido se encuentra disponible
   const activityScreen = document.getElementById('activity-screen');
   const dashboardRight = document.querySelector('.dashboard-right');
   if (activityScreen && dashboardRight) {
-    if (activityScreen.style.display === 'none' || activityScreen.innerHTML.trim() === "") {
-      dashboardRight.style.display = 'none';
-    } else {
-      dashboardRight.style.display = 'block';
-    }
+    // Forzamos mostrar la columna derecha, ya que en esta pantalla se espera contenido.
+    dashboardRight.style.display = 'block';
+    activityScreen.style.display = 'block';
   }
 }
 
@@ -314,20 +309,21 @@ function showCommunitiesMainScreen() {
   hideAllMainSections();
   document.body.classList.add('internal');
   document.getElementById('communities-main-screen').style.display = 'block';
-  // Evaluar la columna izquierda
+  // Forzar mostrar ambas columnas en Comunidades
   const groupsScreen = document.getElementById('groups-screen');
   const communitiesLeft = document.querySelector('.communities-left');
-  if (groupsScreen && (groupsScreen.style.display === 'none' || groupsScreen.innerHTML.trim() === "")) {
-    communitiesLeft.style.display = 'none';
-  } else {
+  if (groupsScreen) {
+    groupsScreen.style.display = 'block';
+  }
+  if (communitiesLeft) {
     communitiesLeft.style.display = 'block';
   }
-  // Evaluar la columna derecha
   const directoryScreen = document.getElementById('directory-screen');
   const communitiesRight = document.querySelector('.communities-right');
-  if (directoryScreen && (directoryScreen.style.display === 'none' || directoryScreen.innerHTML.trim() === "")) {
-    communitiesRight.style.display = 'none';
-  } else {
+  if (directoryScreen) {
+    directoryScreen.style.display = 'block';
+  }
+  if (communitiesRight) {
     communitiesRight.style.display = 'block';
   }
 }
@@ -336,14 +332,13 @@ function showNewsHelpScreen() {
   hideAllMainSections();
   document.body.classList.add('internal');
   document.getElementById('news-help-screen').style.display = 'block';
-  // Para la sección de noticias, evaluar cada columna y ocultar las que no tengan contenido
+  // Forzar mostrar todas las columnas en Noticias & Ayuda
   const newsColumns = document.querySelectorAll('.news-grid > .news-column');
   newsColumns.forEach(col => {
+    col.style.display = 'block';
     const card = col.querySelector('.card');
-    if (card && (card.style.display === 'none' || card.innerHTML.trim() === "")) {
-      col.style.display = 'none';
-    } else {
-      col.style.display = 'block';
+    if (card) {
+      card.style.display = 'block';
     }
   });
 }

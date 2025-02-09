@@ -51,9 +51,9 @@ body {
   min-height: calc(100vh - 50px);
 }
 
-/* CONTENEDOR PRINCIPAL */
+/* CONTENEDOR PRINCIPAL: ahora ocupa todo el ancho */
 .content-container {
-  max-width: 1200px;
+  width: 100%;       /* Ocupa todo el ancho disponible */
   margin: 0 auto;
   padding: 20px;
 }
@@ -61,18 +61,11 @@ body {
 /* Ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
   .content-container {
-    max-width: 100%;
     padding: 10px;
   }
 }
 
-/* -----------------------------
-   NUEVAS REGLAS PARA UNA MEJOR ADAPTACIÓN
------------------------------- */
-
 /* Uso de grid responsivo para las secciones internas */
-
-/* Dashboard Grid: se adapta automáticamente para que los cuadros no queden estrechos */
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -86,38 +79,30 @@ body {
   gap: 20px;
 }
 
-/* Study Grid */
 .study-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
-/* Communities Grid */
 .communities-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
-/* News Grid */
 .news-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
-/* Contenedor para Mi Cuenta */
 .account-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 }
-
-/* -----------------------------
-   RESTO DE ESTILOS EXISTENTES
------------------------------- */
 
 /* AUTENTICACIÓN (Login/Registro) */
 .auth-container {

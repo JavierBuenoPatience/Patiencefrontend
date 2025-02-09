@@ -262,9 +262,9 @@ function showLoginScreen() {
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
   document.getElementById('sidebar').style.display = 'none';
-  // Mostrar el contenedor de autenticación completo
+  // Mostrar el contenedor de autenticación completo y centrarlo
   const authContainer = document.querySelector('.auth-container');
-  if (authContainer) authContainer.style.display = 'block';
+  if (authContainer) authContainer.style.display = 'flex';
   document.body.classList.remove('internal');
 }
 
@@ -276,7 +276,7 @@ function showRegistrationScreen() {
   document.querySelector('footer').style.display = 'none';
   document.getElementById('sidebar').style.display = 'none';
   const authContainer = document.querySelector('.auth-container');
-  if (authContainer) authContainer.style.display = 'block';
+  if (authContainer) authContainer.style.display = 'flex';
   document.body.classList.remove('internal');
 }
 
@@ -314,11 +314,21 @@ function showCommunitiesMainScreen() {
   hideAllMainSections();
   document.body.classList.add('internal');
   document.getElementById('communities-main-screen').style.display = 'block';
-  if (document.getElementById('groups-screen')) {
-    document.getElementById('groups-screen').style.display = 'block';
+  // Evaluar la columna izquierda
+  const groupsScreen = document.getElementById('groups-screen');
+  const communitiesLeft = document.querySelector('.communities-left');
+  if (groupsScreen && (groupsScreen.style.display === 'none' || groupsScreen.innerHTML.trim() === "")) {
+    communitiesLeft.style.display = 'none';
+  } else {
+    communitiesLeft.style.display = 'block';
   }
-  if (document.getElementById('directory-screen')) {
-    document.getElementById('directory-screen').style.display = 'block';
+  // Evaluar la columna derecha
+  const directoryScreen = document.getElementById('directory-screen');
+  const communitiesRight = document.querySelector('.communities-right');
+  if (directoryScreen && (directoryScreen.style.display === 'none' || directoryScreen.innerHTML.trim() === "")) {
+    communitiesRight.style.display = 'none';
+  } else {
+    communitiesRight.style.display = 'block';
   }
 }
 
@@ -326,9 +336,16 @@ function showNewsHelpScreen() {
   hideAllMainSections();
   document.body.classList.add('internal');
   document.getElementById('news-help-screen').style.display = 'block';
-  if (document.getElementById('news-screen')) {
-    document.getElementById('news-screen').style.display = 'block';
-  }
+  // Para la sección de noticias, evaluar cada columna y ocultar las que no tengan contenido
+  const newsColumns = document.querySelectorAll('.news-grid > .news-column');
+  newsColumns.forEach(col => {
+    const card = col.querySelector('.card');
+    if (card && (card.style.display === 'none' || card.innerHTML.trim() === "")) {
+      col.style.display = 'none';
+    } else {
+      col.style.display = 'block';
+    }
+  });
 }
 
 function showAccountScreen() {

@@ -165,17 +165,19 @@
               <div class="quick-links-panel">
                 <h2>Accesos Rápidos</h2>
                 <div class="quick-links-container">
-                  <button onclick="showDocuments()" title="Ir a Documentos"><i class="fas fa-upload"></i></button>
-                  <button onclick="showGroups()" title="Ver Grupos"><i class="fas fa-users"></i></button>
-                  <button onclick="showNews()" title="Últimas Noticias"><i class="fas fa-newspaper"></i></button>
-                  <button onclick="showAIScreen()" title="IA Especializada"><i class="fas fa-robot"></i></button>
+                  <button onclick="showDocuments()" title="Ir a Documentos"><i class="fas fa-upload"></i> Documentos</button>
+                  <button onclick="showGroups()" title="Ver Grupos"><i class="fas fa-users"></i> Grupos</button>
+                  <button onclick="showNews()" title="Últimas Noticias"><i class="fas fa-newspaper"></i> Noticias</button>
+                  <button onclick="showAIScreen()" title="IA Especializada"><i class="fas fa-robot"></i> IA Especializada</button>
                 </div>
               </div>
-              <!-- Nuevo bloque promocional para redes sociales -->
+              <!-- Nueva tarjeta en el dashboard para Enlaces a IA Especializada -->
               <div class="card promo-card">
-                <h2>Descubre Patience</h2>
-                <p>La plataforma que revoluciona tu preparación con IA especializada y seguimiento personalizado. ¡Comparte tu progreso en redes y demuestra tu avance!</p>
-                <img src="assets/promo.jpg" alt="Promoción Patience" />
+                <h2>Acceso a IA Especializada</h2>
+                <p>Accede a herramientas de IA para potenciar tu estudio.</p>
+                <div class="ia-links-container">
+                  <a href="#" onclick="showAIScreen()">Ver IA Especializada</a>
+                </div>
               </div>
             </div>
             <div class="card" id="study-time-screen" style="display: none;">
@@ -184,10 +186,7 @@
             </div>
           </div>
           <div class="dashboard-right">
-            <div class="card" id="activity-screen" style="display: none;">
-              <h2>Actividad Reciente</h2>
-              <ul id="full-activity-list"></ul>
-            </div>
+            <!-- La antigua sección de "Actividad Reciente" se ha reemplazado por la tarjeta de IA en la columna izquierda (o se puede eliminar la columna derecha si ya no es necesaria) -->
           </div>
         </div>
         <!-- Modal del Quiz (fuera del grid) -->

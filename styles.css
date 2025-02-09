@@ -32,34 +32,29 @@ html {
   font-size: var(--base-font-size);
 }
 
-/* BODY: Se elimina el padding-top para evitar doble compensación.
-   El header fijo se solapa, y en pantallas internas se compensará con margin-top en .main-content. */
+/* BODY: Se elimina el layout flex para que el flujo sea natural.
+   De este modo, el header (fixed) y el footer (fixed) se solapan al contenido sin afectar su ancho ni su posicionamiento. */
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  /* Se eliminan display: flex y flex-direction */
   overflow-x: hidden;
-  /* padding-top: 50px;  <-- Eliminado */
 }
 
-/* MAIN CONTENT: Para pantallas de login/registro (sin header visible) se usa sin margen superior.
-   En pantallas internas, se agrega la clase "internal" al body para aplicar margin-top: 50px.
-   Se eliminan height, min-height y overflow para que el contenedor se ajuste al contenido. */
+/* MAIN CONTENT: Por defecto (pantallas de login/registro) se usa sin margen superior.
+   En pantallas internas (cuando el body tiene la clase "internal") se aplica margin-top: 50px */
 .main-content {
   padding: 16px;
-  flex: 1;
-  transition: margin-left 0.3s ease-in-out;
+  width: 100%;
   margin-top: 0;
 }
 
 body.internal .main-content {
   margin-top: 50px;
-  /* Se elimina cualquier altura fija para que el contenido se ajuste naturalmente */
 }
 
-/* CONTENEDOR PRINCIPAL: ocupa todo el ancho */
+/* CONTENEDOR PRINCIPAL: ocupa todo el ancho y se centra con padding */
 .content-container {
   width: 100%;
   margin: 0 auto;
@@ -118,7 +113,7 @@ body.internal .main-content {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 50px);
+  min-height: 100vh;
   background-color: var(--background-color);
   padding: 20px;
 }
@@ -374,23 +369,6 @@ footer {
   right: 0;
   transition: left 0.3s ease-in-out;
 }
-
-/* (Opcional) Si deseas que en dispositivos pequeños el sidebar se superponga en lugar de empujar el contenido,
-   puedes comentar o eliminar la regla de margin-left en .main-content derivada del sidebar. */
-/*
-@media (max-width: 1024px) {
-  .sidebar {
-    width: 200px;
-    transform: translateX(-200px);
-  }
-  .sidebar.show-sidebar ~ .main-content {
-    margin-left: 200px;
-  }
-  .sidebar.show-sidebar ~ footer {
-    left: 200px;
-  }
-}
-*/
 
 /* CARTAS Y COMPONENTES */
 .card {
@@ -1053,21 +1031,6 @@ form textarea {
 }
 
 /* RESPONSIVIDAD */
-@media (max-width: 1024px) {
-  .sidebar {
-    width: 200px;
-    transform: translateX(-200px);
-  }
-  /* Se comenta la regla que empuja el main-content hacia la derecha para evitar que quede con poco ancho:
-  .sidebar.show-sidebar ~ .main-content {
-    margin-left: 200px;
-  }
-  .sidebar.show-sidebar ~ footer {
-    left: 200px;
-  }
-  */
-}
-
 @media (max-width: 768px) {
   .home-metrics {
     flex-direction: column;
@@ -1092,18 +1055,6 @@ form textarea {
   .iframe-container {
     height: 500px;
   }
-  .sidebar {
-    width: 180px;
-    transform: translateX(-180px);
-  }
-  /* Se comenta también la regla de margin-left para main-content:
-  .sidebar.show-sidebar ~ .main-content {
-    margin-left: 180px;
-  }
-  .sidebar.show-sidebar ~ footer {
-    left: 180px;
-  }
-  */
   .header-logo {
     height: 28px;
   }

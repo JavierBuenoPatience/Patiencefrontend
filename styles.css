@@ -32,6 +32,7 @@ html {
   font-size: var(--base-font-size);
 }
 
+/* Body: se añade padding-top para el header fijo */
 body {
   background-color: var(--background-color);
   color: var(--text-color);
@@ -39,23 +40,30 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  /* Reserva espacio para el header fijo */
   padding-top: 50px;
 }
 
-/* MAIN CONTENT */
+/* MAIN CONTENT: se asegura que ocupe el alto restante */
 .main-content {
   padding: 16px;
   flex: 1;
   transition: margin-left 0.3s ease-in-out;
+  min-height: calc(100vh - 50px);
 }
 
 /* CONTENEDOR PRINCIPAL */
 .content-container {
   max-width: 1200px;
   margin: 0 auto;
-  /* Se mantiene el padding original */
   padding: 20px;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .content-container {
+    max-width: 100%;
+    padding: 10px;
+  }
 }
 
 /* -----------------------------
@@ -1070,6 +1078,10 @@ form textarea {
   .folder-card,
   .document-card {
     width: 100%;
+  }
+  /* Reducimos los gaps en los grids para aprovechar mejor el ancho */
+  .dashboard-grid, .study-grid, .communities-grid, .news-grid {
+    gap: 10px;
   }
 }
 

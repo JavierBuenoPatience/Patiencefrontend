@@ -32,7 +32,8 @@ html {
   font-size: var(--base-font-size);
 }
 
-/* Body: se añade padding-top para el header fijo */
+/* BODY: Se ha eliminado el padding-top para evitar acumulaciones; 
+   en su lugar, se aplicará margin-top en .main-content cuando el usuario esté logueado */
 body {
   background-color: var(--background-color);
   color: var(--text-color);
@@ -40,14 +41,22 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  padding-top: 50px; /* Para que el contenido no quede oculto detrás del header fijo */
+  /* padding-top: 50px;  <-- Eliminado */
 }
 
-/* MAIN CONTENT: ocupa el alto restante */
+/* MAIN CONTENT: configuración por defecto para pantallas sin header (login/registro) */
 .main-content {
   padding: 16px;
   flex: 1;
   transition: margin-left 0.3s ease-in-out;
+  margin-top: 0;
+  min-height: 100vh;
+}
+
+/* Cuando el usuario ha iniciado sesión (pantallas internas), se agrega la clase "internal" al body.
+   Esto aplica margin-top para que el contenido comience justo debajo del header fijo de 50px. */
+body.internal .main-content {
+  margin-top: 50px;
   min-height: calc(100vh - 50px);
 }
 

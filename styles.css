@@ -33,15 +33,13 @@ html {
 }
 
 /* BODY: Se ha eliminado el padding-top para evitar la doble compensación.
-   Así, el header fijo (50px de alto) no crea un espacio extra, y en las pantallas internas
-   se aplicará el margin-top a través de la clase “internal”. */
+   El header fijo (50px) se solapa y el margen superior se aplicará únicamente en las pantallas internas. */
 body {
   background-color: var(--background-color);
   color: var(--text-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  margin-top: 0;
   overflow-x: hidden;
   /* padding-top: 50px;  <-- Eliminado */
 }
@@ -52,17 +50,17 @@ body {
   flex: 1;
   transition: margin-left 0.3s ease-in-out;
   margin-top: 0;
-  min-height: 100vh;
+  /* Se remueve min-height para evitar forzar un alto excesivo */
 }
 
 /* Cuando el usuario ha iniciado sesión (pantallas internas),
    se añade la clase “internal” al body para aplicar un margin-top igual a la altura del header fijo.
-   De esta forma, el contenedor se ajusta a:
-      min-height: calc(100vh - 50px) y margin-top: 50px
-   logrando que el área total sea 100vh sin espacio extra. */
+   Se usa height en lugar de min-height para que el contenedor tenga un alto exacto (100vh – 50px),
+   y se añade overflow-y: auto para permitir scroll en caso de contenido extenso. */
 body.internal .main-content {
-  margin-top: 0px;
-  min-height: calc(100vh - 50px);
+  margin-top: 50px;
+  height: calc(100vh - 50px);
+  overflow-y: auto;
 }
 
 /* CONTENEDOR PRINCIPAL: ahora ocupa todo el ancho */

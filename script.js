@@ -652,10 +652,11 @@ function handleDailyCheckIn() {
     addActivity("Check-in diario realizado");
   } else {
     const diff = (new Date(today) - new Date(lastCheckin)) / (1000 * 60 * 60 * 24);
-    if (diff === 0) {
+    const dayDiff = Math.floor(diff);
+    if (dayDiff === 0) {
       document.getElementById('checkin-status').textContent = "Ya hiciste check-in hoy.";
       return;
-    } else if (diff === 1) {
+    } else if (dayDiff === 1) {
       user.dailyStreak++;
       user.lastCheckinDate = new Date();
       dailyStreak = user.dailyStreak;

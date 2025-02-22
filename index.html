@@ -18,39 +18,39 @@
 </head>
 <body>
   <!-- Sidebar (visible solo cuando el usuario está logueado) -->
-  <aside class="sidebar" id="sidebar">
+  <aside class="sidebar" id="sidebar" role="navigation">
     <div class="sidebar-header">
       <img src="assets/logo.png" alt="Logo Patience" class="sidebar-logo" title="Logo Patience" />
-      <button class="pin-sidebar" id="pin-sidebar" onclick="togglePinSidebar()" title="Fijar barra lateral">
-        <i class="fas fa-thumbt"></i>
+      <button class="pin-sidebar" id="pin-sidebar" onclick="togglePinSidebar()" title="Fijar barra lateral" aria-label="Fijar barra lateral">
+        <i class="fas fa-thumbtack"></i>
       </button>
-      <button class="close-sidebar" onclick="toggleSidebar()" title="Cerrar barra lateral">
+      <button class="close-sidebar" onclick="toggleSidebar()" title="Cerrar barra lateral" aria-label="Cerrar barra lateral">
         <i class="fas fa-times"></i>
       </button>
     </div>
     <ul>
       <li>
-        <a href="#" onclick="showProgressMainScreen()" title="Mi Progreso">
+        <a href="#" onclick="showProgressMainScreen()" title="Mi Progreso" aria-label="Mi Progreso">
           <i class="fas fa-home"></i> Mi Progreso
         </a>
       </li>
       <li>
-        <a href="#" onclick="showStudyMainScreen()" title="Estudio">
+        <a href="#" onclick="showStudyMainScreen()" title="Estudio" aria-label="Estudio">
           <i class="fas fa-book-open"></i> Estudio
         </a>
       </li>
       <li>
-        <a href="#" onclick="showCommunitiesMainScreen()" title="Comunidades">
+        <a href="#" onclick="showCommunitiesMainScreen()" title="Comunidades" aria-label="Comunidades">
           <i class="fas fa-users"></i> Comunidades
         </a>
       </li>
       <li>
-        <a href="#" onclick="showNewsHelpScreen()" title="Noticias & Ayuda">
-          <i class="fas fa-newspaper"></i> Noticias & Ayuda
+        <a href="#" onclick="showNewsHelpScreen()" title="Noticias &amp; Ayuda" aria-label="Noticias y Ayuda">
+          <i class="fas fa-newspaper"></i> Noticias &amp; Ayuda
         </a>
       </li>
       <li>
-        <a href="#" onclick="showAccountScreen()" title="Mi Cuenta">
+        <a href="#" onclick="showAccountScreen()" title="Mi Cuenta" aria-label="Mi Cuenta">
           <i class="fas fa-user-cog"></i> Mi Cuenta
         </a>
       </li>
@@ -58,19 +58,19 @@
   </aside>
 
   <!-- Header (visible solo cuando el usuario está logueado) -->
-  <header>
+  <header role="banner">
     <div class="header-left">
-      <button id="menu-icon" onclick="toggleSidebar()" title="Abrir barra lateral">
+      <button id="menu-icon" onclick="toggleSidebar()" title="Abrir barra lateral" aria-label="Abrir barra lateral">
         <i class="fas fa-bars"></i>
       </button>
-      <img src="assets/logo.png" alt="Logo Patience" class="header-logo" onclick="handleLogoClick()" title="Ir al inicio" />
+      <img src="assets/logo.png" alt="Logo Patience" class="header-logo" onclick="handleLogoClick()" title="Ir al inicio" role="button" aria-label="Ir al inicio" />
     </div>
     <div class="header-right">
-      <div class="notification-icon" onclick="toggleNotifications()" title="Notificaciones">
+      <div class="notification-icon" onclick="toggleNotifications()" title="Notificaciones" aria-label="Notificaciones">
         <i class="fas fa-bell"></i>
         <span id="notification-count" class="notification-count">0</span>
       </div>
-      <img src="assets/default-profile.png" alt="Icono de Perfil" id="profile-icon" onclick="showProfile()" title="Ir a tu Perfil" />
+      <img src="assets/default-profile.png" alt="Icono de Perfil" id="profile-icon" onclick="showProfile()" title="Ir a tu Perfil" role="button" aria-label="Ir a tu Perfil" />
     </div>
   </header>
 
@@ -277,7 +277,7 @@
           </div>
           <div class="communities-right">
             <div class="card" id="directory-screen" style="display: none;">
-              <h2>Academias & Preparadores</h2>
+              <h2>Academias &amp; Preparadores</h2>
               <p>Encuentra los mejores centros para tu preparación.</p>
               <div class="filter-section">
                 <label for="city-filter">Ciudad:</label>
@@ -435,11 +435,11 @@
   </main>
 
   <!-- Botón flotante de ayuda -->
-  <div id="help-floating-button" class="help-floating-button" title="Haz clic para solicitar ayuda" onclick="showHelp()">
+  <div id="help-floating-button" class="help-floating-button" title="Haz clic para solicitar ayuda" onclick="showHelp()" role="button" aria-label="Ayuda">
     <i class="fas fa-question"></i>
   </div>
 
-  <footer>
+  <footer role="contentinfo">
     <p>© 2024 Patience. Todos los derechos reservados.</p>
   </footer>
 

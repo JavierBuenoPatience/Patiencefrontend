@@ -84,6 +84,7 @@ body {
   padding: 16px;
   box-shadow: var(--box-shadow);
   margin-bottom: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* Estilo unificado para botones */
@@ -214,7 +215,8 @@ button:hover {
 header {
   width: 100%;
   height: 50px;
-  background-color: var(--accent-color);
+  /* Fondo en degradado utilizando colores primarios para mayor fuerza visual */
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -245,7 +247,7 @@ header {
   font-size: 20px;
   margin-right: 16px;
   cursor: pointer;
-  color: var(--text-color);
+  color: var(--white-color);
 }
 
 #menu-icon:hover {
@@ -262,7 +264,7 @@ header {
   position: relative;
   cursor: pointer;
   font-size: 18px;
-  color: var(--text-color);
+  color: var(--white-color);
 }
 
 .notification-count {
@@ -884,4 +886,8 @@ footer {
   justify-content: center;
   cursor: pointer;
   z-index: 3000;
+  transition: transform 0.2s;
+}
+.help-floating-button:hover {
+  transform: scale(1.1);
 }

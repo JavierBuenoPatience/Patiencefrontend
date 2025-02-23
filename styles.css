@@ -14,12 +14,12 @@ html, body, main {
   --secondary-text-color: #7F8C8D;
 
   /* Nuevos colores para ampliar la paleta */
-  --highlight-color: #F39C12;    /* Naranja para acentos */
-  --info-color: #3498DB;         /* Azul */
-  --success-color: #2ECC71;      /* Verde */
-  --warning-color: #E74C3C;      /* Rojo */
-  --promo-bg: #FDEDEC;           /* Fondo suave para secciones promocionales */
-  --promo-text: #C0392B;         /* Rojo oscuro para textos promocionales */
+  --highlight-color: #F39C12;
+  --info-color: #3498DB;
+  --success-color: #2ECC71;
+  --warning-color: #E74C3C;
+  --promo-bg: #FDEDEC;
+  --promo-text: #C0392B;
 
   --border-color: #E0E0E0;
   --border-radius: 8px;
@@ -54,7 +54,6 @@ body {
 .main-content {
   padding: 16px;
   transition: margin-left 0.3s ease-in-out;
-  /* Agregamos margen superior para separarlo del header en pantallas internas */
   margin-top: 60px;
 }
 
@@ -65,7 +64,7 @@ body {
   padding: 20px;
 }
 
-/* AUTENTICACIÓN (Login/Registro) - Solo estas pantallas se centran */
+/* AUTENTICACIÓN */
 .auth-container {
   display: flex;
   flex-direction: column;
@@ -87,7 +86,7 @@ body {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Estilo unificado para botones */
+/* Botones */
 button {
   background-color: var(--secondary-color);
   color: var(--white-color);
@@ -215,7 +214,6 @@ button:hover {
 header {
   width: 100%;
   height: 50px;
-  /* Fondo en degradado utilizando colores primarios para mayor fuerza visual */
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   display: flex;
   align-items: center;

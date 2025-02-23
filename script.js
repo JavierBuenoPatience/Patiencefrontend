@@ -2,7 +2,7 @@
    SCRIPT.JS INTEGRADO (COMPLETO Y MODIFICADO)
 ========================== */
 
-// URL del backend en Render
+// URL del backend en Render (este valor no se usa para la bbdd, se mantiene para otros fines)
 const BASE_URL = "https://patienceclean.onrender.com";
 console.log("Frontend cargado. BASE_URL =", BASE_URL);
 

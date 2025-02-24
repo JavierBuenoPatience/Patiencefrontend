@@ -28,36 +28,38 @@
         <i class="fas fa-times"></i>
       </button>
     </div>
-    <ul>
-      <li>
-        <a href="#" onclick="showProgressMainScreen()" title="Mi Progreso" aria-label="Mi Progreso">
-          <i class="fas fa-home"></i> Mi Progreso
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="showStudyMainScreen()" title="Estudio" aria-label="Estudio">
-          <i class="fas fa-book-open"></i> Estudio
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="showCommunitiesMainScreen()" title="Comunidades" aria-label="Comunidades">
-          <i class="fas fa-users"></i> Comunidades
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="showNewsHelpScreen()" title="Noticias &amp; Ayuda" aria-label="Noticias y Ayuda">
-          <i class="fas fa-newspaper"></i> Noticias &amp; Ayuda
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="showAccountScreen()" title="Mi Cuenta" aria-label="Mi Cuenta">
-          <i class="fas fa-user-cog"></i> Mi Cuenta
-        </a>
-      </li>
-    </ul>
+    <nav>
+      <ul>
+        <li>
+          <a href="#" onclick="showProgressMainScreen()" title="Mi Progreso" aria-label="Mi Progreso">
+            <i class="fas fa-home"></i> Mi Progreso
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showStudyMainScreen()" title="Estudio" aria-label="Estudio">
+            <i class="fas fa-book-open"></i> Estudio
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showCommunitiesMainScreen()" title="Comunidades" aria-label="Comunidades">
+            <i class="fas fa-users"></i> Comunidades
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showNewsHelpScreen()" title="Noticias &amp; Ayuda" aria-label="Noticias y Ayuda">
+            <i class="fas fa-newspaper"></i> Noticias &amp; Ayuda
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showAccountScreen()" title="Mi Cuenta" aria-label="Mi Cuenta">
+            <i class="fas fa-user-cog"></i> Mi Cuenta
+          </a>
+        </li>
+      </ul>
+    </nav>
   </aside>
 
-  <!-- Header (visible solo cuando el usuario está logueado) -->
+  <!-- Header -->
   <header role="banner">
     <div class="header-left">
       <button id="menu-icon" onclick="toggleSidebar()" title="Abrir barra lateral" aria-label="Abrir barra lateral">
@@ -84,7 +86,7 @@
   <main class="main-content" id="main-content">
     <div class="content-container">
       <!-- Contenedor de autenticación (Login / Registro) -->
-      <div class="auth-container">
+      <section class="auth-container">
         <!-- Pantalla de Login -->
         <div class="card auth-card" id="login-screen">
           <img src="assets/logo.png" alt="Logo Patience" class="logo" />
@@ -118,12 +120,11 @@
           <p>¿Ya tienes una cuenta?</p>
           <button type="button" onclick="showLoginScreen()">Inicia sesión</button>
         </div>
-      </div>
+      </section>
 
-      <!-- Contenido de la aplicación (visible después de iniciar sesión) -->
-
-      <!-- Dashboard: Mi Progreso -->
-      <div id="progress-main-screen" style="display: none;">
+      <!-- Contenido de la aplicación (después de iniciar sesión) -->
+      <section id="progress-main-screen" style="display: none;">
+        <!-- Se utiliza un grid para un layout responsive -->
         <div class="dashboard-grid">
           <div class="dashboard-left">
             <div class="card home-card" id="progress-screen" style="display: none;">
@@ -150,7 +151,7 @@
                 <h2>Tu día hoy</h2>
                 <div class="checkin-section">
                   <h3>Check-In Diario</h3>
-                  <p>Haz check-in para mantener tu racha.</p>
+                  <p>Realiza tu check-in diario para mantener tu racha.</p>
                   <button id="daily-checkin-button" onclick="handleDailyCheckIn()">Check-In</button>
                   <p id="checkin-status"></p>
                 </div>
@@ -171,7 +172,6 @@
                   <button onclick="showAIScreen()" title="IA Especializada"><i class="fas fa-robot"></i> IA Especializada</button>
                 </div>
               </div>
-              <!-- Nueva tarjeta en el dashboard para Enlaces a IA Especializada -->
               <div class="card promo-card">
                 <h2>Acceso a IA Especializada</h2>
                 <p>Accede a herramientas de IA para potenciar tu estudio.</p>
@@ -186,10 +186,9 @@
             </div>
           </div>
           <div class="dashboard-right">
-            <!-- La antigua sección de "Actividad Reciente" se ha reemplazado por la tarjeta de IA en la columna izquierda (o se puede eliminar la columna derecha si ya no es necesaria) -->
+            <!-- Sección adicional para contenido, si se requiere -->
           </div>
         </div>
-        <!-- Modal del Quiz (fuera del grid) -->
         <div class="modal" id="quiz-modal" style="display: none;">
           <div class="modal-content">
             <span class="close-modal" onclick="closeQuizModal()">&times;</span>
@@ -200,16 +199,15 @@
             <button id="next-quiz-button" onclick="loadDailyQuiz()">Siguiente pregunta</button>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Sección: Estudio -->
-      <div id="study-main-screen" style="display: none;">
+      <section id="study-main-screen" style="display: none;">
         <div class="study-grid">
           <div class="study-menu">
             <div class="card" id="study-menu-screen" style="margin-bottom: 20px;">
               <h2>Opciones de Estudio</h2>
               <p>Selecciona la herramienta que desees utilizar.</p>
-              <div class="study-options-buttons" style="display: flex; gap: 10px;">
+              <div class="study-options-buttons">
                 <button onclick="showDocuments()">Documentos</button>
                 <button onclick="showAIScreen()">IA Especializada</button>
               </div>
@@ -258,10 +256,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Sección: Comunidades -->
-      <div id="communities-main-screen" style="display: none;">
+      <section id="communities-main-screen" style="display: none;">
         <div class="communities-grid">
           <div class="communities-left">
             <div class="card" id="groups-screen" style="display: none;">
@@ -296,10 +293,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Sección: Noticias & Ayuda -->
-      <div id="news-help-screen" style="display: none;">
+      <section id="news-help-screen" style="display: none;">
         <div class="news-grid">
           <div class="news-column">
             <div class="card" id="news-screen" style="display: none;">
@@ -309,9 +305,9 @@
                   <button onclick="showNewsContent('csif')">CSIF</button>
                   <button onclick="showNewsContent('sipri')">SIPRI</button>
                 </div>
-                <div class="iframe-container" style="height: 900px; width: 100%; max-width: 1200px;">
-                  <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es/andalucia/educacion/oposiciones" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 100%; height: 100%;"></iframe>
-                  <iframe id="sipri-iframe" class="news-iframe" style="display: none; width: 100%; height: 100%;" src="https://sipri.es/oposiciones/" sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
+                <div class="iframe-container">
+                  <iframe id="csif-iframe" class="news-iframe" src="https://www.csif.es/andalucia/educacion/oposiciones" sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
+                  <iframe id="sipri-iframe" class="news-iframe" style="display: none;" src="https://sipri.es/oposiciones/" sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
                 </div>
               </div>
             </div>
@@ -365,22 +361,21 @@
               <p>¿Dudas o asistencia? ¡Te ayudamos!</p>
               <p>Contáctanos en <a href="mailto:patienceopos@gmail.com">patienceopos@gmail.com</a>.</p>
               <div class="guide-section" style="margin-top: 30px;">
-                <button onclick="showGuideScreen()" style="margin-bottom:10px;">Guía IA</button>
-                <button onclick="showTraining()" style="margin-bottom:10px;">Sobre Patience</button>
+                <button onclick="showGuideScreen()">Guía IA</button>
+                <button onclick="showTraining()">Sobre Patience</button>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Sección: Mi Cuenta -->
-      <div id="account-screen" style="display: none;">
+      <section id="account-screen" style="display: none;">
         <div class="account-container">
           <div class="card" id="profile-screen" style="display: none;">
             <h2>Mi Perfil</h2>
             <form id="profile-form" onsubmit="handleProfileUpdate(event)">
-              <div class="profile-field" style="text-align:center;">
-                <div class="profile-image-container" style="margin: 0 auto; position: relative;">
+              <div class="profile-field image-field">
+                <div class="profile-image-container">
                   <img id="profile-img" src="assets/default-profile.png" alt="Imagen de Perfil" class="profile-img" />
                   <label for="profile-img-upload" class="upload-profile-label" title="Subir foto de perfil">
                     <i class="fas fa-camera"></i>
@@ -423,21 +418,20 @@
             <h2>Próximamente</h2>
             <p>Nuevas funcionalidades en desarrollo...</p>
           </div>
-          <div style="margin-top: 20px; text-align: center;">
-            <button onclick="handleLogout()" style="background-color: #c0392b;">
+          <div class="logout-container">
+            <button onclick="handleLogout()" class="logout-button">
               <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
             </button>
           </div>
         </div>
-      </div>
-
+      </section>
     </div>
   </main>
 
   <!-- Botón flotante de ayuda -->
-  <div id="help-floating-button" class="help-floating-button" title="Haz clic para solicitar ayuda" onclick="showHelp()" role="button" aria-label="Ayuda">
+  <button id="help-floating-button" class="help-floating-button" title="Haz clic para solicitar ayuda" onclick="showHelp()" aria-label="Ayuda">
     <i class="fas fa-question"></i>
-  </div>
+  </button>
 
   <footer role="contentinfo">
     <p>© 2024 Patience. Todos los derechos reservados.</p>

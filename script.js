@@ -1,8 +1,8 @@
 /* ==========================
-   SCRIPT.JS INTEGRADO (COMPLETO Y MODIFICADO)
+   SCRIPT.JS INTEGRADO (MEJORADO COMPLETO)
 ========================== */
 
-// URL del backend en Render (este valor no se usa para la bbdd, se mantiene para otros fines)
+// URL del backend (se mantiene para llamadas API)
 const BASE_URL = "https://patienceclean.onrender.com";
 console.log("Frontend cargado. BASE_URL =", BASE_URL);
 
@@ -110,13 +110,10 @@ let elapsedTime = 0;
 let isTimerRunning = false;
 let documentsViewMode = 'list';
 
-/* -----------------------------
-   FUNCIONES STUB Y UTILITARIAS
------------------------------- */
+/* FUNCIONES STUB Y UTILITARIAS */
 function loadDailyCheckInStatus() {
-  // Stub: Puedes implementar esta función en el futuro si deseas
+  // Stub: Función a implementar en el futuro si se desea
 }
-
 function handleDragOver(event) {
   event.preventDefault();
 }
@@ -125,9 +122,7 @@ function handleDrop(event) {
   uploadDocuments(event);
 }
 
-/* -----------------------------
-   FUNCIONES DE MOSTRAR PANTALLAS
------------------------------- */
+/* FUNCIONES DE MOSTRAR PANTALLAS */
 function showDocuments() {
   hideAllMainSections();
   document.getElementById('study-main-screen').style.display = 'block';
@@ -136,14 +131,12 @@ function showDocuments() {
 function showGroups() {
   hideAllMainSections();
   document.getElementById('communities-main-screen').style.display = 'block';
-  // Forzamos mostrar el contenido de grupos
   const groupsScreen = document.getElementById('groups-screen');
   if (groupsScreen) groupsScreen.style.display = 'block';
 }
 function showNews() {
   hideAllMainSections();
   document.getElementById('news-help-screen').style.display = 'block';
-  // Forzamos mostrar el contenido de noticias
   const newsScreen = document.getElementById('news-screen');
   if (newsScreen) newsScreen.style.display = 'block';
 }
@@ -191,9 +184,7 @@ function showStudyTimeScreen() {
   }
 }
 
-/* -----------------------------
-   EVENTO DOMContentLoaded
------------------------------- */
+/* EVENTO DOMContentLoaded */
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOMContentLoaded: iniciando aplicación");
   if (localStorage.getItem('loggedIn') === 'true') {
@@ -231,16 +222,13 @@ document.addEventListener('DOMContentLoaded', () => {
   updateRecentActivitySummary();
 });
 
-/* -----------------------------
-   FUNCIONES UTILITARIAS
------------------------------- */
+/* FUNCIONES UTILITARIAS */
 function hideLoginAndRegistrationScreens() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('registration-screen').style.display = 'none';
   const authContainer = document.querySelector('.auth-container');
   if (authContainer) authContainer.style.display = 'none';
 }
-
 function hideAllMainSections() {
   const sections = ['progress-main-screen', 'study-main-screen', 'communities-main-screen', 'news-help-screen', 'account-screen'];
   sections.forEach(id => {
@@ -249,9 +237,7 @@ function hideAllMainSections() {
   });
 }
 
-/* -----------------------------
-   FUNCIONES DE PANTALLAS (VISIBILIDAD)
------------------------------- */
+/* FUNCIONES DE PANTALLAS (LOGIN/REGISTRO) */
 function showLoginScreen() {
   hideAllMainSections();
   document.getElementById('login-screen').style.display = 'block';
@@ -259,12 +245,10 @@ function showLoginScreen() {
   document.querySelector('header').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
   document.getElementById('sidebar').style.display = 'none';
-  // Mostrar el contenedor de autenticación completo centrado
   const authContainer = document.querySelector('.auth-container');
   if (authContainer) authContainer.style.display = 'flex';
   document.body.classList.remove('internal');
 }
-
 function showRegistrationScreen() {
   hideAllMainSections();
   document.getElementById('registration-screen').style.display = 'block';
@@ -276,10 +260,8 @@ function showRegistrationScreen() {
   if (authContainer) authContainer.style.display = 'flex';
   document.body.classList.remove('internal');
 }
-
 function showProgressMainScreen() {
   hideAllMainSections();
-  // Ocultar el contenedor de autenticación
   const authContainer = document.querySelector('.auth-container');
   if (authContainer) authContainer.style.display = 'none';
   document.body.classList.add('internal');
@@ -288,61 +270,43 @@ function showProgressMainScreen() {
     document.getElementById('progress-screen').style.display = 'block';
   }
   document.getElementById('sidebar').style.display = 'block';
-  // Para el dashboard, se muestra la columna derecha si el contenido se encuentra disponible
   const activityScreen = document.getElementById('activity-screen');
   const dashboardRight = document.querySelector('.dashboard-right');
   if (activityScreen && dashboardRight) {
-    // Forzamos mostrar la columna derecha, ya que en esta pantalla se espera contenido.
     dashboardRight.style.display = 'block';
     activityScreen.style.display = 'block';
   }
 }
-
 function showStudyMainScreen() {
   hideAllMainSections();
   document.body.classList.add('internal');
   document.getElementById('study-main-screen').style.display = 'block';
   showDocuments();
 }
-
 function showCommunitiesMainScreen() {
   hideAllMainSections();
   document.body.classList.add('internal');
   document.getElementById('communities-main-screen').style.display = 'block';
-  // Forzar mostrar ambas columnas en Comunidades
   const groupsScreen = document.getElementById('groups-screen');
   const communitiesLeft = document.querySelector('.communities-left');
-  if (groupsScreen) {
-    groupsScreen.style.display = 'block';
-  }
-  if (communitiesLeft) {
-    communitiesLeft.style.display = 'block';
-  }
+  if (groupsScreen) groupsScreen.style.display = 'block';
+  if (communitiesLeft) communitiesLeft.style.display = 'block';
   const directoryScreen = document.getElementById('directory-screen');
   const communitiesRight = document.querySelector('.communities-right');
-  if (directoryScreen) {
-    directoryScreen.style.display = 'block';
-  }
-  if (communitiesRight) {
-    communitiesRight.style.display = 'block';
-  }
+  if (directoryScreen) directoryScreen.style.display = 'block';
+  if (communitiesRight) communitiesRight.style.display = 'block';
 }
-
 function showNewsHelpScreen() {
   hideAllMainSections();
   document.body.classList.add('internal');
   document.getElementById('news-help-screen').style.display = 'block';
-  // Forzar mostrar todas las columnas en Noticias & Ayuda
   const newsColumns = document.querySelectorAll('.news-grid > .news-column');
   newsColumns.forEach(col => {
     col.style.display = 'block';
     const card = col.querySelector('.card');
-    if (card) {
-      card.style.display = 'block';
-    }
+    if (card) card.style.display = 'block';
   });
 }
-
 function showAccountScreen() {
   hideAllMainSections();
   document.body.classList.add('internal');
@@ -352,9 +316,7 @@ function showAccountScreen() {
   }
 }
 
-/* -----------------------------
-   FUNCIONES DE REGISTRO Y LOGIN
------------------------------- */
+/* REGISTRO Y LOGIN */
 async function handleRegistration(event) {
   event.preventDefault();
   const name = document.getElementById('reg-name').value;
@@ -370,7 +332,6 @@ async function handleRegistration(event) {
     alert(error.message);
   }
 }
-
 async function handleLogin(event) {
   event.preventDefault();
   const email = document.getElementById('login-email').value;
@@ -390,7 +351,6 @@ async function handleLogin(event) {
     alert("Error al iniciar sesión: " + error.message);
   }
 }
-
 function handleLogout() {
   if (isTimerRunning) {
     pauseTimer();
@@ -403,9 +363,7 @@ function handleLogout() {
   showLoginScreen();
 }
 
-/* -----------------------------
-   FUNCIONES DE PERFIL
------------------------------- */
+/* PERFIL */
 function handleProfileUpdate(event) {
   event.preventDefault();
   const email = localStorage.getItem('email');
@@ -432,7 +390,6 @@ function handleProfileUpdate(event) {
   updateUserNameHome();
   updateDashboard();
 }
-
 function updateUserNameHome() {
   const email = localStorage.getItem('email');
   if (!email || !users[email]) return;
@@ -443,17 +400,13 @@ function updateUserNameHome() {
     document.getElementById('user-name-home').textContent = user?.name || 'Opositor';
   }
 }
-
 function updateProfileIcon() {
   const profileIcon = document.getElementById('profile-icon');
   const email = localStorage.getItem('email');
   if (!email || !users[email]) return;
   const profile = users[email].profile || {};
-  if (profileIcon) {
-    profileIcon.src = profile.profileImage || 'assets/default-profile.png';
-  }
+  if (profileIcon) profileIcon.src = profile.profileImage || 'assets/default-profile.png';
 }
-
 function handleImageUpload(event) {
   const reader = new FileReader();
   reader.onload = function (e) {
@@ -464,13 +417,10 @@ function handleImageUpload(event) {
   }
 }
 
-/* -----------------------------
-   FUNCIONES DE ACTIVIDAD
------------------------------- */
+/* ACTIVIDAD */
 function loadRecentActivity() {
-  // Stub: Implementa la carga de actividad si lo deseas
+  // Stub: Implementar carga de actividad si es necesario
 }
-
 function updateRecentActivitySummary() {
   const email = localStorage.getItem('email');
   if (!email || !users[email]) return;
@@ -478,14 +428,12 @@ function updateRecentActivitySummary() {
   const recentActivitySummary = document.getElementById('recent-activity-summary');
   if (recentActivitySummary) {
     if (user?.recentActivities?.length > 0) {
-      const lastActivity = user.recentActivities[user.recentActivities.length - 1];
-      recentActivitySummary.textContent = `Última actividad: ${lastActivity}`;
+      recentActivitySummary.textContent = `Última actividad: ${user.recentActivities[user.recentActivities.length - 1]}`;
     } else {
       recentActivitySummary.textContent = 'Última actividad: --';
     }
   }
 }
-
 function displayFullActivity() {
   const email = localStorage.getItem('email');
   if (!email || !users[email]) return;
@@ -503,46 +451,34 @@ function displayFullActivity() {
     });
   }
 }
-
 function addActivity(message) {
   const email = localStorage.getItem('email');
   if (!email || !users[email]) return;
   const user = users[email];
-  if (!user.recentActivities) {
-    user.recentActivities = [];
-  }
-  const now = new Date();
-  const timestamp = now.toLocaleString();
+  if (!user.recentActivities) user.recentActivities = [];
+  const timestamp = new Date().toLocaleString();
   user.recentActivities.push(`[${timestamp}] ${message}`);
   localStorage.setItem('users', JSON.stringify(users));
   updateRecentActivitySummary();
 }
 
-/* -----------------------------
-   FUNCIONES DE ONBOARDING
------------------------------- */
+/* ONBOARDING */
 function startOnboarding() {
   showOverlay();
   showOnboardingStep(1);
 }
-
 function nextOnboardingStep() {
   const currentStep = parseInt(localStorage.getItem('onboardingStep')) || 1;
-  const nextStep = currentStep + 1;
-  showOnboardingStep(nextStep);
+  showOnboardingStep(currentStep + 1);
 }
-
 function showOnboardingStep(step) {
   const totalSteps = 5;
   for (let i = 1; i <= totalSteps; i++) {
     const stepElement = document.getElementById(`onboarding-step-${i}`);
-    if (stepElement) {
-      stepElement.style.display = i === step ? 'block' : 'none';
-    }
+    if (stepElement) stepElement.style.display = i === step ? 'block' : 'none';
   }
   localStorage.setItem('onboardingStep', step);
 }
-
 function finishOnboarding() {
   hideOverlay();
   const email = localStorage.getItem('email');
@@ -552,20 +488,16 @@ function finishOnboarding() {
   }
   localStorage.removeItem('onboardingStep');
 }
-
 function showOverlay() {
   const overlay = document.getElementById('onboarding-overlay');
   overlay.style.display = 'flex';
 }
-
 function hideOverlay() {
   const overlay = document.getElementById('onboarding-overlay');
   overlay.style.display = 'none';
 }
 
-/* -----------------------------
-   FUNCIONES DEL DASHBOARD Y RACHA
------------------------------- */
+/* DASHBOARD Y RACHA */
 function updateDashboard() {
   const email = localStorage.getItem('email');
   if (!email || !users[email]) return;
@@ -575,9 +507,7 @@ function updateDashboard() {
   updateUserNameHome();
   if (user?.examDate) {
     const examDate = new Date(user.examDate);
-    const today = new Date();
-    const timeDiff = examDate - today;
-    const daysRemaining = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+    const daysRemaining = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
     daysRemainingElement.textContent = daysRemaining > 0 ? daysRemaining + ' días' : 'Examen pasado';
   } else {
     daysRemainingElement.textContent = '--';
@@ -587,57 +517,41 @@ function updateDashboard() {
   updateMotivationalMessage();
   updateRecentActivitySummary();
 }
-
 function calculateTotalStudyTime(email) {
   const user = users[email];
   if (user?.studySessions?.length) {
     const totalMilliseconds = user.studySessions.reduce((acc, session) => acc + session.duration, 0);
-    const totalHours = (totalMilliseconds / (1000 * 60 * 60)).toFixed(2);
-    return totalHours;
+    return (totalMilliseconds / (1000 * 60 * 60)).toFixed(2);
   }
   return 0;
 }
-
 function updateMotivationalMessage() {
   const messageElement = document.getElementById('motivational-message');
   if (messageElement) {
-    const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
-    messageElement.textContent = randomMessage;
+    messageElement.textContent = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
   }
 }
 
-/* -----------------------------
-   FUNCIONES DEL LOGOTIPO
------------------------------- */
+/* LOGOTIPO */
 function handleLogoClick() {
-  if (localStorage.getItem('loggedIn') === 'true') {
-    showProgressMainScreen();
-  } else {
-    showLoginScreen();
-  }
+  if (localStorage.getItem('loggedIn') === 'true') showProgressMainScreen();
+  else showLoginScreen();
 }
 
-/* -----------------------------
-   FUNCIONES DEL CHECK-IN DIARIO (RACHA)
------------------------------- */
+/* CHECK-IN DIARIO */
 function loadDailyStreak() {
   const email = localStorage.getItem('email');
   if (!email) return;
   if (!users[email]) {
-    // Si el usuario aún no existe en el objeto, lo creamos
     users[email] = { dailyStreak: 0, lastCheckinDate: null };
     localStorage.setItem('users', JSON.stringify(users));
   }
   dailyStreak = users[email].dailyStreak;
 }
-
 function updateDailyStreakDisplay() {
   const dailyStreakElement = document.getElementById('daily-streak');
-  if (dailyStreakElement) {
-    dailyStreakElement.textContent = dailyStreak + " días";
-  }
+  if (dailyStreakElement) dailyStreakElement.textContent = dailyStreak + " días";
 }
-
 function handleDailyCheckIn() {
   const email = localStorage.getItem('email');
   if (!email || !users[email]) return;
@@ -648,27 +562,25 @@ function handleDailyCheckIn() {
     user.dailyStreak = 1;
     user.lastCheckinDate = new Date();
     dailyStreak = 1;
-    addNotification("Has hecho check-in por primera vez. ¡Racha iniciada!");
+    addNotification("Check-in inicializado, ¡racha iniciada!");
     addActivity("Check-in diario realizado");
   } else {
-    const diff = (new Date(today) - new Date(lastCheckin)) / (1000 * 60 * 60 * 24);
-    const dayDiff = Math.floor(diff);
+    const dayDiff = Math.floor((new Date(today) - new Date(lastCheckin)) / (1000 * 60 * 60 * 24));
     if (dayDiff === 0) {
       document.getElementById('checkin-status').textContent = "Ya hiciste check-in hoy.";
       return;
     } else if (dayDiff === 1) {
       user.dailyStreak++;
-      user.lastCheckinDate = new Date();
       dailyStreak = user.dailyStreak;
       addNotification(`Racha incrementada a ${dailyStreak} días.`);
       addActivity("Check-in diario incrementa racha a " + dailyStreak);
     } else {
       user.dailyStreak = 1;
-      user.lastCheckinDate = new Date();
       dailyStreak = 1;
-      addNotification("La racha se ha reiniciado. ¡Vuelve a empezar con fuerza!");
+      addNotification("Racha reiniciada, ¡comienza de nuevo!");
       addActivity("Check-in diario, racha reiniciada");
     }
+    user.lastCheckinDate = new Date();
   }
   localStorage.setItem('users', JSON.stringify(users));
   updateDailyStreakDisplay();
@@ -676,9 +588,7 @@ function handleDailyCheckIn() {
   updateRecentActivitySummary();
 }
 
-/* -----------------------------
-   FUNCIONES DEL CRONÓMETRO
------------------------------- */
+/* CRONÓMETRO */
 function startTimer() {
   if (!isTimerRunning) {
     isTimerRunning = true;
@@ -697,7 +607,6 @@ function startTimer() {
     resetBtn.disabled = false;
   }
 }
-
 function pauseTimer() {
   if (!isTimerRunning) return;
   isTimerRunning = false;
@@ -710,40 +619,26 @@ function pauseTimer() {
     pauseBtn.disabled = true;
   }
 }
-
 function resetTimer() {
-  if (isTimerRunning) {
-    pauseTimer();
-  }
+  if (isTimerRunning) pauseTimer();
   elapsedTime = 0;
   updateTimerDisplay();
   const resetBtn = document.getElementById('reset-timer');
-  if (resetBtn) {
-    resetBtn.disabled = true;
-  }
+  if (resetBtn) resetBtn.disabled = true;
 }
-
 function updateTimerDisplay() {
   const hours = Math.floor(elapsedTime / (1000 * 60 * 60)).toString().padStart(2, '0');
   const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60).toString().padStart(2, '0');
   const seconds = Math.floor((elapsedTime / 1000) % 60).toString().padStart(2, '0');
   const timerDisplay = document.getElementById('timer-display');
-  if (timerDisplay) {
-    timerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
-  }
+  if (timerDisplay) timerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
 }
-
 function saveStudySession() {
   const email = localStorage.getItem('email');
   if (!email || !users[email]) return;
   const user = users[email];
-  if (!user.studySessions) {
-    user.studySessions = [];
-  }
-  user.studySessions.push({
-    duration: elapsedTime,
-    date: new Date()
-  });
+  if (!user.studySessions) user.studySessions = [];
+  user.studySessions.push({ duration: elapsedTime, date: new Date() });
   localStorage.setItem('users', JSON.stringify(users));
   updateDashboard();
   elapsedTime = 0;
@@ -752,36 +647,26 @@ function saveStudySession() {
   updateRecentActivitySummary();
 }
 
-/* -----------------------------
-   FUNCIONES DEL QUIZ DIARIO
------------------------------- */
+/* QUIZ DIARIO */
 function openQuizModal() {
   const quizModal = document.getElementById('quiz-modal');
   quizModal.style.display = 'block';
   loadDailyQuiz();
 }
-
 function closeQuizModal() {
-  const quizModal = document.getElementById('quiz-modal');
-  quizModal.style.display = 'none';
+  document.getElementById('quiz-modal').style.display = 'none';
 }
-
 window.onclick = function(event) {
   const quizModal = document.getElementById('quiz-modal');
-  if (event.target === quizModal) {
-    quizModal.style.display = 'none';
-  }
+  if (event.target === quizModal) quizModal.style.display = 'none';
 };
-
 function loadDailyQuiz() {
   currentQuizIndex = (currentQuizIndex + 1) % dailyQuizQuestions.length;
   const questionObj = dailyQuizQuestions[currentQuizIndex];
-  const quizQuestion = document.getElementById('quiz-question');
+  document.getElementById('quiz-question').textContent = questionObj.question;
   const quizOptions = document.getElementById('quiz-options');
-  const quizResult = document.getElementById('quiz-result');
-  quizQuestion.textContent = questionObj.question;
   quizOptions.innerHTML = '';
-  quizResult.textContent = '';
+  document.getElementById('quiz-result').textContent = '';
   questionObj.options.forEach((opt, idx) => {
     const btn = document.createElement('button');
     btn.textContent = opt;
@@ -789,32 +674,27 @@ function loadDailyQuiz() {
     quizOptions.appendChild(btn);
   });
 }
-
 function checkDailyQuizAnswer(selectedIndex) {
   const questionObj = dailyQuizQuestions[currentQuizIndex];
   const quizResult = document.getElementById('quiz-result');
   if (selectedIndex === questionObj.answer) {
     quizResult.textContent = "¡Correcto!";
     addActivity(`Quiz Diario: Respuesta correcta a "${questionObj.question}"`);
-    addNotification("Has respondido correctamente al Quiz Diario.");
+    addNotification("Respuesta correcta en el Quiz Diario.");
   } else {
     quizResult.textContent = "Respuesta incorrecta.";
     addActivity(`Quiz Diario: Respuesta incorrecta a "${questionObj.question}"`);
-    addNotification("Has respondido incorrectamente al Quiz Diario.");
+    addNotification("Respuesta incorrecta en el Quiz Diario.");
   }
   updateRecentActivitySummary();
 }
 
-/* -----------------------------
-   FUNCIONES PARA DISCORD
------------------------------- */
+/* DISCORD */
 function redirectToDiscord() {
   window.open(discordInviteLink, '_blank');
 }
 
-/* -----------------------------
-   FUNCIONES PARA IA ESPECIALIZADA
------------------------------- */
+/* IA ESPECIALIZADA */
 function initSpecialties() {
   const aiCardsContainer = document.getElementById('ai-cards-container');
   if (!aiCardsContainer) return;
@@ -823,71 +703,36 @@ function initSpecialties() {
     const aiCard = document.createElement('div');
     aiCard.classList.add('ai-card');
     aiCard.onclick = () => {
-      if (specialty.url !== '#') {
-        window.open(specialty.url, '_blank');
-      } else {
-        alert('Enlace próximamente disponible.');
-      }
+      if (specialty.url !== '#') window.open(specialty.url, '_blank');
+      else alert('Enlace próximamente disponible.');
     };
-    aiCard.innerHTML = `
-      <img src="assets/${specialty.image}" alt="${specialty.name}">
-      <h3>${specialty.name}</h3>
-    `;
+    aiCard.innerHTML = `<img src="assets/${specialty.image}" alt="${specialty.name}"><h3>${specialty.name}</h3>`;
     aiCardsContainer.appendChild(aiCard);
   });
 }
-
 function filterSpecialties() {
   const searchTerm = (document.getElementById('ai-search-input')?.value.toLowerCase() || '');
   const aiCardsContainer = document.getElementById('ai-cards-container');
   if (!aiCardsContainer) return;
   aiCardsContainer.innerHTML = '';
-  if (!searchTerm) {
-    specialties.forEach(specialty => {
-      const aiCard = document.createElement('div');
-      aiCard.classList.add('ai-card');
-      aiCard.onclick = () => {
-        if (specialty.url !== '#') {
-          window.open(specialty.url, '_blank');
-        } else {
-          alert('Enlace próximamente disponible.');
-        }
-      };
-      aiCard.innerHTML = `
-        <img src="assets/${specialty.image}" alt="${specialty.name}">
-        <h3>${specialty.name}</h3>
-      `;
-      aiCardsContainer.appendChild(aiCard);
-    });
-    return;
-  }
   const filtered = specialties.filter(s => s.name.toLowerCase().includes(searchTerm));
-  filtered.forEach(specialty => {
+  (filtered.length ? filtered : specialties).forEach(specialty => {
     const aiCard = document.createElement('div');
     aiCard.classList.add('ai-card');
     aiCard.onclick = () => {
-      if (specialty.url !== '#') {
-        window.open(specialty.url, '_blank');
-      } else {
-        alert('Enlace próximamente disponible.');
-      }
+      if (specialty.url !== '#') window.open(specialty.url, '_blank');
+      else alert('Enlace próximamente disponible.');
     };
-    aiCard.innerHTML = `
-      <img src="assets/${specialty.image}" alt="${specialty.name}">
-      <h3>${specialty.name}</h3>
-    `;
+    aiCard.innerHTML = `<img src="assets/${specialty.image}" alt="${specialty.name}"><h3>${specialty.name}</h3>`;
     aiCardsContainer.appendChild(aiCard);
   });
 }
 
-/* -----------------------------
-   FUNCIONES PARA DIRECTORIO DE ACADEMIAS
------------------------------- */
+/* DIRECTORIO DE ACADEMIAS */
 function initAcademyDirectory() {
   populateFilters();
   renderAcademies();
 }
-
 function populateFilters() {
   const cityFilter = document.getElementById('city-filter');
   const specialtyFilter = document.getElementById('specialty-filter');
@@ -907,20 +752,14 @@ function populateFilters() {
     specialtyFilter.appendChild(option);
   });
 }
-
 function filterAcademies() {
   const city = document.getElementById('city-filter')?.value;
   const specialty = document.getElementById('specialty-filter')?.value;
   let filteredAcademies = academies;
-  if (city) {
-    filteredAcademies = filteredAcademies.filter(a => a.city === city);
-  }
-  if (specialty) {
-    filteredAcademies = filteredAcademies.filter(a => a.specialties.includes(specialty));
-  }
+  if (city) filteredAcademies = filteredAcademies.filter(a => a.city === city);
+  if (specialty) filteredAcademies = filteredAcademies.filter(a => a.specialties.includes(specialty));
   renderAcademies(filteredAcademies);
 }
-
 function renderAcademies(academyList = academies) {
   const academyContainer = document.getElementById('academy-container');
   if (!academyContainer) return;
@@ -948,12 +787,7 @@ function renderAcademies(academyList = academies) {
     image.classList.add('academy-image');
     const info = document.createElement('div');
     info.classList.add('academy-info');
-    info.innerHTML = `
-      <p><strong>Ciudad:</strong> ${academy.city}</p>
-      <p><strong>Teléfono:</strong> ${academy.phone}</p>
-      <p><strong>Email:</strong> ${academy.email}</p>
-      <p><strong>Especialidades:</strong> ${academy.specialties.join(', ')}</p>
-    `;
+    info.innerHTML = `<p><strong>Ciudad:</strong> ${academy.city}</p><p><strong>Teléfono:</strong> ${academy.phone}</p><p><strong>Email:</strong> ${academy.email}</p><p><strong>Especialidades:</strong> ${academy.specialties.join(', ')}</p>`;
     const annotationSection = document.createElement('div');
     annotationSection.classList.add('annotation-section');
     const annotationLabel = document.createElement('label');
@@ -974,7 +808,6 @@ function renderAcademies(academyList = academies) {
     academyContainer.appendChild(academyCard);
   });
 }
-
 function getUserAnnotation(academyName) {
   const email = localStorage.getItem('email');
   if (users[email] && users[email].annotations && users[email].annotations[academyName]) {
@@ -982,7 +815,6 @@ function getUserAnnotation(academyName) {
   }
   return '';
 }
-
 function saveUserAnnotation(academyName, annotation) {
   const email = localStorage.getItem('email');
   if (!users[email].annotations) {
@@ -995,9 +827,7 @@ function saveUserAnnotation(academyName, annotation) {
   updateRecentActivitySummary();
 }
 
-/* -----------------------------
-   FUNCIONES PARA DOCUMENTOS
------------------------------- */
+/* DOCUMENTOS */
 function uploadDocuments(event) {
   const email = localStorage.getItem('email');
   if (!email || !users[email]) return;
@@ -1026,7 +856,6 @@ function uploadDocuments(event) {
     reader.readAsDataURL(file);
   }
 }
-
 function createFolder() {
   const folderName = prompt('Nombre de la nueva carpeta:');
   if (folderName) {
@@ -1034,10 +863,7 @@ function createFolder() {
     if (!users[email].folders) {
       users[email].folders = [];
     }
-    const folderData = {
-      name: folderName,
-      documents: []
-    };
+    const folderData = { name: folderName, documents: [] };
     users[email].folders.push(folderData);
     localStorage.setItem('users', JSON.stringify(users));
     displayDocuments();
@@ -1046,7 +872,6 @@ function createFolder() {
     updateRecentActivitySummary();
   }
 }
-
 function deleteFolder(folderName) {
   const email = localStorage.getItem('email');
   const folderIndex = users[email].folders.findIndex(folder => folder.name === folderName);
@@ -1059,7 +884,6 @@ function deleteFolder(folderName) {
     updateRecentActivitySummary();
   }
 }
-
 function displayDocuments() {
   const email = localStorage.getItem('email');
   if (!email || !users[email]) return;
@@ -1094,9 +918,7 @@ function displayDocuments() {
       const docElement = document.createElement('div');
       docElement.classList.add('document-card');
       docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
-      docElement.addEventListener('click', () => {
-        openDocument(email, doc);
-      });
+      docElement.addEventListener('click', () => { openDocument(email, doc); });
       folderDocuments.appendChild(docElement);
     });
     folderElement.appendChild(folderDocuments);
@@ -1107,9 +929,7 @@ function displayDocuments() {
     const docElement = document.createElement('div');
     docElement.classList.add('document-card');
     docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
-    docElement.addEventListener('click', () => {
-      openDocument(email, doc);
-    });
+    docElement.addEventListener('click', () => { openDocument(email, doc); });
     const moveButton = document.createElement('button');
     moveButton.innerHTML = '<i class="fas fa-folder"></i>';
     moveButton.onclick = (e) => {
@@ -1120,24 +940,17 @@ function displayDocuments() {
     documentsContainer.appendChild(docElement);
   });
 }
-
 function openDocument(email, doc) {
   doc.lastOpened = new Date();
   users[email].lastDocument = doc.name;
   localStorage.setItem('users', JSON.stringify(users));
   const byteCharacters = atob(doc.fileContent.split(',')[1]);
-  const byteNumbers = new Array(byteCharacters.length);
-  for (let i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
-  }
-  const byteArray = new Uint8Array(byteNumbers);
-  const blob = new Blob([byteArray], { type: doc.fileType });
-  const blobUrl = URL.createObjectURL(blob);
-  window.open(blobUrl, '_blank');
+  const byteNumbers = Array.from(byteCharacters, char => char.charCodeAt(0));
+  const blob = new Blob([new Uint8Array(byteNumbers)], { type: doc.fileType });
+  window.open(URL.createObjectURL(blob), '_blank');
   addActivity(`Documento "${doc.name}" abierto.`);
   updateRecentActivitySummary();
 }
-
 function moveDocumentToFolder(email, documentName) {
   const selectedFolder = prompt('Nombre de la carpeta a la que deseas mover el documento:');
   if (selectedFolder) {
@@ -1160,7 +973,6 @@ function moveDocumentToFolder(email, documentName) {
     }
   }
 }
-
 function filterDocuments() {
   const searchTerm = (document.getElementById('document-search')?.value || '').toLowerCase();
   const email = localStorage.getItem('email');
@@ -1175,33 +987,25 @@ function filterDocuments() {
     documentsContainer.classList.remove('list-view');
   }
   const userDocuments = users[email].documents || [];
-  const filteredDocuments = userDocuments.filter(doc =>
-    doc.name.toLowerCase().includes(searchTerm)
-  );
+  const filteredDocuments = userDocuments.filter(doc => doc.name.toLowerCase().includes(searchTerm));
   filteredDocuments.forEach(doc => {
     const docElement = document.createElement('div');
     docElement.classList.add('document-card');
     docElement.innerHTML = `<i class="fas fa-file-alt"></i> ${doc.name}`;
-    docElement.addEventListener('click', () => {
-      openDocument(email, doc);
-    });
+    docElement.addEventListener('click', () => { openDocument(email, doc); });
     documentsContainer.appendChild(docElement);
   });
 }
-
 function toggleDocumentsView() {
   documentsViewMode = (documentsViewMode === 'list') ? 'grid' : 'list';
   displayDocuments();
 }
 
-/* -----------------------------
-   FUNCIONES PARA SIDEBAR Y NOTIFICACIONES
------------------------------- */
+/* SIDEBAR Y NOTIFICACIONES */
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   sidebar.classList.toggle('show-sidebar');
 }
-
 function togglePinSidebar() {
   const pinButton = document.getElementById('pin-sidebar');
   const sidebar = document.getElementById('sidebar');
@@ -1213,30 +1017,25 @@ function togglePinSidebar() {
   } else {
     localStorage.setItem('sidebarPinned', 'true');
     pinButton.classList.add('pinned');
-    sidebar.classList.add('pinned');
-    sidebar.classList.add('show-sidebar');
+    sidebar.classList.add('pinned', 'show-sidebar');
   }
 }
-
 function loadSidebarState() {
   const pinButton = document.getElementById('pin-sidebar');
   const sidebar = document.getElementById('sidebar');
   const isPinned = localStorage.getItem('sidebarPinned') === 'true';
   if (isPinned) {
     pinButton.classList.add('pinned');
-    sidebar.classList.add('pinned');
-    sidebar.classList.add('show-sidebar');
+    sidebar.classList.add('pinned', 'show-sidebar');
   } else {
     pinButton.classList.remove('pinned');
     sidebar.classList.remove('pinned');
   }
 }
-
 function toggleNotifications() {
   const notificationPanel = document.getElementById('notification-panel');
   notificationPanel.classList.toggle('show-notifications');
 }
-
 function updateNotifications() {
   const notificationCount = document.getElementById('notification-count');
   const notificationList = document.getElementById('notification-list');
@@ -1257,18 +1056,13 @@ function updateNotifications() {
     });
   }
 }
-
 function addNotification(message) {
   const email = localStorage.getItem('email');
   const user = users[email];
-  if (!user.notifications) {
-    user.notifications = [];
-  }
+  if (!user.notifications) user.notifications = [];
   user.notifications.push(message);
   localStorage.setItem('users', JSON.stringify(users));
   addActivity("Notificación: " + message);
 }
 
-/* -----------------------------
-   FIN DEL SCRIPT
------------------------------- */
+/* FIN DEL SCRIPT */
